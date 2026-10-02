@@ -241,13 +241,44 @@ function chooseAircraft() {
   let pool = getAircraftPool();
 
   /*
+   * In ICAO mode, only use aircraft that have
+   * a valid ICAO code.
+   */
+
+  if (modeSelect.value === 'ICAO code') {
+    pool = pool.filter((item) => getAnswerValue(item, 'ICAO code'));
+  }
+
+  /*
+   * In Mixed mode, we don't know the question type
+   * until after choosing the aircraft. However, exclude
+   * aircraft without a code so that Mixed mode can safely
+   * ask either question type.
+   */
+
+  if (modeSelect.value === 'Mixed') {
+    pool = pool.filter(
+      (item) =>
+        getAnswerValue(item, 'Aircraft name') &&
+        getAnswerValue(item, 'ICAO code'),
+    );
+  }
+
+  /*
    * If the selected category has fewer than four
-   * aircraft, use the full collection so that
-   * four answer choices can still be provided.
+   * usable aircraft, use the full collection.
    */
 
   if (pool.length < 4) {
     pool = [...aircraft];
+
+    if (modeSelect.value === 'ICAO code' || modeSelect.value === 'Mixed') {
+      pool = pool.filter(
+        (item) =>
+          getAnswerValue(item, 'Aircraft name') &&
+          getAnswerValue(item, 'ICAO code'),
+      );
+    }
   }
 
   if (pool.length === 0) {
@@ -262,7 +293,7 @@ function chooseAircraft() {
 
   /*
    * If filtering removed everything, fall back
-   * to the full pool.
+   * to the full usable pool.
    */
 
   if (choices.length === 0) {
@@ -292,12 +323,19 @@ function buildAnswerChoices(correctAircraft, questionType) {
   let pool = getAircraftPool();
 
   /*
+   * Only use aircraft that have a valid answer
+   * for the current question type.
+   */
+
+  pool = pool.filter((item) => getAnswerValue(item, questionType));
+
+  /*
    * If the selected category doesn't contain
-   * enough aircraft for four choices, use all aircraft.
+   * enough aircraft, use all usable aircraft.
    */
 
   if (pool.length < 4) {
-    pool = [...aircraft];
+    pool = aircraft.filter((item) => getAnswerValue(item, questionType));
   }
 
   /*
@@ -331,7 +369,6 @@ function buildAnswerChoices(correctAircraft, questionType) {
 
   return choices.map((item) => ({
     aircraft: item,
-
     text: getAnswerValue(item, questionType),
   }));
 }
@@ -400,7 +437,13 @@ function nextQuestion() {
   const category = displayText(currentAircraft.category);
 
   if (category) {
-    promptElement.textContent += ` · ${category}`;
+    const categorySpan = document.createElement('span');
+
+    categorySpan.className = 'category-hint';
+
+    categorySpan.textContent = category;
+
+    promptElement.appendChild(categorySpan);
   }
 
   /*

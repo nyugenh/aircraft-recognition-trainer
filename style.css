@@ -1,8 +1,3 @@
-/* =========================================================
-   Aircraft Recognition Trainer
-   Accessible + responsive styling
-   ========================================================= */
-
 /* ---------------------------------------------------------
    Base
    --------------------------------------------------------- */
@@ -31,6 +26,7 @@ body {
   line-height: 1.5;
 
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* ---------------------------------------------------------
@@ -45,7 +41,9 @@ body {
 
   margin: 0 auto;
 
-  padding: clamp(12px, 2vw, 24px) clamp(12px, 3vw, 32px);
+  padding: max(12px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
 
   display: grid;
 
@@ -73,6 +71,8 @@ body {
 }
 
 .header h1 {
+  min-width: 0;
+
   margin: 0;
 
   font-size: clamp(1.35rem, 3vw, 2rem);
@@ -82,6 +82,8 @@ body {
   font-weight: 700;
 
   letter-spacing: -0.02em;
+
+  overflow-wrap: anywhere;
 }
 
 .score {
@@ -113,7 +115,7 @@ body {
 
   align-items: center;
 
-  gap: 8px;
+  gap: 10px;
 
   font-size: clamp(0.95rem, 1.8vw, 1.1rem);
 
@@ -125,12 +127,11 @@ body {
 
   padding: 8px 36px 8px 12px;
 
-  border: 2px solid #7a8490;
+  border: 2px solid #687581;
 
   border-radius: 8px;
 
   background: #ffffff;
-
   color: #17202a;
 
   font: inherit;
@@ -138,6 +139,14 @@ body {
   font-weight: 500;
 
   cursor: pointer;
+
+  transition:
+    border-color 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.controls select:hover {
+  border-color: #3f4d5a;
 }
 
 /* ---------------------------------------------------------
@@ -147,6 +156,7 @@ body {
 .image-container {
   position: relative;
 
+  min-width: 0;
   min-height: 0;
 
   display: flex;
@@ -156,7 +166,10 @@ body {
 
   overflow: hidden;
 
+  border: 1px solid #d8dee3;
   border-radius: 10px;
+
+  background: #ffffff;
 }
 
 #aircraft-image {
@@ -200,15 +213,19 @@ body {
 
   padding: 9px 15px;
 
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
   border-radius: 8px;
 
-  background: rgba(0, 0, 0, 0.72);
+  background: rgba(0, 0, 0, 0.78);
 
   color: #ffffff;
 
   font-size: 0.95rem;
 
   font-weight: 600;
+
+  line-height: 1.3;
 
   white-space: nowrap;
 
@@ -226,7 +243,10 @@ body {
    --------------------------------------------------------- */
 
 .prompt {
+  min-width: 0;
   min-height: 1.5em;
+
+  padding-inline: 4px;
 
   text-align: center;
 
@@ -235,6 +255,37 @@ body {
   line-height: 1.35;
 
   font-weight: 700;
+
+  overflow-wrap: anywhere;
+}
+
+.category-hint {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 0.5rem;
+
+  padding: 0.15rem 0.5rem;
+
+  border: 1px solid #aeb7bf;
+
+  border-radius: 999px;
+
+  background: #eef2f5;
+  color: #53616d;
+
+  font-size: 0.65em;
+
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  position: relative;
+  top: -0.05em;
+
+  white-space: nowrap;
 }
 
 /* ---------------------------------------------------------
@@ -251,6 +302,7 @@ body {
 
 .answers button {
   width: 100%;
+  min-width: 0;
 
   min-height: 52px;
 
@@ -261,7 +313,6 @@ body {
   border-radius: 9px;
 
   background: #ffffff;
-
   color: #17202a;
 
   font: inherit;
@@ -272,11 +323,16 @@ body {
 
   line-height: 1.3;
 
+  text-align: center;
+
+  overflow-wrap: anywhere;
+
   cursor: pointer;
 
   transition:
     background-color 0.12s ease,
     border-color 0.12s ease,
+    box-shadow 0.12s ease,
     transform 0.08s ease,
     opacity 0.12s ease;
 }
@@ -291,18 +347,18 @@ body {
   transform: translateY(1px);
 }
 
-/* Disabled / loading */
+/* ---------------------------------------------------------
+   Disabled / loading answers
+   --------------------------------------------------------- */
 
 .answers button:disabled {
   cursor: default;
 }
 
-/* Loading state */
-
 .answers.loading button {
   background: #e5e8eb;
 
-  color: #8b939a;
+  color: #7c858d;
 
   border-color: #c4c9ce;
 
@@ -319,6 +375,16 @@ body {
   border-color: #26733b;
 
   color: #164d27;
+
+  font-weight: 700;
+
+  box-shadow: inset 0 0 0 1px rgba(38, 115, 59, 0.15);
+}
+
+.answers button.correct::before {
+  content: '✓ ';
+
+  font-weight: 800;
 }
 
 .answers button.incorrect {
@@ -327,6 +393,16 @@ body {
   border-color: #a52a2a;
 
   color: #6e1b1b;
+
+  font-weight: 700;
+
+  box-shadow: inset 0 0 0 1px rgba(165, 42, 42, 0.15);
+}
+
+.answers button.incorrect::before {
+  content: '✕ ';
+
+  font-weight: 800;
 }
 
 /* ---------------------------------------------------------
@@ -336,7 +412,7 @@ body {
 .bottom {
   display: grid;
 
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
 
   align-items: center;
 
@@ -357,6 +433,8 @@ body {
   line-height: 1.35;
 
   font-weight: 600;
+
+  overflow-wrap: anywhere;
 }
 
 .streak {
@@ -381,7 +459,6 @@ body {
   border-radius: 9px;
 
   background: #263746;
-
   color: #ffffff;
 
   font: inherit;
@@ -390,11 +467,14 @@ body {
 
   font-weight: 700;
 
+  line-height: 1.3;
+
   cursor: pointer;
 
   transition:
     background-color 0.12s ease,
     border-color 0.12s ease,
+    box-shadow 0.12s ease,
     opacity 0.12s ease,
     transform 0.08s ease;
 }
@@ -426,6 +506,13 @@ select:focus-visible {
   outline-offset: 3px;
 }
 
+.answers button:focus-visible,
+.next-button:focus-visible {
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 5px #e09b00;
+}
+
 /* ---------------------------------------------------------
    Medium screens
    --------------------------------------------------------- */
@@ -454,7 +541,10 @@ select:focus-visible {
 
 @media (max-width: 550px) {
   .app {
-    padding: 12px;
+    padding: max(12px, env(safe-area-inset-top))
+      max(12px, env(safe-area-inset-right))
+      max(12px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
 
     gap: 10px;
   }
@@ -509,6 +599,12 @@ select:focus-visible {
     line-height: 1.35;
   }
 
+  .category-hint {
+    margin-left: 0.35rem;
+
+    font-size: 0.7em;
+  }
+
   /* Answers */
 
   .answers {
@@ -560,7 +656,9 @@ select:focus-visible {
   .app {
     gap: 6px;
 
-    padding: 8px;
+    padding: max(8px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
   }
 
   .header h1 {
@@ -603,7 +701,9 @@ select:focus-visible {
 
 @media (max-width: 380px) {
   .app {
-    padding: 8px;
+    padding: max(8px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
   }
 
   .header h1 {
@@ -627,6 +727,14 @@ select:focus-visible {
   .answers button {
     font-size: 1rem;
   }
+
+  .category-hint {
+    margin-left: 0.25rem;
+
+    padding-inline: 0.4rem;
+
+    font-size: 0.65em;
+  }
 }
 
 /* ---------------------------------------------------------
@@ -637,7 +745,9 @@ select:focus-visible {
   .app {
     gap: 6px;
 
-    padding: 8px 14px;
+    padding: max(8px, env(safe-area-inset-top))
+      max(14px, env(safe-area-inset-right))
+      max(8px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   }
 
   .header h1 {
@@ -654,6 +764,14 @@ select:focus-visible {
 
   .prompt {
     font-size: 1rem;
+  }
+
+  .category-hint {
+    margin-left: 0.35rem;
+
+    padding: 0.1rem 0.4rem;
+
+    font-size: 0.65em;
   }
 
   .answers {
@@ -684,7 +802,14 @@ select:focus-visible {
     border-color: #687481;
   }
 
-  .answers button:active:not(:disabled) {
+  .next-button:hover:not(:disabled) {
+    background: #263746;
+
+    border-color: #263746;
+  }
+
+  .answers button:active:not(:disabled),
+  .next-button:active:not(:disabled) {
     transform: scale(0.98);
   }
 }
@@ -694,6 +819,10 @@ select:focus-visible {
    --------------------------------------------------------- */
 
 @media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
   body {
     background: #12161a;
 
@@ -706,6 +835,24 @@ select:focus-visible {
     color: #f1f3f5;
 
     border-color: #7d8790;
+  }
+
+  .controls select:hover {
+    border-color: #aab4bd;
+  }
+
+  .category-hint {
+    border-color: #58636c;
+
+    background: #252c31;
+
+    color: #c4cdd3;
+  }
+
+  .image-container {
+    border-color: #30383f;
+
+    background: #181d21;
   }
 
   .answers button {
@@ -725,7 +872,7 @@ select:focus-visible {
   .answers.loading button {
     background: #24292e;
 
-    color: #666d73;
+    color: #777f86;
 
     border-color: #3d444a;
   }
@@ -740,6 +887,8 @@ select:focus-visible {
     color: #a9e6b8;
 
     border-color: #4c9b61;
+
+    box-shadow: inset 0 0 0 1px rgba(76, 155, 97, 0.2);
   }
 
   .answers button.incorrect {
@@ -748,6 +897,8 @@ select:focus-visible {
     color: #f1aaaa;
 
     border-color: #b95b5b;
+
+    box-shadow: inset 0 0 0 1px rgba(185, 91, 91, 0.2);
   }
 
   .next-button {
@@ -764,8 +915,54 @@ select:focus-visible {
     border-color: #ffffff;
   }
 
-  .image-container {
-    background: #181d21;
+  .loading-message {
+    border-color: rgba(255, 255, 255, 0.2);
+
+    background: rgba(0, 0, 0, 0.82);
+  }
+}
+
+/* ---------------------------------------------------------
+   Forced colours / Windows High Contrast
+   --------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  body {
+    background: Canvas;
+
+    color: CanvasText;
+  }
+
+  .controls select,
+  .answers button,
+  .next-button {
+    background: ButtonFace;
+
+    color: ButtonText;
+
+    border-color: ButtonText;
+  }
+
+  .answers button.correct,
+  .answers button.incorrect {
+    background: ButtonFace;
+
+    color: ButtonText;
+
+    border-color: Highlight;
+  }
+
+  .category-hint {
+    background: Canvas;
+
+    color: CanvasText;
+
+    border-color: CanvasText;
+  }
+
+  button:focus-visible,
+  select:focus-visible {
+    outline: 3px solid Highlight;
   }
 }
 
