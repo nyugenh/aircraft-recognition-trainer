@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Aircraft Recognition Trainer</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main class="app">
+      <!-- Header -->
+      <header class="header">
+        <h1>Aircraft Recognition Trainer</h1>
+
+        <div id="score" class="score">Score: 0/0</div>
+      </header>
+
+      <!-- Controls -->
+      <section class="controls">
+        <label>
+          <span>Category:</span>
+
+          <select id="category">
+            <option value="All">All</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Question:</span>
+
+          <select id="mode">
+            <option value="Aircraft name">Aircraft name</option>
+
+            <option value="ICAO code">ICAO code</option>
+
+            <option value="Mixed">Mixed</option>
+          </select>
+        </label>
+      </section>
+
+      <!-- Image -->
+      <section id="image-container" class="image-container">
+        <img id="aircraft-image" alt="Aircraft" />
+      </section>
+
+      <!-- Prompt -->
+      <div id="prompt" class="prompt"></div>
+
+      <!-- Answers -->
+      <section id="answers" class="answers">
+        <button data-index="0"></button>
+        <button data-index="1"></button>
+        <button data-index="2"></button>
+        <button data-index="3"></button>
+      </section>
+
+      <!-- Bottom bar -->
+      <footer class="bottom">
+        <div id="feedback" class="feedback"></div>
+
+        <button id="next" class="next-button">Next aircraft</button>
+      </footer>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,315 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+
+  background: #eef3f8;
+
+  overflow: hidden;
+}
+
+.app {
+  width: 100%;
+  height: 100dvh;
+
+  display: grid;
+
+  grid-template-rows:
+    auto
+    auto
+    minmax(0, 1fr)
+    auto
+    auto
+    auto;
+
+  gap: clamp(6px, 1vh, 12px);
+
+  padding: clamp(8px, 2vw, 18px) clamp(8px, 2vw, 18px);
+
+  max-width: 1600px;
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+.header h1 {
+  margin: 0;
+
+  font-size: clamp(16px, 2.2vw, 26px);
+
+  line-height: 1.1;
+}
+
+.score {
+  flex-shrink: 0;
+
+  font-size: clamp(10px, 1.2vw, 14px);
+}
+
+/* =========================================================
+   Controls
+   ========================================================= */
+
+.controls {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: clamp(6px, 1vw, 14px);
+}
+
+.controls label {
+  display: grid;
+
+  grid-template-columns: auto minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 6px;
+
+  min-width: 0;
+
+  font-size: clamp(10px, 1.2vw, 14px);
+}
+
+select {
+  width: 100%;
+
+  min-width: 0;
+
+  padding: clamp(5px, 0.7vw, 8px);
+
+  border: 1px solid #bbb;
+
+  border-radius: 5px;
+
+  background: white;
+
+  font-family: inherit;
+
+  font-size: clamp(10px, 1.2vw, 14px);
+}
+
+/* =========================================================
+   Image
+   ========================================================= */
+
+.image-container {
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: white;
+
+  border: 1px solid #c8c8c8;
+
+  overflow: hidden;
+}
+
+#aircraft-image {
+  display: block;
+
+  max-width: calc(100% - 20px);
+  max-height: calc(100% - 20px);
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+
+  user-select: none;
+}
+
+/* =========================================================
+   Prompt
+   ========================================================= */
+
+.prompt {
+  text-align: center;
+
+  font-weight: 700;
+
+  font-size: clamp(11px, 1.5vw, 18px);
+
+  line-height: 1.2;
+
+  min-height: 1.2em;
+}
+
+/* =========================================================
+   Answers
+   ========================================================= */
+
+.answers {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: clamp(4px, 0.7vw, 8px);
+}
+
+.answers button {
+  min-width: 0;
+
+  min-height: clamp(32px, 5vh, 52px);
+
+  padding: clamp(4px, 0.8vw, 10px);
+
+  border: 1px solid #aaa;
+
+  border-radius: 5px;
+
+  background: #f7f7f7;
+
+  font-family: inherit;
+
+  font-size: clamp(10px, 1.25vw, 15px);
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.1s,
+    border-color 0.1s;
+}
+
+.answers button:hover:not(:disabled) {
+  background: #e9eef4;
+
+  border-color: #777;
+}
+
+.answers button:disabled {
+  cursor: default;
+
+  opacity: 0.8;
+}
+
+/* =========================================================
+   Bottom
+   ========================================================= */
+
+.bottom {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 0;
+}
+
+.feedback {
+  min-width: 0;
+
+  font-size: clamp(10px, 1.2vw, 14px);
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.next-button {
+  flex-shrink: 0;
+
+  padding: clamp(6px, 0.8vw, 10px) clamp(10px, 1.4vw, 18px);
+
+  border: 1px solid #777;
+
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  font-family: inherit;
+
+  font-size: clamp(10px, 1.2vw, 14px);
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.next-button:hover {
+  background: #e9eef4;
+}
+
+/* =========================================================
+   Very narrow screens
+   ========================================================= */
+
+@media (max-width: 550px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .controls label {
+    grid-template-columns:
+      minmax(65px, auto)
+      minmax(0, 1fr);
+  }
+
+  .header h1 {
+    font-size: 17px;
+  }
+}
+
+/* =========================================================
+   Very short screens
+   ========================================================= */
+
+@media (max-height: 550px) {
+  .app {
+    gap: 4px;
+
+    padding: 6px 8px;
+  }
+
+  .answers button {
+    min-height: 28px;
+  }
+
+  .prompt {
+    font-size: 11px;
+  }
+}
