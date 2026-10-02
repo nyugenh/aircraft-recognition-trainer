@@ -215,8 +215,6 @@ body {
 }
 
 .app.reverse-mode .answers.reverse button {
-  position: relative;
-
   width: 100%;
   height: 100%;
 
@@ -514,9 +512,8 @@ body {
   min-height: var(--control-height);
 
   /*
-     Leave equal space on both sides so the answer
-     text remains visually centred even when the
-     result symbol is present.
+     Equal horizontal padding keeps the text
+     centred even when a result symbol appears.
   */
 
   padding: 10px 42px;
@@ -577,7 +574,7 @@ body {
 }
 
 /* ---------------------------------------------------------
-   Correct / incorrect answer states
+   Multiple-choice result states
    --------------------------------------------------------- */
 
 .answers button.correct {
@@ -650,6 +647,8 @@ body {
 }
 
 .answers.reverse button {
+  position: relative;
+
   min-height: 0;
 
   height: 100%;
@@ -665,9 +664,8 @@ body {
 }
 
 /*
-   Suppress the MCQ result pseudo-elements
-   because photo answers use the border/background
-   itself for feedback.
+   Do not display the text-answer result symbols
+   on photo choices.
 */
 
 .answers.reverse button::before {
@@ -705,8 +703,6 @@ body {
    --------------------------------------------------------- */
 
 .type-answer-container {
-  position: relative;
-
   display: flex;
 
   align-items: stretch;
@@ -721,12 +717,7 @@ body {
   min-width: 0;
   min-height: var(--control-height);
 
-  /*
-     Extra right padding leaves room for
-     the result symbol.
-  */
-
-  padding: 10px 52px 10px 14px;
+  padding: 10px 14px;
 
   border: 2px solid var(--border);
   border-radius: var(--radius);
@@ -797,58 +788,12 @@ body {
 }
 
 /* ---------------------------------------------------------
-   Typed answer result icon
-   --------------------------------------------------------- */
-
-.type-answer-container::after {
-  position: absolute;
-
-  right: 16px;
-  top: 50%;
-
-  transform: translateY(-50%);
-
-  display: none;
-
-  font-size: 1.35rem;
-  line-height: 1;
-
-  font-weight: 800;
-
-  pointer-events: none;
-
-  z-index: 2;
-}
-
-.type-answer-container.correct::after {
-  content: '✓';
-
-  display: block;
-
-  color: var(--correct-border);
-}
-
-.type-answer-container.partial::after {
-  content: '◐';
-
-  display: block;
-
-  color: var(--partial-border);
-}
-
-.type-answer-container.incorrect::after {
-  content: '✕';
-
-  display: block;
-
-  color: var(--incorrect-border);
-}
-
-/* ---------------------------------------------------------
    Submit button
    --------------------------------------------------------- */
 
 .submit-answer {
+  flex-shrink: 0;
+
   min-width: 110px;
 
   min-height: var(--control-height);
@@ -932,7 +877,9 @@ body {
   font-weight: 700;
 }
 
-/* Result colours */
+/* ---------------------------------------------------------
+   Feedback result colours
+   --------------------------------------------------------- */
 
 .feedback.correct-feedback .feedback-result {
   color: var(--correct-border);
@@ -1101,7 +1048,7 @@ input:focus-visible {
 
     /*
        Keep the title on one line.
-       Truncate rather than wrap.
+       Truncate if the screen is extremely narrow.
     */
 
     white-space: nowrap;
@@ -1265,18 +1212,7 @@ input:focus-visible {
 
     min-height: 52px;
 
-    padding-right: 52px;
-  }
-
-  /*
-     Keep result icon inside the input row
-     when the layout becomes vertical.
-  */
-
-  .type-answer-container::after {
-    right: 16px;
-
-    top: 26px;
+    padding: 10px 14px;
   }
 
   .submit-answer {
@@ -1343,10 +1279,14 @@ input:focus-visible {
     grid-template-rows:
       auto
       auto
-      minmax(140px, 1fr)
-      auto
+      minmax(90px, 1fr)
+      minmax(2.7em, auto)
       auto
       auto;
+  }
+
+  .app:not(.reverse-mode) .image-container {
+    min-height: 90px;
   }
 
   .app.reverse-mode {
@@ -1378,7 +1318,14 @@ input:focus-visible {
   }
 
   .prompt {
+    min-height: 2.7em;
+
+    padding-block: 1px;
+
     font-size: 1rem;
+    line-height: 1.35;
+
+    overflow: visible;
   }
 
   .answers {
@@ -1406,10 +1353,8 @@ input:focus-visible {
     min-height: 44px;
   }
 
-  .type-answer-container::after {
-    top: 22px;
-
-    right: 14px;
+  .feedback {
+    font-size: 0.95rem;
   }
 }
 
@@ -1419,17 +1364,45 @@ input:focus-visible {
 
 @media (max-width: 380px) {
   .app {
+    height: auto;
+
+    min-height: 100dvh;
+
     padding: max(8px, env(safe-area-inset-top))
       max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
       max(8px, env(safe-area-inset-left));
   }
 
+  /* -------------------------------------------------------
+     Header
+     ------------------------------------------------------- */
+
+  .header {
+    gap: 2px;
+  }
+
   .header h1 {
     font-size: 1.1rem;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
   }
 
   .score {
     font-size: 0.82rem;
+  }
+
+  /* -------------------------------------------------------
+     Controls
+     ------------------------------------------------------- */
+
+  .controls {
+    gap: 5px;
   }
 
   .controls label {
@@ -1441,19 +1414,83 @@ input:focus-visible {
   }
 
   .controls select {
+    min-height: 40px;
+
     font-size: 0.95rem;
   }
 
-  .answers button {
+  /* -------------------------------------------------------
+     Standard mode layout
+     ------------------------------------------------------- */
+
+  .app:not(.reverse-mode) {
+    grid-template-rows:
+      auto
+      auto
+      minmax(90px, 1fr)
+      minmax(2.7em, auto)
+      auto
+      auto;
+  }
+
+  .app:not(.reverse-mode) .image-container {
+    min-height: 90px;
+  }
+
+  .prompt {
+    min-height: 2.7em;
+
+    padding-block: 1px;
+
     font-size: 1rem;
 
-    padding-left: 36px;
-    padding-right: 36px;
+    line-height: 1.35;
+
+    overflow: visible;
+  }
+
+  /* -------------------------------------------------------
+     Category
+     ------------------------------------------------------- */
+
+  .category-hint {
+    padding-inline: 0.35rem;
+
+    font-size: 0.64em;
+  }
+
+  /* -------------------------------------------------------
+     Answers
+     ------------------------------------------------------- */
+
+  .answers {
+    gap: 6px;
+  }
+
+  .answers button {
+    min-height: 44px;
+
+    padding: 6px 36px;
+
+    font-size: 1rem;
   }
 
   .answers button.correct::before,
   .answers button.incorrect::before {
     left: 11px;
+  }
+
+  /* -------------------------------------------------------
+     Reverse mode
+     ------------------------------------------------------- */
+
+  .app.reverse-mode {
+    grid-template-rows:
+      auto
+      auto
+      auto
+      minmax(190px, 1fr)
+      auto;
   }
 
   .answers.reverse,
@@ -1465,10 +1502,30 @@ input:focus-visible {
     padding: 4px;
   }
 
-  .category-hint {
-    padding-inline: 0.35rem;
+  /* -------------------------------------------------------
+     Typed answer
+     ------------------------------------------------------- */
 
-    font-size: 0.64em;
+  .type-answer-input {
+    min-height: 44px;
+
+    padding: 6px 10px;
+  }
+
+  .submit-answer {
+    min-height: 44px;
+  }
+
+  /* -------------------------------------------------------
+     Bottom
+     ------------------------------------------------------- */
+
+  .next-button {
+    min-height: 44px;
+  }
+
+  .feedback {
+    font-size: 0.95rem;
   }
 }
 
@@ -1598,7 +1655,9 @@ input:focus-visible {
     min-height: 42px;
   }
 
-  /* Typed answer */
+  /* -------------------------------------------------------
+     Typed answer — landscape
+     ------------------------------------------------------- */
 
   .type-answer-container {
     gap: 8px;
@@ -1609,10 +1668,6 @@ input:focus-visible {
 
     padding-top: 7px;
     padding-bottom: 7px;
-  }
-
-  .type-answer-container::after {
-    top: 21px;
   }
 
   .submit-answer {
@@ -1794,18 +1849,6 @@ input:focus-visible {
     box-shadow: 0 0 0 3px rgba(185, 91, 91, 0.18);
   }
 
-  .type-answer-container.correct::after {
-    color: #7fd394;
-  }
-
-  .type-answer-container.partial::after {
-    color: #e2c568;
-  }
-
-  .type-answer-container.incorrect::after {
-    color: #e98b8b;
-  }
-
   .feedback-detail {
     color: var(--text-muted);
   }
@@ -1890,10 +1933,6 @@ input:focus-visible {
     color: CanvasText;
 
     border-color: CanvasText;
-  }
-
-  .type-answer-container::after {
-    color: Highlight;
   }
 
   .feedback-result,
