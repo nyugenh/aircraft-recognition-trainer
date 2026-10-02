@@ -320,34 +320,56 @@ function getAnswerValue(item, questionType) {
    ========================================================= */
 
 function buildAnswerChoices(correctAircraft, questionType) {
-  let pool = getAircraftPool();
+  const correctAnswer = getAnswerValue(correctAircraft, questionType);
 
   /*
-   * Only use aircraft that have a valid answer
-   * for the current question type.
+   * Get all aircraft with a valid answer for this
+   * question type.
    */
-
-  pool = pool.filter((item) => getAnswerValue(item, questionType));
+  const allUsableAircraft = aircraft.filter((item) =>
+    getAnswerValue(item, questionType),
+  );
 
   /*
-   * If the selected category doesn't contain
-   * enough aircraft, use all usable aircraft.
+   * Remove duplicate visible answers.
+   *
+   * This is important because two different aircraft
+   * records could theoretically have the same name
+   * or ICAO code.
    */
+  const uniqueAircraft = [];
+  const usedAnswers = new Set();
 
-  if (pool.length < 4) {
-    pool = aircraft.filter((item) => getAnswerValue(item, questionType));
+  for (const item of allUsableAircraft) {
+    const answer = getAnswerValue(item, questionType);
+
+    if (!usedAnswers.has(answer)) {
+      usedAnswers.add(answer);
+      uniqueAircraft.push(item);
+    }
   }
 
   /*
-   * Remove the correct aircraft.
+   * Make sure the correct aircraft is included.
    */
+  const correctExists = uniqueAircraft.some((item) => item === correctAircraft);
 
-  const distractorPool = pool.filter((item) => item !== correctAircraft);
+  if (!correctExists) {
+    uniqueAircraft.unshift(correctAircraft);
+  }
+
+  /*
+   * All possible distractors, excluding:
+   * - the correct aircraft
+   * - duplicate visible answers
+   */
+  const distractorPool = uniqueAircraft.filter(
+    (item) => item !== correctAircraft,
+  );
 
   /*
    * Prefer distractors from the same category.
    */
-
   const sameCategory = distractorPool.filter(
     (item) =>
       item.category &&
@@ -355,18 +377,73 @@ function buildAnswerChoices(correctAircraft, questionType) {
       item.category === correctAircraft.category,
   );
 
-  let distractors = [];
+  /*
+   * Randomise both pools before selecting from them.
+   * This prevents the manifest order from influencing
+   * which aircraft are repeatedly used as distractors.
+   */
+  shuffle(sameCategory);
+  shuffle(distractorPool);
 
-  if (sameCategory.length >= 3) {
-    distractors = randomSample(sameCategory, 3);
-  } else {
-    distractors = randomSample(distractorPool, 3);
+  const distractors = [];
+
+  /*
+   * First take as many unique distractors as possible
+   * from the same category.
+   */
+  for (const item of sameCategory) {
+    if (distractors.length >= 3) {
+      break;
+    }
+
+    const answer = getAnswerValue(item, questionType);
+
+    if (
+      answer !== correctAnswer &&
+      !distractors.some(
+        (selected) => getAnswerValue(selected, questionType) === answer,
+      )
+    ) {
+      distractors.push(item);
+    }
   }
 
+  /*
+   * If the category didn't provide enough distractors,
+   * fill the remaining slots from the entire dataset.
+   */
+  if (distractors.length < 3) {
+    for (const item of distractorPool) {
+      if (distractors.length >= 3) {
+        break;
+      }
+
+      const answer = getAnswerValue(item, questionType);
+
+      const alreadyUsed = distractors.some(
+        (selected) => getAnswerValue(selected, questionType) === answer,
+      );
+
+      if (answer !== correctAnswer && !alreadyUsed) {
+        distractors.push(item);
+      }
+    }
+  }
+
+  /*
+   * Build the final answer list.
+   */
   const choices = [correctAircraft, ...distractors];
 
+  /*
+   * Randomise answer positions.
+   */
   shuffle(choices);
 
+  /*
+   * Convert aircraft objects into the format
+   * used by the answer buttons.
+   */
   return choices.map((item) => ({
     aircraft: item,
     text: getAnswerValue(item, questionType),
