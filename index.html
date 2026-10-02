@@ -25,6 +25,7 @@
     <title>Aircraft Recognition Trainer</title>
 
     <link rel="icon" type="image/png" href="favicon.png" />
+
     <link rel="stylesheet" href="style.css" />
   </head>
 
@@ -34,7 +35,7 @@
       <header class="header">
         <h1>Aircraft Recognition Trainer</h1>
 
-        <div id="score" class="score" aria-live="polite">Score: 0/0</div>
+        <div id="score" class="score" aria-live="polite">Score: 0/0 (0%)</div>
       </header>
 
       <!-- Controls -->
@@ -52,13 +53,27 @@
 
           <select id="mode">
             <option value="Aircraft name">Aircraft name</option>
+
             <option value="ICAO code">ICAO code</option>
+
             <option value="Mixed">Mixed</option>
+          </select>
+        </label>
+
+        <label for="answer-mode">
+          <span>Answer:</span>
+
+          <select id="answer-mode">
+            <option value="multiple-choice">Multiple choice</option>
+
+            <option value="reverse">Choose the photo</option>
+
+            <option value="type">Type the answer</option>
           </select>
         </label>
       </section>
 
-      <!-- Aircraft image -->
+      <!-- Aircraft image for normal modes -->
       <section
         id="image-container"
         class="image-container"
@@ -79,7 +94,29 @@
       <!-- Question -->
       <div id="prompt" class="prompt" aria-live="polite"></div>
 
-      <!-- Answers -->
+      <!-- Typed answer -->
+      <section id="type-answer-container" class="type-answer-container" hidden>
+        <label class="visually-hidden" for="type-answer-input">
+          Type your answer
+        </label>
+
+        <input
+          id="type-answer-input"
+          class="type-answer-input"
+          type="text"
+          autocomplete="off"
+          autocapitalize="none"
+          spellcheck="false"
+          placeholder="Type your answer..."
+          disabled
+        />
+
+        <button id="submit-answer" class="submit-answer" type="button" disabled>
+          Submit
+        </button>
+      </section>
+
+      <!-- Multiple choice / reverse photo answers -->
       <section id="answers" class="answers" aria-label="Answer choices">
         <button type="button" data-index="0" disabled></button>
 

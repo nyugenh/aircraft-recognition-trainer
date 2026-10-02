@@ -1,22 +1,75 @@
+/* =========================================================
+   Aircraft Recognition Trainer
+   Clean + accessible + responsive training UI
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Design tokens
+   --------------------------------------------------------- */
+
+:root {
+  --page-bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface-muted: #eef2f5;
+
+  --text: #17202a;
+  --text-muted: #53616d;
+  --text-disabled: #7c858d;
+
+  --border: #687481;
+  --border-light: #d8dee3;
+  --border-hover: #3f4d5a;
+
+  --primary: #263746;
+  --primary-hover: #172630;
+
+  --focus: #e09b00;
+
+  --correct-bg: #dff3e4;
+  --correct-border: #26733b;
+  --correct-text: #164d27;
+
+  --partial-bg: #fff3d6;
+  --partial-border: #c28700;
+  --partial-text: #6b4b00;
+
+  --incorrect-bg: #f9dddd;
+  --incorrect-border: #a52a2a;
+  --incorrect-text: #6e1b1b;
+
+  --radius: 9px;
+  --control-height: 52px;
+
+  --page-gap: 10px;
+  --control-gap: 16px;
+  --answer-gap: 10px;
+}
+
 /* ---------------------------------------------------------
    Base
    --------------------------------------------------------- */
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 html {
   height: 100%;
+  color-scheme: light;
 }
 
 body {
   margin: 0;
-
   min-height: 100%;
 
-  background: #f5f7fa;
-  color: #17202a;
+  background: var(--page-bg);
+  color: var(--text);
 
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
@@ -27,6 +80,28 @@ body {
 
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* ---------------------------------------------------------
+   Accessibility
+   --------------------------------------------------------- */
+
+.visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ---------------------------------------------------------
@@ -52,9 +127,127 @@ body {
     auto
     minmax(0, 1fr)
     auto
+    auto
     auto;
 
-  gap: clamp(10px, 1.5vh, 18px);
+  grid-template-areas:
+    'header'
+    'controls'
+    'image'
+    'prompt'
+    'answers'
+    'bottom';
+
+  row-gap: var(--page-gap);
+}
+
+/* ---------------------------------------------------------
+   Grid areas
+   --------------------------------------------------------- */
+
+.header {
+  grid-area: header;
+}
+
+.controls {
+  grid-area: controls;
+}
+
+.image-container {
+  grid-area: image;
+}
+
+.prompt {
+  grid-area: prompt;
+}
+
+.answers {
+  grid-area: answers;
+}
+
+.bottom {
+  grid-area: bottom;
+}
+
+/* ---------------------------------------------------------
+   Reverse mode — choose photo
+   --------------------------------------------------------- */
+
+.app.reverse-mode {
+  /*
+     The photo grid receives the flexible space.
+
+     HEADER
+     CONTROLS
+     QUESTION
+     PHOTOS
+     BOTTOM
+  */
+
+  grid-template-rows:
+    auto
+    auto
+    auto
+    minmax(260px, 1fr)
+    auto;
+
+  grid-template-areas:
+    'header'
+    'controls'
+    'prompt'
+    'answers'
+    'bottom';
+
+  align-content: stretch;
+}
+
+.app.reverse-mode .answers.reverse {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.app.reverse-mode .answers.reverse button {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  min-height: 0;
+
+  padding: 8px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.app.reverse-mode .answers.reverse button img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+
+  border-radius: 5px;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 }
 
 /* ---------------------------------------------------------
@@ -76,11 +269,9 @@ body {
   margin: 0;
 
   font-size: clamp(1.35rem, 3vw, 2rem);
-
   line-height: 1.2;
 
   font-weight: 700;
-
   letter-spacing: -0.02em;
 
   overflow-wrap: anywhere;
@@ -90,6 +281,7 @@ body {
   flex-shrink: 0;
 
   font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  line-height: 1.3;
 
   font-weight: 700;
 
@@ -107,7 +299,7 @@ body {
 
   align-items: center;
 
-  gap: 12px 24px;
+  gap: 10px var(--control-gap);
 }
 
 .controls label {
@@ -118,24 +310,23 @@ body {
   gap: 10px;
 
   font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  line-height: 1.3;
 
   font-weight: 600;
 }
 
 .controls select {
-  min-height: 44px;
+  min-height: 46px;
 
   padding: 8px 36px 8px 12px;
 
-  border: 2px solid #687581;
-
+  border: 2px solid var(--border);
   border-radius: 8px;
 
-  background: #ffffff;
-  color: #17202a;
+  background: var(--surface);
+  color: var(--text);
 
   font: inherit;
-
   font-weight: 500;
 
   cursor: pointer;
@@ -146,7 +337,7 @@ body {
 }
 
 .controls select:hover {
-  border-color: #3f4d5a;
+  border-color: var(--border-hover);
 }
 
 /* ---------------------------------------------------------
@@ -166,10 +357,10 @@ body {
 
   overflow: hidden;
 
-  border: 1px solid #d8dee3;
+  border: 1px solid var(--border-light);
   border-radius: 10px;
 
-  background: #ffffff;
+  background: var(--surface);
 }
 
 #aircraft-image {
@@ -186,7 +377,6 @@ body {
   border-radius: 8px;
 
   user-select: none;
-
   -webkit-user-select: none;
   -webkit-user-drag: none;
 
@@ -211,21 +401,20 @@ body {
 
   transform: translate(-50%, -50%);
 
-  padding: 9px 15px;
+  display: none;
+
+  padding: 8px 14px;
 
   border: 1px solid rgba(255, 255, 255, 0.18);
-
   border-radius: 8px;
 
   background: rgba(0, 0, 0, 0.78);
-
   color: #ffffff;
 
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  line-height: 1.3;
 
   font-weight: 600;
-
-  line-height: 1.3;
 
   white-space: nowrap;
 
@@ -234,8 +423,8 @@ body {
   z-index: 2;
 }
 
-.loading-message.hidden {
-  display: none;
+.loading-message:not(.hidden) {
+  display: block;
 }
 
 /* ---------------------------------------------------------
@@ -244,14 +433,23 @@ body {
 
 .prompt {
   min-width: 0;
-  min-height: 1.5em;
+  min-height: 1.35em;
 
-  padding-inline: 4px;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 0.35rem 0.5rem;
 
   text-align: center;
 
   font-size: clamp(1.05rem, 2.2vw, 1.4rem);
-
   line-height: 1.35;
 
   font-weight: 700;
@@ -259,28 +457,30 @@ body {
   overflow-wrap: anywhere;
 }
 
+/* ---------------------------------------------------------
+   Category hint
+   --------------------------------------------------------- */
+
 .category-hint {
   display: inline-flex;
 
   align-items: center;
   justify-content: center;
 
-  margin-left: 0.5rem;
+  margin: 0;
 
-  padding: 0.15rem 0.5rem;
+  padding: 0.12rem 0.45rem;
 
   border: 1px solid #aeb7bf;
-
   border-radius: 999px;
 
-  background: #eef2f5;
-  color: #53616d;
+  background: var(--surface-muted);
+  color: var(--text-muted);
 
-  font-size: 0.65em;
+  font-size: 0.62em;
+  line-height: 1.2;
 
   font-weight: 600;
-
-  line-height: 1.2;
 
   vertical-align: middle;
 
@@ -288,39 +488,51 @@ body {
 }
 
 /* ---------------------------------------------------------
-   Answer buttons
+   Standard answer area
    --------------------------------------------------------- */
 
 .answers {
+  min-width: 0;
+
   display: grid;
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  gap: 10px;
+  gap: var(--answer-gap);
 }
 
+/* ---------------------------------------------------------
+   Standard multiple-choice buttons
+   --------------------------------------------------------- */
+
 .answers button {
+  position: relative;
+
   width: 100%;
   min-width: 0;
 
-  min-height: 52px;
+  min-height: var(--control-height);
 
-  padding: 10px 14px;
+  /*
+     Leave equal space on both sides so the answer
+     text remains visually centred even when the
+     result symbol is present.
+  */
 
-  border: 2px solid #687481;
+  padding: 10px 42px;
 
-  border-radius: 9px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
 
-  background: #ffffff;
-  color: #17202a;
+  background: var(--surface);
+  color: var(--text);
 
   font: inherit;
 
   font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.3;
 
   font-weight: 600;
-
-  line-height: 1.3;
 
   text-align: center;
 
@@ -339,25 +551,25 @@ body {
 .answers button:hover:not(:disabled) {
   background: #eef3f7;
 
-  border-color: #3f4d5a;
+  border-color: var(--border-hover);
 }
 
 .answers button:active:not(:disabled) {
   transform: translateY(1px);
 }
 
-/* ---------------------------------------------------------
-   Disabled / loading answers
-   --------------------------------------------------------- */
-
 .answers button:disabled {
   cursor: default;
 }
 
+/* ---------------------------------------------------------
+   Answer loading state
+   --------------------------------------------------------- */
+
 .answers.loading button {
   background: #e5e8eb;
 
-  color: #7c858d;
+  color: var(--text-disabled);
 
   border-color: #c4c9ce;
 
@@ -365,43 +577,373 @@ body {
 }
 
 /* ---------------------------------------------------------
-   Correct / incorrect answers
+   Correct / incorrect answer states
    --------------------------------------------------------- */
 
 .answers button.correct {
-  background: #dff3e4;
+  background: var(--correct-bg);
 
-  border-color: #26733b;
+  border-color: var(--correct-border);
 
-  color: #164d27;
+  color: var(--correct-text);
 
   font-weight: 700;
 
   box-shadow: inset 0 0 0 1px rgba(38, 115, 59, 0.15);
 }
 
-.answers button.correct::before {
-  content: '✓ ';
-
-  font-weight: 800;
-}
-
 .answers button.incorrect {
-  background: #f9dddd;
+  background: var(--incorrect-bg);
 
-  border-color: #a52a2a;
+  border-color: var(--incorrect-border);
 
-  color: #6e1b1b;
+  color: var(--incorrect-text);
 
   font-weight: 700;
 
   box-shadow: inset 0 0 0 1px rgba(165, 42, 42, 0.15);
 }
 
+/* ---------------------------------------------------------
+   Multiple-choice result symbols
+   --------------------------------------------------------- */
+
+.answers button.correct::before,
 .answers button.incorrect::before {
-  content: '✕ ';
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  font-size: 1.15rem;
+  line-height: 1;
 
   font-weight: 800;
+
+  pointer-events: none;
+}
+
+.answers button.correct::before {
+  content: '✓';
+
+  color: var(--correct-border);
+}
+
+.answers button.incorrect::before {
+  content: '✕';
+
+  color: var(--incorrect-border);
+}
+
+/* ---------------------------------------------------------
+   Reverse photo buttons
+   --------------------------------------------------------- */
+
+.answers.reverse {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin: 0;
+}
+
+.answers.reverse button {
+  min-height: 0;
+
+  height: 100%;
+
+  padding: 8px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+/*
+   Suppress the MCQ result pseudo-elements
+   because photo answers use the border/background
+   itself for feedback.
+*/
+
+.answers.reverse button::before {
+  content: none !important;
+}
+
+.answers.reverse button img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+
+  border-radius: 5px;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+.answers.reverse button.correct {
+  background: var(--correct-bg);
+}
+
+.answers.reverse button.incorrect {
+  background: var(--incorrect-bg);
+}
+
+/* ---------------------------------------------------------
+   Typed answer
+   --------------------------------------------------------- */
+
+.type-answer-container {
+  position: relative;
+
+  display: flex;
+
+  align-items: stretch;
+  justify-content: center;
+
+  gap: 10px;
+}
+
+.type-answer-input {
+  flex: 1;
+
+  min-width: 0;
+  min-height: var(--control-height);
+
+  /*
+     Extra right padding leaves room for
+     the result symbol.
+  */
+
+  padding: 10px 52px 10px 14px;
+
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+
+  background: var(--surface);
+  color: var(--text);
+
+  font: inherit;
+
+  font-size: 1.1rem;
+  font-weight: 500;
+
+  outline: none;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.type-answer-input:hover:not(:disabled) {
+  border-color: var(--border-hover);
+}
+
+.type-answer-input:focus {
+  border-color: var(--primary);
+
+  box-shadow: 0 0 0 3px rgba(224, 155, 0, 0.35);
+}
+
+.type-answer-input:disabled {
+  cursor: default;
+}
+
+/* ---------------------------------------------------------
+   Typed answer result states
+   --------------------------------------------------------- */
+
+.type-answer-input.correct {
+  background: var(--correct-bg);
+
+  border-color: var(--correct-border);
+
+  color: var(--correct-text);
+
+  box-shadow: 0 0 0 3px rgba(38, 115, 59, 0.14);
+}
+
+.type-answer-input.partial {
+  background: var(--partial-bg);
+
+  border-color: var(--partial-border);
+
+  color: var(--partial-text);
+
+  box-shadow: 0 0 0 3px rgba(194, 135, 0, 0.14);
+}
+
+.type-answer-input.incorrect {
+  background: var(--incorrect-bg);
+
+  border-color: var(--incorrect-border);
+
+  color: var(--incorrect-text);
+
+  box-shadow: 0 0 0 3px rgba(165, 42, 42, 0.14);
+}
+
+/* ---------------------------------------------------------
+   Typed answer result icon
+   --------------------------------------------------------- */
+
+.type-answer-container::after {
+  position: absolute;
+
+  right: 16px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  display: none;
+
+  font-size: 1.35rem;
+  line-height: 1;
+
+  font-weight: 800;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+.type-answer-container.correct::after {
+  content: '✓';
+
+  display: block;
+
+  color: var(--correct-border);
+}
+
+.type-answer-container.partial::after {
+  content: '◐';
+
+  display: block;
+
+  color: var(--partial-border);
+}
+
+.type-answer-container.incorrect::after {
+  content: '✕';
+
+  display: block;
+
+  color: var(--incorrect-border);
+}
+
+/* ---------------------------------------------------------
+   Submit button
+   --------------------------------------------------------- */
+
+.submit-answer {
+  min-width: 110px;
+
+  min-height: var(--control-height);
+
+  padding: 10px 18px;
+
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+
+  background: var(--primary);
+  color: #ffffff;
+
+  font: inherit;
+
+  font-size: 1.05rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    opacity 0.12s ease,
+    transform 0.08s ease;
+}
+
+.submit-answer:hover:not(:disabled) {
+  background: var(--primary-hover);
+
+  border-color: var(--primary-hover);
+}
+
+.submit-answer:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.submit-answer:disabled {
+  opacity: 0.5;
+
+  cursor: default;
+}
+
+/* ---------------------------------------------------------
+   Feedback
+   --------------------------------------------------------- */
+
+.feedback {
+  min-height: 1.35em;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: baseline;
+
+  gap: 3px 7px;
+
+  text-align: left;
+
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  line-height: 1.35;
+
+  font-weight: 600;
+
+  overflow-wrap: anywhere;
+}
+
+.feedback-result {
+  font-weight: 700;
+}
+
+.feedback-detail {
+  color: var(--text-muted);
+
+  font-weight: 500;
+}
+
+.feedback-answer {
+  color: var(--text);
+
+  font-weight: 700;
+}
+
+/* Result colours */
+
+.feedback.correct-feedback .feedback-result {
+  color: var(--correct-border);
+}
+
+.feedback.partial-feedback .feedback-result {
+  color: var(--partial-border);
+}
+
+.feedback.incorrect-feedback .feedback-result {
+  color: var(--incorrect-border);
 }
 
 /* ---------------------------------------------------------
@@ -411,35 +953,24 @@ body {
 .bottom {
   display: grid;
 
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
 
   align-items: center;
 
-  gap: 16px;
+  gap: 12px 16px;
 }
 
 .status {
   min-width: 0;
 }
 
-.feedback {
-  min-height: 1.5em;
-
-  text-align: left;
-
-  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
-
-  line-height: 1.35;
-
-  font-weight: 600;
-
-  overflow-wrap: anywhere;
-}
-
 .streak {
-  min-height: 1.4em;
+  min-height: 1.35em;
 
   font-size: 0.9rem;
+  line-height: 1.3;
 
   font-weight: 600;
 }
@@ -453,20 +984,18 @@ body {
 
   padding: 10px 20px;
 
-  border: 2px solid #263746;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
 
-  border-radius: 9px;
-
-  background: #263746;
+  background: var(--primary);
   color: #ffffff;
 
   font: inherit;
 
   font-size: clamp(1rem, 1.8vw, 1.1rem);
+  line-height: 1.3;
 
   font-weight: 700;
-
-  line-height: 1.3;
 
   cursor: pointer;
 
@@ -479,9 +1008,9 @@ body {
 }
 
 .next-button:hover:not(:disabled) {
-  background: #172630;
+  background: var(--primary-hover);
 
-  border-color: #172630;
+  border-color: var(--primary-hover);
 }
 
 .next-button:active:not(:disabled) {
@@ -499,17 +1028,11 @@ body {
    --------------------------------------------------------- */
 
 button:focus-visible,
-select:focus-visible {
-  outline: 4px solid #e09b00;
+select:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--focus);
 
   outline-offset: 3px;
-}
-
-.answers button:focus-visible,
-.next-button:focus-visible {
-  box-shadow:
-    0 0 0 2px #ffffff,
-    0 0 0 5px #e09b00;
 }
 
 /* ---------------------------------------------------------
@@ -517,20 +1040,18 @@ select:focus-visible {
    --------------------------------------------------------- */
 
 @media (max-width: 700px) {
-  .app {
-    gap: 12px;
+  :root {
+    --page-gap: 9px;
+    --answer-gap: 9px;
   }
 
   .controls {
-    gap: 10px 16px;
+    gap: 8px 16px;
   }
 
-  .answers {
-    gap: 9px;
-  }
-
-  .answers button {
-    min-height: 50px;
+  .answers.reverse,
+  .app.reverse-mode .answers.reverse {
+    gap: 10px;
   }
 }
 
@@ -539,45 +1060,101 @@ select:focus-visible {
    --------------------------------------------------------- */
 
 @media (max-width: 550px) {
-  .app {
-    padding: max(12px, env(safe-area-inset-top))
-      max(12px, env(safe-area-inset-right))
-      max(12px, env(safe-area-inset-bottom))
-      max(12px, env(safe-area-inset-left));
-
-    gap: 10px;
+  :root {
+    --page-gap: 8px;
+    --answer-gap: 8px;
   }
 
-  /* Header */
+  .app {
+    padding: max(10px, env(safe-area-inset-top))
+      max(12px, env(safe-area-inset-right))
+      max(10px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
+  }
+
+  /* -------------------------------------------------------
+     Mobile header
+     ------------------------------------------------------- */
 
   .header {
-    align-items: flex-start;
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr);
+
+    grid-template-rows:
+      auto
+      auto;
+
+    align-items: center;
+
+    gap: 2px;
   }
 
   .header h1 {
-    font-size: 1.45rem;
+    min-width: 0;
+
+    font-size: 1.3rem;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.025em;
+
+    /*
+       Keep the title on one line.
+       Truncate rather than wrap.
+    */
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
   }
 
   .score {
-    font-size: 1rem;
+    justify-self: end;
+
+    font-size: 0.9rem;
+
+    line-height: 1.25;
   }
 
-  /* Controls */
+  /* -------------------------------------------------------
+     Standard mode image
+     ------------------------------------------------------- */
+
+  .app:not(.reverse-mode) {
+    grid-template-rows:
+      auto
+      auto
+      minmax(180px, 1fr)
+      auto
+      auto
+      auto;
+  }
+
+  /* -------------------------------------------------------
+     Controls
+     ------------------------------------------------------- */
 
   .controls {
     display: grid;
 
     grid-template-columns: 1fr;
 
-    gap: 8px;
+    gap: 7px;
   }
 
   .controls label {
     display: grid;
 
-    grid-template-columns: 90px minmax(0, 1fr);
+    grid-template-columns:
+      90px
+      minmax(0, 1fr);
 
     align-items: center;
+
+    gap: 10px;
 
     font-size: 1rem;
   }
@@ -590,7 +1167,9 @@ select:focus-visible {
     font-size: 1rem;
   }
 
-  /* Prompt */
+  /* -------------------------------------------------------
+     Question
+     ------------------------------------------------------- */
 
   .prompt {
     font-size: 1.15rem;
@@ -599,12 +1178,14 @@ select:focus-visible {
   }
 
   .category-hint {
-    margin-left: 0.35rem;
+    padding-inline: 0.4rem;
 
-    font-size: 0.7em;
+    font-size: 0.68em;
   }
 
-  /* Answers */
+  /* -------------------------------------------------------
+     Standard answers
+     ------------------------------------------------------- */
 
   .answers {
     grid-template-columns: 1fr;
@@ -615,23 +1196,118 @@ select:focus-visible {
   .answers button {
     min-height: 52px;
 
-    padding: 10px 14px;
+    padding: 10px 42px;
 
     font-size: 1.05rem;
   }
 
-  /* Bottom */
+  .answers button.correct::before,
+  .answers button.incorrect::before {
+    left: 14px;
+  }
 
-  .bottom {
-    grid-template-columns: 1fr;
+  /* -------------------------------------------------------
+     Reverse mode — photo grid
+     ------------------------------------------------------- */
+
+  .app.reverse-mode {
+    grid-template-rows:
+      auto
+      auto
+      auto
+      minmax(260px, 1fr)
+      auto;
+  }
+
+  .app.reverse-mode .answers.reverse {
+    width: 100%;
+    height: 100%;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .app.reverse-mode .answers.reverse button {
+    aspect-ratio: auto;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 0;
+
+    padding: 6px;
+  }
+
+  .app.reverse-mode .answers.reverse button img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    border-radius: 4px;
+  }
+
+  /* -------------------------------------------------------
+     Typed answer
+     ------------------------------------------------------- */
+
+  .type-answer-container {
+    flex-direction: column;
 
     gap: 8px;
   }
 
+  .type-answer-input {
+    width: 100%;
+
+    min-height: 52px;
+
+    padding-right: 52px;
+  }
+
+  /*
+     Keep result icon inside the input row
+     when the layout becomes vertical.
+  */
+
+  .type-answer-container::after {
+    right: 16px;
+
+    top: 26px;
+  }
+
+  .submit-answer {
+    width: 100%;
+  }
+
+  /* -------------------------------------------------------
+     Feedback
+     ------------------------------------------------------- */
+
   .feedback {
+    justify-content: center;
+
     text-align: center;
 
-    font-size: 1rem;
+    gap: 2px 6px;
+  }
+
+  .feedback-detail,
+  .feedback-answer {
+    width: 100%;
+  }
+
+  /* -------------------------------------------------------
+     Bottom
+     ------------------------------------------------------- */
+
+  .bottom {
+    grid-template-columns: 1fr;
+
+    gap: 6px;
   }
 
   .streak {
@@ -652,16 +1328,42 @@ select:focus-visible {
    --------------------------------------------------------- */
 
 @media (max-width: 550px) and (max-height: 700px) {
-  .app {
-    gap: 6px;
+  :root {
+    --page-gap: 6px;
+    --answer-gap: 7px;
+  }
 
+  .app {
     padding: max(8px, env(safe-area-inset-top))
-      max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
-      max(8px, env(safe-area-inset-left));
+      max(10px, env(safe-area-inset-right))
+      max(8px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  }
+
+  .app:not(.reverse-mode) {
+    grid-template-rows:
+      auto
+      auto
+      minmax(140px, 1fr)
+      auto
+      auto
+      auto;
+  }
+
+  .app.reverse-mode {
+    grid-template-rows:
+      auto
+      auto
+      auto
+      minmax(190px, 1fr)
+      auto;
   }
 
   .header h1 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+  }
+
+  .score {
+    font-size: 0.85rem;
   }
 
   .controls {
@@ -680,17 +1382,34 @@ select:focus-visible {
   }
 
   .answers {
-    gap: 5px;
+    gap: 7px;
   }
 
   .answers button {
     min-height: 44px;
 
-    padding: 6px 10px;
+    padding: 6px 38px;
   }
 
+  .answers.reverse,
+  .app.reverse-mode .answers.reverse {
+    gap: 7px;
+  }
+
+  .app.reverse-mode .answers.reverse button {
+    padding: 5px;
+  }
+
+  .type-answer-input,
+  .submit-answer,
   .next-button {
     min-height: 44px;
+  }
+
+  .type-answer-container::after {
+    top: 22px;
+
+    right: 14px;
   }
 }
 
@@ -706,15 +1425,17 @@ select:focus-visible {
   }
 
   .header h1 {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
 
   .score {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
   }
 
   .controls label {
-    grid-template-columns: 78px minmax(0, 1fr);
+    grid-template-columns:
+      78px
+      minmax(0, 1fr);
 
     font-size: 0.95rem;
   }
@@ -725,14 +1446,29 @@ select:focus-visible {
 
   .answers button {
     font-size: 1rem;
+
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  .answers button.correct::before,
+  .answers button.incorrect::before {
+    left: 11px;
+  }
+
+  .answers.reverse,
+  .app.reverse-mode .answers.reverse {
+    gap: 6px;
+  }
+
+  .app.reverse-mode .answers.reverse button {
+    padding: 4px;
   }
 
   .category-hint {
-    margin-left: 0.25rem;
+    padding-inline: 0.35rem;
 
-    padding-inline: 0.4rem;
-
-    font-size: 0.65em;
+    font-size: 0.64em;
   }
 }
 
@@ -741,20 +1477,66 @@ select:focus-visible {
    --------------------------------------------------------- */
 
 @media (max-width: 800px) and (orientation: landscape) {
-  .app {
-    gap: 6px;
+  :root {
+    --page-gap: 6px;
+    --answer-gap: 6px;
+  }
 
+  .app {
     padding: max(8px, env(safe-area-inset-top))
       max(14px, env(safe-area-inset-right))
       max(8px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   }
 
+  .app:not(.reverse-mode) {
+    grid-template-rows:
+      auto
+      auto
+      minmax(130px, 1fr)
+      auto
+      auto
+      auto;
+  }
+
+  .app.reverse-mode {
+    grid-template-rows:
+      auto
+      auto
+      auto
+      minmax(160px, 1fr)
+      auto;
+  }
+
+  .header {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+
+    grid-template-rows: auto;
+
+    gap: 12px;
+  }
+
   .header h1 {
     font-size: 1.3rem;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+  }
+
+  .score {
+    justify-self: end;
+
+    font-size: 0.9rem;
   }
 
   .controls {
-    gap: 6px 16px;
+    gap: 5px 16px;
   }
 
   .controls select {
@@ -766,11 +1548,9 @@ select:focus-visible {
   }
 
   .category-hint {
-    margin-left: 0.35rem;
-
     padding: 0.1rem 0.4rem;
 
-    font-size: 0.65em;
+    font-size: 0.64em;
   }
 
   .answers {
@@ -782,10 +1562,60 @@ select:focus-visible {
   .answers button {
     min-height: 42px;
 
-    padding: 6px 10px;
+    padding: 6px 38px;
+  }
+
+  .answers button.correct::before,
+  .answers button.incorrect::before {
+    left: 10px;
+  }
+
+  .answers.reverse,
+  .app.reverse-mode .answers.reverse {
+    gap: 6px;
+  }
+
+  .app.reverse-mode .answers.reverse {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+
+    height: 100%;
+  }
+
+  .app.reverse-mode .answers.reverse button {
+    aspect-ratio: auto;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 0;
+
+    padding: 4px;
   }
 
   .next-button {
+    min-height: 42px;
+  }
+
+  /* Typed answer */
+
+  .type-answer-container {
+    gap: 8px;
+  }
+
+  .type-answer-input {
+    min-height: 42px;
+
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  .type-answer-container::after {
+    top: 21px;
+  }
+
+  .submit-answer {
     min-height: 42px;
   }
 }
@@ -796,19 +1626,26 @@ select:focus-visible {
 
 @media (hover: none) and (pointer: coarse) {
   .answers button:hover:not(:disabled) {
-    background: #ffffff;
+    background: var(--surface);
 
-    border-color: #687481;
+    border-color: var(--border);
   }
 
   .next-button:hover:not(:disabled) {
-    background: #263746;
+    background: var(--primary);
 
-    border-color: #263746;
+    border-color: var(--primary);
+  }
+
+  .submit-answer:hover:not(:disabled) {
+    background: var(--primary);
+
+    border-color: var(--primary);
   }
 
   .answers button:active:not(:disabled),
-  .next-button:active:not(:disabled) {
+  .next-button:active:not(:disabled),
+  .submit-answer:active:not(:disabled) {
     transform: scale(0.98);
   }
 }
@@ -818,66 +1655,77 @@ select:focus-visible {
    --------------------------------------------------------- */
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #12161a;
+    --surface: #20262b;
+    --surface-muted: #252c31;
+
+    --text: #f1f3f5;
+    --text-muted: #c4cdd3;
+    --text-disabled: #777f86;
+
+    --border: #7d8790;
+    --border-light: #30383f;
+    --border-hover: #aab4bd;
+
+    --primary: #d9e2e8;
+    --primary-hover: #ffffff;
+  }
+
   html {
     color-scheme: dark;
   }
 
-  body {
-    background: #12161a;
-
-    color: #f1f3f5;
-  }
-
   .controls select {
-    background: #20262b;
+    background: var(--surface);
 
-    color: #f1f3f5;
+    color: var(--text);
 
-    border-color: #7d8790;
+    border-color: var(--border);
   }
 
   .controls select:hover {
-    border-color: #aab4bd;
+    border-color: var(--border-hover);
   }
 
   .category-hint {
     border-color: #58636c;
 
-    background: #252c31;
+    background: var(--surface-muted);
 
-    color: #c4cdd3;
+    color: var(--text-muted);
   }
 
   .image-container {
-    border-color: #30383f;
+    border-color: var(--border-light);
 
     background: #181d21;
   }
 
   .answers button {
-    background: #20262b;
+    background: var(--surface);
 
-    color: #f1f3f5;
+    color: var(--text);
 
-    border-color: #7d8790;
+    border-color: var(--border);
   }
 
   .answers button:hover:not(:disabled) {
     background: #2b3339;
 
-    border-color: #aab4bd;
+    border-color: var(--border-hover);
+  }
+
+  .answers.reverse button {
+    background: var(--surface);
   }
 
   .answers.loading button {
     background: #24292e;
 
-    color: #777f86;
+    color: var(--text-disabled);
 
     border-color: #3d444a;
-  }
-
-  .answers button:disabled {
-    color: #777f86;
   }
 
   .answers button.correct {
@@ -900,18 +1748,98 @@ select:focus-visible {
     box-shadow: inset 0 0 0 1px rgba(185, 91, 91, 0.2);
   }
 
+  .answers button.correct::before {
+    color: #7fd394;
+  }
+
+  .answers button.incorrect::before {
+    color: #e98b8b;
+  }
+
+  .type-answer-input {
+    background: var(--surface);
+
+    color: var(--text);
+
+    border-color: var(--border);
+  }
+
+  .type-answer-input.correct {
+    background: #193d26;
+
+    border-color: #4c9b61;
+
+    color: #a9e6b8;
+
+    box-shadow: 0 0 0 3px rgba(76, 155, 97, 0.18);
+  }
+
+  .type-answer-input.partial {
+    background: #403617;
+
+    border-color: #c7a33a;
+
+    color: #f1d98a;
+
+    box-shadow: 0 0 0 3px rgba(199, 163, 58, 0.18);
+  }
+
+  .type-answer-input.incorrect {
+    background: #451f1f;
+
+    border-color: #b95b5b;
+
+    color: #f1aaaa;
+
+    box-shadow: 0 0 0 3px rgba(185, 91, 91, 0.18);
+  }
+
+  .type-answer-container.correct::after {
+    color: #7fd394;
+  }
+
+  .type-answer-container.partial::after {
+    color: #e2c568;
+  }
+
+  .type-answer-container.incorrect::after {
+    color: #e98b8b;
+  }
+
+  .feedback-detail {
+    color: var(--text-muted);
+  }
+
+  .feedback-answer {
+    color: var(--text);
+  }
+
+  .feedback.correct-feedback .feedback-result {
+    color: #7fd394;
+  }
+
+  .feedback.partial-feedback .feedback-result {
+    color: #e2c568;
+  }
+
+  .feedback.incorrect-feedback .feedback-result {
+    color: #e98b8b;
+  }
+
+  .submit-answer,
   .next-button {
-    background: #d9e2e8;
+    background: var(--primary);
 
     color: #17202a;
 
-    border-color: #d9e2e8;
+    border-color: var(--primary);
   }
 
+  .submit-answer:hover:not(:disabled),
   .next-button:hover:not(:disabled) {
-    background: #ffffff;
+    background: var(--primary-hover);
 
-    border-color: #ffffff;
+    border-color: var(--primary-hover);
   }
 
   .loading-message {
@@ -934,7 +1862,9 @@ select:focus-visible {
 
   .controls select,
   .answers button,
-  .next-button {
+  .next-button,
+  .submit-answer,
+  .type-answer-input {
     background: ButtonFace;
 
     color: ButtonText;
@@ -943,7 +1873,10 @@ select:focus-visible {
   }
 
   .answers button.correct,
-  .answers button.incorrect {
+  .answers button.incorrect,
+  .type-answer-input.correct,
+  .type-answer-input.partial,
+  .type-answer-input.incorrect {
     background: ButtonFace;
 
     color: ButtonText;
@@ -959,8 +1892,19 @@ select:focus-visible {
     border-color: CanvasText;
   }
 
+  .type-answer-container::after {
+    color: Highlight;
+  }
+
+  .feedback-result,
+  .feedback-detail,
+  .feedback-answer {
+    color: CanvasText;
+  }
+
   button:focus-visible,
-  select:focus-visible {
+  select:focus-visible,
+  input:focus-visible {
     outline: 3px solid Highlight;
   }
 }
