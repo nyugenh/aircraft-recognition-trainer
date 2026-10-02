@@ -1,214 +1,80 @@
 'use strict';
 
-const APP_TITLE = 'Aircraft Recognition Trainer';
+/* =========================================================
+   Configuration
+   ========================================================= */
 
 const MANIFEST_PATH = 'aircraft_quiz_assets/manifest.json';
 
-// =============================================================
-// State
-// =============================================================
+const ASSET_FOLDER = 'aircraft_quiz_assets';
 
-let aircraft = [];
+/* =========================================================
+   DOM elements
+   ========================================================= */
 
-let current = null;
-
-let previousAircraft = null;
-
-let options = [];
-
-let total = 0;
-
-let correct = 0;
-
-let answered = false;
-
-let activeMode = 'Aircraft name';
-
-// =============================================================
-// DOM elements
-// =============================================================
+const scoreElement = document.getElementById('score');
 
 const categorySelect = document.getElementById('category');
 
 const modeSelect = document.getElementById('mode');
 
-const image = document.getElementById('aircraft-image');
+const imageContainer = document.getElementById('image-container');
 
-const prompt = document.getElementById('prompt');
+const loadingMessage = document.getElementById('loading-message');
 
-const score = document.getElementById('score');
+const aircraftImage = document.getElementById('aircraft-image');
 
-const feedback = document.getElementById('feedback');
+const promptElement = document.getElementById('prompt');
 
-const nextButton = document.getElementById('next');
+const answersContainer = document.getElementById('answers');
 
 const answerButtons = Array.from(document.querySelectorAll('#answers button'));
 
-// =============================================================
-// Load manifest
-// =============================================================
+const feedbackElement = document.getElementById('feedback');
 
-async function loadAircraft() {
-  let response;
+const streakElement = document.getElementById('streak');
 
-  try {
-    response = await fetch(MANIFEST_PATH);
-  } catch (error) {
-    throw new Error('Could not load aircraft manifest.\n\n' + error.message);
-  }
+const nextButton = document.getElementById('next');
 
-  if (!response.ok) {
-    throw new Error(
-      `Could not load manifest.json.\n\n` + `HTTP ${response.status}`,
-    );
-  }
+/* =========================================================
+   Quiz state
+   ========================================================= */
 
-  let data;
+let aircraft = [];
 
-  try {
-    data = await response.json();
-  } catch (error) {
-    throw new Error('manifest.json is not valid JSON.');
-  }
+let currentAircraft = null;
 
-  if (!Array.isArray(data.aircraft)) {
-    throw new Error('manifest.json does not contain ' + 'an aircraft array.');
-  }
+let currentCorrectAnswer = '';
 
-  aircraft = data.aircraft.map((item) => {
-    return {
-      ...item,
+let currentQuestionType = '';
 
-      image_path: resolveImagePath(item.image_path),
-    };
-  });
+let previousAircraft = null;
 
-  if (aircraft.length < 4) {
-    throw new Error(
-      `Only ${aircraft.length} aircraft ` +
-        `were found.\n\n` +
-        `At least 4 aircraft are required.`,
-    );
-  }
-}
+let score = 0;
 
-// =============================================================
-// Resolve image path
-// =============================================================
+let totalQuestions = 0;
 
-function resolveImagePath(imagePath) {
-  /*
-   * Relative paths in manifest.json are relative
-   * to aircraft_quiz_assets.
-   *
-   * Example:
-   *
-   * p02_01_cessna_172.png
-   *
-   * becomes:
-   *
-   * aircraft_quiz_assets/p02_01_cessna_172.png
-   */
+let currentStreak = 0;
 
-  if (
-    imagePath.startsWith('http://') ||
-    imagePath.startsWith('https://') ||
-    imagePath.startsWith('/')
-  ) {
-    return imagePath;
-  }
+let answered = false;
 
-  return 'aircraft_quiz_assets/' + imagePath;
-}
+let imageLoading = false;
 
-// =============================================================
-// Populate category selector
-// =============================================================
-
-function populateCategories() {
-  const categories = [
-    ...new Set(aircraft.map((item) => item.category).filter(Boolean)),
-  ].sort();
-
-  categorySelect.innerHTML = '';
-
-  addOption(categorySelect, 'All', 'All');
-
-  for (const category of categories) {
-    addOption(categorySelect, category, category);
-  }
-}
-
-// =============================================================
-// Add select option
-// =============================================================
-
-function addOption(select, value, text) {
-  const option = document.createElement('option');
-
-  option.value = value;
-
-  option.textContent = text;
-
-  select.appendChild(option);
-}
-
-// =============================================================
-// Get aircraft pool
-// =============================================================
-
-function getPool() {
-  const category = categorySelect.value;
-
-  if (category === 'All') {
-    return aircraft;
-  }
-
-  const result = aircraft.filter((item) => item.category === category);
-
-  /*
-   * If the category has fewer than
-   * four aircraft, fall back to all
-   * aircraft so we can still provide
-   * four answer choices.
-   */
-
-  if (result.length >= 4) {
-    return result;
-  }
-
-  return aircraft;
-}
-
-// =============================================================
-// Random choice
-// =============================================================
+/* =========================================================
+   Utility functions
+   ========================================================= */
 
 function randomChoice(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-// =============================================================
-// Random sample
-// =============================================================
-
 function randomSample(array, count) {
   const copy = [...array];
 
-  const result = [];
+  shuffle(copy);
 
-  while (result.length < count && copy.length > 0) {
-    const index = Math.floor(Math.random() * copy.length);
-
-    result.push(copy.splice(index, 1)[0]);
-  }
-
-  return result;
+  return copy.slice(0, count);
 }
-
-// =============================================================
-// Shuffle
-// =============================================================
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -220,259 +86,561 @@ function shuffle(array) {
   return array;
 }
 
-// =============================================================
-// Get display text
-// =============================================================
-
-function displayText(item, mode) {
-  if (mode === 'ICAO code') {
-    return item.code || item.name;
+function displayText(value) {
+  if (value === undefined || value === null) {
+    return '';
   }
 
-  return item.name;
+  return String(value);
 }
 
-// =============================================================
-// Next question
-// =============================================================
+/* =========================================================
+   Image path handling
+   ========================================================= */
 
-function nextQuestion() {
-  const pool = getPool();
+function resolveImagePath(imagePath) {
+  if (!imagePath) {
+    return '';
+  }
+
+  /*
+   * If the manifest already contains a full URL,
+   * leave it alone.
+   */
+
+  if (
+    imagePath.startsWith('http://') ||
+    imagePath.startsWith('https://') ||
+    imagePath.startsWith('/')
+  ) {
+    return imagePath;
+  }
+
+  /*
+   * Manifest paths are relative to the aircraft
+   * asset folder.
+   */
+
+  return `${ASSET_FOLDER}/${imagePath}`;
+}
+
+/* =========================================================
+   Score display
+   ========================================================= */
+
+function updateScore() {
+  const percentage =
+    totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+
+  if (totalQuestions === 0) {
+    scoreElement.textContent = 'Score: 0/0';
+  } else {
+    scoreElement.textContent = `Score: ${score}/${totalQuestions} · ${percentage}%`;
+  }
+
+  streakElement.textContent = `Streak: ${currentStreak}`;
+}
+
+/* =========================================================
+   Loading state
+   ========================================================= */
+
+function setLoadingState(loading) {
+  imageLoading = loading;
+
+  answersContainer.classList.toggle('loading', loading);
+
+  imageContainer.classList.toggle('loading', loading);
+
+  aircraftImage.classList.toggle('loading', loading);
+
+  loadingMessage.classList.toggle('hidden', !loading);
+
+  /*
+   * Prevent answering before the aircraft image
+   * has actually loaded.
+   */
+
+  answerButtons.forEach((button) => {
+    button.disabled = loading || answered;
+  });
+
+  /*
+   * Prevent advancing while the new aircraft
+   * is still loading.
+   */
+
+  nextButton.disabled = loading || !answered;
+}
+
+/* =========================================================
+   Reset answer button states
+   ========================================================= */
+
+function resetAnswerButtons() {
+  answerButtons.forEach((button) => {
+    button.classList.remove('correct', 'incorrect');
+
+    button.disabled = true;
+
+    button.textContent = '';
+  });
+}
+
+/* =========================================================
+   Populate categories
+   ========================================================= */
+
+function populateCategories() {
+  const categories = [
+    ...new Set(aircraft.map((item) => item.category).filter(Boolean)),
+  ];
+
+  categories.sort((a, b) => String(a).localeCompare(String(b)));
+
+  categorySelect.innerHTML = '';
+
+  const allOption = document.createElement('option');
+
+  allOption.value = 'All';
+
+  allOption.textContent = 'All';
+
+  categorySelect.appendChild(allOption);
+
+  categories.forEach((category) => {
+    const option = document.createElement('option');
+
+    option.value = category;
+
+    option.textContent = category;
+
+    categorySelect.appendChild(option);
+  });
+}
+
+/* =========================================================
+   Get aircraft pool
+   ========================================================= */
+
+function getAircraftPool() {
+  const selectedCategory = categorySelect.value;
+
+  if (selectedCategory === 'All') {
+    return [...aircraft];
+  }
+
+  return aircraft.filter((item) => item.category === selectedCategory);
+}
+
+/* =========================================================
+   Choose aircraft
+   ========================================================= */
+
+function chooseAircraft() {
+  let pool = getAircraftPool();
+
+  /*
+   * If the selected category has fewer than four
+   * aircraft, use the full collection so that
+   * four answer choices can still be provided.
+   */
 
   if (pool.length < 4) {
-    feedback.textContent = 'Not enough aircraft available.';
+    pool = [...aircraft];
+  }
+
+  if (pool.length === 0) {
+    return null;
+  }
+
+  /*
+   * Avoid showing the same aircraft twice in a row.
+   */
+
+  let choices = pool.filter((item) => item !== previousAircraft);
+
+  /*
+   * If filtering removed everything, fall back
+   * to the full pool.
+   */
+
+  if (choices.length === 0) {
+    choices = pool;
+  }
+
+  return randomChoice(choices);
+}
+
+/* =========================================================
+   Get answer value
+   ========================================================= */
+
+function getAnswerValue(item, questionType) {
+  if (questionType === 'Aircraft name') {
+    return displayText(item.name);
+  }
+
+  return displayText(item.icao);
+}
+
+/* =========================================================
+   Build answer choices
+   ========================================================= */
+
+function buildAnswerChoices(correctAircraft, questionType) {
+  let pool = getAircraftPool();
+
+  /*
+   * If the selected category doesn't contain
+   * enough aircraft for four choices, use all aircraft.
+   */
+
+  if (pool.length < 4) {
+    pool = [...aircraft];
+  }
+
+  /*
+   * Remove the correct aircraft.
+   */
+
+  const distractorPool = pool.filter((item) => item !== correctAircraft);
+
+  /*
+   * Prefer distractors from the same category.
+   */
+
+  const sameCategory = distractorPool.filter(
+    (item) =>
+      item.category &&
+      correctAircraft.category &&
+      item.category === correctAircraft.category,
+  );
+
+  let distractors = [];
+
+  if (sameCategory.length >= 3) {
+    distractors = randomSample(sameCategory, 3);
+  } else {
+    distractors = randomSample(distractorPool, 3);
+  }
+
+  const choices = [correctAircraft, ...distractors];
+
+  shuffle(choices);
+
+  return choices.map((item) => ({
+    aircraft: item,
+
+    text: getAnswerValue(item, questionType),
+  }));
+}
+
+/* =========================================================
+   Determine question type
+   ========================================================= */
+
+function chooseQuestionType() {
+  const mode = modeSelect.value;
+
+  if (mode === 'Mixed') {
+    return Math.random() < 0.5 ? 'Aircraft name' : 'ICAO code';
+  }
+
+  return mode;
+}
+
+/* =========================================================
+   Load next question
+   ========================================================= */
+
+function nextQuestion() {
+  if (imageLoading) {
+    return;
+  }
+
+  answered = false;
+
+  feedbackElement.textContent = '';
+
+  resetAnswerButtons();
+
+  const selectedAircraft = chooseAircraft();
+
+  if (!selectedAircraft) {
+    promptElement.textContent = 'No aircraft available.';
 
     return;
   }
 
-  // ---------------------------------------------------------
-  // Select aircraft
-  //
-  // Completely random except the previous aircraft cannot
-  // immediately repeat.
-  // ---------------------------------------------------------
+  currentAircraft = selectedAircraft;
 
-  let available = pool;
+  previousAircraft = selectedAircraft;
 
-  if (previousAircraft !== null && pool.length > 1) {
-    available = pool.filter((item) => item.key !== previousAircraft.key);
-  }
+  currentQuestionType = chooseQuestionType();
 
-  current = randomChoice(available);
+  currentCorrectAnswer = getAnswerValue(currentAircraft, currentQuestionType);
 
-  previousAircraft = current;
+  /*
+   * Build answer choices.
+   */
 
-  // ---------------------------------------------------------
-  // Select question mode
-  // ---------------------------------------------------------
+  const choices = buildAnswerChoices(currentAircraft, currentQuestionType);
 
-  let mode = modeSelect.value;
+  /*
+   * Update prompt.
+   */
 
-  if (mode === 'Mixed') {
-    mode = randomChoice(['Aircraft name', 'ICAO code']);
-  }
-
-  if (mode === 'ICAO code' && !current.code) {
-    mode = 'Aircraft name';
-  }
-
-  activeMode = mode;
-
-  // ---------------------------------------------------------
-  // Select distractors
-  // ---------------------------------------------------------
-
-  const distractorPool = pool.filter((item) => item.key !== current.key);
-
-  const sameCategory = distractorPool.filter(
-    (item) => item.category === current.category,
-  );
-
-  let source;
-
-  if (sameCategory.length >= 3) {
-    source = sameCategory;
+  if (currentQuestionType === 'Aircraft name') {
+    promptElement.textContent = 'Which aircraft is this?';
   } else {
-    source = distractorPool;
+    promptElement.textContent = 'What is the ICAO code?';
   }
 
-  const distractors = randomSample(source, 3);
+  /*
+   * Populate answer buttons.
+   */
 
-  // ---------------------------------------------------------
-  // Randomise answer positions
-  // ---------------------------------------------------------
+  choices.forEach((choice, index) => {
+    const button = answerButtons[index];
 
-  options = shuffle([...distractors, current]);
+    button.textContent = choice.text;
 
-  // ---------------------------------------------------------
-  // Display image
-  // ---------------------------------------------------------
+    button.dataset.answer = choice.text;
 
-  image.src = current.image_path;
+    button.dataset.correct = String(choice.aircraft === currentAircraft);
 
-  image.alt = current.name;
-
-  // ---------------------------------------------------------
-  // Prompt
-  // ---------------------------------------------------------
-
-  prompt.textContent =
-    `Identify the ${activeMode.toLowerCase()}` + `  |  ` + current.category;
-
-  // ---------------------------------------------------------
-  // Answer buttons
-  // ---------------------------------------------------------
-
-  answerButtons.forEach((button, index) => {
-    const option = options[index];
-
-    button.textContent = displayText(option, activeMode);
-
-    button.disabled = false;
+    button.dataset.index = String(index);
   });
 
-  // ---------------------------------------------------------
-  // Reset
-  // ---------------------------------------------------------
+  /*
+   * Clear previous image immediately.
+   *
+   * This prevents the previous aircraft from
+   * briefly appearing while the new one loads.
+   */
 
-  feedback.textContent = '';
+  aircraftImage.removeAttribute('src');
 
-  feedback.style.color = '';
+  aircraftImage.alt = 'Aircraft image';
 
-  answered = false;
+  /*
+   * Disable interaction until the image loads.
+   */
+
+  setLoadingState(true);
+
+  /*
+   * Load the new aircraft image.
+   */
+
+  const imagePath = resolveImagePath(currentAircraft.image_path);
+
+  aircraftImage.onload = () => {
+    setLoadingState(false);
+  };
+
+  aircraftImage.onerror = () => {
+    setLoadingState(false);
+
+    answerButtons.forEach((button) => {
+      button.disabled = true;
+    });
+
+    nextButton.disabled = true;
+
+    feedbackElement.textContent = 'Unable to load this aircraft image.';
+  };
+
+  aircraftImage.src = imagePath;
 }
 
-// =============================================================
-// Answer
-// =============================================================
+/* =========================================================
+   Answer question
+   ========================================================= */
 
-function answer(index) {
-  if (answered || current === null) {
+function answer(button) {
+  /*
+   * Ignore clicks while loading or after answering.
+   */
+
+  if (imageLoading || answered || !currentAircraft) {
     return;
   }
 
   answered = true;
 
-  const chosen = options[index];
+  const isCorrect = button.dataset.correct === 'true';
 
-  const isCorrect = chosen.key === current.key;
-
-  total++;
+  totalQuestions++;
 
   if (isCorrect) {
-    correct++;
-  }
+    score++;
 
-  // ---------------------------------------------------------
-  // Answer text
-  // ---------------------------------------------------------
+    currentStreak++;
 
-  let answerText = current.name;
-
-  if (current.code) {
-    answerText += ` (${current.code})`;
-  }
-
-  if (isCorrect) {
-    feedback.textContent = `Correct: ${answerText}`;
-
-    feedback.style.color = '#147a3d';
+    feedbackElement.textContent = 'Correct!';
   } else {
-    feedback.textContent = `Not quite. Answer: ${answerText}`;
+    currentStreak = 0;
 
-    feedback.style.color = '#b42318';
+    feedbackElement.textContent = `Incorrect. Correct answer: ${currentCorrectAnswer}`;
   }
 
-  // ---------------------------------------------------------
-  // Score
-  // ---------------------------------------------------------
+  /*
+   * Disable every answer.
+   */
 
-  score.textContent = `Score: ${correct}/${total}`;
+  answerButtons.forEach((answerButton) => {
+    answerButton.disabled = true;
 
-  // ---------------------------------------------------------
-  // Disable answers
-  // ---------------------------------------------------------
+    answerButton.classList.remove('correct', 'incorrect');
 
-  answerButtons.forEach((button) => {
-    button.disabled = true;
+    /*
+     * Always show the correct answer.
+     */
+
+    if (answerButton.dataset.correct === 'true') {
+      answerButton.classList.add('correct');
+    }
   });
+
+  /*
+   * Highlight the user's incorrect choice.
+   */
+
+  if (!isCorrect) {
+    button.classList.add('incorrect');
+  }
+
+  updateScore();
+
+  /*
+   * Allow the user to move to the next aircraft.
+   */
+
+  nextButton.disabled = false;
 }
 
-// =============================================================
-// Event handlers
-// =============================================================
+/* =========================================================
+   Load manifest
+   ========================================================= */
 
-answerButtons.forEach((button, index) => {
-  button.addEventListener('click', () => answer(index));
-});
-
-nextButton.addEventListener('click', nextQuestion);
-
-categorySelect.addEventListener('change', nextQuestion);
-
-modeSelect.addEventListener('change', nextQuestion);
-
-// =============================================================
-// Keyboard shortcuts
-// =============================================================
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === ' ' || event.key === 'Enter') {
-    if (answered) {
-      event.preventDefault();
-
-      nextQuestion();
-    }
-  }
-});
-
-// =============================================================
-// Initialisation
-// =============================================================
-
-async function init() {
+async function loadAircraft() {
   try {
-    await loadAircraft();
+    const response = await fetch(MANIFEST_PATH);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const manifest = await response.json();
+
+    /*
+     * Support either:
+     *
+     * { "aircraft": [...] }
+     *
+     * or simply:
+     *
+     * [...]
+     */
+
+    if (Array.isArray(manifest)) {
+      aircraft = manifest;
+    } else if (Array.isArray(manifest.aircraft)) {
+      aircraft = manifest.aircraft;
+    } else {
+      throw new Error('Manifest does not contain an aircraft array.');
+    }
+
+    if (aircraft.length < 4) {
+      throw new Error('At least four aircraft are required.');
+    }
 
     populateCategories();
+
+    updateScore();
 
     nextQuestion();
   } catch (error) {
     console.error(error);
 
-    document.body.innerHTML = `
-            <div style="
-                padding: 30px;
-                font-family: Segoe UI, Arial, sans-serif;
-            ">
-                <h2>
-                    ${APP_TITLE}
-                </h2>
+    promptElement.textContent = 'Unable to load aircraft data.';
 
-                <p>
-                    Could not load aircraft assets.
-                </p>
+    feedbackElement.textContent =
+      'Check that manifest.json and the aircraft images are available.';
 
-                <pre style="
-                    white-space: pre-wrap;
-                ">${escapeHtml(error.message)}</pre>
-            </div>
-        `;
+    loadingMessage.textContent = 'Unable to load';
+
+    loadingMessage.classList.remove('hidden');
+
+    answerButtons.forEach((button) => {
+      button.disabled = true;
+    });
+
+    nextButton.disabled = true;
   }
 }
 
-// =============================================================
-// Escape HTML for error messages
-// =============================================================
+/* =========================================================
+   Event listeners
+   ========================================================= */
 
-function escapeHtml(text) {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+answerButtons.forEach((button) => {
+  button.addEventListener('click', () => answer(button));
+});
 
-// Start.
-init();
+nextButton.addEventListener('click', nextQuestion);
+
+categorySelect.addEventListener('change', () => {
+  /*
+   * Changing the category starts a fresh
+   * question and keeps the existing score.
+   */
+
+  nextQuestion();
+});
+
+modeSelect.addEventListener('change', () => {
+  /*
+   * Changing the question type starts a
+   * fresh question and keeps the existing score.
+   */
+
+  nextQuestion();
+});
+
+/* =========================================================
+   Keyboard controls
+   ========================================================= */
+
+document.addEventListener('keydown', (event) => {
+  /*
+   * Don't hijack keyboard input while the user
+   * is interacting with a select element.
+   */
+
+  if (event.target.tagName === 'SELECT') {
+    return;
+  }
+
+  /*
+   * Enter or Space advances after answering.
+   */
+
+  if (
+    (event.key === 'Enter' || event.key === ' ') &&
+    answered &&
+    !imageLoading
+  ) {
+    event.preventDefault();
+
+    nextQuestion();
+  }
+});
+
+/* =========================================================
+   Start
+   ========================================================= */
+
+loadAircraft();

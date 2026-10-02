@@ -2,7 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <meta name="description" content="Aircraft recognition training quiz" />
+
+    <meta
+      name="theme-color"
+      content="#f5f7fa"
+      media="(prefers-color-scheme: light)"
+    />
+
+    <meta
+      name="theme-color"
+      content="#12161a"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <title>Aircraft Recognition Trainer</title>
 
@@ -16,12 +34,12 @@
       <header class="header">
         <h1>Aircraft Recognition Trainer</h1>
 
-        <div id="score" class="score">Score: 0/0</div>
+        <div id="score" class="score" aria-live="polite">Score: 0/0</div>
       </header>
 
       <!-- Controls -->
-      <section class="controls">
-        <label>
+      <section class="controls" aria-label="Quiz settings">
+        <label for="category">
           <span>Category:</span>
 
           <select id="category">
@@ -29,40 +47,60 @@
           </select>
         </label>
 
-        <label>
+        <label for="mode">
           <span>Question:</span>
 
           <select id="mode">
             <option value="Aircraft name">Aircraft name</option>
-
             <option value="ICAO code">ICAO code</option>
-
             <option value="Mixed">Mixed</option>
           </select>
         </label>
       </section>
 
-      <!-- Image -->
-      <section id="image-container" class="image-container">
-        <img id="aircraft-image" alt="Aircraft" />
+      <!-- Aircraft image -->
+      <section
+        id="image-container"
+        class="image-container"
+        aria-label="Aircraft image"
+      >
+        <div
+          id="loading-message"
+          class="loading-message"
+          role="status"
+          aria-live="polite"
+        >
+          Loading aircraft…
+        </div>
+
+        <img id="aircraft-image" alt="" draggable="false" />
       </section>
 
-      <!-- Prompt -->
-      <div id="prompt" class="prompt"></div>
+      <!-- Question -->
+      <div id="prompt" class="prompt" aria-live="polite"></div>
 
       <!-- Answers -->
-      <section id="answers" class="answers">
-        <button data-index="0"></button>
-        <button data-index="1"></button>
-        <button data-index="2"></button>
-        <button data-index="3"></button>
+      <section id="answers" class="answers" aria-label="Answer choices">
+        <button type="button" data-index="0" disabled></button>
+
+        <button type="button" data-index="1" disabled></button>
+
+        <button type="button" data-index="2" disabled></button>
+
+        <button type="button" data-index="3" disabled></button>
       </section>
 
-      <!-- Bottom bar -->
+      <!-- Bottom -->
       <footer class="bottom">
-        <div id="feedback" class="feedback"></div>
+        <div class="status" aria-live="polite">
+          <div id="feedback" class="feedback"></div>
 
-        <button id="next" class="next-button">Next aircraft</button>
+          <div id="streak" class="streak">Streak: 0</div>
+        </div>
+
+        <button id="next" class="next-button" type="button" disabled>
+          Next aircraft
+        </button>
       </footer>
     </main>
 

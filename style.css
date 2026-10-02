@@ -1,6 +1,6 @@
 /* =========================================================
    Aircraft Recognition Trainer
-   Accessible, readable, responsive layout
+   Accessible + responsive styling
    ========================================================= */
 
 /* ---------------------------------------------------------
@@ -17,14 +17,20 @@ html {
 
 body {
   margin: 0;
+
   min-height: 100%;
+
   background: #f5f7fa;
   color: #17202a;
+
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif;
+
   font-size: 16px;
   line-height: 1.5;
+
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ---------------------------------------------------------
@@ -33,12 +39,16 @@ body {
 
 .app {
   width: min(1100px, 100%);
+
   height: 100vh;
   height: 100dvh;
+
   margin: 0 auto;
+
   padding: clamp(12px, 2vw, 24px) clamp(12px, 3vw, 32px);
 
   display: grid;
+
   grid-template-rows:
     auto
     auto
@@ -55,23 +65,32 @@ body {
 
 .header {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
+
   gap: 16px;
 }
 
 .header h1 {
   margin: 0;
+
   font-size: clamp(1.35rem, 3vw, 2rem);
+
   line-height: 1.2;
+
   font-weight: 700;
+
   letter-spacing: -0.02em;
 }
 
 .score {
   flex-shrink: 0;
+
   font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+
   font-weight: 700;
+
   white-space: nowrap;
 }
 
@@ -81,31 +100,41 @@ body {
 
 .controls {
   display: flex;
+
   flex-wrap: wrap;
+
   align-items: center;
+
   gap: 12px 24px;
 }
 
 .controls label {
   display: flex;
+
   align-items: center;
+
   gap: 8px;
 
   font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+
   font-weight: 600;
 }
 
 .controls select {
   min-height: 44px;
+
   padding: 8px 36px 8px 12px;
 
   border: 2px solid #7a8490;
+
   border-radius: 8px;
 
   background: #ffffff;
+
   color: #17202a;
 
   font: inherit;
+
   font-weight: 500;
 
   cursor: pointer;
@@ -116,9 +145,12 @@ body {
    --------------------------------------------------------- */
 
 .image-container {
+  position: relative;
+
   min-height: 0;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -139,6 +171,54 @@ body {
   object-fit: contain;
 
   border-radius: 8px;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+
+  opacity: 1;
+
+  transition: opacity 0.15s ease;
+}
+
+#aircraft-image.loading {
+  opacity: 0;
+}
+
+/* ---------------------------------------------------------
+   Loading message
+   --------------------------------------------------------- */
+
+.loading-message {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  padding: 9px 15px;
+
+  border-radius: 8px;
+
+  background: rgba(0, 0, 0, 0.72);
+
+  color: #ffffff;
+
+  font-size: 0.95rem;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+.loading-message.hidden {
+  display: none;
 }
 
 /* ---------------------------------------------------------
@@ -151,7 +231,9 @@ body {
   text-align: center;
 
   font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+
   line-height: 1.35;
+
   font-weight: 700;
 }
 
@@ -161,25 +243,33 @@ body {
 
 .answers {
   display: grid;
+
   grid-template-columns: repeat(2, minmax(0, 1fr));
+
   gap: 10px;
 }
 
 .answers button {
   width: 100%;
+
   min-height: 52px;
 
   padding: 10px 14px;
 
   border: 2px solid #687481;
+
   border-radius: 9px;
 
   background: #ffffff;
+
   color: #17202a;
 
   font: inherit;
+
   font-size: clamp(1rem, 1.8vw, 1.15rem);
+
   font-weight: 600;
+
   line-height: 1.3;
 
   cursor: pointer;
@@ -187,11 +277,13 @@ body {
   transition:
     background-color 0.12s ease,
     border-color 0.12s ease,
-    transform 0.08s ease;
+    transform 0.08s ease,
+    opacity 0.12s ease;
 }
 
 .answers button:hover:not(:disabled) {
   background: #eef3f7;
+
   border-color: #3f4d5a;
 }
 
@@ -199,23 +291,42 @@ body {
   transform: translateY(1px);
 }
 
+/* Disabled / loading */
+
 .answers button:disabled {
   cursor: default;
-  opacity: 1;
+}
+
+/* Loading state */
+
+.answers.loading button {
+  background: #e5e8eb;
+
+  color: #8b939a;
+
+  border-color: #c4c9ce;
+
+  cursor: wait;
 }
 
 /* ---------------------------------------------------------
-   Feedback
+   Correct / incorrect answers
    --------------------------------------------------------- */
 
-.feedback {
-  min-height: 1.5em;
+.answers button.correct {
+  background: #dff3e4;
 
-  text-align: center;
+  border-color: #26733b;
 
-  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
-  line-height: 1.35;
-  font-weight: 600;
+  color: #164d27;
+}
+
+.answers button.incorrect {
+  background: #f9dddd;
+
+  border-color: #a52a2a;
+
+  color: #6e1b1b;
 }
 
 /* ---------------------------------------------------------
@@ -224,10 +335,41 @@ body {
 
 .bottom {
   display: grid;
+
   grid-template-columns: 1fr auto;
+
   align-items: center;
+
   gap: 16px;
 }
+
+.status {
+  min-width: 0;
+}
+
+.feedback {
+  min-height: 1.5em;
+
+  text-align: left;
+
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+
+  line-height: 1.35;
+
+  font-weight: 600;
+}
+
+.streak {
+  min-height: 1.4em;
+
+  font-size: 0.9rem;
+
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Next button
+   --------------------------------------------------------- */
 
 .next-button {
   min-height: 50px;
@@ -235,13 +377,17 @@ body {
   padding: 10px 20px;
 
   border: 2px solid #263746;
+
   border-radius: 9px;
 
   background: #263746;
+
   color: #ffffff;
 
   font: inherit;
+
   font-size: clamp(1rem, 1.8vw, 1.1rem);
+
   font-weight: 700;
 
   cursor: pointer;
@@ -249,56 +395,39 @@ body {
   transition:
     background-color 0.12s ease,
     border-color 0.12s ease,
+    opacity 0.12s ease,
     transform 0.08s ease;
 }
 
-.next-button:hover {
+.next-button:hover:not(:disabled) {
   background: #172630;
+
   border-color: #172630;
 }
 
-.next-button:active {
+.next-button:active:not(:disabled) {
   transform: translateY(1px);
+}
+
+.next-button:disabled {
+  opacity: 0.5;
+
+  cursor: default;
 }
 
 /* ---------------------------------------------------------
    Keyboard focus
    --------------------------------------------------------- */
 
-/*
-   Very visible focus indicator for keyboard users.
-   Do not remove this.
-*/
-
 button:focus-visible,
 select:focus-visible {
   outline: 4px solid #e09b00;
+
   outline-offset: 3px;
 }
 
 /* ---------------------------------------------------------
-   Answer state colours
-   --------------------------------------------------------- */
-
-/*
-   These states use both colour AND text/feedback,
-   so the result isn't communicated by colour alone.
-*/
-
-.answers button.correct {
-  background: #dff3e4;
-  border-color: #26733b;
-  color: #164d27;
-}
-
-.answers button.incorrect {
-  background: #f9dddd;
-  border-color: #a52a2a;
-  color: #6e1b1b;
-}
-
-/* ---------------------------------------------------------
-   Tablet / medium screens
+   Medium screens
    --------------------------------------------------------- */
 
 @media (max-width: 700px) {
@@ -326,8 +455,11 @@ select:focus-visible {
 @media (max-width: 550px) {
   .app {
     padding: 12px;
+
     gap: 10px;
   }
+
+  /* Header */
 
   .header {
     align-items: flex-start;
@@ -341,17 +473,21 @@ select:focus-visible {
     font-size: 1rem;
   }
 
-  /* Stack the controls */
+  /* Controls */
 
   .controls {
     display: grid;
+
     grid-template-columns: 1fr;
+
     gap: 8px;
   }
 
   .controls label {
     display: grid;
+
     grid-template-columns: 90px minmax(0, 1fr);
+
     align-items: center;
 
     font-size: 1rem;
@@ -359,45 +495,57 @@ select:focus-visible {
 
   .controls select {
     width: 100%;
+
     min-height: 46px;
 
     font-size: 1rem;
   }
 
-  /* Larger question text */
+  /* Prompt */
 
   .prompt {
     font-size: 1.15rem;
+
     line-height: 1.35;
   }
 
-  /* One answer per row for easier tapping */
+  /* Answers */
 
   .answers {
     grid-template-columns: 1fr;
+
     gap: 8px;
   }
 
   .answers button {
     min-height: 52px;
+
     padding: 10px 14px;
 
     font-size: 1.05rem;
   }
 
-  /* Bottom area */
+  /* Bottom */
 
   .bottom {
     grid-template-columns: 1fr;
+
     gap: 8px;
   }
 
   .feedback {
+    text-align: center;
+
     font-size: 1rem;
+  }
+
+  .streak {
+    text-align: center;
   }
 
   .next-button {
     width: 100%;
+
     min-height: 52px;
 
     font-size: 1.05rem;
@@ -411,6 +559,7 @@ select:focus-visible {
 @media (max-width: 550px) and (max-height: 700px) {
   .app {
     gap: 6px;
+
     padding: 8px;
   }
 
@@ -424,6 +573,7 @@ select:focus-visible {
 
   .controls select {
     min-height: 40px;
+
     padding-top: 5px;
     padding-bottom: 5px;
   }
@@ -438,6 +588,7 @@ select:focus-visible {
 
   .answers button {
     min-height: 44px;
+
     padding: 6px 10px;
   }
 
@@ -465,6 +616,7 @@ select:focus-visible {
 
   .controls label {
     grid-template-columns: 78px minmax(0, 1fr);
+
     font-size: 0.95rem;
   }
 
@@ -484,6 +636,7 @@ select:focus-visible {
 @media (max-width: 800px) and (orientation: landscape) {
   .app {
     gap: 6px;
+
     padding: 8px 14px;
   }
 
@@ -505,16 +658,114 @@ select:focus-visible {
 
   .answers {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 6px;
   }
 
   .answers button {
     min-height: 42px;
+
     padding: 6px 10px;
   }
 
   .next-button {
     min-height: 42px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Touch devices
+   --------------------------------------------------------- */
+
+@media (hover: none) and (pointer: coarse) {
+  .answers button:hover:not(:disabled) {
+    background: #ffffff;
+
+    border-color: #687481;
+  }
+
+  .answers button:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+}
+
+/* ---------------------------------------------------------
+   Dark mode
+   --------------------------------------------------------- */
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #12161a;
+
+    color: #f1f3f5;
+  }
+
+  .controls select {
+    background: #20262b;
+
+    color: #f1f3f5;
+
+    border-color: #7d8790;
+  }
+
+  .answers button {
+    background: #20262b;
+
+    color: #f1f3f5;
+
+    border-color: #7d8790;
+  }
+
+  .answers button:hover:not(:disabled) {
+    background: #2b3339;
+
+    border-color: #aab4bd;
+  }
+
+  .answers.loading button {
+    background: #24292e;
+
+    color: #666d73;
+
+    border-color: #3d444a;
+  }
+
+  .answers button:disabled {
+    color: #777f86;
+  }
+
+  .answers button.correct {
+    background: #193d26;
+
+    color: #a9e6b8;
+
+    border-color: #4c9b61;
+  }
+
+  .answers button.incorrect {
+    background: #451f1f;
+
+    color: #f1aaaa;
+
+    border-color: #b95b5b;
+  }
+
+  .next-button {
+    background: #d9e2e8;
+
+    color: #17202a;
+
+    border-color: #d9e2e8;
+  }
+
+  .next-button:hover:not(:disabled) {
+    background: #ffffff;
+
+    border-color: #ffffff;
+  }
+
+  .image-container {
+    background: #181d21;
   }
 }
 
@@ -527,8 +778,11 @@ select:focus-visible {
   *::before,
   *::after {
     scroll-behavior: auto !important;
+
     transition-duration: 0.01ms !important;
+
     animation-duration: 0.01ms !important;
+
     animation-iteration-count: 1 !important;
   }
 }
