@@ -1,315 +1,534 @@
+/* =========================================================
+   Aircraft Recognition Trainer
+   Accessible, readable, responsive layout
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Base
+   --------------------------------------------------------- */
+
 * {
   box-sizing: border-box;
 }
 
-html,
-body {
-  width: 100%;
+html {
   height: 100%;
-  margin: 0;
 }
 
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-
-  background: #eef3f8;
-
-  overflow: hidden;
+  margin: 0;
+  min-height: 100%;
+  background: #f5f7fa;
+  color: #17202a;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
 }
+
+/* ---------------------------------------------------------
+   Main application
+   --------------------------------------------------------- */
 
 .app {
-  width: 100%;
+  width: min(1100px, 100%);
+  height: 100vh;
   height: 100dvh;
+  margin: 0 auto;
+  padding: clamp(12px, 2vw, 24px) clamp(12px, 3vw, 32px);
 
   display: grid;
-
   grid-template-rows:
     auto
     auto
     minmax(0, 1fr)
     auto
-    auto
     auto;
 
-  gap: clamp(6px, 1vh, 12px);
-
-  padding: clamp(8px, 2vw, 18px) clamp(8px, 2vw, 18px);
-
-  max-width: 1600px;
-
-  margin: 0 auto;
+  gap: clamp(10px, 1.5vh, 18px);
 }
 
-/* =========================================================
+/* ---------------------------------------------------------
    Header
-   ========================================================= */
+   --------------------------------------------------------- */
 
 .header {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
-  gap: 12px;
+  gap: 16px;
 }
 
 .header h1 {
   margin: 0;
-
-  font-size: clamp(16px, 2.2vw, 26px);
-
-  line-height: 1.1;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .score {
   flex-shrink: 0;
-
-  font-size: clamp(10px, 1.2vw, 14px);
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-/* =========================================================
+/* ---------------------------------------------------------
    Controls
-   ========================================================= */
+   --------------------------------------------------------- */
 
 .controls {
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1fr);
-
-  gap: clamp(6px, 1vw, 14px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
 }
 
 .controls label {
-  display: grid;
-
-  grid-template-columns: auto minmax(0, 1fr);
-
+  display: flex;
   align-items: center;
+  gap: 8px;
 
-  gap: 6px;
-
-  min-width: 0;
-
-  font-size: clamp(10px, 1.2vw, 14px);
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  font-weight: 600;
 }
 
-select {
-  width: 100%;
+.controls select {
+  min-height: 44px;
+  padding: 8px 36px 8px 12px;
 
-  min-width: 0;
+  border: 2px solid #7a8490;
+  border-radius: 8px;
 
-  padding: clamp(5px, 0.7vw, 8px);
+  background: #ffffff;
+  color: #17202a;
 
-  border: 1px solid #bbb;
+  font: inherit;
+  font-weight: 500;
 
-  border-radius: 5px;
-
-  background: white;
-
-  font-family: inherit;
-
-  font-size: clamp(10px, 1.2vw, 14px);
+  cursor: pointer;
 }
 
-/* =========================================================
-   Image
-   ========================================================= */
+/* ---------------------------------------------------------
+   Aircraft image
+   --------------------------------------------------------- */
 
 .image-container {
-  min-width: 0;
   min-height: 0;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
-  background: white;
-
-  border: 1px solid #c8c8c8;
-
   overflow: hidden;
+
+  border-radius: 10px;
 }
 
 #aircraft-image {
   display: block;
 
-  max-width: calc(100% - 20px);
-  max-height: calc(100% - 20px);
+  max-width: 100%;
+  max-height: 100%;
 
   width: auto;
   height: auto;
 
   object-fit: contain;
 
-  user-select: none;
+  border-radius: 8px;
 }
 
-/* =========================================================
-   Prompt
-   ========================================================= */
+/* ---------------------------------------------------------
+   Question prompt
+   --------------------------------------------------------- */
 
 .prompt {
+  min-height: 1.5em;
+
   text-align: center;
 
+  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+  line-height: 1.35;
   font-weight: 700;
-
-  font-size: clamp(11px, 1.5vw, 18px);
-
-  line-height: 1.2;
-
-  min-height: 1.2em;
 }
 
-/* =========================================================
-   Answers
-   ========================================================= */
+/* ---------------------------------------------------------
+   Answer buttons
+   --------------------------------------------------------- */
 
 .answers {
   display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1fr);
-
-  gap: clamp(4px, 0.7vw, 8px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .answers button {
-  min-width: 0;
+  width: 100%;
+  min-height: 52px;
 
-  min-height: clamp(32px, 5vh, 52px);
+  padding: 10px 14px;
 
-  padding: clamp(4px, 0.8vw, 10px);
+  border: 2px solid #687481;
+  border-radius: 9px;
 
-  border: 1px solid #aaa;
+  background: #ffffff;
+  color: #17202a;
 
-  border-radius: 5px;
-
-  background: #f7f7f7;
-
-  font-family: inherit;
-
-  font-size: clamp(10px, 1.25vw, 15px);
+  font: inherit;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  font-weight: 600;
+  line-height: 1.3;
 
   cursor: pointer;
 
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
   transition:
-    background 0.1s,
-    border-color 0.1s;
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    transform 0.08s ease;
 }
 
 .answers button:hover:not(:disabled) {
-  background: #e9eef4;
+  background: #eef3f7;
+  border-color: #3f4d5a;
+}
 
-  border-color: #777;
+.answers button:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 .answers button:disabled {
   cursor: default;
-
-  opacity: 0.8;
+  opacity: 1;
 }
 
-/* =========================================================
-   Bottom
-   ========================================================= */
+/* ---------------------------------------------------------
+   Feedback
+   --------------------------------------------------------- */
+
+.feedback {
+  min-height: 1.5em;
+
+  text-align: center;
+
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Bottom area
+   --------------------------------------------------------- */
 
 .bottom {
   display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    auto;
-
+  grid-template-columns: 1fr auto;
   align-items: center;
-
-  gap: 10px;
-
-  min-width: 0;
-}
-
-.feedback {
-  min-width: 0;
-
-  font-size: clamp(10px, 1.2vw, 14px);
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
+  gap: 16px;
 }
 
 .next-button {
-  flex-shrink: 0;
+  min-height: 50px;
 
-  padding: clamp(6px, 0.8vw, 10px) clamp(10px, 1.4vw, 18px);
+  padding: 10px 20px;
 
-  border: 1px solid #777;
+  border: 2px solid #263746;
+  border-radius: 9px;
 
-  border-radius: 5px;
+  background: #263746;
+  color: #ffffff;
 
-  background: #ffffff;
-
-  font-family: inherit;
-
-  font-size: clamp(10px, 1.2vw, 14px);
-
+  font: inherit;
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
   font-weight: 700;
 
   cursor: pointer;
+
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    transform 0.08s ease;
 }
 
 .next-button:hover {
-  background: #e9eef4;
+  background: #172630;
+  border-color: #172630;
 }
 
-/* =========================================================
-   Very narrow screens
-   ========================================================= */
-
-@media (max-width: 550px) {
-  .controls {
-    grid-template-columns: 1fr;
-  }
-
-  .controls label {
-    grid-template-columns:
-      minmax(65px, auto)
-      minmax(0, 1fr);
-  }
-
-  .header h1 {
-    font-size: 17px;
-  }
+.next-button:active {
+  transform: translateY(1px);
 }
 
-/* =========================================================
-   Very short screens
-   ========================================================= */
+/* ---------------------------------------------------------
+   Keyboard focus
+   --------------------------------------------------------- */
 
-@media (max-height: 550px) {
+/*
+   Very visible focus indicator for keyboard users.
+   Do not remove this.
+*/
+
+button:focus-visible,
+select:focus-visible {
+  outline: 4px solid #e09b00;
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------
+   Answer state colours
+   --------------------------------------------------------- */
+
+/*
+   These states use both colour AND text/feedback,
+   so the result isn't communicated by colour alone.
+*/
+
+.answers button.correct {
+  background: #dff3e4;
+  border-color: #26733b;
+  color: #164d27;
+}
+
+.answers button.incorrect {
+  background: #f9dddd;
+  border-color: #a52a2a;
+  color: #6e1b1b;
+}
+
+/* ---------------------------------------------------------
+   Tablet / medium screens
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
   .app {
-    gap: 4px;
+    gap: 12px;
+  }
 
-    padding: 6px 8px;
+  .controls {
+    gap: 10px 16px;
+  }
+
+  .answers {
+    gap: 9px;
   }
 
   .answers button {
-    min-height: 28px;
+    min-height: 50px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Phones
+   --------------------------------------------------------- */
+
+@media (max-width: 550px) {
+  .app {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .header {
+    align-items: flex-start;
+  }
+
+  .header h1 {
+    font-size: 1.45rem;
+  }
+
+  .score {
+    font-size: 1rem;
+  }
+
+  /* Stack the controls */
+
+  .controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .controls label {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    align-items: center;
+
+    font-size: 1rem;
+  }
+
+  .controls select {
+    width: 100%;
+    min-height: 46px;
+
+    font-size: 1rem;
+  }
+
+  /* Larger question text */
+
+  .prompt {
+    font-size: 1.15rem;
+    line-height: 1.35;
+  }
+
+  /* One answer per row for easier tapping */
+
+  .answers {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .answers button {
+    min-height: 52px;
+    padding: 10px 14px;
+
+    font-size: 1.05rem;
+  }
+
+  /* Bottom area */
+
+  .bottom {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .feedback {
+    font-size: 1rem;
+  }
+
+  .next-button {
+    width: 100%;
+    min-height: 52px;
+
+    font-size: 1.05rem;
+  }
+}
+
+/* ---------------------------------------------------------
+   Small-height phones
+   --------------------------------------------------------- */
+
+@media (max-width: 550px) and (max-height: 700px) {
+  .app {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .header h1 {
+    font-size: 1.3rem;
+  }
+
+  .controls {
+    gap: 5px;
+  }
+
+  .controls select {
+    min-height: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 
   .prompt {
-    font-size: 11px;
+    font-size: 1rem;
+  }
+
+  .answers {
+    gap: 5px;
+  }
+
+  .answers button {
+    min-height: 44px;
+    padding: 6px 10px;
+  }
+
+  .next-button {
+    min-height: 44px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Very narrow phones
+   --------------------------------------------------------- */
+
+@media (max-width: 380px) {
+  .app {
+    padding: 8px;
+  }
+
+  .header h1 {
+    font-size: 1.25rem;
+  }
+
+  .score {
+    font-size: 0.9rem;
+  }
+
+  .controls label {
+    grid-template-columns: 78px minmax(0, 1fr);
+    font-size: 0.95rem;
+  }
+
+  .controls select {
+    font-size: 0.95rem;
+  }
+
+  .answers button {
+    font-size: 1rem;
+  }
+}
+
+/* ---------------------------------------------------------
+   Landscape phones
+   --------------------------------------------------------- */
+
+@media (max-width: 800px) and (orientation: landscape) {
+  .app {
+    gap: 6px;
+    padding: 8px 14px;
+  }
+
+  .header h1 {
+    font-size: 1.3rem;
+  }
+
+  .controls {
+    gap: 6px 16px;
+  }
+
+  .controls select {
+    min-height: 38px;
+  }
+
+  .prompt {
+    font-size: 1rem;
+  }
+
+  .answers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .answers button {
+    min-height: 42px;
+    padding: 6px 10px;
+  }
+
+  .next-button {
+    min-height: 42px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
