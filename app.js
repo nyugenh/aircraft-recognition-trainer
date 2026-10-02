@@ -532,7 +532,7 @@ function answer(button) {
   } else {
     currentStreak = 0;
 
-    feedbackElement.textContent = `Incorrect. Correct answer: ${currentCorrectAnswer}`;
+    feedbackElement.textContent = `Correct answer: ${currentCorrectAnswer}`;
   }
 
   /*
