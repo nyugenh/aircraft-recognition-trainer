@@ -568,13 +568,22 @@
       "image_path": "p25_01_boeing_737_800_b738.png"
     },
     {
-      "key": "p25_02_boeing_737_700_b737",
+      "key": "p25_02_boeing_737_800_b738",
+      "label": "Boeing 737-800 (B738)",
+      "name": "Boeing 737-800",
+      "code": "B738",
+      "category": "Medium Jets",
+      "page": 25,
+      "image_path": "p25_02_boeing_737_800_b738.png"
+    },
+    {
+      "key": "p25_03_boeing_737_700_b737",
       "label": "Boeing 737-700 (B737)",
       "name": "Boeing 737-700",
       "code": "B737",
       "category": "Medium Jets",
       "page": 25,
-      "image_path": "p25_02_boeing_737_700_b737.png"
+      "image_path": "p25_03_boeing_737_700_b737.png"
     },
     {
       "key": "p26_01_boeing_business_jet_b737",
