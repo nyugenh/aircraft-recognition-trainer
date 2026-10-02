@@ -281,7 +281,7 @@ function getAnswerValue(item, questionType) {
     return displayText(item.name);
   }
 
-  return displayText(item.icao);
+  return displayText(item.code);
 }
 
 /* =========================================================
@@ -395,6 +395,12 @@ function nextQuestion() {
     promptElement.textContent = 'Which aircraft is this?';
   } else {
     promptElement.textContent = 'What is the ICAO code?';
+  }
+
+  const category = displayText(currentAircraft.category);
+
+  if (category) {
+    promptElement.textContent += ` · ${category}`;
   }
 
   /*
