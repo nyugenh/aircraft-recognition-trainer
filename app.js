@@ -29,7 +29,6 @@ const answerButtons = [...document.querySelectorAll('#answers button')];
 
 const scoreElement = document.getElementById('score');
 const feedbackElement = document.getElementById('feedback');
-const streakElement = document.getElementById('streak');
 
 const nextButton = document.getElementById('next');
 
@@ -45,7 +44,6 @@ let aircraftQueue = [];
 
 let score = 0;
 let total = 0;
-let streak = 0;
 
 let answered = false;
 
@@ -76,11 +74,6 @@ function setupAccessibility() {
   if (scoreElement) {
     scoreElement.setAttribute('aria-live', 'polite');
     scoreElement.setAttribute('aria-atomic', 'true');
-  }
-
-  if (streakElement) {
-    streakElement.setAttribute('aria-live', 'polite');
-    streakElement.setAttribute('aria-atomic', 'true');
   }
 
   if (loadingMessage) {
@@ -246,8 +239,6 @@ function updateScore() {
   const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
 
   scoreElement.textContent = `Score: ${score}/${total} (${percentage}%)`;
-
-  streakElement.textContent = `Streak: ${streak}`;
 }
 
 // =========================================================
@@ -1016,15 +1007,11 @@ function submitTypedAnswer() {
   typeAnswerContainer.classList.remove('correct', 'partial', 'incorrect');
 
   if (points === 1) {
-    streak += 1;
-
     typeAnswerInput.classList.add('correct');
     typeAnswerContainer.classList.add('correct');
 
     setFeedback('correct', '✓ Correct!');
   } else if (points > 0) {
-    streak = 0;
-
     typeAnswerInput.classList.add('partial');
     typeAnswerContainer.classList.add('partial');
 
@@ -1035,8 +1022,6 @@ function submitTypedAnswer() {
       correctAnswer,
     );
   } else {
-    streak = 0;
-
     typeAnswerInput.classList.add('incorrect');
     typeAnswerContainer.classList.add('incorrect');
 
@@ -1082,14 +1067,11 @@ function answerMultipleChoice(button) {
 
   if (isCorrect) {
     score += 1;
-    streak += 1;
 
     button.classList.add('correct');
 
     setFeedback('correct', '✓ Correct!');
   } else {
-    streak = 0;
-
     button.classList.add('incorrect');
 
     setFeedback('incorrect', '✕ Incorrect', 'Correct answer:', correctAnswer);
@@ -1141,14 +1123,11 @@ function answerReversePhoto(button) {
 
   if (isCorrect) {
     score += 1;
-    streak += 1;
 
     button.classList.add('correct');
 
     setFeedback('correct', '✓ Correct!');
   } else {
-    streak = 0;
-
     button.classList.add('incorrect');
 
     setFeedback('incorrect', '✕ Incorrect', 'Correct photo:', correctAnswer);
