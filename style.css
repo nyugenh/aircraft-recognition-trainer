@@ -1,6 +1,6 @@
 /* =========================================================
    Aircraft Recognition Trainer
-   Clean, accessible and responsive training UI
+   Clean + accessible + responsive training UI
    ========================================================= */
 
 /* =========================================================
@@ -11,35 +11,26 @@
   --page-bg: #f5f7fa;
   --surface: #ffffff;
   --surface-muted: #eef2f5;
-
   --text: #17202a;
   --text-muted: #53616d;
   --text-disabled: #7c858d;
-
   --border: #687481;
   --border-light: #d8dee3;
   --border-hover: #3f4d5a;
-
   --primary: #263746;
   --primary-hover: #172630;
-
   --focus: #e09b00;
-
   --correct-bg: #dff3e4;
   --correct-border: #26733b;
   --correct-text: #164d27;
-
   --partial-bg: #fff3d6;
   --partial-border: #c28700;
   --partial-text: #6b4b00;
-
   --incorrect-bg: #f9dddd;
   --incorrect-border: #a52a2a;
   --incorrect-text: #6e1b1b;
-
   --radius: 9px;
   --control-height: 52px;
-
   --page-gap: 10px;
   --control-gap: 16px;
   --answer-gap: 10px;
@@ -67,17 +58,13 @@ html {
 body {
   margin: 0;
   min-height: 100%;
-
   background: var(--page-bg);
   color: var(--text);
-
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif;
-
   font-size: 16px;
   line-height: 1.5;
-
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -88,18 +75,13 @@ body {
 
 .visually-hidden {
   position: absolute;
-
   width: 1px;
   height: 1px;
-
   padding: 0;
   margin: -1px;
-
   overflow: hidden;
-
   clip: rect(0, 0, 0, 0);
   clip-path: inset(50%);
-
   white-space: nowrap;
   border: 0;
 }
@@ -110,18 +92,13 @@ body {
 
 .app {
   width: min(1100px, 100%);
-
   height: 100vh;
   height: 100dvh;
-
   margin: 0 auto;
-
   padding: max(12px, env(safe-area-inset-top))
     max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
     max(12px, env(safe-area-inset-left));
-
   display: grid;
-
   grid-template-rows:
     auto
     auto
@@ -129,7 +106,6 @@ body {
     auto
     auto
     auto;
-
   grid-template-areas:
     'header'
     'controls'
@@ -137,11 +113,12 @@ body {
     'prompt'
     'answers'
     'bottom';
-
   row-gap: var(--page-gap);
 }
 
-/* Grid areas */
+/* =========================================================
+   Grid areas
+   ========================================================= */
 
 .header {
   grid-area: header;
@@ -175,32 +152,24 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 16px;
 }
 
 .header h1 {
   min-width: 0;
-
   margin: 0;
-
   font-size: clamp(1.35rem, 3vw, 2rem);
   line-height: 1.2;
-
   font-weight: 700;
   letter-spacing: -0.02em;
-
   overflow-wrap: anywhere;
 }
 
 .score {
   flex-shrink: 0;
-
   font-size: clamp(0.95rem, 1.8vw, 1.15rem);
   line-height: 1.3;
-
   font-weight: 700;
-
   white-space: nowrap;
 }
 
@@ -212,38 +181,28 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-
   gap: 10px var(--control-gap);
 }
 
 .controls label {
   display: flex;
   align-items: center;
-
   gap: 10px;
-
   font-size: clamp(0.95rem, 1.8vw, 1.1rem);
   line-height: 1.3;
-
   font-weight: 600;
 }
 
 .controls select {
   min-height: 46px;
-
   padding: 8px 36px 8px 12px;
-
   border: 2px solid var(--border);
   border-radius: 8px;
-
   background: var(--surface);
   color: var(--text);
-
   font: inherit;
   font-weight: 500;
-
   cursor: pointer;
-
   transition:
     background-color 0.12s ease,
     border-color 0.12s ease;
@@ -259,41 +218,28 @@ body {
 
 .image-container {
   position: relative;
-
   min-width: 0;
   min-height: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   overflow: hidden;
-
   border: 1px solid var(--border-light);
   border-radius: 10px;
-
   background: var(--surface);
 }
 
 #aircraft-image {
   display: block;
-
-  width: auto;
-  height: auto;
-
-  max-width: 100%;
-  max-height: 100%;
-
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-
+  object-position: center;
   border-radius: 8px;
-
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
-
   opacity: 1;
-
   transition: opacity 0.15s ease;
 }
 
@@ -307,29 +253,19 @@ body {
 
 .loading-message {
   position: absolute;
-
   top: 50%;
   left: 50%;
-
   transform: translate(-50%, -50%);
-
   display: none;
-
   padding: 8px 14px;
-
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
-
   background: rgba(0, 0, 0, 0.78);
   color: #ffffff;
-
   font-size: 0.9rem;
   line-height: 1.3;
-
   font-weight: 600;
-
   white-space: nowrap;
-
   pointer-events: none;
   z-index: 2;
 }
@@ -345,25 +281,17 @@ body {
 .prompt {
   min-width: 0;
   min-height: 1.35em;
-
   margin: 0;
   padding: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex-wrap: wrap;
-
   gap: 0.35rem 0.5rem;
-
   text-align: center;
-
   font-size: clamp(1.05rem, 2.2vw, 1.4rem);
   line-height: 1.35;
-
   font-weight: 700;
-
   overflow-wrap: anywhere;
 }
 
@@ -375,21 +303,15 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   margin: 0;
   padding: 0.12rem 0.45rem;
-
   border: 1px solid #aeb7bf;
   border-radius: 999px;
-
   background: var(--surface-muted);
   color: var(--text-muted);
-
   font-size: 0.62em;
   line-height: 1.2;
-
   font-weight: 600;
-
   white-space: nowrap;
 }
 
@@ -399,11 +321,8 @@ body {
 
 .answers {
   min-width: 0;
-
   display: grid;
-
   grid-template-columns: repeat(2, minmax(0, 1fr));
-
   gap: var(--answer-gap);
 }
 
@@ -413,42 +332,26 @@ body {
 
 .answers button {
   position: relative;
-
   width: 100%;
   min-width: 0;
   min-height: var(--control-height);
-
-  /*
-     Equal side padding keeps answer text visually centred
-     when the result symbol is present.
-  */
-
   padding: 10px 42px;
-
   border: 2px solid var(--border);
   border-radius: var(--radius);
-
   background: var(--surface);
   color: var(--text);
-
   font: inherit;
   font-size: clamp(1rem, 1.8vw, 1.15rem);
   line-height: 1.3;
-
   font-weight: 600;
-
   text-align: center;
-
   overflow-wrap: anywhere;
-
   cursor: pointer;
-
   transition:
     background-color 0.12s ease,
     border-color 0.12s ease,
     box-shadow 0.12s ease,
-    opacity 0.12s ease,
-    transform 0.08s ease;
+    opacity 0.12s ease;
 }
 
 .answers button:hover:not(:disabled) {
@@ -456,21 +359,18 @@ body {
   border-color: var(--border-hover);
 }
 
-.answers button:active:not(:disabled) {
-  transform: translateY(1px);
-}
-
 .answers button:disabled {
   cursor: default;
 }
 
-/* Loading */
+/* =========================================================
+   Loading
+   ========================================================= */
 
 .answers.loading button {
   background: #e5e8eb;
   color: var(--text-disabled);
   border-color: #c4c9ce;
-
   cursor: wait;
 }
 
@@ -482,9 +382,7 @@ body {
   background: var(--correct-bg);
   border-color: var(--correct-border);
   color: var(--correct-text);
-
   font-weight: 700;
-
   box-shadow: inset 0 0 0 1px rgba(38, 115, 59, 0.15);
 }
 
@@ -492,9 +390,7 @@ body {
   background: var(--incorrect-bg);
   border-color: var(--incorrect-border);
   color: var(--incorrect-text);
-
   font-weight: 700;
-
   box-shadow: inset 0 0 0 1px rgba(165, 42, 42, 0.15);
 }
 
@@ -505,17 +401,12 @@ body {
 .answers button.correct::before,
 .answers button.incorrect::before {
   position: absolute;
-
   left: 14px;
   top: 50%;
-
   transform: translateY(-50%);
-
   font-size: 1.15rem;
   line-height: 1;
-
   font-weight: 800;
-
   pointer-events: none;
 }
 
@@ -540,41 +431,40 @@ body {
     auto
     minmax(260px, 1fr)
     auto;
-
   grid-template-areas:
     'header'
     'controls'
     'prompt'
     'answers'
     'bottom';
-
   align-content: stretch;
 }
 
 .app.reverse-mode .answers.reverse {
   width: 100%;
   height: 100%;
-
   display: grid;
-
   grid-template-columns: repeat(2, minmax(0, 1fr));
-
   grid-template-rows: repeat(2, minmax(0, 1fr));
-
   gap: 12px;
 }
+
+/* =========================================================
+   Reverse photo tile
+   ========================================================= */
 
 .app.reverse-mode .answers.reverse button {
   width: 100%;
   height: 100%;
   min-height: 0;
-
   padding: 8px;
-
-  display: flex;
+  display: grid;
+  grid-template-rows:
+    minmax(0, 1fr)
+    1.8em;
   align-items: center;
-  justify-content: center;
-
+  justify-items: center;
+  gap: 4px;
   overflow: hidden;
 }
 
@@ -582,22 +472,79 @@ body {
   content: none !important;
 }
 
+/* =========================================================
+   Reverse photo
+   ========================================================= */
+
 .app.reverse-mode .answers.reverse button img {
   display: block;
-
   width: 100%;
   height: 100%;
-
+  min-width: 0;
+  min-height: 0;
   max-width: 100%;
   max-height: 100%;
-
   object-fit: contain;
-
   border-radius: 5px;
-
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
+}
+
+/* =========================================================
+   Reverse aircraft name
+   ========================================================= */
+
+.app.reverse-mode .answers.reverse .photo-choice-name {
+  display: block;
+  width: 100%;
+  height: 1.8em;
+  padding: 2px 5px 3px;
+  color: transparent;
+  font-size: clamp(0.78rem, 1.5vw, 0.95rem);
+  line-height: 1.2;
+  font-weight: 700;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app.reverse-mode .answers.reverse .photo-choice-name.hidden-name {
+  visibility: hidden;
+}
+
+.app.reverse-mode .answers.reverse .photo-choice-name:not(.hidden-name) {
+  visibility: visible;
+  color: var(--text);
+}
+
+/* =========================================================
+   Reverse result states
+   ========================================================= */
+
+.app.reverse-mode .answers.reverse button.correct {
+  background: var(--correct-bg);
+  border-color: var(--correct-border);
+  box-shadow: inset 0 0 0 2px rgba(38, 115, 59, 0.15);
+}
+
+.app.reverse-mode .answers.reverse button.incorrect {
+  background: var(--incorrect-bg);
+  border-color: var(--incorrect-border);
+  box-shadow: inset 0 0 0 2px rgba(165, 42, 42, 0.15);
+}
+
+/* =========================================================
+   Reverse result-state names
+   ========================================================= */
+
+.app.reverse-mode .answers.reverse button.correct .photo-choice-name {
+  color: var(--correct-text);
+}
+
+.app.reverse-mode .answers.reverse button.incorrect .photo-choice-name {
+  color: var(--incorrect-text);
 }
 
 /* =========================================================
@@ -608,30 +555,22 @@ body {
   display: flex;
   align-items: stretch;
   justify-content: center;
-
   gap: 10px;
 }
 
 .type-answer-input {
   flex: 1;
-
   min-width: 0;
   min-height: var(--control-height);
-
   padding: 10px 14px;
-
   border: 2px solid var(--border);
   border-radius: var(--radius);
-
   background: var(--surface);
   color: var(--text);
-
   font: inherit;
   font-size: 1.1rem;
   font-weight: 500;
-
   outline: none;
-
   transition:
     background-color 0.15s ease,
     border-color 0.15s ease,
@@ -645,7 +584,6 @@ body {
 
 .type-answer-input:focus {
   border-color: var(--primary);
-
   box-shadow: 0 0 0 3px rgba(224, 155, 0, 0.35);
 }
 
@@ -653,13 +591,14 @@ body {
   cursor: default;
 }
 
-/* Typed result states */
+/* =========================================================
+   Typed result states
+   ========================================================= */
 
 .type-answer-input.correct {
   background: var(--correct-bg);
   border-color: var(--correct-border);
   color: var(--correct-text);
-
   box-shadow: 0 0 0 3px rgba(38, 115, 59, 0.14);
 }
 
@@ -667,7 +606,6 @@ body {
   background: var(--partial-bg);
   border-color: var(--partial-border);
   color: var(--partial-text);
-
   box-shadow: 0 0 0 3px rgba(194, 135, 0, 0.14);
 }
 
@@ -675,7 +613,6 @@ body {
   background: var(--incorrect-bg);
   border-color: var(--incorrect-border);
   color: var(--incorrect-text);
-
   box-shadow: 0 0 0 3px rgba(165, 42, 42, 0.14);
 }
 
@@ -685,38 +622,26 @@ body {
 
 .submit-answer {
   flex-shrink: 0;
-
   min-width: 110px;
   min-height: var(--control-height);
-
   padding: 10px 18px;
-
   border: 2px solid var(--primary);
   border-radius: var(--radius);
-
   background: var(--primary);
   color: #ffffff;
-
   font: inherit;
   font-size: 1.05rem;
   font-weight: 700;
-
   cursor: pointer;
-
   transition:
     background-color 0.12s ease,
     border-color 0.12s ease,
-    opacity 0.12s ease,
-    transform 0.08s ease;
+    opacity 0.12s ease;
 }
 
 .submit-answer:hover:not(:disabled) {
   background: var(--primary-hover);
   border-color: var(--primary-hover);
-}
-
-.submit-answer:active:not(:disabled) {
-  transform: translateY(1px);
 }
 
 .submit-answer:disabled {
@@ -730,20 +655,14 @@ body {
 
 .feedback {
   min-height: 1.35em;
-
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-
   gap: 3px 7px;
-
   text-align: left;
-
   font-size: clamp(0.95rem, 1.8vw, 1.1rem);
   line-height: 1.35;
-
   font-weight: 600;
-
   overflow-wrap: anywhere;
 }
 
@@ -779,13 +698,10 @@ body {
 
 .bottom {
   display: grid;
-
   grid-template-columns:
     minmax(0, 1fr)
     auto;
-
   align-items: center;
-
   gap: 12px 16px;
 }
 
@@ -795,10 +711,8 @@ body {
 
 .streak {
   min-height: 1.35em;
-
   font-size: 0.9rem;
   line-height: 1.3;
-
   font-weight: 600;
 }
 
@@ -808,37 +722,25 @@ body {
 
 .next-button {
   min-height: 50px;
-
   padding: 10px 20px;
-
   border: 2px solid var(--primary);
   border-radius: var(--radius);
-
   background: var(--primary);
   color: #ffffff;
-
   font: inherit;
   font-size: clamp(1rem, 1.8vw, 1.1rem);
   line-height: 1.3;
-
   font-weight: 700;
-
   cursor: pointer;
-
   transition:
     background-color 0.12s ease,
     border-color 0.12s ease,
-    opacity 0.12s ease,
-    transform 0.08s ease;
+    opacity 0.12s ease;
 }
 
 .next-button:hover:not(:disabled) {
   background: var(--primary-hover);
   border-color: var(--primary-hover);
-}
-
-.next-button:active:not(:disabled) {
-  transform: translateY(1px);
 }
 
 .next-button:disabled {
@@ -899,20 +801,15 @@ input:focus-visible {
 
   .header {
     display: grid;
-
     grid-template-columns: minmax(0, 1fr);
-
     gap: 2px;
   }
 
   .header h1 {
     min-width: 0;
-
     font-size: 1.3rem;
     line-height: 1.2;
-
     letter-spacing: -0.025em;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -920,7 +817,6 @@ input:focus-visible {
 
   .score {
     justify-self: end;
-
     font-size: 0.9rem;
     line-height: 1.25;
   }
@@ -945,31 +841,23 @@ input:focus-visible {
 
   .controls {
     display: grid;
-
     grid-template-columns: 1fr;
-
     gap: 7px;
   }
 
   .controls label {
     display: grid;
-
     grid-template-columns:
       90px
       minmax(0, 1fr);
-
     align-items: center;
-
     gap: 10px;
-
     font-size: 1rem;
   }
 
   .controls select {
     width: 100%;
-
     min-height: 46px;
-
     font-size: 1rem;
   }
 
@@ -984,7 +872,6 @@ input:focus-visible {
 
   .category-hint {
     padding-inline: 0.4rem;
-
     font-size: 0.68em;
   }
 
@@ -994,15 +881,12 @@ input:focus-visible {
 
   .answers {
     grid-template-columns: 1fr;
-
     gap: 8px;
   }
 
   .answers button {
     min-height: 52px;
-
     padding: 10px 42px;
-
     font-size: 1.05rem;
   }
 
@@ -1021,16 +905,13 @@ input:focus-visible {
 
   .app.reverse-mode .answers.reverse {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
     grid-template-rows: repeat(2, minmax(0, 1fr));
-
     gap: 10px;
   }
 
   .app.reverse-mode .answers.reverse button {
     width: 100%;
     height: 100%;
-
     padding: 6px;
   }
 
@@ -1040,13 +921,11 @@ input:focus-visible {
 
   .type-answer-container {
     flex-direction: column;
-
     gap: 8px;
   }
 
   .type-answer-input {
     width: 100%;
-
     min-height: 52px;
   }
 
@@ -1060,9 +939,7 @@ input:focus-visible {
 
   .feedback {
     justify-content: center;
-
     text-align: center;
-
     gap: 2px 6px;
   }
 
@@ -1077,7 +954,6 @@ input:focus-visible {
 
   .bottom {
     grid-template-columns: 1fr;
-
     gap: 6px;
   }
 
@@ -1087,9 +963,7 @@ input:focus-visible {
 
   .next-button {
     width: 100%;
-
     min-height: 52px;
-
     font-size: 1.05rem;
   }
 }
@@ -1110,14 +984,11 @@ input:focus-visible {
       max(8px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
   }
 
-  /* Standard mode */
+  /* -------------------------------------------------------
+     Standard mode
+     ------------------------------------------------------- */
 
   .app:not(.reverse-mode) {
-    /*
-       Allow the image to shrink first while reserving
-       enough space for the prompt and answer controls.
-    */
-
     grid-template-rows:
       auto
       auto
@@ -1131,7 +1002,9 @@ input:focus-visible {
     min-height: 90px;
   }
 
-  /* Reverse mode */
+  /* -------------------------------------------------------
+     Reverse mode
+     ------------------------------------------------------- */
 
   .app.reverse-mode {
     grid-template-rows:
@@ -1142,7 +1015,9 @@ input:focus-visible {
       auto;
   }
 
-  /* Header */
+  /* -------------------------------------------------------
+     Header
+     ------------------------------------------------------- */
 
   .header h1 {
     font-size: 1.2rem;
@@ -1152,7 +1027,9 @@ input:focus-visible {
     font-size: 0.85rem;
   }
 
-  /* Controls */
+  /* -------------------------------------------------------
+     Controls
+     ------------------------------------------------------- */
 
   .controls {
     gap: 5px;
@@ -1160,25 +1037,25 @@ input:focus-visible {
 
   .controls select {
     min-height: 40px;
-
     padding-top: 5px;
     padding-bottom: 5px;
   }
 
-  /* Prompt */
+  /* -------------------------------------------------------
+     Prompt
+     ------------------------------------------------------- */
 
   .prompt {
     min-height: 2.7em;
-
     padding-block: 1px;
-
     font-size: 1rem;
     line-height: 1.35;
-
     overflow: visible;
   }
 
-  /* Answers */
+  /* -------------------------------------------------------
+     Answers
+     ------------------------------------------------------- */
 
   .answers {
     gap: 7px;
@@ -1186,7 +1063,6 @@ input:focus-visible {
 
   .answers button {
     min-height: 44px;
-
     padding: 6px 38px;
   }
 
@@ -1199,7 +1075,9 @@ input:focus-visible {
     padding: 5px;
   }
 
-  /* Typed answer */
+  /* -------------------------------------------------------
+     Typed answer
+     ------------------------------------------------------- */
 
   .type-answer-input,
   .submit-answer,
@@ -1207,7 +1085,9 @@ input:focus-visible {
     min-height: 44px;
   }
 
-  /* Feedback */
+  /* -------------------------------------------------------
+     Feedback
+     ------------------------------------------------------- */
 
   .feedback {
     font-size: 0.95rem;
@@ -1220,20 +1100,16 @@ input:focus-visible {
 
 @media (max-width: 380px) {
   .app {
-    /*
-       Do not force the whole application into the viewport
-       if the content genuinely needs more vertical room.
-    */
-
     height: auto;
     min-height: 100dvh;
-
     padding: max(8px, env(safe-area-inset-top))
       max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom))
       max(8px, env(safe-area-inset-left));
   }
 
-  /* Header */
+  /* -------------------------------------------------------
+     Header
+     ------------------------------------------------------- */
 
   .header h1 {
     font-size: 1.1rem;
@@ -1243,13 +1119,14 @@ input:focus-visible {
     font-size: 0.82rem;
   }
 
-  /* Controls */
+  /* -------------------------------------------------------
+     Controls
+     ------------------------------------------------------- */
 
   .controls label {
     grid-template-columns:
       78px
       minmax(0, 1fr);
-
     font-size: 0.95rem;
   }
 
@@ -1257,7 +1134,9 @@ input:focus-visible {
     font-size: 0.95rem;
   }
 
-  /* Standard mode */
+  /* -------------------------------------------------------
+     Standard mode
+     ------------------------------------------------------- */
 
   .app:not(.reverse-mode) {
     grid-template-rows:
@@ -1273,26 +1152,26 @@ input:focus-visible {
     min-height: 90px;
   }
 
-  /* Prompt */
+  /* -------------------------------------------------------
+     Prompt
+     ------------------------------------------------------- */
 
   .prompt {
     min-height: 2.7em;
-
     padding-block: 1px;
-
     font-size: 1rem;
     line-height: 1.35;
-
     overflow: visible;
   }
 
   .category-hint {
     padding-inline: 0.35rem;
-
     font-size: 0.64em;
   }
 
-  /* Answers */
+  /* -------------------------------------------------------
+     Answers
+     ------------------------------------------------------- */
 
   .answers {
     gap: 6px;
@@ -1300,9 +1179,7 @@ input:focus-visible {
 
   .answers button {
     min-height: 44px;
-
     padding: 6px 36px;
-
     font-size: 1rem;
   }
 
@@ -1311,7 +1188,9 @@ input:focus-visible {
     left: 11px;
   }
 
-  /* Reverse mode */
+  /* -------------------------------------------------------
+     Reverse mode
+     ------------------------------------------------------- */
 
   .app.reverse-mode {
     grid-template-rows:
@@ -1331,7 +1210,9 @@ input:focus-visible {
     padding: 4px;
   }
 
-  /* Typed answer */
+  /* -------------------------------------------------------
+     Typed answer
+     ------------------------------------------------------- */
 
   .type-answer-input,
   .submit-answer,
@@ -1339,7 +1220,9 @@ input:focus-visible {
     min-height: 44px;
   }
 
-  /* Feedback */
+  /* -------------------------------------------------------
+     Feedback
+     ------------------------------------------------------- */
 
   .feedback {
     font-size: 0.95rem;
@@ -1362,7 +1245,9 @@ input:focus-visible {
       max(8px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   }
 
-  /* Standard mode */
+  /* -------------------------------------------------------
+     Standard mode
+     ------------------------------------------------------- */
 
   .app:not(.reverse-mode) {
     grid-template-rows:
@@ -1374,7 +1259,9 @@ input:focus-visible {
       auto;
   }
 
-  /* Reverse mode */
+  /* -------------------------------------------------------
+     Reverse mode
+     ------------------------------------------------------- */
 
   .app.reverse-mode {
     grid-template-rows:
@@ -1385,21 +1272,20 @@ input:focus-visible {
       auto;
   }
 
-  /* Header */
+  /* -------------------------------------------------------
+     Header
+     ------------------------------------------------------- */
 
   .header {
     display: grid;
-
     grid-template-columns:
       minmax(0, 1fr)
       auto;
-
     gap: 12px;
   }
 
   .header h1 {
     font-size: 1.3rem;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1407,11 +1293,12 @@ input:focus-visible {
 
   .score {
     justify-self: end;
-
     font-size: 0.9rem;
   }
 
-  /* Controls */
+  /* -------------------------------------------------------
+     Controls
+     ------------------------------------------------------- */
 
   .controls {
     gap: 5px 16px;
@@ -1421,7 +1308,9 @@ input:focus-visible {
     min-height: 38px;
   }
 
-  /* Prompt */
+  /* -------------------------------------------------------
+     Prompt
+     ------------------------------------------------------- */
 
   .prompt {
     font-size: 1rem;
@@ -1429,21 +1318,20 @@ input:focus-visible {
 
   .category-hint {
     padding: 0.1rem 0.4rem;
-
     font-size: 0.64em;
   }
 
-  /* Answers */
+  /* -------------------------------------------------------
+     Answers
+     ------------------------------------------------------- */
 
   .answers {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
     gap: 6px;
   }
 
   .answers button {
     min-height: 42px;
-
     padding: 6px 38px;
   }
 
@@ -1452,24 +1340,25 @@ input:focus-visible {
     left: 10px;
   }
 
-  /* Reverse photos */
+  /* -------------------------------------------------------
+     Reverse photos
+     ------------------------------------------------------- */
 
   .app.reverse-mode .answers.reverse {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
     grid-template-rows: repeat(2, minmax(0, 1fr));
-
     gap: 6px;
   }
 
   .app.reverse-mode .answers.reverse button {
     width: 100%;
     height: 100%;
-
     padding: 4px;
   }
 
-  /* Typed answer */
+  /* -------------------------------------------------------
+     Typed answer
+     ------------------------------------------------------- */
 
   .type-answer-container {
     gap: 8px;
@@ -1477,7 +1366,6 @@ input:focus-visible {
 
   .type-answer-input {
     min-height: 42px;
-
     padding-top: 7px;
     padding-bottom: 7px;
   }
@@ -1507,12 +1395,6 @@ input:focus-visible {
     background: var(--primary);
     border-color: var(--primary);
   }
-
-  .answers button:active:not(:disabled),
-  .next-button:active:not(:disabled),
-  .submit-answer:active:not(:disabled) {
-    transform: scale(0.98);
-  }
 }
 
 /* =========================================================
@@ -1524,15 +1406,12 @@ input:focus-visible {
     --page-bg: #12161a;
     --surface: #20262b;
     --surface-muted: #252c31;
-
     --text: #f1f3f5;
     --text-muted: #c4cdd3;
     --text-disabled: #777f86;
-
     --border: #7d8790;
     --border-light: #30383f;
     --border-hover: #aab4bd;
-
     --primary: #d9e2e8;
     --primary-hover: #ffffff;
   }
@@ -1541,7 +1420,9 @@ input:focus-visible {
     color-scheme: dark;
   }
 
-  /* Controls */
+  /* -------------------------------------------------------
+     Controls
+     ------------------------------------------------------- */
 
   .controls select {
     background: var(--surface);
@@ -1553,7 +1434,9 @@ input:focus-visible {
     border-color: var(--border-hover);
   }
 
-  /* Category */
+  /* -------------------------------------------------------
+     Category
+     ------------------------------------------------------- */
 
   .category-hint {
     border-color: #58636c;
@@ -1561,14 +1444,18 @@ input:focus-visible {
     color: var(--text-muted);
   }
 
-  /* Image */
+  /* -------------------------------------------------------
+     Image
+     ------------------------------------------------------- */
 
   .image-container {
     border-color: var(--border-light);
     background: #181d21;
   }
 
-  /* Answers */
+  /* -------------------------------------------------------
+     Answers
+     ------------------------------------------------------- */
 
   .answers button {
     background: var(--surface);
@@ -1587,13 +1474,14 @@ input:focus-visible {
     border-color: #3d444a;
   }
 
-  /* MCQ result */
+  /* -------------------------------------------------------
+     MCQ result states
+     ------------------------------------------------------- */
 
   .answers button.correct {
     background: #193d26;
     color: #a9e6b8;
     border-color: #4c9b61;
-
     box-shadow: inset 0 0 0 1px rgba(76, 155, 97, 0.2);
   }
 
@@ -1601,7 +1489,6 @@ input:focus-visible {
     background: #451f1f;
     color: #f1aaaa;
     border-color: #b95b5b;
-
     box-shadow: inset 0 0 0 1px rgba(185, 91, 91, 0.2);
   }
 
@@ -1613,13 +1500,53 @@ input:focus-visible {
     color: #e98b8b;
   }
 
-  /* Reverse */
+  /* -------------------------------------------------------
+     Reverse / Choose Photo
+     ------------------------------------------------------- */
 
   .answers.reverse button {
     background: var(--surface);
   }
 
-  /* Typed answer */
+  .app.reverse-mode .answers.reverse button.correct {
+    background: #193d26;
+    border-color: #4c9b61;
+    box-shadow: inset 0 0 0 2px rgba(76, 155, 97, 0.2);
+  }
+
+  .app.reverse-mode .answers.reverse button.incorrect {
+    background: #451f1f;
+    border-color: #b95b5b;
+    box-shadow: inset 0 0 0 2px rgba(185, 91, 91, 0.2);
+  }
+
+  /* -------------------------------------------------------
+     Reverse aircraft names
+     ------------------------------------------------------- */
+
+  .app.reverse-mode .answers.reverse .photo-choice-name {
+    color: var(--text);
+  }
+
+  .app.reverse-mode .answers.reverse .photo-choice-name.hidden-name {
+    visibility: hidden;
+  }
+
+  .app.reverse-mode .answers.reverse .photo-choice-name:not(.hidden-name) {
+    color: var(--text);
+  }
+
+  .app.reverse-mode .answers.reverse button.correct .photo-choice-name {
+    color: #a9e6b8;
+  }
+
+  .app.reverse-mode .answers.reverse button.incorrect .photo-choice-name {
+    color: #f1aaaa;
+  }
+
+  /* -------------------------------------------------------
+     Typed answer
+     ------------------------------------------------------- */
 
   .type-answer-input {
     background: var(--surface);
@@ -1631,7 +1558,6 @@ input:focus-visible {
     background: #193d26;
     border-color: #4c9b61;
     color: #a9e6b8;
-
     box-shadow: 0 0 0 3px rgba(76, 155, 97, 0.18);
   }
 
@@ -1639,7 +1565,6 @@ input:focus-visible {
     background: #403617;
     border-color: #c7a33a;
     color: #f1d98a;
-
     box-shadow: 0 0 0 3px rgba(199, 163, 58, 0.18);
   }
 
@@ -1647,11 +1572,12 @@ input:focus-visible {
     background: #451f1f;
     border-color: #b95b5b;
     color: #f1aaaa;
-
     box-shadow: 0 0 0 3px rgba(185, 91, 91, 0.18);
   }
 
-  /* Feedback */
+  /* -------------------------------------------------------
+     Feedback
+     ------------------------------------------------------- */
 
   .feedback-detail {
     color: var(--text-muted);
@@ -1673,7 +1599,9 @@ input:focus-visible {
     color: #e98b8b;
   }
 
-  /* Primary buttons */
+  /* -------------------------------------------------------
+     Primary buttons
+     ------------------------------------------------------- */
 
   .submit-answer,
   .next-button {
@@ -1688,7 +1616,9 @@ input:focus-visible {
     border-color: var(--primary-hover);
   }
 
-  /* Loading */
+  /* -------------------------------------------------------
+     Loading
+     ------------------------------------------------------- */
 
   .loading-message {
     border-color: rgba(255, 255, 255, 0.2);
@@ -1753,12 +1683,9 @@ input:focus-visible {
   *,
   *::before,
   *::after {
-    scroll-behavior: auto !important;
-
+    scroll-behaviour: auto !important;
     transition-duration: 0.01ms !important;
-
     animation-duration: 0.01ms !important;
-
     animation-iteration-count: 1 !important;
   }
 }

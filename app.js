@@ -182,6 +182,27 @@ function getAnswerValue(item, questionType) {
 }
 
 // =========================================================
+// Aircraft type identity
+// =========================================================
+
+function getAircraftTypeKey(item) {
+  const code = displayText(item?.code).toLowerCase();
+  const name = displayText(item?.name).toLowerCase();
+
+  // ICAO code is the best identifier of the aircraft type.
+  if (code) {
+    return `code:${code}`;
+  }
+
+  // Fall back to aircraft name when no code exists.
+  if (name) {
+    return `name:${name}`;
+  }
+
+  return '';
+}
+
+// =========================================================
 // Score
 // =========================================================
 
@@ -354,7 +375,7 @@ function getValidAircraftPool() {
 }
 
 // =========================================================
-// Choose aircraft using shuffle-bag
+// Choose aircraft using type-based shuffle-bag
 // =========================================================
 
 function chooseAircraft() {
@@ -364,26 +385,81 @@ function chooseAircraft() {
     return null;
   }
 
-  const poolSet = new Set(pool);
+  /*
+    Group every manifest entry by aircraft TYPE.
+
+    Multiple photographs of the same type remain available,
+    but the type itself can only be selected once per cycle.
+  */
+  const aircraftByType = new Map();
+
+  for (const item of pool) {
+    const typeKey = getAircraftTypeKey(item);
+
+    if (!typeKey) {
+      continue;
+    }
+
+    if (!aircraftByType.has(typeKey)) {
+      aircraftByType.set(typeKey, []);
+    }
+
+    aircraftByType.get(typeKey).push(item);
+  }
+
+  if (aircraftByType.size === 0) {
+    return null;
+  }
 
   /*
-     Remove anything that is no longer eligible.
-  */
+    The queue contains aircraft TYPE keys, not individual
+    manifest entries.
 
-  aircraftQueue = aircraftQueue.filter((item) => poolSet.has(item));
+    This guarantees each type occurs only once per cycle.
+  */
+  const availableTypeKeys = new Set(aircraftByType.keys());
+
+  aircraftQueue = aircraftQueue.filter((item) =>
+    availableTypeKeys.has(getAircraftTypeKey(item)),
+  );
 
   /*
-     When the current cycle is empty,
-     create a new shuffled cycle.
+    Start a new cycle containing every aircraft type exactly once.
   */
-
   if (aircraftQueue.length === 0) {
-    aircraftQueue = [...pool];
+    aircraftQueue = [...aircraftByType.values()].map((entries) => {
+      /*
+        Use one representative entry for the queue.
+        The actual question photo is selected randomly
+        when the type is drawn below.
+      */
+      return entries[0];
+    });
 
     shuffle(aircraftQueue);
   }
 
-  return aircraftQueue.pop();
+  /*
+    Take the next aircraft TYPE from the cycle.
+  */
+  const typeRepresentative = aircraftQueue.pop();
+
+  const typeKey = getAircraftTypeKey(typeRepresentative);
+
+  /*
+    Find EVERY manifest photo belonging to this aircraft type.
+  */
+  const photosForType = aircraftByType.get(typeKey);
+
+  if (!photosForType || photosForType.length === 0) {
+    return typeRepresentative;
+  }
+
+  /*
+    Randomly choose the actual question photograph from
+    ALL available manifest entries for this aircraft type.
+  */
+  return photosForType[Math.floor(Math.random() * photosForType.length)];
 }
 
 // =========================================================
@@ -506,65 +582,94 @@ function buildTextAnswerChoices(correctAircraft, questionType) {
 // =========================================================
 
 function buildPhotoChoices(correctAircraft) {
-  const usableAircraft = getValidAircraftPool().filter(
-    (item) => getAnswerValue(item, currentQuestionType) && getImagePath(item),
-  );
-
   /*
-     Ensure correct aircraft is always included.
+    Choose Photo:
+    - Exactly 4 choices
+    - All 4 must be from the SAME category
+    - All 4 must be different aircraft types
+    - The correct aircraft is always included
   */
 
-  const uniqueAircraft = [correctAircraft];
-
-  const usedAircraft = new Set([correctAircraft]);
+  const correctCategory = displayText(correctAircraft?.category);
 
   /*
-     Prefer same-category photos.
+    Only aircraft belonging to the current aircraft's
+    category can be used as choices.
   */
+  const categoryPool = aircraft.filter((item) => {
+    return (
+      displayText(item?.category) === correctCategory &&
+      getImagePath(item) &&
+      displayText(item?.name)
+    );
+  });
 
-  const sameCategory = usableAircraft.filter(
+  /*
+    Group by aircraft type so multiple photos of the
+    same aircraft cannot appear as separate choices.
+  */
+  const uniqueByType = new Map();
+
+  for (const item of categoryPool) {
+    const typeKey = getAircraftTypeKey(item);
+
+    if (!typeKey) {
+      continue;
+    }
+
+    /*
+      Always prefer the actual current aircraft entry
+      for the correct answer.
+    */
+    if (item === correctAircraft || !uniqueByType.has(typeKey)) {
+      uniqueByType.set(typeKey, item);
+    }
+  }
+
+  /*
+    Force the current aircraft into the collection.
+  */
+  const correctTypeKey = getAircraftTypeKey(correctAircraft);
+
+  uniqueByType.set(correctTypeKey, correctAircraft);
+
+  /*
+    Remove the correct aircraft type from the distractors.
+  */
+  const distractors = [...uniqueByType.values()].filter(
     (item) =>
-      item !== correctAircraft &&
-      displayText(item.category) &&
-      displayText(correctAircraft.category) &&
-      item.category === correctAircraft.category,
+      getAircraftTypeKey(item) !== correctTypeKey &&
+      displayText(item.category) === correctCategory,
   );
 
-  shuffle(sameCategory);
-
-  for (const item of sameCategory) {
-    if (uniqueAircraft.length >= 4) {
-      break;
-    }
-
-    if (!usedAircraft.has(item)) {
-      usedAircraft.add(item);
-      uniqueAircraft.push(item);
-    }
-  }
+  shuffle(distractors);
 
   /*
-     Fill remaining slots globally.
+    Exactly:
+      1 correct aircraft
+      3 different aircraft types
   */
+  const choices = [
+    correctAircraft,
+    distractors[0],
+    distractors[1],
+    distractors[2],
+  ];
 
-  if (uniqueAircraft.length < 4) {
-    const remaining = usableAircraft.filter((item) => !usedAircraft.has(item));
-
-    shuffle(remaining);
-
-    for (const item of remaining) {
-      if (uniqueAircraft.length >= 4) {
-        break;
-      }
-
-      usedAircraft.add(item);
-      uniqueAircraft.push(item);
-    }
+  /*
+    Safety check — should never fail given your manifest.
+  */
+  if (choices.some((item) => !item)) {
+    console.error('Could not create 4 same-category aircraft choices.', {
+      correctAircraft,
+      category: correctCategory,
+      choices,
+    });
   }
 
-  shuffle(uniqueAircraft);
+  shuffle(choices);
 
-  return uniqueAircraft.map((item) => ({
+  return choices.map((item) => ({
     aircraft: item,
     text: getAnswerValue(item, currentQuestionType),
   }));
@@ -672,30 +777,40 @@ function displayPhotoAnswerChoices(choices) {
       button.replaceChildren();
       button.disabled = true;
       button.hidden = true;
-
       button.setAttribute('aria-hidden', 'true');
-
       return;
     }
 
     button.hidden = false;
-
     button.removeAttribute('aria-hidden');
-
     button.replaceChildren();
 
+    /*
+      Aircraft photograph.
+    */
     const img = document.createElement('img');
 
     img.src = getImagePath(choice.aircraft);
-
     img.alt = `Aircraft photo option ${index + 1}`;
-
     img.draggable = false;
 
+    /*
+      Aircraft name.
+
+      Hidden until the question has been answered.
+      The CSS reserves the space, so revealing the name
+      does NOT move or resize the photograph.
+    */
+    const name = document.createElement('span');
+
+    name.className = 'photo-choice-name hidden-name';
+    name.textContent = choice.text;
+    name.setAttribute('aria-label', `Answer: ${choice.text}`);
+
     button.appendChild(img);
+    button.appendChild(name);
 
     button.dataset.answer = choice.text;
-
     button.dataset.correct =
       choice.aircraft === currentAircraft ? 'true' : 'false';
 
@@ -973,11 +1088,22 @@ function answerReversePhoto(button) {
   }
 
   const isCorrect = button.dataset.correct === 'true';
-
   const correctAnswer = getAnswerValue(currentAircraft, currentQuestionType);
 
   answered = true;
   total += 1;
+
+  /*
+    Reveal the aircraft name for EVERY photo now that
+    the user has made their selection.
+  */
+  answerButtons.forEach((answerButton) => {
+    const nameElement = answerButton.querySelector('.photo-choice-name');
+
+    if (nameElement) {
+      nameElement.classList.remove('hidden-name');
+    }
+  });
 
   if (isCorrect) {
     score += 1;
@@ -993,6 +1119,9 @@ function answerReversePhoto(button) {
 
     setFeedback('incorrect', '✕ Incorrect', 'Correct photo:', correctAnswer);
 
+    /*
+      Mark the correct photo as well.
+    */
     answerButtons.forEach((answerButton) => {
       if (answerButton.dataset.correct === 'true') {
         answerButton.classList.add('correct');
@@ -1000,6 +1129,9 @@ function answerReversePhoto(button) {
     });
   }
 
+  /*
+    Disable all photo choices after answering.
+  */
   answerButtons.forEach((answerButton) => {
     answerButton.disabled = true;
   });
