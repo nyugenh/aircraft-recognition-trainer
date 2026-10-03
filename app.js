@@ -1093,10 +1093,7 @@ function answerReversePhoto(button) {
   answered = true;
   total += 1;
 
-  /*
-    Reveal the aircraft name for EVERY photo now that
-    the user has made their selection.
-  */
+  // Reveal ALL 4 names after selection.
   answerButtons.forEach((answerButton) => {
     const nameElement = answerButton.querySelector('.photo-choice-name');
 
@@ -1119,9 +1116,7 @@ function answerReversePhoto(button) {
 
     setFeedback('incorrect', '✕ Incorrect', 'Correct photo:', correctAnswer);
 
-    /*
-      Mark the correct photo as well.
-    */
+    // Mark the correct photo as well.
     answerButtons.forEach((answerButton) => {
       if (answerButton.dataset.correct === 'true') {
         answerButton.classList.add('correct');
@@ -1129,9 +1124,7 @@ function answerReversePhoto(button) {
     });
   }
 
-  /*
-    Disable all photo choices after answering.
-  */
+  // Disable all photo choices.
   answerButtons.forEach((answerButton) => {
     answerButton.disabled = true;
   });
