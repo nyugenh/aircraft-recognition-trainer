@@ -154,6 +154,42 @@ function displayText(value) {
 }
 
 // =========================================================
+// Grammar helpers
+// =========================================================
+
+function getIndefiniteArticle(text) {
+  const value = displayText(text);
+
+  if (!value) {
+    return 'a';
+  }
+
+  // Use the first spoken-looking word.
+  const firstWord = value
+    .replace(/^[^A-Za-z0-9]+/, '')
+    .split(/\s+/)[0]
+    .toLowerCase();
+
+  // Words that begin with a vowel sound.
+  if (
+    /^(a|e|i|o|u)/.test(firstWord) ||
+    /^(honest|hour|heir|honour|airbus|embraer|antonov|ilyushin|aviation)/.test(
+      firstWord,
+    )
+  ) {
+    return 'an';
+  }
+
+  return 'a';
+}
+
+function formatPointsWithGrammar(points) {
+  const formattedPoints = formatPoints(points);
+
+  return `${formattedPoints} ${Number(points) === 1 ? 'point' : 'points'}`;
+}
+
+// =========================================================
 // Image path
 // =========================================================
 
@@ -691,10 +727,11 @@ function displayQuestion() {
   let questionText;
 
   if (answerModeSelect.value === 'reverse') {
-    questionText = `Which photo is ${getAnswerValue(
-      currentAircraft,
-      currentQuestionType,
-    )}?`;
+    const aircraftName = getAnswerValue(currentAircraft, currentQuestionType);
+
+    questionText = `Which photo is ${getIndefiniteArticle(
+      aircraftName,
+    )} ${aircraftName}?`;
   } else if (currentQuestionType === 'Aircraft name') {
     questionText = 'Which aircraft is this?';
   } else {
@@ -993,7 +1030,7 @@ function submitTypedAnswer() {
 
     setFeedback(
       'partial',
-      `◐ Partial · ${formatPoints(points)} point`,
+      `◐ Partial · ${formatPointsWithGrammar(points)}`,
       'Correct answer:',
       correctAnswer,
     );

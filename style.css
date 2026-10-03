@@ -382,7 +382,7 @@ body {
   background: var(--correct-bg);
   border-color: var(--correct-border);
   color: var(--correct-text);
-  font-weight: 700;
+  font-weight: 600;
   box-shadow: inset 0 0 0 1px rgba(38, 115, 59, 0.15);
 }
 
@@ -390,7 +390,7 @@ body {
   background: var(--incorrect-bg);
   border-color: var(--incorrect-border);
   color: var(--incorrect-text);
-  font-weight: 700;
+  font-weight: 600;
   box-shadow: inset 0 0 0 1px rgba(165, 42, 42, 0.15);
 }
 
