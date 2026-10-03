@@ -532,22 +532,22 @@
       "image_path": "p23_01_airbus_a320_a320.png"
     },
     {
-      "key": "p23_02_airbus_a319",
-      "label": "Airbus A319",
+      "key": "p23_02_airbus_a319_a319",
+      "label": "Airbus A319 (A319)",
       "name": "Airbus A319",
-      "code": "",
+      "code": "A319",
       "category": "Medium Jets",
       "page": 23,
-      "image_path": "p23_02_airbus_a319.png"
+      "image_path": "p23_02_airbus_a319_a319.png"
     },
     {
-      "key": "p24_01_airbus_a321",
-      "label": "Airbus A321",
+      "key": "p24_01_airbus_a321_a321",
+      "label": "Airbus A321 (A321)",
       "name": "Airbus A321",
-      "code": "",
+      "code": "A321",
       "category": "Medium Jets",
       "page": 24,
-      "image_path": "p24_01_airbus_a321.png"
+      "image_path": "p24_01_airbus_a321_a321.png"
     },
     {
       "key": "p24_02_airbus_a220_100_300_bcs1_bcs3",
