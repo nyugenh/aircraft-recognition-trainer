@@ -1,4 +1,4 @@
-const MANIFEST_PATH = 'aircraft_quiz_assets/manifest.json';
+const MANIFEST_PATH = 'manifest.json';
 const ASSET_FOLDER = 'aircraft_quiz_assets';
 
 // =========================================================
@@ -1121,11 +1121,12 @@ function answerReversePhoto(button) {
     }
   });
 
+  // Force the browser to recalculate the layout immediately.
+  void answerContainer.offsetHeight;
+
   if (isCorrect) {
     score += 1;
-
     button.classList.add('correct');
-
     setFeedback('correct', '✓ Correct!');
   } else {
     button.classList.add('incorrect');
@@ -1146,9 +1147,13 @@ function answerReversePhoto(button) {
   });
 
   updateScore();
-
   nextButton.disabled = false;
-  nextButton.focus();
+
+  // Give the browser one frame to paint the names
+  // before moving focus to the Next button.
+  requestAnimationFrame(() => {
+    nextButton.focus();
+  });
 }
 
 // =========================================================
