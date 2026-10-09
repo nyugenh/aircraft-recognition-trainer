@@ -1,43 +1,62 @@
 /* =========================================================
    Aircraft Recognition Trainer
-   Clean + accessible + responsive training UI
+   Refactored responsive stylesheet
    ========================================================= */
 
 /* =========================================================
-   Design tokens
+   1. Design tokens
    ========================================================= */
 
 :root {
+  color-scheme: light;
+
   --page-bg: #f5f7fa;
-  --surface: #ffffff;
+  --surface: #fff;
   --surface-muted: #eef2f5;
+
   --text: #17202a;
   --text-muted: #53616d;
   --text-disabled: #7c858d;
+
   --border: #687481;
   --border-light: #d8dee3;
   --border-hover: #3f4d5a;
+
   --primary: #263746;
   --primary-hover: #172630;
+  --primary-text: #fff;
+
   --focus: #e09b00;
+
   --correct-bg: #dff3e4;
   --correct-border: #26733b;
   --correct-text: #164d27;
+
   --partial-bg: #fff3d6;
   --partial-border: #c28700;
   --partial-text: #6b4b00;
+
   --incorrect-bg: #f9dddd;
   --incorrect-border: #a52a2a;
   --incorrect-text: #6e1b1b;
+
   --radius: 9px;
+  --radius-small: 6px;
+
   --control-height: 52px;
   --page-gap: 10px;
   --control-gap: 16px;
   --answer-gap: 10px;
+
+  --page-padding: 12px;
+  --content-width: 1100px;
+
+  --transition-fast: 120ms ease;
+  --transition-normal: 160ms ease;
 }
 
 /* =========================================================
-   Base
+   2. Reset and base
    ========================================================= */
 
 *,
@@ -51,27 +70,43 @@
 }
 
 html {
-  height: 100%;
+  min-height: 100%;
   color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
-  margin: 0;
+  min-width: 280px;
   min-height: 100%;
+  margin: 0;
+
   background: var(--page-bg);
   color: var(--text);
+
   font-family:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif;
   font-size: 16px;
   line-height: 1.5;
+
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* =========================================================
-   Accessibility
-   ========================================================= */
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+  cursor: default;
+}
 
 .visually-hidden {
   position: absolute;
@@ -87,17 +122,10 @@ body {
 }
 
 /* =========================================================
-   Main application
+   3. Application layout
    ========================================================= */
 
 .app {
-  width: min(1100px, 100%);
-  height: 100vh;
-  height: 100dvh;
-  margin: 0 auto;
-  padding: max(12px, env(safe-area-inset-top))
-    max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
-    max(12px, env(safe-area-inset-left));
   display: grid;
   grid-template-rows:
     auto
@@ -113,12 +141,19 @@ body {
     'prompt'
     'answers'
     'bottom';
-  row-gap: var(--page-gap);
-}
 
-/* =========================================================
-   Grid areas
-   ========================================================= */
+  gap: var(--page-gap);
+
+  width: min(100%, var(--content-width));
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  margin-inline: auto;
+  padding: max(var(--page-padding), env(safe-area-inset-top))
+    max(var(--page-padding), env(safe-area-inset-right))
+    max(var(--page-padding), env(safe-area-inset-bottom))
+    max(var(--page-padding), env(safe-area-inset-left));
+}
 
 .header {
   grid-area: header;
@@ -144,285 +179,24 @@ body {
   grid-area: bottom;
 }
 
-/* =========================================================
-   Header
-   ========================================================= */
+/* Text-only questions must not stretch the answer area. */
 
-.header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
+.app.no-image {
+  grid-template-rows: auto auto auto auto auto;
+  grid-template-areas:
+    'header'
+    'controls'
+    'prompt'
+    'answers'
+    'bottom';
+  align-content: start;
 }
 
-.header h1 {
-  min-width: 0;
-  margin: 0;
-  font-size: clamp(1.35rem, 3vw, 2rem);
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  overflow-wrap: anywhere;
-}
-
-.score {
-  flex-shrink: 0;
-  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-  line-height: 1.3;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-/* =========================================================
-   Controls
-   ========================================================= */
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px var(--control-gap);
-}
-
-.controls label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
-  line-height: 1.3;
-  font-weight: 600;
-}
-
-.controls select {
-  min-height: 46px;
-  padding: 8px 36px 8px 12px;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text);
-  font: inherit;
-  font-weight: 500;
-  cursor: pointer;
-  transition:
-    background-color 0.12s ease,
-    border-color 0.12s ease;
-}
-
-.controls select:hover {
-  border-color: var(--border-hover);
-}
-
-/* =========================================================
-   Aircraft image
-   ========================================================= */
-
-.image-container {
-  position: relative;
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  background: var(--surface);
-}
-
-#aircraft-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  border-radius: 8px;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-user-drag: none;
-  opacity: 1;
-  transition: opacity 0.15s ease;
-}
-
-#aircraft-image.loading {
-  opacity: 0;
-}
-
-/* =========================================================
-   Loading message
-   ========================================================= */
-
-.loading-message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.app.no-image .image-container {
   display: none;
-  padding: 8px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 8px;
-  background: rgba(0, 0, 0, 0.78);
-  color: #ffffff;
-  font-size: 0.9rem;
-  line-height: 1.3;
-  font-weight: 600;
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 2;
 }
 
-.loading-message:not(.hidden) {
-  display: block;
-}
-
-/* =========================================================
-   Question prompt
-   ========================================================= */
-
-.prompt {
-  min-width: 0;
-  min-height: 1.35em;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.5rem;
-  text-align: center;
-  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
-  line-height: 1.35;
-  font-weight: 700;
-  overflow-wrap: anywhere;
-}
-
-/* =========================================================
-   Category hint
-   ========================================================= */
-
-.category-hint {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0.12rem 0.45rem;
-  border: 1px solid #aeb7bf;
-  border-radius: 999px;
-  background: var(--surface-muted);
-  color: var(--text-muted);
-  font-size: 0.62em;
-  line-height: 1.2;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* =========================================================
-   Answer area
-   ========================================================= */
-
-.answers {
-  min-width: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--answer-gap);
-}
-
-/* =========================================================
-   Multiple-choice buttons
-   ========================================================= */
-
-.answers button {
-  position: relative;
-  width: 100%;
-  min-width: 0;
-  min-height: var(--control-height);
-  padding: 10px 42px;
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text);
-  font: inherit;
-  font-size: clamp(1rem, 1.8vw, 1.15rem);
-  line-height: 1.3;
-  font-weight: 600;
-  text-align: center;
-  overflow-wrap: anywhere;
-  cursor: pointer;
-  transition:
-    background-color 0.12s ease,
-    border-color 0.12s ease,
-    box-shadow 0.12s ease,
-    opacity 0.12s ease;
-}
-
-.answers button:hover:not(:disabled) {
-  background: #eef3f7;
-  border-color: var(--border-hover);
-}
-
-.answers button:disabled {
-  cursor: default;
-}
-
-/* =========================================================
-   Loading
-   ========================================================= */
-
-.answers.loading button {
-  background: #e5e8eb;
-  color: var(--text-disabled);
-  border-color: #c4c9ce;
-  cursor: wait;
-}
-
-/* =========================================================
-   Multiple-choice result states
-   ========================================================= */
-
-.answers button.correct {
-  background: var(--correct-bg);
-  border-color: var(--correct-border);
-  color: var(--correct-text);
-  font-weight: 600;
-  box-shadow: inset 0 0 0 1px rgba(38, 115, 59, 0.15);
-}
-
-.answers button.incorrect {
-  background: var(--incorrect-bg);
-  border-color: var(--incorrect-border);
-  color: var(--incorrect-text);
-  font-weight: 600;
-  box-shadow: inset 0 0 0 1px rgba(165, 42, 42, 0.15);
-}
-
-/* =========================================================
-   Multiple-choice result symbols
-   ========================================================= */
-
-.answers button.correct::before,
-.answers button.incorrect::before {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.15rem;
-  line-height: 1;
-  font-weight: 800;
-  pointer-events: none;
-}
-
-.answers button.correct::before {
-  content: '✓';
-  color: var(--correct-border);
-}
-
-.answers button.incorrect::before {
-  content: '✕';
-  color: var(--incorrect-border);
-}
-
-/* =========================================================
-   Reverse mode — Choose Photo
-   ========================================================= */
+/* Choose Photo uses the available space for its photo tiles. */
 
 .app.reverse-mode {
   grid-template-rows:
@@ -440,31 +214,329 @@ body {
   align-content: stretch;
 }
 
-.app.reverse-mode .answers.reverse {
+/* =========================================================
+   4. Header
+   ========================================================= */
+
+.header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.header h1 {
+  min-width: 0;
+  margin: 0;
+
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.score {
+  flex-shrink: 0;
+
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  line-height: 1.3;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   5. Mode and category controls
+   ========================================================= */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px var(--control-gap);
+  min-width: 0;
+}
+
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.controls select {
+  min-width: 0;
+  min-height: 46px;
+  padding: 8px 36px 8px 12px;
+
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.controls select:hover {
+  border-color: var(--border-hover);
+}
+
+/* =========================================================
+   6. Aircraft image
+   ========================================================= */
+
+.image-container {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+#aircraft-image {
+  display: block;
+
   width: 100%;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
+
+  object-fit: contain;
+  object-position: center;
+  border-radius: inherit;
+
+  opacity: 1;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+
+  transition: opacity var(--transition-normal);
+}
+
+#aircraft-image.loading {
+  opacity: 0;
+}
+
+.loading-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+
+  display: none;
+  padding: 8px 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+
+  font-size: 0.9rem;
+  line-height: 1.3;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.loading-message:not(.hidden) {
+  display: block;
+}
+
+/* =========================================================
+   7. Question prompt
+   ========================================================= */
+
+.prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.5rem;
+
+  min-width: 0;
+  min-height: 1.35em;
+  margin: 0;
+  padding: 0;
+
+  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+  line-height: 1.35;
+  font-weight: 700;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.app.no-image .prompt {
+  min-height: 3em;
+  font-size: clamp(1.25rem, 2.8vw, 1.65rem);
+}
+
+.category-hint {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+  padding: 0.12rem 0.45rem;
+
+  border: 1px solid #aeb7bf;
+  border-radius: 999px;
+  background: var(--surface-muted);
+  color: var(--text-muted);
+
+  font-size: 0.62em;
+  line-height: 1.2;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   8. Answer area and multiple-choice buttons
+   ========================================================= */
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--answer-gap);
+
+  min-width: 0;
+}
+
+.app.no-image .answers {
+  width: min(800px, 100%);
+  margin-inline: auto;
+}
+
+.answers button {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+  min-height: var(--control-height);
+  padding: 10px 42px;
+
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.3;
+  font-weight: 600;
+  text-align: center;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.answers button:hover:not(:disabled) {
+  background: #eef3f7;
+  border-color: var(--border-hover);
+}
+
+.answers button:disabled {
+  cursor: default;
+}
+
+/* Loading state */
+
+.answers.loading button {
+  background: #e5e8eb;
+  color: var(--text-disabled);
+  border-color: #c4c9ce;
+  cursor: wait;
+}
+
+/* Correct and incorrect answers */
+
+.answers button.correct {
+  background: var(--correct-bg);
+  border-color: var(--correct-border);
+  color: var(--correct-text);
+  box-shadow: inset 0 0 0 1px rgba(38, 115, 59, 0.15);
+}
+
+.answers button.incorrect {
+  background: var(--incorrect-bg);
+  border-color: var(--incorrect-border);
+  color: var(--incorrect-text);
+  box-shadow: inset 0 0 0 1px rgba(165, 42, 42, 0.15);
+}
+
+/* Result symbols */
+
+.answers button.correct::before,
+.answers button.incorrect::before {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+
+  font-size: 1.15rem;
+  line-height: 1;
+  font-weight: 800;
+  pointer-events: none;
+}
+
+.answers button.correct::before {
+  content: '✓';
+  color: var(--correct-border);
+}
+
+.answers button.incorrect::before {
+  content: '✕';
+  color: var(--incorrect-border);
+}
+
+/* =========================================================
+   9. Choose Photo mode
+   ========================================================= */
+
+.app.reverse-mode .answers.reverse {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: 12px;
+
+  width: 100%;
+  height: 100%;
 }
 
-/* =========================================================
-   Reverse photo tile
-   ========================================================= */
-
 .app.reverse-mode .answers.reverse button {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 1.8em;
+  align-items: center;
+  justify-items: center;
+  gap: 4px;
+
   width: 100%;
   height: 100%;
   min-height: 0;
   padding: 8px;
-  display: grid;
-  grid-template-rows:
-    minmax(0, 1fr)
-    1.8em;
-  align-items: center;
-  justify-items: center;
-  gap: 4px;
   overflow: hidden;
 }
 
@@ -472,40 +544,37 @@ body {
   content: none !important;
 }
 
-/* =========================================================
-   Reverse photo
-   ========================================================= */
-
 .app.reverse-mode .answers.reverse button img {
   display: block;
+
   width: 100%;
   height: 100%;
   min-width: 0;
   min-height: 0;
   max-width: 100%;
   max-height: 100%;
+
   object-fit: contain;
   border-radius: 5px;
+
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
 }
 
-/* =========================================================
-   Reverse aircraft name
-   ========================================================= */
-
 .app.reverse-mode .answers.reverse .photo-choice-name {
   display: block;
+
   width: 100%;
   height: 1.8em;
   padding: 2px 5px 3px;
+  overflow: hidden;
+
   color: transparent;
   font-size: clamp(0.78rem, 1.5vw, 0.95rem);
   line-height: 1.2;
   font-weight: 700;
   text-align: center;
-  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -519,10 +588,6 @@ body {
   color: var(--text);
 }
 
-/* =========================================================
-   Reverse result states
-   ========================================================= */
-
 .app.reverse-mode .answers.reverse button.correct {
   background: var(--correct-bg);
   border-color: var(--correct-border);
@@ -535,10 +600,6 @@ body {
   box-shadow: inset 0 0 0 2px rgba(165, 42, 42, 0.15);
 }
 
-/* =========================================================
-   Reverse result-state names
-   ========================================================= */
-
 .app.reverse-mode .answers.reverse button.correct .photo-choice-name {
   color: var(--correct-text);
 }
@@ -548,7 +609,7 @@ body {
 }
 
 /* =========================================================
-   Typed answer
+   10. Typed answers
    ========================================================= */
 
 .type-answer-container {
@@ -556,6 +617,8 @@ body {
   align-items: stretch;
   justify-content: center;
   gap: 10px;
+
+  min-width: 0;
 }
 
 .type-answer-input {
@@ -563,19 +626,21 @@ body {
   min-width: 0;
   min-height: var(--control-height);
   padding: 10px 14px;
+
   border: 2px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
   color: var(--text);
-  font: inherit;
+
   font-size: 1.1rem;
   font-weight: 500;
   outline: none;
+
   transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease,
-    box-shadow 0.15s ease,
-    color 0.15s ease;
+    background-color var(--transition-normal),
+    border-color var(--transition-normal),
+    box-shadow var(--transition-normal),
+    color var(--transition-normal);
 }
 
 .type-answer-input:hover:not(:disabled) {
@@ -591,9 +656,7 @@ body {
   cursor: default;
 }
 
-/* =========================================================
-   Typed result states
-   ========================================================= */
+/* Typed-answer result states */
 
 .type-answer-input.correct {
   background: var(--correct-bg);
@@ -617,56 +680,70 @@ body {
 }
 
 /* =========================================================
-   Submit button
+   11. Submit and next buttons
    ========================================================= */
+
+.submit-answer,
+.next-button {
+  min-height: 50px;
+  padding: 10px 20px;
+
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: var(--primary-text);
+
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
+  line-height: 1.3;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    opacity var(--transition-fast);
+}
 
 .submit-answer {
   flex-shrink: 0;
   min-width: 110px;
-  min-height: var(--control-height);
-  padding: 10px 18px;
-  border: 2px solid var(--primary);
-  border-radius: var(--radius);
-  background: var(--primary);
-  color: #ffffff;
-  font: inherit;
+  padding-inline: 18px;
   font-size: 1.05rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    background-color 0.12s ease,
-    border-color 0.12s ease,
-    opacity 0.12s ease;
 }
 
-.submit-answer:hover:not(:disabled) {
+.submit-answer:hover:not(:disabled),
+.next-button:hover:not(:disabled) {
   background: var(--primary-hover);
   border-color: var(--primary-hover);
 }
 
-.submit-answer:disabled {
+.submit-answer:disabled,
+.next-button:disabled {
   opacity: 0.5;
   cursor: default;
 }
 
 /* =========================================================
-   Feedback
+   12. Feedback and bottom area
    ========================================================= */
 
 .feedback {
-  min-height: 1.35em;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 3px 7px;
-  text-align: left;
+
+  min-height: 1.35em;
+
   font-size: clamp(0.95rem, 1.8vw, 1.1rem);
   line-height: 1.35;
   font-weight: 600;
+  text-align: left;
   overflow-wrap: anywhere;
 }
 
-.feedback-result {
+.feedback-result,
+.feedback-answer {
   font-weight: 700;
 }
 
@@ -677,7 +754,6 @@ body {
 
 .feedback-answer {
   color: var(--text);
-  font-weight: 700;
 }
 
 .feedback.correct-feedback .feedback-result {
@@ -692,15 +768,9 @@ body {
   color: var(--incorrect-border);
 }
 
-/* =========================================================
-   Bottom area
-   ========================================================= */
-
 .bottom {
   display: grid;
-  grid-template-columns:
-    minmax(0, 1fr)
-    auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px 16px;
 }
@@ -709,40 +779,12 @@ body {
   min-width: 0;
 }
 
-/* =========================================================
-   Next button
-   ========================================================= */
-
 .next-button {
   min-height: 50px;
-  padding: 10px 20px;
-  border: 2px solid var(--primary);
-  border-radius: var(--radius);
-  background: var(--primary);
-  color: #ffffff;
-  font: inherit;
-  font-size: clamp(1rem, 1.8vw, 1.1rem);
-  line-height: 1.3;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    background-color 0.12s ease,
-    border-color 0.12s ease,
-    opacity 0.12s ease;
-}
-
-.next-button:hover:not(:disabled) {
-  background: var(--primary-hover);
-  border-color: var(--primary-hover);
-}
-
-.next-button:disabled {
-  opacity: 0.5;
-  cursor: default;
 }
 
 /* =========================================================
-   Keyboard focus
+   13. Keyboard focus
    ========================================================= */
 
 button:focus-visible,
@@ -753,7 +795,7 @@ input:focus-visible {
 }
 
 /* =========================================================
-   Medium screens
+   14. Tablets and smaller screens
    ========================================================= */
 
 @media (max-width: 700px) {
@@ -772,7 +814,7 @@ input:focus-visible {
 }
 
 /* =========================================================
-   Phones
+   15. Phones
    ========================================================= */
 
 @media (max-width: 550px) {
@@ -788,9 +830,7 @@ input:focus-visible {
       max(12px, env(safe-area-inset-left));
   }
 
-  /* -------------------------------------------------------
-   Mobile header
-   ------------------------------------------------------- */
+  /* Header */
 
   .header {
     display: grid;
@@ -813,39 +853,19 @@ input:focus-visible {
     justify-self: end;
     font-size: 0.9rem;
     line-height: 1.25;
-    white-space: nowrap;
   }
 
-  /* -------------------------------------------------------
-     Standard mode layout
-     ------------------------------------------------------- */
-
-  .app:not(.reverse-mode) {
-    grid-template-rows:
-      auto
-      auto
-      minmax(180px, 1fr)
-      auto
-      auto
-      auto;
-  }
-
-  /* -------------------------------------------------------
-     Controls
-     ------------------------------------------------------- */
+  /* Controls */
 
   .controls {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 7px;
   }
 
   .controls label {
     display: grid;
-    grid-template-columns:
-      90px
-      minmax(0, 1fr);
-    align-items: center;
+    grid-template-columns: 90px minmax(0, 1fr);
     gap: 10px;
     font-size: 1rem;
   }
@@ -856,9 +876,31 @@ input:focus-visible {
     font-size: 1rem;
   }
 
-  /* -------------------------------------------------------
-     Question
-     ------------------------------------------------------- */
+  /* Image mode */
+
+  .app:not(.reverse-mode):not(.no-image) {
+    grid-template-rows:
+      auto
+      auto
+      minmax(180px, 1fr)
+      auto
+      auto
+      auto;
+  }
+
+  /* Text-only questions stay compact */
+
+  .app.no-image {
+    grid-template-rows: auto auto auto auto auto;
+    align-content: start;
+  }
+
+  .app.no-image .prompt {
+    min-height: 90px;
+    font-size: 1.25rem;
+  }
+
+  /* Question */
 
   .prompt {
     font-size: 1.15rem;
@@ -870,12 +912,10 @@ input:focus-visible {
     font-size: 0.68em;
   }
 
-  /* -------------------------------------------------------
-     Standard answers
-     ------------------------------------------------------- */
+  /* Multiple choice */
 
   .answers {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 8px;
   }
 
@@ -885,9 +925,7 @@ input:focus-visible {
     font-size: 1.05rem;
   }
 
-  /* -------------------------------------------------------
-     Reverse mode
-     ------------------------------------------------------- */
+  /* Choose Photo */
 
   .app.reverse-mode {
     grid-template-rows:
@@ -910,9 +948,7 @@ input:focus-visible {
     padding: 6px;
   }
 
-  /* -------------------------------------------------------
-     Typed answer
-     ------------------------------------------------------- */
+  /* Typed answers */
 
   .type-answer-container {
     flex-direction: column;
@@ -928,27 +964,18 @@ input:focus-visible {
     width: 100%;
   }
 
-  /* -------------------------------------------------------
-     Feedback
-     ------------------------------------------------------- */
+  /* Feedback */
 
   .feedback {
     justify-content: center;
-    text-align: center;
     gap: 2px 6px;
+    text-align: center;
   }
 
-  .feedback-detail,
-  .feedback-answer {
-    width: auto;
-  }
-
-  /* -------------------------------------------------------
-     Bottom
-     ------------------------------------------------------- */
+  /* Bottom area */
 
   .bottom {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 6px;
   }
 
@@ -960,7 +987,7 @@ input:focus-visible {
 }
 
 /* =========================================================
-   Short phones
+   16. Short phones
    ========================================================= */
 
 @media (max-width: 550px) and (max-height: 700px) {
@@ -975,11 +1002,7 @@ input:focus-visible {
       max(8px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
   }
 
-  /* -------------------------------------------------------
-     Standard mode
-     ------------------------------------------------------- */
-
-  .app:not(.reverse-mode) {
+  .app:not(.reverse-mode):not(.no-image) {
     grid-template-rows:
       auto
       auto
@@ -989,26 +1012,20 @@ input:focus-visible {
       auto;
   }
 
-  .app:not(.reverse-mode) .image-container {
+  .app:not(.reverse-mode):not(.no-image) .image-container {
     min-height: 90px;
   }
 
-  /* -------------------------------------------------------
-     Reverse mode
-     ------------------------------------------------------- */
+  /* Keep no-photo layouts compact on short screens. */
 
-  .app.reverse-mode {
-    grid-template-rows:
-      auto
-      auto
-      auto
-      minmax(190px, 1fr)
-      auto;
+  .app.no-image {
+    grid-template-rows: auto auto auto auto auto;
+    align-content: start;
   }
 
-  /* -------------------------------------------------------
-     Header
-     ------------------------------------------------------- */
+  .app.no-image .prompt {
+    min-height: 70px;
+  }
 
   .header h1 {
     font-size: 1.2rem;
@@ -1018,23 +1035,14 @@ input:focus-visible {
     font-size: 0.85rem;
   }
 
-  /* -------------------------------------------------------
-     Controls
-     ------------------------------------------------------- */
-
   .controls {
     gap: 5px;
   }
 
   .controls select {
     min-height: 40px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-block: 5px;
   }
-
-  /* -------------------------------------------------------
-     Prompt
-     ------------------------------------------------------- */
 
   .prompt {
     min-height: 2.7em;
@@ -1044,9 +1052,9 @@ input:focus-visible {
     overflow: visible;
   }
 
-  /* -------------------------------------------------------
-     Answers
-     ------------------------------------------------------- */
+  .app.no-image .prompt {
+    font-size: 1.1rem;
+  }
 
   .answers {
     gap: 7px;
@@ -1057,7 +1065,15 @@ input:focus-visible {
     padding: 6px 38px;
   }
 
-  .answers.reverse,
+  .app.reverse-mode {
+    grid-template-rows:
+      auto
+      auto
+      auto
+      minmax(190px, 1fr)
+      auto;
+  }
+
   .app.reverse-mode .answers.reverse {
     gap: 7px;
   }
@@ -1066,19 +1082,11 @@ input:focus-visible {
     padding: 5px;
   }
 
-  /* -------------------------------------------------------
-     Typed answer
-     ------------------------------------------------------- */
-
   .type-answer-input,
   .submit-answer,
   .next-button {
     min-height: 44px;
   }
-
-  /* -------------------------------------------------------
-     Feedback
-     ------------------------------------------------------- */
 
   .feedback {
     font-size: 0.95rem;
@@ -1086,7 +1094,7 @@ input:focus-visible {
 }
 
 /* =========================================================
-   Very narrow phones
+   17. Very narrow phones
    ========================================================= */
 
 @media (max-width: 380px) {
@@ -1098,10 +1106,6 @@ input:focus-visible {
       max(8px, env(safe-area-inset-left));
   }
 
-  /* -------------------------------------------------------
-     Header
-     ------------------------------------------------------- */
-
   .header h1 {
     font-size: 1.1rem;
   }
@@ -1110,14 +1114,8 @@ input:focus-visible {
     font-size: 0.82rem;
   }
 
-  /* -------------------------------------------------------
-     Controls
-     ------------------------------------------------------- */
-
   .controls label {
-    grid-template-columns:
-      78px
-      minmax(0, 1fr);
+    grid-template-columns: 78px minmax(0, 1fr);
     font-size: 0.95rem;
   }
 
@@ -1125,11 +1123,7 @@ input:focus-visible {
     font-size: 0.95rem;
   }
 
-  /* -------------------------------------------------------
-     Standard mode
-     ------------------------------------------------------- */
-
-  .app:not(.reverse-mode) {
+  .app:not(.reverse-mode):not(.no-image) {
     grid-template-rows:
       auto
       auto
@@ -1139,13 +1133,18 @@ input:focus-visible {
       auto;
   }
 
-  .app:not(.reverse-mode) .image-container {
+  .app:not(.reverse-mode):not(.no-image) .image-container {
     min-height: 90px;
   }
 
-  /* -------------------------------------------------------
-     Prompt
-     ------------------------------------------------------- */
+  .app.no-image {
+    grid-template-rows: auto auto auto auto auto;
+  }
+
+  .app.no-image .prompt {
+    min-height: 65px;
+    font-size: 1.05rem;
+  }
 
   .prompt {
     min-height: 2.7em;
@@ -1159,10 +1158,6 @@ input:focus-visible {
     padding-inline: 0.35rem;
     font-size: 0.64em;
   }
-
-  /* -------------------------------------------------------
-     Answers
-     ------------------------------------------------------- */
 
   .answers {
     gap: 6px;
@@ -1179,10 +1174,6 @@ input:focus-visible {
     left: 11px;
   }
 
-  /* -------------------------------------------------------
-     Reverse mode
-     ------------------------------------------------------- */
-
   .app.reverse-mode {
     grid-template-rows:
       auto
@@ -1192,7 +1183,6 @@ input:focus-visible {
       auto;
   }
 
-  .answers.reverse,
   .app.reverse-mode .answers.reverse {
     gap: 6px;
   }
@@ -1201,27 +1191,15 @@ input:focus-visible {
     padding: 4px;
   }
 
-  /* -------------------------------------------------------
-     Typed answer
-     ------------------------------------------------------- */
-
   .type-answer-input,
   .submit-answer,
   .next-button {
     min-height: 44px;
   }
-
-  /* -------------------------------------------------------
-     Feedback
-     ------------------------------------------------------- */
-
-  .feedback {
-    font-size: 0.95rem;
-  }
 }
 
 /* =========================================================
-   Landscape phones
+   18. Landscape phones
    ========================================================= */
 
 @media (max-width: 800px) and (orientation: landscape) {
@@ -1236,11 +1214,7 @@ input:focus-visible {
       max(8px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   }
 
-  /* -------------------------------------------------------
-     Standard mode
-     ------------------------------------------------------- */
-
-  .app:not(.reverse-mode) {
+  .app:not(.reverse-mode):not(.no-image) {
     grid-template-rows:
       auto
       auto
@@ -1250,9 +1224,14 @@ input:focus-visible {
       auto;
   }
 
-  /* -------------------------------------------------------
-     Reverse mode
-     ------------------------------------------------------- */
+  .app.no-image {
+    grid-template-rows: auto auto auto auto auto;
+    align-content: start;
+  }
+
+  .app.no-image .prompt {
+    min-height: 70px;
+  }
 
   .app.reverse-mode {
     grid-template-rows:
@@ -1263,15 +1242,9 @@ input:focus-visible {
       auto;
   }
 
-  /* -------------------------------------------------------
-     Header
-     ------------------------------------------------------- */
-
   .header {
     display: grid;
-    grid-template-columns:
-      minmax(0, 1fr)
-      auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 12px;
   }
 
@@ -1287,10 +1260,6 @@ input:focus-visible {
     font-size: 0.9rem;
   }
 
-  /* -------------------------------------------------------
-     Controls
-     ------------------------------------------------------- */
-
   .controls {
     gap: 5px 16px;
   }
@@ -1299,22 +1268,18 @@ input:focus-visible {
     min-height: 38px;
   }
 
-  /* -------------------------------------------------------
-     Prompt
-     ------------------------------------------------------- */
-
   .prompt {
     font-size: 1rem;
+  }
+
+  .app.no-image .prompt {
+    font-size: 1.1rem;
   }
 
   .category-hint {
     padding: 0.1rem 0.4rem;
     font-size: 0.64em;
   }
-
-  /* -------------------------------------------------------
-     Answers
-     ------------------------------------------------------- */
 
   .answers {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1331,10 +1296,6 @@ input:focus-visible {
     left: 10px;
   }
 
-  /* -------------------------------------------------------
-     Reverse photos
-     ------------------------------------------------------- */
-
   .app.reverse-mode .answers.reverse {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(2, minmax(0, 1fr));
@@ -1347,18 +1308,13 @@ input:focus-visible {
     padding: 4px;
   }
 
-  /* -------------------------------------------------------
-     Typed answer
-     ------------------------------------------------------- */
-
   .type-answer-container {
     gap: 8px;
   }
 
   .type-answer-input {
     min-height: 42px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    padding-block: 7px;
   }
 
   .submit-answer,
@@ -1368,7 +1324,7 @@ input:focus-visible {
 }
 
 /* =========================================================
-   Touch devices
+   19. Touch devices
    ========================================================= */
 
 @media (hover: none) and (pointer: coarse) {
@@ -1377,11 +1333,7 @@ input:focus-visible {
     border-color: var(--border);
   }
 
-  .next-button:hover:not(:disabled) {
-    background: var(--primary);
-    border-color: var(--primary);
-  }
-
+  .next-button:hover:not(:disabled),
   .submit-answer:hover:not(:disabled) {
     background: var(--primary);
     border-color: var(--primary);
@@ -1389,31 +1341,29 @@ input:focus-visible {
 }
 
 /* =========================================================
-   Dark mode
+   20. Dark mode
    ========================================================= */
 
 @media (prefers-color-scheme: dark) {
   :root {
+    color-scheme: dark;
+
     --page-bg: #12161a;
     --surface: #20262b;
     --surface-muted: #252c31;
+
     --text: #f1f3f5;
     --text-muted: #c4cdd3;
     --text-disabled: #777f86;
+
     --border: #7d8790;
     --border-light: #30383f;
     --border-hover: #aab4bd;
+
     --primary: #d9e2e8;
-    --primary-hover: #ffffff;
+    --primary-hover: #fff;
+    --primary-text: #17202a;
   }
-
-  html {
-    color-scheme: dark;
-  }
-
-  /* -------------------------------------------------------
-     Controls
-     ------------------------------------------------------- */
 
   .controls select {
     background: var(--surface);
@@ -1425,28 +1375,16 @@ input:focus-visible {
     border-color: var(--border-hover);
   }
 
-  /* -------------------------------------------------------
-     Category
-     ------------------------------------------------------- */
-
   .category-hint {
     border-color: #58636c;
     background: var(--surface-muted);
     color: var(--text-muted);
   }
 
-  /* -------------------------------------------------------
-     Image
-     ------------------------------------------------------- */
-
   .image-container {
     border-color: var(--border-light);
     background: #181d21;
   }
-
-  /* -------------------------------------------------------
-     Answers
-     ------------------------------------------------------- */
 
   .answers button {
     background: var(--surface);
@@ -1465,22 +1403,18 @@ input:focus-visible {
     border-color: #3d444a;
   }
 
-  /* -------------------------------------------------------
-     MCQ result states
-     ------------------------------------------------------- */
-
-  .answers button.correct {
+  .answers button.correct,
+  .app.reverse-mode .answers.reverse button.correct {
     background: #193d26;
     color: #a9e6b8;
     border-color: #4c9b61;
-    box-shadow: inset 0 0 0 1px rgba(76, 155, 97, 0.2);
   }
 
-  .answers button.incorrect {
+  .answers button.incorrect,
+  .app.reverse-mode .answers.reverse button.incorrect {
     background: #451f1f;
     color: #f1aaaa;
     border-color: #b95b5b;
-    box-shadow: inset 0 0 0 1px rgba(185, 91, 91, 0.2);
   }
 
   .answers button.correct::before {
@@ -1491,42 +1425,6 @@ input:focus-visible {
     color: #e98b8b;
   }
 
-  /* -------------------------------------------------------
-     Reverse / Choose Photo
-     ------------------------------------------------------- */
-
-  .answers.reverse button {
-    background: var(--surface);
-  }
-
-  .app.reverse-mode .answers.reverse button.correct {
-    background: #193d26;
-    border-color: #4c9b61;
-    box-shadow: inset 0 0 0 2px rgba(76, 155, 97, 0.2);
-  }
-
-  .app.reverse-mode .answers.reverse button.incorrect {
-    background: #451f1f;
-    border-color: #b95b5b;
-    box-shadow: inset 0 0 0 2px rgba(185, 91, 91, 0.2);
-  }
-
-  /* -------------------------------------------------------
-     Reverse aircraft names
-     ------------------------------------------------------- */
-
-  .app.reverse-mode .answers.reverse .photo-choice-name {
-    color: var(--text);
-  }
-
-  .app.reverse-mode .answers.reverse .photo-choice-name.hidden-name {
-    visibility: hidden;
-  }
-
-  .app.reverse-mode .answers.reverse .photo-choice-name:not(.hidden-name) {
-    color: var(--text);
-  }
-
   .app.reverse-mode .answers.reverse button.correct .photo-choice-name {
     color: #a9e6b8;
   }
@@ -1534,10 +1432,6 @@ input:focus-visible {
   .app.reverse-mode .answers.reverse button.incorrect .photo-choice-name {
     color: #f1aaaa;
   }
-
-  /* -------------------------------------------------------
-     Typed answer
-     ------------------------------------------------------- */
 
   .type-answer-input {
     background: var(--surface);
@@ -1566,10 +1460,6 @@ input:focus-visible {
     box-shadow: 0 0 0 3px rgba(185, 91, 91, 0.18);
   }
 
-  /* -------------------------------------------------------
-     Feedback
-     ------------------------------------------------------- */
-
   .feedback-detail {
     color: var(--text-muted);
   }
@@ -1590,27 +1480,6 @@ input:focus-visible {
     color: #e98b8b;
   }
 
-  /* -------------------------------------------------------
-     Primary buttons
-     ------------------------------------------------------- */
-
-  .submit-answer,
-  .next-button {
-    background: var(--primary);
-    color: #17202a;
-    border-color: var(--primary);
-  }
-
-  .submit-answer:hover:not(:disabled),
-  .next-button:hover:not(:disabled) {
-    background: var(--primary-hover);
-    border-color: var(--primary-hover);
-  }
-
-  /* -------------------------------------------------------
-     Loading
-     ------------------------------------------------------- */
-
   .loading-message {
     border-color: rgba(255, 255, 255, 0.2);
     background: rgba(0, 0, 0, 0.82);
@@ -1618,7 +1487,7 @@ input:focus-visible {
 }
 
 /* =========================================================
-   Forced colours / Windows High Contrast
+   21. Windows high contrast / forced colours
    ========================================================= */
 
 @media (forced-colors: active) {
@@ -1667,14 +1536,14 @@ input:focus-visible {
 }
 
 /* =========================================================
-   Reduced motion
+   22. Reduced motion
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    scroll-behaviour: auto !important;
+    scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
