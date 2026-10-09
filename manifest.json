@@ -28,7 +28,15 @@
         "024.jpg",
         "025.jpg",
         "026.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 90,
+        "max": 100
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "2",
@@ -58,7 +66,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 122,
+        "max": 122
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "3",
@@ -88,7 +104,15 @@
         "017.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 140,
+        "max": 150
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "4",
@@ -107,7 +131,15 @@
         "006.jpg",
         "007.jpg",
         "008.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 140,
+        "max": 150
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "5",
@@ -116,13 +148,15 @@
       "code": "C210",
       "category": "Light Singles",
       "query": "Cessna 210 Centurion",
-      "images": [
-        "000.jpg",
-        "001.jpg",
-        "002.jpg",
-        "003.jpg",
-        "004.jpg"
-      ]
+      "images": ["000.jpg", "001.jpg", "002.jpg", "003.jpg", "004.jpg"],
+      "cruise_speed_kt": {
+        "min": 170,
+        "max": 170
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "6",
@@ -152,7 +186,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 100,
+        "max": 120
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "7",
@@ -182,7 +224,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 110,
+        "max": 130
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "8",
@@ -205,7 +255,15 @@
         "013.jpg",
         "014.jpg",
         "015.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 130,
+        "max": 150
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "9",
@@ -221,7 +279,15 @@
         "003.jpg",
         "005.jpg",
         "006.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 140,
+        "max": 160
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "10",
@@ -251,7 +317,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 200,
+        "max": 200
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "11",
@@ -269,7 +343,15 @@
         "006.jpg",
         "007.jpg",
         "008.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 160,
+        "max": 180
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "12",
@@ -278,13 +360,15 @@
       "code": "BE35",
       "category": "Light Singles",
       "query": "Bonanza 35",
-      "images": [
-        "000.jpg",
-        "002.jpg",
-        "004.jpg",
-        "008.jpg",
-        "009.jpg"
-      ]
+      "images": ["000.jpg", "002.jpg", "004.jpg", "008.jpg", "009.jpg"],
+      "cruise_speed_kt": {
+        "min": 160,
+        "max": 180
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "13",
@@ -302,7 +386,15 @@
         "007.jpg",
         "008.jpg",
         "009.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 150,
+        "max": 170
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "14",
@@ -332,7 +424,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 160,
+        "max": 180
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "15",
@@ -362,7 +462,15 @@
         "023.jpg",
         "024.jpg",
         "025.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 50,
+        "max": 100
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "16",
@@ -379,7 +487,15 @@
         "008.jpg",
         "010.jpg",
         "011.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 50,
+        "max": 100
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "17",
@@ -409,7 +525,15 @@
         "025.jpg",
         "026.jpg",
         "027.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 180,
+        "max": 180
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "18",
@@ -431,7 +555,15 @@
         "010.jpg",
         "011.jpg",
         "012.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 150,
+        "max": 180
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "19",
@@ -452,7 +584,15 @@
         "008.jpg",
         "009.jpg",
         "010.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 170,
+        "max": 170
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "20",
@@ -480,7 +620,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 180,
+        "max": 220
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "21",
@@ -499,7 +647,15 @@
         "007.jpg",
         "008.jpg",
         "010.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 150,
+        "max": 180
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "22",
@@ -527,7 +683,15 @@
         "019.jpg",
         "021.jpg",
         "022.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 175,
+        "max": 175
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "23",
@@ -557,7 +721,15 @@
         "020.jpg",
         "021.jpg",
         "022.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 150,
+        "max": 180
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "24",
@@ -587,7 +759,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 210,
+        "max": 210
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "25",
@@ -617,7 +797,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 180,
+        "max": 200
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "26",
@@ -642,7 +830,15 @@
         "013.jpg",
         "014.jpg",
         "015.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 155,
+        "max": 155
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "27",
@@ -672,7 +868,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 150,
+        "max": 200
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "28",
@@ -702,7 +906,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 140,
+        "max": 160
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "29",
@@ -732,7 +944,15 @@
         "022.jpg",
         "023.jpg",
         "024.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 130,
+        "max": 150
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "30",
@@ -751,7 +971,15 @@
         "006.jpg",
         "007.jpg",
         "008.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 150,
+        "max": 190
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "31",
@@ -774,7 +1002,15 @@
         "010.jpg",
         "011.jpg",
         "014.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 270,
+        "max": 270
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "32",
@@ -804,7 +1040,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 160,
+        "max": 160
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "33",
@@ -834,7 +1078,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 240,
+        "max": 280
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "34",
@@ -843,10 +1095,15 @@
       "code": "B350",
       "category": "Turboprops",
       "query": "B350 King Air",
-      "images": [
-        "000.jpg",
-        "001.jpg"
-      ]
+      "images": ["000.jpg", "001.jpg"],
+      "cruise_speed_kt": {
+        "min": 300,
+        "max": 300
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "35",
@@ -868,7 +1125,15 @@
         "009.jpg",
         "010.jpg",
         "011.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 280,
+        "max": 280
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "36",
@@ -894,7 +1159,15 @@
         "013.jpg",
         "014.jpg",
         "015.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 290,
+        "max": 290
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "37",
@@ -920,7 +1193,15 @@
         "015.jpg",
         "016.jpg",
         "017.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 270,
+        "max": 270
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "38",
@@ -950,7 +1231,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 250,
+        "max": 250
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "39",
@@ -979,7 +1268,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 250,
+        "max": 250
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "40",
@@ -1006,7 +1303,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 360,
+        "max": 360
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "41",
@@ -1030,7 +1335,15 @@
         "011.jpg",
         "012.jpg",
         "013.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 275,
+        "max": 275
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "42",
@@ -1051,7 +1364,15 @@
         "008.jpg",
         "009.jpg",
         "010.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 240,
+        "max": 270
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "43",
@@ -1081,7 +1402,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 240,
+        "max": 240
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "44",
@@ -1097,7 +1426,15 @@
         "004.jpg",
         "005.jpg",
         "006.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 400,
+        "max": 460
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "45",
@@ -1118,7 +1455,15 @@
         "008.jpg",
         "009.jpg",
         "011.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 400,
+        "max": 460
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "46",
@@ -1138,7 +1483,15 @@
         "011.jpg",
         "012.jpg",
         "013.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 400,
+        "max": 460
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "47",
@@ -1161,7 +1514,15 @@
         "010.jpg",
         "013.jpg",
         "014.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 470,
+        "max": 490
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "48",
@@ -1177,7 +1538,15 @@
         "004.jpg",
         "005.jpg",
         "006.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 480,
+        "max": 480
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "49",
@@ -1186,13 +1555,15 @@
       "code": "GLF6",
       "category": "Business Jets",
       "query": "Gulfstream 6",
-      "images": [
-        "000.jpg",
-        "001.jpg",
-        "002.jpg",
-        "003.jpg",
-        "004.jpg"
-      ]
+      "images": ["000.jpg", "001.jpg", "002.jpg", "003.jpg", "004.jpg"],
+      "cruise_speed_kt": {
+        "min": 470,
+        "max": 490
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "50",
@@ -1218,7 +1589,15 @@
         "013.jpg",
         "014.jpg",
         "015.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 490,
+        "max": 490
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "51",
@@ -1248,7 +1627,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 450,
+        "max": 480
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "52",
@@ -1278,7 +1665,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 360,
+        "max": 370
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "53",
@@ -1308,7 +1703,15 @@
         "019.jpg",
         "020.jpg",
         "021.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 430,
+        "max": 470
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "54",
@@ -1336,7 +1739,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.9,
+        "max": 0.9
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "55",
@@ -1366,7 +1777,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 450,
+        "max": 480
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "56",
@@ -1375,13 +1794,15 @@
       "code": "WW24",
       "category": "Business Jets",
       "query": "Westwind",
-      "images": [
-        "000.jpg",
-        "001.jpg",
-        "003.jpg",
-        "004.jpg",
-        "005.jpg"
-      ]
+      "images": ["000.jpg", "001.jpg", "003.jpg", "004.jpg", "005.jpg"],
+      "cruise_speed_kt": {
+        "min": 400,
+        "max": 450
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "57",
@@ -1411,7 +1832,15 @@
         "019.jpg",
         "020.jpg",
         "021.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 430,
+        "max": 460
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "58",
@@ -1441,7 +1870,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 400,
+        "max": 440
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "59",
@@ -1471,7 +1908,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.78,
+        "max": 0.78
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "60",
@@ -1501,7 +1946,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.78,
+        "max": 0.78
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "61",
@@ -1531,7 +1984,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.78,
+        "max": 0.78
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "62",
@@ -1554,7 +2015,15 @@
         "012.jpg",
         "013.jpg",
         "014.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.78,
+        "max": 0.78
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "63",
@@ -1584,7 +2053,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.7,
+        "max": 0.7
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "64",
@@ -1612,7 +2089,15 @@
         "016.jpg",
         "017.jpg",
         "018.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.7,
+        "max": 0.7
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "65",
@@ -1642,7 +2127,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.78,
+        "max": 0.8
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "66",
@@ -1672,7 +2165,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.78,
+        "max": 0.8
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "67",
@@ -1702,7 +2203,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.78,
+        "max": 0.8
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "68",
@@ -1723,7 +2232,15 @@
         "009.jpg",
         "010.jpg",
         "013.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.74,
+        "max": 0.76
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "69",
@@ -1750,7 +2267,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.76,
+        "max": 0.76
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "70",
@@ -1776,7 +2301,15 @@
         "013.jpg",
         "014.jpg",
         "015.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.7,
+        "max": 0.7
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "71",
@@ -1801,7 +2334,15 @@
         "015.jpg",
         "016.jpg",
         "017.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.7,
+        "max": 0.7
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "72",
@@ -1822,7 +2363,15 @@
         "011.jpg",
         "013.jpg",
         "014.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.67,
+        "max": 0.67
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "73",
@@ -1846,7 +2395,15 @@
         "011.jpg",
         "012.jpg",
         "013.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.67,
+        "max": 0.67
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "74",
@@ -1872,7 +2429,15 @@
         "015.jpg",
         "016.jpg",
         "017.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.67,
+        "max": 0.67
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "75",
@@ -1902,7 +2467,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.78,
+        "max": 0.8
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": "Heavy",
+      "speed_type": "cruise"
     },
     {
       "key": "76",
@@ -1932,7 +2505,15 @@
         "023.jpg",
         "024.jpg",
         "025.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.75,
+        "max": 0.78
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "77",
@@ -1960,7 +2541,15 @@
         "015.jpg",
         "016.jpg",
         "017.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.75,
+        "max": 0.78
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "78",
@@ -1980,7 +2569,15 @@
         "016.jpg",
         "017.jpg",
         "018.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.855,
+        "max": 0.855
+      },
+      "wake_category": "Heavy",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "79",
@@ -2002,7 +2599,15 @@
         "010.jpg",
         "011.jpg",
         "012.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.84,
+        "max": 0.84
+      },
+      "wake_category": "Heavy",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "80",
@@ -2030,7 +2635,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.85,
+        "max": 0.85
+      },
+      "wake_category": "Heavy",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "81",
@@ -2059,7 +2672,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.81,
+        "max": 0.81
+      },
+      "wake_category": "Heavy",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "82",
@@ -2081,7 +2702,15 @@
         "010.jpg",
         "011.jpg",
         "012.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.82,
+        "max": 0.82
+      },
+      "wake_category": "Heavy",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "83",
@@ -2099,7 +2728,15 @@
         "006.jpg",
         "007.jpg",
         "008.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.85,
+        "max": 0.85
+      },
+      "wake_category": "Heavy",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "84",
@@ -2120,7 +2757,15 @@
         "018.jpg",
         "021.jpg",
         "022.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.85,
+        "max": 0.85
+      },
+      "wake_category": "Super",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "85",
@@ -2150,7 +2795,15 @@
         "020.jpg",
         "021.jpg",
         "022.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 120,
+        "max": 120
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "86",
@@ -2174,7 +2827,15 @@
         "012.jpg",
         "015.jpg",
         "017.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 125,
+        "max": 125
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "87",
@@ -2198,7 +2859,15 @@
         "013.jpg",
         "014.jpg",
         "015.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 125,
+        "max": 125
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "88",
@@ -2214,7 +2883,12 @@
         "003.jpg",
         "004.jpg",
         "005.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "89",
@@ -2236,7 +2910,15 @@
         "009.jpg",
         "010.jpg",
         "011.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 145,
+        "max": 145
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "90",
@@ -2254,7 +2936,15 @@
         "006.jpg",
         "007.jpg",
         "008.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 124,
+        "max": 124
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "91",
@@ -2274,7 +2964,15 @@
         "008.jpg",
         "009.jpg",
         "010.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 157,
+        "max": 157
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "92",
@@ -2283,13 +2981,15 @@
       "code": "R22",
       "category": "Helicopters",
       "query": "Robinson 22 Helicopter",
-      "images": [
-        "000.jpg",
-        "001.jpg",
-        "004.jpg",
-        "005.jpg",
-        "006.jpg"
-      ]
+      "images": ["000.jpg", "001.jpg", "004.jpg", "005.jpg", "006.jpg"],
+      "cruise_speed_kt": {
+        "min": 82,
+        "max": 82
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "93",
@@ -2317,7 +3017,12 @@
         "015.jpg",
         "016.jpg",
         "017.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "94",
@@ -2340,7 +3045,15 @@
         "013.jpg",
         "014.jpg",
         "015.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 124,
+        "max": 124
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "95",
@@ -2362,7 +3075,15 @@
         "015.jpg",
         "016.jpg",
         "017.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 150,
+        "max": 150
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "96",
@@ -2388,7 +3109,15 @@
         "016.jpg",
         "017.jpg",
         "018.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 150,
+        "max": 150
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "97",
@@ -2409,7 +3138,15 @@
         "009.jpg",
         "010.jpg",
         "011.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 145,
+        "max": 145
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "98",
@@ -2432,7 +3169,15 @@
         "012.jpg",
         "013.jpg",
         "014.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 150,
+        "max": 150
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "99",
@@ -2457,7 +3202,15 @@
         "013.jpg",
         "014.jpg",
         "015.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 135,
+        "max": 135
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "100",
@@ -2485,7 +3238,15 @@
         "019.jpg",
         "020.jpg",
         "021.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.86,
+        "max": 0.86
+      },
+      "wake_category": "Unknown",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "101",
@@ -2504,7 +3265,15 @@
         "013.jpg",
         "014.jpg",
         "016.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 1.6,
+        "max": 1.6
+      },
+      "wake_category": "Unknown",
+      "wake_category_when_leading": null,
+      "speed_type": "maximum"
     },
     {
       "key": "102",
@@ -2534,7 +3303,15 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.88,
+        "max": 0.88
+      },
+      "wake_category": "Unknown",
+      "wake_category_when_leading": null,
+      "speed_type": "maximum"
     },
     {
       "key": "103",
@@ -2561,7 +3338,15 @@
         "018.jpg",
         "019.jpg",
         "020.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.76,
+        "max": 0.76
+      },
+      "wake_category": "Heavy",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "104",
@@ -2585,7 +3370,15 @@
         "014.jpg",
         "016.jpg",
         "017.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 330,
+        "max": 330
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "105",
@@ -2615,7 +3408,15 @@
         "021.jpg",
         "022.jpg",
         "023.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.78,
+        "max": 0.8
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "106",
@@ -2633,7 +3434,15 @@
         "007.jpg",
         "008.jpg",
         "009.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 370,
+        "max": 370
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "107",
@@ -2657,7 +3466,15 @@
         "015.jpg",
         "016.jpg",
         "017.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.76,
+        "max": 0.76
+      },
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "108",
@@ -2666,12 +3483,15 @@
       "code": "KC30",
       "category": "Military",
       "query": "KC-30A",
-      "images": [
-        "000.jpg",
-        "001.jpg",
-        "002.jpg",
-        "003.jpg"
-      ]
+      "images": ["000.jpg", "001.jpg", "002.jpg", "003.jpg"],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": {
+        "min": 0.81,
+        "max": 0.81
+      },
+      "wake_category": "Heavy",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "109",
@@ -2689,7 +3509,15 @@
         "005.jpg",
         "006.jpg",
         "007.jpg"
-      ]
+      ],
+      "cruise_speed_kt": {
+        "min": 240,
+        "max": 240
+      },
+      "cruise_speed_mach": null,
+      "wake_category": "Medium",
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     },
     {
       "key": "110",
@@ -2719,7 +3547,12 @@
         "017.jpg",
         "018.jpg",
         "019.jpg"
-      ]
+      ],
+      "cruise_speed_kt": null,
+      "cruise_speed_mach": null,
+      "wake_category": null,
+      "wake_category_when_leading": null,
+      "speed_type": "cruise"
     }
   ]
 }
