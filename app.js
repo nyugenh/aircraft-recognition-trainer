@@ -15,7 +15,14 @@ const ANSWER_MODES = [
   { value: 'enter-icao', label: 'Type ICAO', semantic: 'icao' },
 ];
 
-const QUESTION_TYPES = new Set(['photo', 'name', 'icao', 'speed', 'wake']);
+const QUESTION_TYPES = new Set([
+  'photo',
+  'name',
+  'icao',
+  'cruise-speed',
+  'speed',
+  'wake',
+]);
 const WAKE_CATEGORIES = ['Light', 'Medium', 'Heavy', 'Super'];
 const KEYBOARD_HELP =
   'Keyboard shortcuts: 1 through 4 select an answer. ' +
@@ -33,8 +40,51 @@ const byId = (id) => document.getElementById(id);
 const appElement = $('.app');
 const categorySelect = byId('category');
 const questionTypeSelect = byId('question-type');
-const answerTypeSelect = byId('answer-type');
-const answerTypeLabel = byId('answer-type-label');
+let answerTypeSelect = byId('answer-type');
+let answerTypeLabel = byId('answer-type-label');
+let answerTypeCaption = null;
+
+// Create the answer-type control if the HTML page does not include it.
+// This is also relabelled to "Aircraft identifier" for speed and wake questions.
+if (!answerTypeSelect) {
+  const controlsElement = $('.controls');
+  if (controlsElement) {
+    if (!answerTypeLabel) {
+      answerTypeLabel = document.createElement('label');
+      answerTypeLabel.id = 'answer-type-label';
+      answerTypeLabel.textContent = 'Answer type';
+      controlsElement.appendChild(answerTypeLabel);
+    }
+
+    answerTypeSelect = document.createElement('select');
+    answerTypeSelect.id = 'answer-type';
+    answerTypeSelect.name = 'answer-type';
+    answerTypeSelect.setAttribute('aria-label', 'Answer type');
+    answerTypeLabel.appendChild(answerTypeSelect);
+  }
+}
+
+// Keep the label text separate from the select. Updating label.textContent
+// would remove the nested select element from the DOM.
+if (answerTypeLabel) {
+  const existingCaptionNode = [...answerTypeLabel.childNodes].find(
+    (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim(),
+  );
+
+  answerTypeCaption = document.createElement('span');
+  answerTypeCaption.className = 'answer-type-caption';
+  answerTypeCaption.textContent = existingCaptionNode
+    ? existingCaptionNode.textContent.trim()
+    : 'Answer';
+
+  if (existingCaptionNode) {
+    existingCaptionNode.replaceWith(answerTypeCaption);
+  } else {
+    answerTypeLabel.insertBefore(answerTypeCaption, answerTypeSelect);
+  }
+
+  answerTypeLabel.dataset.defaultLabel = answerTypeCaption.textContent;
+}
 const imageContainer = byId('image-container');
 const imageElement = byId('aircraft-image');
 const loadingMessage = byId('loading-message');
@@ -53,6 +103,30 @@ photoToggleButton.type = 'button';
 photoToggleButton.className = 'photo-toggle';
 photoToggleButton.hidden = true;
 photoToggleButton.setAttribute('aria-pressed', 'false');
+
+// Keep the eye icon and label as separate elements so updating the label
+// never removes the icon from the button.
+const photoToggleIcon = document.createElementNS(
+  'http://www.w3.org/2000/svg',
+  'svg',
+);
+photoToggleIcon.setAttribute('viewBox', '0 0 24 24');
+photoToggleIcon.setAttribute('fill', 'none');
+photoToggleIcon.setAttribute('stroke', 'currentColor');
+photoToggleIcon.setAttribute('stroke-width', '2');
+photoToggleIcon.setAttribute('stroke-linecap', 'round');
+photoToggleIcon.setAttribute('stroke-linejoin', 'round');
+photoToggleIcon.setAttribute('aria-hidden', 'true');
+const photoToggleText = document.createElement('span');
+photoToggleButton.replaceChildren(photoToggleIcon, photoToggleText);
+
+function updatePhotoToggleContents(visible) {
+  photoToggleText.textContent = visible ? 'Hide photos' : 'Show photos';
+  photoToggleIcon.innerHTML = visible
+    ? '<path d="M2 2l20 20"></path><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 8.3 4.5 9.5 6.3a1.2 1.2 0 0 1 0 1.4 16 16 0 0 1-3.1 3.4"></path><path d="M6.2 6.2a16 16 0 0 0-3.7 5.1 1.2 1.2 0 0 0 0 1.4C3.7 14.5 7 19 12 19a10 10 0 0 0 3-.5"></path>'
+    : '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle>';
+}
+updatePhotoToggleContents(false);
 
 // ============================================================
 // Application state
@@ -120,7 +194,7 @@ function getAnswerMode() {
 }
 
 function isSpecialQuestionType(type = getQuestionType()) {
-  return type === 'speed' || type === 'wake';
+  return type === 'speed' || type === 'wake' || type === 'cruise-speed';
 }
 
 function getAnswerSemanticType(mode = getAnswerMode()) {
@@ -153,20 +227,42 @@ function ensureAnswerTypeOptions() {
 
 function syncAnswerOptions() {
   const questionType = getQuestionType();
+  const specialQuestion = isSpecialQuestionType(questionType);
+  const cruiseSpeedQuestion = questionType === 'cruise-speed';
 
-  if (isSpecialQuestionType(questionType)) {
-    if (answerTypeLabel) answerTypeLabel.hidden = true;
-    answerTypeSelect.disabled = true;
-    return;
+  if (answerTypeLabel) {
+    answerTypeLabel.hidden = false;
+    if (answerTypeCaption) {
+      answerTypeCaption.textContent = specialQuestion
+        ? 'Identifier'
+        : answerTypeLabel.dataset.defaultLabel || 'Answer';
+    }
   }
 
-  if (answerTypeLabel) answerTypeLabel.hidden = false;
   answerTypeSelect.disabled = false;
 
   for (const option of answerTypeSelect.options) {
-    const invalid = getAnswerSemanticType(option.value) === questionType;
+    const definition = ANSWER_MODES.find((item) => item.value === option.value);
+    const invalid = specialQuestion
+      ? !['name', 'icao'].includes(option.value)
+      : getAnswerSemanticType(option.value) === questionType;
+
     option.disabled = invalid;
     option.hidden = invalid;
+
+    if (definition) {
+      option.textContent = specialQuestion
+        ? ({ name: 'Aircraft name', icao: 'ICAO code' }[option.value] ??
+          definition.label)
+        : definition.label;
+    }
+  }
+
+  if (specialQuestion) {
+    if (!['name', 'icao'].includes(answerTypeSelect.value)) {
+      answerTypeSelect.value = 'name';
+    }
+    return;
   }
 
   const selectedOption =
@@ -285,6 +381,11 @@ function getAircraftDisplayName(item) {
   return getAnswerValue(item, 'name') || getAnswerValue(item, 'icao');
 }
 
+function getSpecialAircraftIdentifier(item) {
+  const type = getAnswerMode() === 'icao' ? 'icao' : 'name';
+  return getAnswerValue(item, type) || getAircraftDisplayName(item);
+}
+
 // ============================================================
 // Speed and wake-category helpers
 // ============================================================
@@ -308,6 +409,117 @@ function getCruiseSpeedRange(item) {
   }
 
   return { min, max };
+}
+
+function getMachCruiseRange(item) {
+  // Supported manifest fields: cruise_speed_mach, cruise_mach, or mach_cruise.
+  const speed =
+    item?.cruise_speed_mach ?? item?.cruise_mach ?? item?.mach_cruise;
+  if (speed == null) return null;
+
+  const min = Number(typeof speed === 'object' ? speed.min : speed);
+  const max = Number(typeof speed === 'object' ? speed.max : speed);
+  if (
+    !Number.isFinite(min) ||
+    !Number.isFinite(max) ||
+    min <= 0 ||
+    min > max ||
+    max > 2
+  )
+    return null;
+  return { min, max };
+}
+
+function getSpeedRange(item, unit) {
+  return unit === 'mach' ? getMachCruiseRange(item) : getCruiseSpeedRange(item);
+}
+
+function getSpeedSegments(unit) {
+  // Fixed, memorable bands that stay the same for every question.
+  // Boundaries are lower-inclusive and upper-exclusive, except the final band.
+  if (unit === 'mach') {
+    return [
+      { min: -Infinity, max: 0.5, label: 'Below Mach 0.5' },
+      { min: 0.5, max: 0.7, label: 'Mach 0.5–0.7' },
+      { min: 0.7, max: 0.85, label: 'Mach 0.7–0.85' },
+      { min: 0.85, max: Infinity, label: 'Mach 0.85 and above' },
+    ];
+  }
+
+  return [
+    { min: -Infinity, max: 150, label: 'Below 150 kt' },
+    { min: 150, max: 250, label: '150–250 kt' },
+    { min: 250, max: 350, label: '250–350 kt' },
+    { min: 350, max: Infinity, label: '350 kt and above' },
+  ];
+}
+
+function getSpeedSegment(item, unit) {
+  const range = getSpeedRange(item, unit);
+  if (!range) return null;
+
+  const speed = (range.min + range.max) / 2;
+  const segments = getSpeedSegments(unit);
+  return (
+    segments.find((segment, index) =>
+      index === segments.length - 1
+        ? speed >= segment.min
+        : speed >= segment.min && speed < segment.max,
+    ) || null
+  );
+}
+
+function getSpeedChoices(unit) {
+  return getSpeedSegments(unit).map((segment) => segment.label);
+}
+
+function displayCruiseSpeedQuestion(item, unit) {
+  const correctSegment = getSpeedSegment(item, unit);
+  const imagePath = getRandomImagePath(item);
+  const choices = getSpeedChoices(unit);
+  if (!correctSegment || !imagePath || choices.length !== 4) {
+    setLoading(false);
+    promptElement.textContent = 'Unable to create a cruise speed question.';
+    feedbackElement.textContent =
+      unit === 'mach'
+        ? 'Check that cruise_speed_mach ranges are available in manifest.json.'
+        : 'Check that cruise-speed ranges are available in manifest.json.';
+    return false;
+  }
+
+  const correctAnswer = correctSegment.label;
+  specialQuestionData = {
+    type: 'cruise-speed',
+    correctAnswer,
+    feedbackAnswer: correctAnswer,
+  };
+  promptElement.replaceChildren();
+  promptElement.appendChild(
+    document.createTextNode(
+      unit === 'mach'
+        ? `What is the typical cruise Mach number of the ${getSpecialAircraftIdentifier(item)}?`
+        : `What is the cruise speed of the ${getSpecialAircraftIdentifier(item)}?`,
+    ),
+  );
+  appendCategoryHint(promptElement, item.category, 'Aircraft category');
+  displaySpecialChoices(choices, correctAnswer, true);
+
+  loadQuestionImage(imagePath, 'Cruise speed question image')
+    .then(() => {
+      setLoading(false);
+      answerButtons.forEach((button) => {
+        if (!button.hidden) button.disabled = false;
+      });
+      focusFirstAnswer();
+    })
+    .catch((error) => {
+      setLoading(false);
+      feedbackElement.textContent = error.message;
+      answerButtons.forEach((button) => {
+        button.disabled = true;
+      });
+    });
+  return true;
 }
 
 function getWakeCategory(item) {
@@ -431,13 +643,36 @@ function filterPoolForCombination(pool) {
   const questionType = getQuestionType();
 
   if (questionType === 'speed') {
-    return pool.filter((item) => getCruiseSpeedRange(item));
+    return pool.filter(
+      (item) =>
+        (Boolean(getCruiseSpeedRange(item)) ||
+          Boolean(getMachCruiseRange(item))) &&
+        Boolean(
+          getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
+        ),
+    );
+  }
+
+  if (questionType === 'cruise-speed') {
+    return pool.filter(
+      (item) =>
+        getAircraftImages(item).length > 0 &&
+        (Boolean(getCruiseSpeedRange(item)) ||
+          Boolean(getMachCruiseRange(item))) &&
+        Boolean(
+          getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
+        ),
+    );
   }
 
   if (questionType === 'wake') {
     return pool.filter(
       (item) =>
-        getAircraftImages(item).length > 0 && Boolean(getWakeCategory(item)),
+        getAircraftImages(item).length > 0 &&
+        Boolean(getWakeCategory(item)) &&
+        Boolean(
+          getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
+        ),
     );
   }
 
@@ -630,52 +865,6 @@ function displayQuestion() {
 // Layout and loading state
 // ============================================================
 
-function updatePhotoToggleButton() {
-  const label = photosVisible ? 'Hide photo' : 'Show photo';
-  const ns = 'http://www.w3.org/2000/svg';
-
-  const icon = document.createElementNS(ns, 'svg');
-  icon.setAttribute('viewBox', '0 0 24 24');
-  icon.setAttribute('width', '18');
-  icon.setAttribute('height', '18');
-  icon.setAttribute('fill', 'none');
-  icon.setAttribute('stroke', 'currentColor');
-  icon.setAttribute('stroke-width', '2');
-  icon.setAttribute('stroke-linecap', 'round');
-  icon.setAttribute('stroke-linejoin', 'round');
-  icon.setAttribute('aria-hidden', 'true');
-  icon.classList.add('photo-toggle-icon');
-
-  const path = document.createElementNS(ns, 'path');
-
-  if (photosVisible) {
-    // One eye outline with a slash through it
-    path.setAttribute(
-      'd',
-      'M3 3l18 18 M10.6 10.6a2 2 0 0 0 2.8 2.8 M6.7 6.7C3.7 8.5 2 12 2 12s3.6 7 10 7c1.5 0 2.8-.4 4-.9 M9.9 5.2A10 10 0 0 1 12 5c6.4 0 10 7 10 7a16 16 0 0 1-3.1 3.8',
-    );
-  } else {
-    // One normal eye
-    path.setAttribute('d', 'M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7');
-
-    const pupil = document.createElementNS(ns, 'circle');
-    pupil.setAttribute('cx', '12');
-    pupil.setAttribute('cy', '12');
-    pupil.setAttribute('r', '3');
-    icon.appendChild(pupil);
-  }
-
-  icon.appendChild(path);
-
-  photoToggleButton.replaceChildren(icon, document.createTextNode(label));
-
-  photoToggleButton.setAttribute('aria-pressed', String(photosVisible));
-  photoToggleButton.setAttribute(
-    'aria-label',
-    photosVisible ? 'Hide aircraft photos' : 'Show aircraft photos',
-  );
-}
-
 function updatePhotoVisibility() {
   const questionType = getQuestionType();
   const isSpecial = isSpecialQuestionType(questionType);
@@ -683,7 +872,12 @@ function updatePhotoVisibility() {
   const comparison = imageContainer.querySelector('.speed-comparison');
 
   photoToggleButton.hidden = !isSpecial;
-  updatePhotoToggleButton();
+  updatePhotoToggleContents(photosVisible);
+  photoToggleButton.setAttribute('aria-pressed', String(photosVisible));
+  photoToggleButton.setAttribute(
+    'aria-label',
+    photosVisible ? 'Hide aircraft photos' : 'Show aircraft photos',
+  );
   photoToggleButton.setAttribute('aria-controls', 'image-container');
 
   if (questionType === 'speed' && comparison) comparison.hidden = !showPhotos;
@@ -953,8 +1147,8 @@ function displaySpeedComparison(pair) {
   comparison.setAttribute('aria-label', 'Compare aircraft');
 
   const entries = [
-    { item: pair.first, label: getAircraftDisplayName(pair.first) },
-    { item: pair.second, label: getAircraftDisplayName(pair.second) },
+    { item: pair.first, label: getSpecialAircraftIdentifier(pair.first) },
+    { item: pair.second, label: getSpecialAircraftIdentifier(pair.second) },
   ];
 
   for (const { item, label } of entries) {
@@ -976,8 +1170,8 @@ function displaySpeedComparison(pair) {
   imageContainer.appendChild(comparison);
   updatePhotoVisibility();
   promptElement.textContent =
-    `Is the ${getAircraftDisplayName(pair.first)} faster or slower than ` +
-    `the ${getAircraftDisplayName(pair.second)}?`;
+    `Is the ${getSpecialAircraftIdentifier(pair.first)} faster or slower than ` +
+    `the ${getSpecialAircraftIdentifier(pair.second)}?`;
   displaySpecialChoices(['Faster', 'Slower'], pair.answer);
 }
 
@@ -996,17 +1190,17 @@ async function displayWakeQuestion(item) {
   specialQuestionData = {
     type: 'wake',
     correctAnswer: correctCategory,
-    feedbackAnswer: `${getAircraftDisplayName(item)}: ${correctCategory}`,
+    feedbackAnswer: correctCategory,
   };
 
   promptElement.replaceChildren();
   promptElement.appendChild(
     document.createTextNode(
-      `What is the wake turbulence category of the ${getAircraftDisplayName(item)}?`,
+      `What is the wake turbulence category of the ${getSpecialAircraftIdentifier(item)}?`,
     ),
   );
   appendCategoryHint(promptElement, item.category, 'Aircraft category');
-  displaySpecialChoices(shuffle([...WAKE_CATEGORIES]), correctCategory, true);
+  displaySpecialChoices([...WAKE_CATEGORIES], correctCategory, true);
 
   try {
     await loadQuestionImage(imagePath, 'Aircraft wake category question image');
@@ -1269,9 +1463,7 @@ async function nextQuestion() {
     specialQuestionData = {
       type: 'speed',
       correctAnswer: pair.answer,
-      feedbackAnswer:
-        `${getAircraftDisplayName(pair.first)} is ${pair.answer.toLowerCase()} than ` +
-        `${getAircraftDisplayName(pair.second)}.`,
+      feedbackAnswer: pair.answer,
     };
 
     displaySpeedComparison(pair);
@@ -1290,6 +1482,17 @@ async function nextQuestion() {
   }
 
   currentAircraft = item;
+
+  if (questionType === 'cruise-speed') {
+    const availableUnits = [
+      ...(getCruiseSpeedRange(item) ? ['kt'] : []),
+      ...(getMachCruiseRange(item) ? ['mach'] : []),
+    ];
+    const unit =
+      availableUnits[Math.floor(Math.random() * availableUnits.length)] || 'kt';
+    displayCruiseSpeedQuestion(item, unit);
+    return;
+  }
 
   if (questionType === 'wake') {
     await displayWakeQuestion(item);
