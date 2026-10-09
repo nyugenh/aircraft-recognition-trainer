@@ -439,9 +439,9 @@ function getSpeedSegments(unit) {
   // Boundaries are lower-inclusive and upper-exclusive, except the final band.
   if (unit === 'mach') {
     return [
-      { min: -Infinity, max: 0.5, label: 'Below Mach 0.5' },
-      { min: 0.5, max: 0.7, label: 'Mach 0.5–0.7' },
-      { min: 0.7, max: 0.85, label: 'Mach 0.7–0.85' },
+      { min: 0.65, max: 0.75, label: 'Below Mach 0.75' },
+      { min: 0.75, max: 0.8, label: 'Mach 0.75–0.80' },
+      { min: 0.8, max: 0.85, label: 'Mach 0.80–0.85' },
       { min: 0.85, max: Infinity, label: 'Mach 0.85 and above' },
     ];
   }
