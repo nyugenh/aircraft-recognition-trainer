@@ -1,8 +1,30 @@
+'use strict';
+
+// ============================================================
+// Configuration
+// ============================================================
+
 const MANIFEST_PATH = 'manifest.json';
 const ASSET_FOLDER = '';
 
+const ANSWER_MODES = [
+  { value: 'name', label: 'Choose name', semantic: 'name' },
+  { value: 'icao', label: 'Choose ICAO', semantic: 'icao' },
+  { value: 'photo', label: 'Choose photo', semantic: 'photo' },
+  { value: 'enter-name', label: 'Type name', semantic: 'name' },
+  { value: 'enter-icao', label: 'Type ICAO', semantic: 'icao' },
+];
+
+const QUESTION_TYPES = new Set(['photo', 'name', 'icao', 'speed', 'wake']);
+const WAKE_CATEGORIES = ['Light', 'Medium', 'Heavy', 'Super'];
+const KEYBOARD_HELP =
+  'Keyboard shortcuts: 1 through 4 select an answer. ' +
+  'Arrow keys move between answer choices. ' +
+  'Home selects the first answer and End selects the last. ' +
+  'Enter submits a typed answer. N moves to the next question.';
+
 // ============================================================
-// DOM
+// DOM references
 // ============================================================
 
 const $ = (selector) => document.querySelector(selector);
@@ -12,6 +34,7 @@ const appElement = $('.app');
 const categorySelect = byId('category');
 const questionTypeSelect = byId('question-type');
 const answerTypeSelect = byId('answer-type');
+const answerTypeLabel = byId('answer-type-label');
 const imageContainer = byId('image-container');
 const imageElement = byId('aircraft-image');
 const loadingMessage = byId('loading-message');
@@ -24,31 +47,15 @@ const submitAnswerButton = byId('submit-answer');
 const scoreElement = byId('score');
 const feedbackElement = byId('feedback');
 const nextButton = byId('next');
+const photoToggleButton = byId('photo-toggle');
+
+photoToggleButton.type = 'button';
+photoToggleButton.className = 'photo-toggle';
+photoToggleButton.hidden = true;
+photoToggleButton.setAttribute('aria-pressed', 'false');
 
 // ============================================================
-// Configuration
-// ============================================================
-
-const ANSWER_MODES = [
-  { value: 'name', label: 'Choose name', semantic: 'name' },
-  { value: 'icao', label: 'Choose ICAO', semantic: 'icao' },
-  { value: 'photo', label: 'Choose photo', semantic: 'photo' },
-  { value: 'enter-name', label: 'Type name', semantic: 'name' },
-  { value: 'enter-icao', label: 'Type ICAO', semantic: 'icao' },
-];
-
-const QUESTION_TYPES = new Set(['photo', 'name', 'icao', 'speed', 'wake']);
-
-const WAKE_CATEGORIES = ['Light', 'Medium', 'Heavy', 'Super'];
-
-const KEYBOARD_HELP =
-  'Keyboard shortcuts: 1 through 4 select an answer. ' +
-  'Arrow keys move between answer choices. ' +
-  'Home selects the first answer and End selects the last. ' +
-  'Enter submits a typed answer. N moves to the next question.';
-
-// ============================================================
-// State
+// Application state
 // ============================================================
 
 let aircraft = [];
@@ -59,6 +66,7 @@ let score = 0;
 let total = 0;
 let answered = false;
 let specialQuestionData = null;
+let photosVisible = false;
 
 // ============================================================
 // General utilities
@@ -69,11 +77,10 @@ function displayText(value) {
 }
 
 function shuffle(items) {
-  for (let i = items.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [items[i], items[j]] = [items[j], items[i]];
+  for (let index = items.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [items[index], items[swapIndex]] = [items[swapIndex], items[index]];
   }
-
   return items;
 }
 
@@ -83,19 +90,25 @@ function randomItem(items) {
 
 function uniqueBy(items, getKey) {
   const seen = new Set();
-
   return items.filter((item) => {
     const key = getKey(item);
-
     if (!key || seen.has(key)) return false;
-
     seen.add(key);
     return true;
   });
 }
 
+function normaliseAnswer(value) {
+  return displayText(value)
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
 // ============================================================
-// Modes
+// Question and answer modes
 // ============================================================
 
 function getQuestionType() {
@@ -142,10 +155,12 @@ function syncAnswerOptions() {
   const questionType = getQuestionType();
 
   if (isSpecialQuestionType(questionType)) {
+    if (answerTypeLabel) answerTypeLabel.hidden = true;
     answerTypeSelect.disabled = true;
     return;
   }
 
+  if (answerTypeLabel) answerTypeLabel.hidden = false;
   answerTypeSelect.disabled = false;
 
   for (const option of answerTypeSelect.options) {
@@ -156,7 +171,6 @@ function syncAnswerOptions() {
 
   const selectedOption =
     answerTypeSelect.options[answerTypeSelect.selectedIndex];
-
   if (selectedOption && !selectedOption.disabled) return;
 
   const preferredModes = {
@@ -169,7 +183,6 @@ function syncAnswerOptions() {
     const option = [...answerTypeSelect.options].find(
       (item) => item.value === mode && !item.disabled,
     );
-
     if (option) {
       answerTypeSelect.value = mode;
       return;
@@ -179,7 +192,6 @@ function syncAnswerOptions() {
   const firstAvailable = [...answerTypeSelect.options].find(
     (option) => !option.disabled,
   );
-
   if (firstAvailable) answerTypeSelect.value = firstAvailable.value;
 }
 
@@ -192,7 +204,6 @@ function getAnswerValue(item, type) {
 
   if (type === 'Aircraft name' || type === 'name') {
     const name = displayText(item.label ?? item.name);
-
     return name.replace(/\s*\([^)]*\)\s*$/, '').trim();
   }
 
@@ -208,8 +219,8 @@ function getAnswerValue(item, type) {
 function getFeedbackAnswer(item, type) {
   if (!item) return '';
 
-  const name = getAnswerValue(item, 'Aircraft name');
-  const code = getAnswerValue(item, 'ICAO code');
+  const name = getAnswerValue(item, 'name');
+  const code = getAnswerValue(item, 'icao');
 
   if (type === 'Aircraft name' || type === 'name') {
     return name && code ? `${name} (${code})` : name || code;
@@ -226,20 +237,16 @@ function getFeedbackDisplayAnswer(item) {
   if (!item) return '';
 
   const questionType = getQuestionType();
-  const answerMode = getAnswerMode();
-  const answerSemantic = getAnswerSemanticType(answerMode);
-  const name = getAnswerValue(item, 'Aircraft name');
-  const code = getAnswerValue(item, 'ICAO code');
+  const answerSemantic = getAnswerSemanticType();
+  const name = getAnswerValue(item, 'name');
+  const code = getAnswerValue(item, 'icao');
 
   if (questionType === 'photo') {
-    return answerSemantic === 'icao'
-      ? getFeedbackAnswer(item, 'icao')
-      : getFeedbackAnswer(item, 'name');
+    return getFeedbackAnswer(item, answerSemantic === 'icao' ? 'icao' : 'name');
   }
 
   if (questionType === 'name') {
     if (answerSemantic === 'icao') return code;
-
     if (answerSemantic === 'photo') {
       return name && code ? `${name} (${code})` : name || code;
     }
@@ -247,7 +254,6 @@ function getFeedbackDisplayAnswer(item) {
 
   if (questionType === 'icao') {
     if (answerSemantic === 'name') return name;
-
     if (answerSemantic === 'photo') {
       return code && name ? `${code} (${name})` : code || name;
     }
@@ -257,14 +263,8 @@ function getFeedbackDisplayAnswer(item) {
 }
 
 function getTypedAnswerValue(item, mode = getAnswerMode()) {
-  if (mode === 'enter-name') {
-    return getAnswerValue(item, 'Aircraft name');
-  }
-
-  if (mode === 'enter-icao') {
-    return getAnswerValue(item, 'ICAO code');
-  }
-
+  if (mode === 'enter-name') return getAnswerValue(item, 'name');
+  if (mode === 'enter-icao') return getAnswerValue(item, 'icao');
   return '';
 }
 
@@ -272,30 +272,25 @@ function getAircraftTypeKey(item) {
   const code = displayText(
     item?.code ?? item?.icao ?? item?.icao_code ?? item?.ICAO ?? item?.icaoCode,
   ).toLowerCase();
-
   const name = displayText(item?.name ?? item?.label)
     .replace(/\s*\([^)]*\)\s*$/, '')
     .toLowerCase();
 
   if (code) return `code:${code}`;
   if (name) return `name:${name}`;
-
   return '';
 }
 
 function getAircraftDisplayName(item) {
-  return (
-    getAnswerValue(item, 'Aircraft name') || getAnswerValue(item, 'ICAO code')
-  );
+  return getAnswerValue(item, 'name') || getAnswerValue(item, 'icao');
 }
 
 // ============================================================
-// Cruise speed and wake category helpers
+// Speed and wake-category helpers
 // ============================================================
 
 function getCruiseSpeedRange(item) {
   const speed = item?.cruise_speed_kt;
-
   if (!speed) return null;
 
   const min = Number(speed.min);
@@ -317,7 +312,6 @@ function getCruiseSpeedRange(item) {
 
 function getWakeCategory(item) {
   const value = displayText(item?.wake_category).toLowerCase();
-
   const categories = {
     l: 'Light',
     light: 'Light',
@@ -332,37 +326,34 @@ function getWakeCategory(item) {
   return categories[value] ?? '';
 }
 
-// Only compare aircraft whose cruise-speed ranges do not overlap.
-// This avoids questions with ambiguous answers.
+// Only compare aircraft when their cruise-speed ranges do not overlap.
 function getSpeedComparisonPair() {
   const pool = getValidAircraftPool();
   const pairs = [];
 
-  for (let i = 0; i < pool.length; i += 1) {
-    const firstSpeed = getCruiseSpeedRange(pool[i]);
+  for (let firstIndex = 0; firstIndex < pool.length; firstIndex += 1) {
+    const first = pool[firstIndex];
+    const firstSpeed = getCruiseSpeedRange(first);
     if (!firstSpeed) continue;
 
-    for (let j = i + 1; j < pool.length; j += 1) {
-      const secondSpeed = getCruiseSpeedRange(pool[j]);
+    for (
+      let secondIndex = firstIndex + 1;
+      secondIndex < pool.length;
+      secondIndex += 1
+    ) {
+      const second = pool[secondIndex];
+      const secondSpeed = getCruiseSpeedRange(second);
       if (!secondSpeed) continue;
 
       if (firstSpeed.min > secondSpeed.max) {
-        pairs.push({
-          first: pool[i],
-          second: pool[j],
-          answer: 'Faster',
-        });
+        pairs.push({ first, second, answer: 'Faster' });
       } else if (firstSpeed.max < secondSpeed.min) {
-        pairs.push({
-          first: pool[i],
-          second: pool[j],
-          answer: 'Slower',
-        });
+        pairs.push({ first, second, answer: 'Slower' });
       }
     }
   }
 
-  return randomItem(shuffle(pairs));
+  return randomItem(pairs);
 }
 
 // ============================================================
@@ -373,7 +364,7 @@ function cleanPath(value) {
   return displayText(value)
     .replace(/\\/g, '/')
     .replace(/^\/+/, '')
-    .replace(/\/+/g, '/');
+    .replace(/\/{2,}/g, '/');
 }
 
 function getAircraftImages(item) {
@@ -381,7 +372,6 @@ function getAircraftImages(item) {
 
   const folder = cleanPath(item.folder);
   const baseFolder = cleanPath(ASSET_FOLDER);
-
   let images = [];
 
   if (Array.isArray(item.images)) {
@@ -392,7 +382,6 @@ function getAircraftImages(item) {
 
   return images.map((image) => {
     const path = folder ? `${folder}/${image}` : image;
-
     return baseFolder ? `${baseFolder}/${path}` : path;
   });
 }
@@ -402,7 +391,7 @@ function getRandomImagePath(item) {
 }
 
 // ============================================================
-// Categories and aircraft pool
+// Category selection and aircraft pool
 // ============================================================
 
 function populateCategories() {
@@ -410,7 +399,7 @@ function populateCategories() {
     ...new Set(
       aircraft.map((item) => displayText(item.category)).filter(Boolean),
     ),
-  ].sort((a, b) => a.localeCompare(b));
+  ].sort((first, second) => first.localeCompare(second));
 
   categorySelect.replaceChildren();
 
@@ -429,19 +418,12 @@ function populateCategories() {
 
 function getSelectedAircraftPool() {
   const category = categorySelect.value;
-
-  if (!category || category === 'All') {
-    return [...aircraft];
-  }
-
+  if (!category || category === 'All') return [...aircraft];
   return aircraft.filter((item) => displayText(item.category) === category);
 }
 
 function itemHasRequiredValue(item, type) {
-  if (type === 'photo') {
-    return getAircraftImages(item).length > 0;
-  }
-
+  if (type === 'photo') return getAircraftImages(item).length > 0;
   return Boolean(getAnswerValue(item, type));
 }
 
@@ -460,31 +442,18 @@ function filterPoolForCombination(pool) {
   }
 
   const answerSemantic = getAnswerSemanticType();
-
   return pool.filter((item) => {
     if (!itemHasRequiredValue(item, questionType)) return false;
-
-    if (answerSemantic === 'photo') {
-      return getAircraftImages(item).length > 0;
-    }
-
+    if (answerSemantic === 'photo') return getAircraftImages(item).length > 0;
     return Boolean(getAnswerValue(item, answerSemantic));
   });
 }
 
 function hasEnoughDistinctAnswers(pool) {
-  if (isSpecialQuestionType()) {
-    return pool.length > 0;
-  }
-
-  if (isTypedAnswer()) return pool.length > 0;
-
-  if (isPhotoAnswer()) {
-    return uniqueBy(pool, getAircraftTypeKey).length >= 4;
-  }
+  if (isSpecialQuestionType() || isTypedAnswer()) return pool.length > 0;
+  if (isPhotoAnswer()) return uniqueBy(pool, getAircraftTypeKey).length >= 4;
 
   const answerType = getAnswerSemanticType();
-
   return (
     uniqueBy(pool, (item) => getAnswerValue(item, answerType).toLowerCase())
       .length >= 4
@@ -494,47 +463,32 @@ function hasEnoughDistinctAnswers(pool) {
 function getValidAircraftPool() {
   const selectedPool = filterPoolForCombination(getSelectedAircraftPool());
 
-  if (isSpecialQuestionType() || isTypedAnswer()) {
-    return selectedPool;
-  }
+  if (isSpecialQuestionType() || isTypedAnswer()) return selectedPool;
+  if (hasEnoughDistinctAnswers(selectedPool)) return selectedPool;
 
-  if (hasEnoughDistinctAnswers(selectedPool)) {
-    return selectedPool;
-  }
-
-  // Preserve the original fallback for ordinary multiple-choice
-  // questions when a category does not have four distinct answers.
+  // Fall back to all categories if the selected category has too few answers.
   return filterPoolForCombination(aircraft);
 }
 
 // ============================================================
-// Question rotation
-//
-// Each aircraft type appears once per cycle.
+// Question rotation: each aircraft type appears once per cycle
 // ============================================================
 
 function chooseAircraft() {
   const pool = getValidAircraftPool();
-
   if (!pool.length) return null;
 
   const aircraftByType = new Map();
-
   for (const item of pool) {
     const key = getAircraftTypeKey(item);
     if (!key) continue;
-
-    if (!aircraftByType.has(key)) {
-      aircraftByType.set(key, []);
-    }
-
+    if (!aircraftByType.has(key)) aircraftByType.set(key, []);
     aircraftByType.get(key).push(item);
   }
 
   if (!aircraftByType.size) return null;
 
   const availableKeys = new Set(aircraftByType.keys());
-
   aircraftQueue = aircraftQueue.filter((item) =>
     availableKeys.has(getAircraftTypeKey(item)),
   );
@@ -547,45 +501,50 @@ function chooseAircraft() {
 
   const representative = aircraftQueue.pop();
   const entries = aircraftByType.get(getAircraftTypeKey(representative));
-
   return randomItem(entries) ?? representative;
 }
 
 // ============================================================
-// Build multiple-choice answers
+// Build answer choices
 // ============================================================
 
 function buildTextAnswerChoices(correctAircraft, answerType) {
   const correctAnswer = getAnswerValue(correctAircraft, answerType);
+  const correctAnswerKey = correctAnswer.toLowerCase();
+  const correctAircraftKey = getAircraftTypeKey(correctAircraft);
 
   const usableAircraft = getValidAircraftPool().filter((item) =>
     getAnswerValue(item, answerType),
   );
-
   const uniqueAircraft = uniqueBy(usableAircraft, (item) =>
     getAnswerValue(item, answerType).toLowerCase(),
   );
 
-  const sameCategory = uniqueAircraft.filter(
-    (item) =>
-      getAircraftTypeKey(item) !== getAircraftTypeKey(correctAircraft) &&
-      displayText(item.category) === displayText(correctAircraft.category),
+  const distractors = uniqueAircraft.filter((item) => {
+    const answer = getAnswerValue(item, answerType).toLowerCase();
+    return (
+      answer !== correctAnswerKey &&
+      getAircraftTypeKey(item) !== correctAircraftKey
+    );
+  });
+
+  const sameCategory = shuffle(
+    distractors.filter(
+      (item) =>
+        displayText(item.category) === displayText(correctAircraft.category),
+    ),
   );
-
-  const otherCategories = uniqueAircraft.filter(
-    (item) =>
-      getAircraftTypeKey(item) !== getAircraftTypeKey(correctAircraft) &&
-      displayText(item.category) !== displayText(correctAircraft.category),
+  const otherCategories = shuffle(
+    distractors.filter(
+      (item) =>
+        displayText(item.category) !== displayText(correctAircraft.category),
+    ),
   );
-
-  shuffle(sameCategory);
-  shuffle(otherCategories);
-
-  const distractors = [...sameCategory, ...otherCategories].slice(0, 3);
+  const chosenDistractors = [...sameCategory, ...otherCategories].slice(0, 3);
 
   return shuffle([
     { aircraft: correctAircraft, text: correctAnswer },
-    ...distractors.map((item) => ({
+    ...chosenDistractors.map((item) => ({
       aircraft: item,
       text: getAnswerValue(item, answerType),
     })),
@@ -600,36 +559,41 @@ function buildPhotoChoices(correctAircraft) {
     getValidAircraftPool().filter(
       (item) =>
         getAircraftImages(item).length > 0 &&
-        getAnswerValue(item, 'Aircraft name'),
+        Boolean(getAnswerValue(item, 'name')),
     ),
     getAircraftTypeKey,
   ).filter((item) => getAircraftTypeKey(item) !== correctKey);
 
-  const sameCategory = available.filter(
-    (item) => displayText(item.category) === category,
+  const sameCategory = shuffle(
+    available.filter((item) => displayText(item.category) === category),
+  );
+  const otherCategories = shuffle(
+    available.filter((item) => displayText(item.category) !== category),
   );
 
-  const otherCategories = available.filter(
-    (item) => displayText(item.category) !== category,
-  );
-
-  shuffle(sameCategory);
-  shuffle(otherCategories);
-
-  const distractors = [...sameCategory, ...otherCategories].slice(0, 3);
-
-  return shuffle([correctAircraft, ...distractors]).map((item) => ({
-    aircraft: item,
-    text: getFeedbackDisplayAnswer(item),
-  }));
+  return shuffle([
+    correctAircraft,
+    ...[...sameCategory, ...otherCategories].slice(0, 3),
+  ]).map((item) => ({ aircraft: item, text: getFeedbackDisplayAnswer(item) }));
 }
 
 // ============================================================
-// Question wording
+// Prompt construction
 // ============================================================
 
 function getIndefiniteArticle(value) {
   return /^[aeiou]/i.test(displayText(value)) ? 'an' : 'a';
+}
+
+function appendCategoryHint(container, category, labelPrefix = 'Category') {
+  const text = displayText(category);
+  if (!text) return;
+
+  const hint = document.createElement('span');
+  hint.className = 'category-hint';
+  hint.textContent = text;
+  hint.setAttribute('aria-label', `${labelPrefix}: ${text}`);
+  container.appendChild(hint);
 }
 
 function displayQuestion() {
@@ -637,10 +601,8 @@ function displayQuestion() {
 
   const questionType = getQuestionType();
   const answerMode = getAnswerMode();
-
-  const name = getAnswerValue(currentAircraft, 'Aircraft name');
-  const code = getAnswerValue(currentAircraft, 'ICAO code');
-
+  const name = getAnswerValue(currentAircraft, 'name');
+  const code = getAnswerValue(currentAircraft, 'icao');
   let text = '';
 
   if (questionType === 'photo') {
@@ -649,88 +611,186 @@ function displayQuestion() {
         ? 'What is the ICAO code?'
         : 'Which aircraft is this?';
   } else if (questionType === 'name') {
-    if (answerMode === 'photo') {
-      text = `Which photo is ${getIndefiniteArticle(name)} ${name}?`;
-    } else {
-      text = `What is the ICAO code for ${getIndefiniteArticle(name)} ${name}?`;
-    }
+    text =
+      answerMode === 'photo'
+        ? `Which photo is ${getIndefiniteArticle(name)} ${name}?`
+        : `What is the ICAO code for ${getIndefiniteArticle(name)} ${name}?`;
   } else if (questionType === 'icao') {
-    if (answerMode === 'photo') {
-      text = `Which photo is ${code}?`;
-    } else {
-      text = `Which aircraft has ICAO code ${code}?`;
-    }
+    text =
+      answerMode === 'photo'
+        ? `Which photo is ${code}?`
+        : `Which aircraft has ICAO code ${code}?`;
   }
 
   promptElement.appendChild(document.createTextNode(text));
-
-  const category = displayText(currentAircraft?.category);
-
-  if (category) {
-    const hint = document.createElement('span');
-    hint.className = 'category-hint';
-    hint.textContent = category;
-    hint.setAttribute('aria-label', `Category: ${category}`);
-    promptElement.appendChild(hint);
-  }
+  appendCategoryHint(promptElement, currentAircraft?.category);
 }
 
 // ============================================================
-// UI state
+// Layout and loading state
 // ============================================================
+
+function updatePhotoToggleButton() {
+  const label = photosVisible ? 'Hide photo' : 'Show photo';
+  const ns = 'http://www.w3.org/2000/svg';
+
+  const icon = document.createElementNS(ns, 'svg');
+  icon.setAttribute('viewBox', '0 0 24 24');
+  icon.setAttribute('width', '18');
+  icon.setAttribute('height', '18');
+  icon.setAttribute('fill', 'none');
+  icon.setAttribute('stroke', 'currentColor');
+  icon.setAttribute('stroke-width', '2');
+  icon.setAttribute('stroke-linecap', 'round');
+  icon.setAttribute('stroke-linejoin', 'round');
+  icon.setAttribute('aria-hidden', 'true');
+  icon.classList.add('photo-toggle-icon');
+
+  const path = document.createElementNS(ns, 'path');
+
+  if (photosVisible) {
+    // One eye outline with a slash through it
+    path.setAttribute(
+      'd',
+      'M3 3l18 18 M10.6 10.6a2 2 0 0 0 2.8 2.8 M6.7 6.7C3.7 8.5 2 12 2 12s3.6 7 10 7c1.5 0 2.8-.4 4-.9 M9.9 5.2A10 10 0 0 1 12 5c6.4 0 10 7 10 7a16 16 0 0 1-3.1 3.8',
+    );
+  } else {
+    // One normal eye
+    path.setAttribute('d', 'M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7');
+
+    const pupil = document.createElementNS(ns, 'circle');
+    pupil.setAttribute('cx', '12');
+    pupil.setAttribute('cy', '12');
+    pupil.setAttribute('r', '3');
+    icon.appendChild(pupil);
+  }
+
+  icon.appendChild(path);
+
+  photoToggleButton.replaceChildren(icon, document.createTextNode(label));
+
+  photoToggleButton.setAttribute('aria-pressed', String(photosVisible));
+  photoToggleButton.setAttribute(
+    'aria-label',
+    photosVisible ? 'Hide aircraft photos' : 'Show aircraft photos',
+  );
+}
+
+function updatePhotoVisibility() {
+  const questionType = getQuestionType();
+  const isSpecial = isSpecialQuestionType(questionType);
+  const showPhotos = isSpecial && photosVisible;
+  const comparison = imageContainer.querySelector('.speed-comparison');
+
+  photoToggleButton.hidden = !isSpecial;
+  updatePhotoToggleButton();
+  photoToggleButton.setAttribute('aria-controls', 'image-container');
+
+  if (questionType === 'speed' && comparison) comparison.hidden = !showPhotos;
+  if (questionType === 'wake') imageElement.hidden = !showPhotos;
+
+  imageContainer.hidden = isSpecial && !photosVisible;
+  appElement.classList.toggle(
+    'no-image',
+    (isSpecial && !photosVisible) ||
+      (!isSpecial && questionType !== 'photo' && getAnswerMode() !== 'photo'),
+  );
+}
+
+photoToggleButton.addEventListener('click', () => {
+  photosVisible = !photosVisible;
+  updatePhotoVisibility();
+});
 
 function setLoading(loading) {
   imageElement.classList.toggle('loading', loading);
   loadingMessage.classList.toggle('hidden', !loading);
 
-  if (loading) {
-    answerButtons.forEach((button) => {
-      button.disabled = true;
-    });
+  if (!loading) return;
 
-    typeAnswerInput.disabled = true;
-    submitAnswerButton.disabled = true;
-    nextButton.disabled = true;
-  }
+  answerButtons.forEach((button) => {
+    button.disabled = true;
+  });
+  typeAnswerInput.disabled = true;
+  submitAnswerButton.disabled = true;
+  nextButton.disabled = true;
 }
 
 function resetAnswerUI() {
   imageContainer.querySelector('.speed-comparison')?.remove();
-
   imageElement.hidden = false;
+
   answerButtons.forEach((button, index) => {
     button.disabled = true;
     button.hidden = false;
     button.classList.remove('correct', 'incorrect');
     button.replaceChildren();
-
     delete button.dataset.answer;
     delete button.dataset.correct;
-
     button.removeAttribute('aria-hidden');
     button.setAttribute('aria-label', `Answer option ${index + 1}`);
   });
 
   answerContainer.classList.remove('reverse');
   answerContainer.hidden = false;
-
   typeAnswerContainer.hidden = true;
   typeAnswerContainer.classList.remove('correct', 'partial', 'incorrect');
-
   typeAnswerInput.value = '';
   typeAnswerInput.disabled = true;
   typeAnswerInput.classList.remove('correct', 'partial', 'incorrect');
-
   submitAnswerButton.disabled = true;
-
   feedbackElement.replaceChildren();
   feedbackElement.classList.remove(
     'correct-feedback',
     'partial-feedback',
     'incorrect-feedback',
   );
-
   imageContainer.hidden = false;
+}
+
+function configureAnswerMode() {
+  const questionType = getQuestionType();
+  const answerMode = getAnswerMode();
+  appElement.classList.remove('reverse-mode', 'no-image');
+
+  if (isSpecialQuestionType(questionType)) {
+    imageContainer.hidden = false;
+    answerContainer.hidden = false;
+    typeAnswerContainer.hidden = true;
+    updatePhotoVisibility();
+    return;
+  }
+
+  photoToggleButton.hidden = true;
+
+  if (questionType === 'photo') {
+    imageContainer.hidden = false;
+    const typed = isTypedAnswer(answerMode);
+    answerContainer.hidden = typed;
+    typeAnswerContainer.hidden = !typed;
+    return;
+  }
+
+  if (isPhotoAnswer(answerMode)) {
+    imageContainer.hidden = true;
+    answerContainer.hidden = false;
+    typeAnswerContainer.hidden = true;
+    appElement.classList.add('reverse-mode');
+    return;
+  }
+
+  if (isTypedAnswer(answerMode)) {
+    imageContainer.hidden = true;
+    answerContainer.hidden = true;
+    typeAnswerContainer.hidden = false;
+    appElement.classList.add('no-image');
+    return;
+  }
+
+  imageContainer.hidden = true;
+  answerContainer.hidden = false;
+  typeAnswerContainer.hidden = true;
+  appElement.classList.add('no-image');
 }
 
 function updateScore() {
@@ -739,21 +799,18 @@ function updateScore() {
 }
 
 // ============================================================
-// Feedback
+// Feedback and answer completion
 // ============================================================
 
 function setFeedback(type, resultText, detailText = '', answerText = '') {
   feedbackElement.replaceChildren();
-
   feedbackElement.classList.remove(
     'correct-feedback',
     'partial-feedback',
     'incorrect-feedback',
   );
 
-  if (type) {
-    feedbackElement.classList.add(`${type}-feedback`);
-  }
+  if (type) feedbackElement.classList.add(`${type}-feedback`);
 
   const result = document.createElement('span');
   result.className = 'feedback-result';
@@ -788,7 +845,7 @@ function finishAnswer() {
 }
 
 // ============================================================
-// Display text choices
+// Render answer choices
 // ============================================================
 
 function displayTextAnswerChoices(choices, disabled = false) {
@@ -809,20 +866,14 @@ function displayTextAnswerChoices(choices, disabled = false) {
     button.hidden = false;
     button.removeAttribute('aria-hidden');
     button.replaceChildren();
-
     button.textContent = choice.text;
     button.dataset.answer = choice.text;
     button.dataset.correct = String(choice.aircraft === currentAircraft);
     button.disabled = disabled;
-
     button.setAttribute('aria-label', `Option ${index + 1}: ${choice.text}`);
     button.setAttribute('aria-keyshortcuts', String(index + 1));
   });
 }
-
-// ============================================================
-// Display photo choices
-// ============================================================
 
 function displayPhotoAnswerChoices(choices) {
   answerContainer.classList.add('reverse');
@@ -851,29 +902,22 @@ function displayPhotoAnswerChoices(choices) {
     const name = document.createElement('span');
     name.className = 'photo-choice-name hidden-name';
     name.textContent = choice.text;
-
     button.append(image, name);
 
     button.dataset.answer = choice.text;
     button.dataset.correct = String(choice.aircraft === currentAircraft);
     button.disabled = false;
-
     button.setAttribute('aria-label', `Photo option ${index + 1}`);
     button.setAttribute('aria-keyshortcuts', String(index + 1));
   });
 }
 
-// ============================================================
-// Special question choices
-// ============================================================
-
-function displaySpecialChoices(choices, correctAnswer) {
+function displaySpecialChoices(choices, correctAnswer, disabled = false) {
   answerContainer.classList.remove('reverse');
   answerContainer.hidden = false;
 
   answerButtons.forEach((button, index) => {
     const choice = choices[index];
-
     button.replaceChildren();
     button.classList.remove('correct', 'incorrect');
 
@@ -886,21 +930,21 @@ function displaySpecialChoices(choices, correctAnswer) {
 
     button.hidden = false;
     button.removeAttribute('aria-hidden');
-
     button.textContent = choice;
     button.dataset.answer = choice;
     button.dataset.correct = String(choice === correctAnswer);
-    button.disabled = false;
-
+    button.disabled = disabled;
     button.setAttribute('aria-label', `Option ${index + 1}: ${choice}`);
     button.setAttribute('aria-keyshortcuts', String(index + 1));
   });
 }
 
-function displaySpeedComparison(pair) {
-  // Remove any previous comparison.
-  imageContainer.querySelector('.speed-comparison')?.remove();
+// ============================================================
+// Special question rendering
+// ============================================================
 
+function displaySpeedComparison(pair) {
+  imageContainer.querySelector('.speed-comparison')?.remove();
   imageElement.hidden = true;
   loadingMessage.classList.add('hidden');
 
@@ -908,18 +952,12 @@ function displaySpeedComparison(pair) {
   comparison.className = 'speed-comparison';
   comparison.setAttribute('aria-label', 'Compare aircraft');
 
-  const aircraftItems = [
-    {
-      item: pair.first,
-      label: getAircraftDisplayName(pair.first),
-    },
-    {
-      item: pair.second,
-      label: getAircraftDisplayName(pair.second),
-    },
+  const entries = [
+    { item: pair.first, label: getAircraftDisplayName(pair.first) },
+    { item: pair.second, label: getAircraftDisplayName(pair.second) },
   ];
 
-  for (const { item, label } of aircraftItems) {
+  for (const { item, label } of entries) {
     const card = document.createElement('div');
     card.className = 'speed-aircraft';
 
@@ -931,15 +969,15 @@ function displaySpeedComparison(pair) {
     const name = document.createElement('p');
     name.className = 'speed-aircraft-name';
     name.textContent = label;
-
     card.append(image, name);
     comparison.appendChild(card);
   }
 
   imageContainer.appendChild(comparison);
-
-  promptElement.textContent = `Is the ${getAircraftDisplayName(pair.first)} faster or slower than the ${getAircraftDisplayName(pair.second)}?`;
-
+  updatePhotoVisibility();
+  promptElement.textContent =
+    `Is the ${getAircraftDisplayName(pair.first)} faster or slower than ` +
+    `the ${getAircraftDisplayName(pair.second)}?`;
   displaySpecialChoices(['Faster', 'Slower'], pair.answer);
 }
 
@@ -967,33 +1005,19 @@ async function displayWakeQuestion(item) {
       `What is the wake turbulence category of the ${getAircraftDisplayName(item)}?`,
     ),
   );
-
-  const category = displayText(item.category);
-
-  if (category) {
-    const hint = document.createElement('span');
-    hint.className = 'category-hint';
-    hint.textContent = category;
-    hint.setAttribute('aria-label', `Aircraft category: ${category}`);
-    promptElement.appendChild(hint);
-  }
-
-  displaySpecialChoices(shuffle([...WAKE_CATEGORIES]), correctCategory);
+  appendCategoryHint(promptElement, item.category, 'Aircraft category');
+  displaySpecialChoices(shuffle([...WAKE_CATEGORIES]), correctCategory, true);
 
   try {
     await loadQuestionImage(imagePath, 'Aircraft wake category question image');
-
     setLoading(false);
-
     answerButtons.forEach((button) => {
       if (!button.hidden) button.disabled = false;
     });
-
     focusFirstAnswer();
   } catch (error) {
     setLoading(false);
     feedbackElement.textContent = error.message;
-
     answerButtons.forEach((button) => {
       button.disabled = true;
     });
@@ -1001,57 +1025,38 @@ async function displayWakeQuestion(item) {
 }
 
 // ============================================================
-// Typed-answer normalisation and scoring
+// Typed-answer scoring
 // ============================================================
-
-function normaliseAnswer(value) {
-  return displayText(value)
-    .toLowerCase()
-    .replace(/[^\p{L}\p{N}]+/gu, ' ')
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-}
 
 function calculatePartialScore(typedAnswer, correctAnswer) {
   const typedWords = normaliseAnswer(typedAnswer);
   const correctWords = normaliseAnswer(correctAnswer);
-
   if (!typedWords.length || !correctWords.length) return 0;
 
-  if (typedWords.join(' ') === correctWords.join(' ')) {
-    return 1;
-  }
+  if (typedWords.join(' ') === correctWords.join(' ')) return 1;
 
+  // Match words without counting the same expected word more than once.
   const matchedIndexes = new Set();
-  let matchedWords = 0;
-
-  typedWords.forEach((word, index) => {
+  for (const [index, word] of typedWords.entries()) {
     if (index < correctWords.length && word === correctWords[index]) {
       matchedIndexes.add(index);
-      matchedWords += 1;
     }
-  });
+  }
 
   for (const word of typedWords) {
     const index = correctWords.findIndex(
       (correctWord, correctIndex) =>
         correctWord === word && !matchedIndexes.has(correctIndex),
     );
-
-    if (index !== -1) {
-      matchedIndexes.add(index);
-      matchedWords += 1;
-    }
+    if (index !== -1) matchedIndexes.add(index);
   }
 
-  return Math.min(matchedWords / correctWords.length, 1);
+  return Math.min(matchedIndexes.size / correctWords.length, 1);
 }
 
 function formatPoints(points) {
   if (points === 1) return '1';
   if (points === 0) return '0';
-
   return Number(points.toFixed(2)).toString();
 }
 
@@ -1061,15 +1066,13 @@ function formatPointsWithGrammar(points) {
 }
 
 // ============================================================
-// Submit typed answer
+// Answer submission
 // ============================================================
 
 function submitTypedAnswer() {
   if (answered || !currentAircraft || !isTypedAnswer()) return;
 
-  const answerMode = getAnswerMode();
-  const correctAnswer = getTypedAnswerValue(currentAircraft, answerMode);
-
+  const correctAnswer = getTypedAnswerValue(currentAircraft);
   if (!correctAnswer) return;
 
   const feedbackAnswer = getFeedbackDisplayAnswer(currentAircraft);
@@ -1085,12 +1088,10 @@ function submitTypedAnswer() {
   if (points === 1) {
     typeAnswerInput.classList.add('correct');
     typeAnswerContainer.classList.add('correct');
-
     setFeedback('correct', '✓ Correct!', 'Correct answer:', feedbackAnswer);
   } else if (points > 0) {
     typeAnswerInput.classList.add('partial');
     typeAnswerContainer.classList.add('partial');
-
     setFeedback(
       'partial',
       `◐ Partial · ${formatPointsWithGrammar(points)}`,
@@ -1100,32 +1101,24 @@ function submitTypedAnswer() {
   } else {
     typeAnswerInput.classList.add('incorrect');
     typeAnswerContainer.classList.add('incorrect');
-
     setFeedback('incorrect', '✕ Incorrect', 'Correct answer:', feedbackAnswer);
   }
 
   typeAnswerInput.disabled = true;
   submitAnswerButton.disabled = true;
-
   finishAnswer();
 }
-
-// ============================================================
-// Submit special question
-// ============================================================
 
 function answerSpecialQuestion(button) {
   if (answered || !currentAircraft || !specialQuestionData) return;
 
   const isCorrect = button.dataset.correct === 'true';
-
   answered = true;
   total += 1;
 
   if (isCorrect) {
     score += 1;
     button.classList.add('correct');
-
     setFeedback(
       'correct',
       '✓ Correct!',
@@ -1134,13 +1127,11 @@ function answerSpecialQuestion(button) {
     );
   } else {
     button.classList.add('incorrect');
-
     answerButtons.forEach((answerButton) => {
       if (answerButton.dataset.correct === 'true') {
         answerButton.classList.add('correct');
       }
     });
-
     setFeedback(
       'incorrect',
       '✕ Incorrect',
@@ -1152,33 +1143,24 @@ function answerSpecialQuestion(button) {
   answerButtons.forEach((answerButton) => {
     answerButton.disabled = true;
   });
-
   finishAnswer();
 }
-
-// ============================================================
-// Submit multiple-choice answer
-// ============================================================
 
 function answerMultipleChoice(button) {
   if (answered || !currentAircraft) return;
 
-  const feedbackAnswer = getFeedbackDisplayAnswer(currentAircraft);
   const isCorrect = button.dataset.correct === 'true';
-
+  const feedbackAnswer = getFeedbackDisplayAnswer(currentAircraft);
   answered = true;
   total += 1;
 
   if (isCorrect) {
     score += 1;
     button.classList.add('correct');
-
     setFeedback('correct', '✓ Correct!', 'Answer:', feedbackAnswer);
   } else {
     button.classList.add('incorrect');
-
     setFeedback('incorrect', '✕ Incorrect', 'Correct answer:', feedbackAnswer);
-
     answerButtons.forEach((answerButton) => {
       if (answerButton.dataset.correct === 'true') {
         answerButton.classList.add('correct');
@@ -1189,35 +1171,25 @@ function answerMultipleChoice(button) {
   answerButtons.forEach((answerButton) => {
     answerButton.disabled = true;
   });
-
   finishAnswer();
 }
-
-// ============================================================
-// Submit reverse-photo answer
-// ============================================================
 
 function answerReversePhoto(button) {
   if (answered || !currentAircraft) return;
 
   const isCorrect = button.dataset.correct === 'true';
   const feedbackAnswer = getFeedbackDisplayAnswer(currentAircraft);
-
   answered = true;
   total += 1;
-
   revealCorrectPhotoNames();
 
   if (isCorrect) {
     score += 1;
     button.classList.add('correct');
-
     setFeedback('correct', '✓ Correct!', 'Answer:', feedbackAnswer);
   } else {
     button.classList.add('incorrect');
-
     setFeedback('incorrect', '✕ Incorrect', 'Correct photo:', feedbackAnswer);
-
     answerButtons.forEach((answerButton) => {
       if (answerButton.dataset.correct === 'true') {
         answerButton.classList.add('correct');
@@ -1228,7 +1200,6 @@ function answerReversePhoto(button) {
   answerButtons.forEach((answerButton) => {
     answerButton.disabled = true;
   });
-
   finishAnswer();
 }
 
@@ -1245,84 +1216,22 @@ function answerQuestion(button) {
 }
 
 // ============================================================
-// Configure layout for selected modes
-// ============================================================
-
-function configureAnswerMode() {
-  const questionType = getQuestionType();
-  const answerMode = getAnswerMode();
-
-  appElement.classList.remove('reverse-mode', 'no-image');
-
-  if (questionType === 'speed') {
-    imageContainer.hidden = false;
-    answerContainer.hidden = false;
-    typeAnswerContainer.hidden = true;
-    return;
-  }
-
-  if (questionType === 'wake') {
-    imageContainer.hidden = false;
-    answerContainer.hidden = false;
-    typeAnswerContainer.hidden = true;
-    return;
-  }
-
-  if (questionType === 'photo') {
-    imageContainer.hidden = false;
-
-    if (isTypedAnswer(answerMode)) {
-      answerContainer.hidden = true;
-      typeAnswerContainer.hidden = false;
-    } else {
-      answerContainer.hidden = false;
-      typeAnswerContainer.hidden = true;
-    }
-
-    return;
-  }
-
-  if (isPhotoAnswer(answerMode)) {
-    imageContainer.hidden = true;
-    answerContainer.hidden = false;
-    typeAnswerContainer.hidden = true;
-    appElement.classList.add('reverse-mode');
-    return;
-  }
-
-  if (isTypedAnswer(answerMode)) {
-    imageContainer.hidden = true;
-    answerContainer.hidden = true;
-    typeAnswerContainer.hidden = false;
-    appElement.classList.add('no-image');
-    return;
-  }
-
-  imageContainer.hidden = true;
-  answerContainer.hidden = false;
-  typeAnswerContainer.hidden = true;
-  appElement.classList.add('no-image');
-}
-
-// ============================================================
 // Image loading
 // ============================================================
 
 function loadQuestionImage(path, altText) {
   return new Promise((resolve, reject) => {
     imageElement.onload = () => resolve();
-
     imageElement.onerror = () => {
       reject(new Error(`Unable to load aircraft image: ${path}`));
     };
-
     imageElement.alt = altText;
     imageElement.src = path;
   });
 }
 
 // ============================================================
-// Next question
+// Advance to the next question
 // ============================================================
 
 async function nextQuestion() {
@@ -1330,7 +1239,6 @@ async function nextQuestion() {
   currentChoices = [];
   currentAircraft = null;
   specialQuestionData = null;
-
   feedbackElement.replaceChildren();
 
   syncAnswerOptions();
@@ -1340,10 +1248,15 @@ async function nextQuestion() {
 
   const questionType = getQuestionType();
 
-  // Faster or slower?
+  if (!QUESTION_TYPES.has(questionType)) {
+    setLoading(false);
+    promptElement.textContent = 'Choose a valid question type.';
+    return;
+  }
+
+  // Special question: compare two aircraft by cruise-speed ranges.
   if (questionType === 'speed') {
     const pair = getSpeedComparisonPair();
-
     if (!pair) {
       setLoading(false);
       promptElement.textContent = 'No suitable speed comparisons available.';
@@ -1353,38 +1266,31 @@ async function nextQuestion() {
     }
 
     currentAircraft = pair.first;
-
-    const firstName = getAircraftDisplayName(pair.first);
-    const secondName = getAircraftDisplayName(pair.second);
-
     specialQuestionData = {
       type: 'speed',
       correctAnswer: pair.answer,
-      feedbackAnswer: `${firstName} is ${pair.answer.toLowerCase()} than ${secondName}.`,
+      feedbackAnswer:
+        `${getAircraftDisplayName(pair.first)} is ${pair.answer.toLowerCase()} than ` +
+        `${getAircraftDisplayName(pair.second)}.`,
     };
 
     displaySpeedComparison(pair);
-
     setLoading(false);
     focusFirstAnswer();
     return;
   }
 
   const item = chooseAircraft();
-
   if (!item) {
     setLoading(false);
-
     promptElement.textContent = 'Not enough aircraft available.';
     feedbackElement.textContent =
       'Check that the manifest contains enough aircraft with the required data for the selected question type.';
-
     return;
   }
 
   currentAircraft = item;
 
-  // Guess the wake turbulence category.
   if (questionType === 'wake') {
     await displayWakeQuestion(item);
     return;
@@ -1392,22 +1298,20 @@ async function nextQuestion() {
 
   const answerMode = getAnswerMode();
   const answerSemantic = getAnswerSemanticType(answerMode);
-
   const answerType =
     answerSemantic === 'name'
-      ? 'Aircraft name'
+      ? 'name'
       : answerSemantic === 'icao'
-        ? 'ICAO code'
+        ? 'icao'
         : questionType === 'name'
-          ? 'Aircraft name'
-          : 'ICAO code';
+          ? 'name'
+          : 'icao';
 
   displayQuestion();
 
   // Photo question: identify the displayed aircraft.
   if (questionType === 'photo') {
     const imagePath = getRandomImagePath(currentAircraft);
-
     if (!imagePath) {
       setLoading(false);
       feedbackElement.textContent = 'No image is available for this aircraft.';
@@ -1420,7 +1324,6 @@ async function nextQuestion() {
           imagePath,
           'Aircraft recognition question image',
         );
-
         setLoading(false);
         typeAnswerInput.disabled = false;
         submitAnswerButton.disabled = false;
@@ -1429,7 +1332,6 @@ async function nextQuestion() {
         setLoading(false);
         feedbackElement.textContent = error.message;
       }
-
       return;
     }
 
@@ -1438,23 +1340,18 @@ async function nextQuestion() {
 
     try {
       await loadQuestionImage(imagePath, 'Aircraft recognition question image');
-
       setLoading(false);
-
       answerButtons.forEach((button) => {
         if (!button.hidden) button.disabled = false;
       });
-
       focusFirstAnswer();
     } catch (error) {
       setLoading(false);
       feedbackElement.textContent = error.message;
-
       answerButtons.forEach((button) => {
         button.disabled = true;
       });
     }
-
     return;
   }
 
@@ -1462,18 +1359,15 @@ async function nextQuestion() {
   if (isPhotoAnswer(answerMode)) {
     currentChoices = buildPhotoChoices(currentAircraft);
     displayPhotoAnswerChoices(currentChoices);
-
     setLoading(false);
-
     answerButtons.forEach((button) => {
       if (!button.hidden) button.disabled = false;
     });
-
     focusFirstAnswer();
     return;
   }
 
-  // Text question: type an answer.
+  // Text question: type the answer.
   if (isTypedAnswer(answerMode)) {
     setLoading(false);
     typeAnswerInput.disabled = false;
@@ -1482,27 +1376,24 @@ async function nextQuestion() {
     return;
   }
 
-  // Text question: choose a text answer.
+  // Text question: select a text answer.
   currentChoices = buildTextAnswerChoices(currentAircraft, answerType);
   displayTextAnswerChoices(currentChoices);
-
   setLoading(false);
   focusFirstAnswer();
 }
 
 // ============================================================
-// Load manifest
+// Load aircraft manifest
 // ============================================================
 
 async function loadManifest() {
   const response = await fetch(MANIFEST_PATH);
-
   if (!response.ok) {
     throw new Error(`Unable to load manifest (${response.status}).`);
   }
 
   const manifest = await response.json();
-
   if (!manifest || !Array.isArray(manifest.aircraft)) {
     throw new Error('Invalid manifest: expected an aircraft array.');
   }
@@ -1511,7 +1402,6 @@ async function loadManifest() {
     if (!item || typeof item !== 'object') return false;
 
     const hasFolder = Boolean(displayText(item.folder));
-
     const hasImages =
       (Array.isArray(item.images) && item.images.some(Boolean)) ||
       Boolean(displayText(item.image_path));
@@ -1549,14 +1439,11 @@ function focusLastAnswer() {
 function moveAnswerFocus(direction) {
   const buttons = getAvailableAnswerButtons();
   const current = document.activeElement;
-  const index = buttons.indexOf(current);
-
-  if (index === -1) return false;
+  if (!buttons.includes(current)) return false;
 
   const rect = current.getBoundingClientRect();
   const x = rect.left + rect.width / 2;
   const y = rect.top + rect.height / 2;
-
   let bestButton = null;
   let bestScore = Infinity;
 
@@ -1566,26 +1453,22 @@ function moveAnswerFocus(direction) {
     const otherRect = button.getBoundingClientRect();
     const dx = otherRect.left + otherRect.width / 2 - x;
     const dy = otherRect.top + otherRect.height / 2 - y;
-
     let primary;
     let secondary;
 
     if (direction === 'left' || direction === 'right') {
       if (direction === 'left' && dx >= -1) continue;
       if (direction === 'right' && dx <= 1) continue;
-
       primary = Math.abs(dx);
       secondary = Math.abs(dy);
     } else {
       if (direction === 'up' && dy >= -1) continue;
       if (direction === 'down' && dy <= 1) continue;
-
       primary = Math.abs(dy);
       secondary = Math.abs(dx);
     }
 
     const candidateScore = primary * 1000 + secondary;
-
     if (candidateScore < bestScore) {
       bestScore = candidateScore;
       bestButton = button;
@@ -1593,7 +1476,6 @@ function moveAnswerFocus(direction) {
   }
 
   if (!bestButton) return false;
-
   bestButton.focus();
   return true;
 }
@@ -1635,18 +1517,15 @@ function handleKeyboard(event) {
       event.preventDefault();
       nextQuestion();
     }
-
     return;
   }
 
   if (!answered && /^[1-4]$/.test(event.key)) {
     const button = answerButtons[Number(event.key) - 1];
-
     if (button && !button.disabled && !button.hidden) {
       event.preventDefault();
       button.click();
     }
-
     return;
   }
 
@@ -1667,39 +1546,31 @@ function handleKeyboard(event) {
   if (event.key === 'Home' && getAvailableAnswerButtons().length) {
     event.preventDefault();
     focusFirstAnswer();
-  }
-
-  if (event.key === 'End' && getAvailableAnswerButtons().length) {
+  } else if (event.key === 'End' && getAvailableAnswerButtons().length) {
     event.preventDefault();
     focusLastAnswer();
   }
 }
 
 // ============================================================
-// Accessibility
+// Accessibility setup
 // ============================================================
 
 function setupAccessibility() {
   appElement.setAttribute('aria-describedby', 'keyboard-shortcuts-help');
-
   promptElement.setAttribute('aria-live', 'polite');
   promptElement.setAttribute('aria-atomic', 'true');
   promptElement.setAttribute('tabindex', '-1');
-
   feedbackElement.setAttribute('aria-live', 'polite');
   feedbackElement.setAttribute('aria-atomic', 'true');
-
   scoreElement.setAttribute('aria-live', 'polite');
   scoreElement.setAttribute('aria-atomic', 'true');
-
   loadingMessage.setAttribute('role', 'status');
   loadingMessage.setAttribute('aria-live', 'polite');
   loadingMessage.setAttribute('aria-atomic', 'true');
-
   answerContainer.setAttribute('aria-label', 'Answer choices');
 
   let help = byId('keyboard-shortcuts-help');
-
   if (!help) {
     help = document.createElement('div');
     help.id = 'keyboard-shortcuts-help';
@@ -1711,7 +1582,6 @@ function setupAccessibility() {
   answerButtons.forEach((button, index) => {
     button.setAttribute('aria-keyshortcuts', String(index + 1));
   });
-
   nextButton.setAttribute('aria-keyshortcuts', 'Enter Space N');
   submitAnswerButton.setAttribute('aria-keyshortcuts', 'Enter');
 }
@@ -1754,10 +1624,7 @@ answerTypeSelect.addEventListener('change', () => {
 });
 
 document.addEventListener('keydown', handleKeyboard);
-
-imageElement.addEventListener('dragstart', (event) => {
-  event.preventDefault();
-});
+imageElement.addEventListener('dragstart', (event) => event.preventDefault());
 
 // ============================================================
 // Startup
@@ -1768,31 +1635,23 @@ async function start() {
     ensureAnswerTypeOptions();
     setupAccessibility();
     setLoading(true);
-
     await loadManifest();
-
     populateCategories();
     syncAnswerOptions();
     updateScore();
-
     await nextQuestion();
   } catch (error) {
     console.error(error);
-
     setLoading(false);
-
     promptElement.textContent = 'Unable to load aircraft data.';
     feedbackElement.textContent =
       error instanceof Error ? error.message : String(error);
-
     answerButtons.forEach((button) => {
       button.disabled = true;
     });
-
     typeAnswerInput.disabled = true;
     submitAnswerButton.disabled = true;
     nextButton.disabled = true;
-
     promptElement.focus();
   }
 }
