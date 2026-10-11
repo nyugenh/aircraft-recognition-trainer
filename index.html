@@ -1,141 +1,125 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f7fa" />
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
+      name="description"
+      content="Aircraft recognition practice for trainee air traffic controllers."
     />
-
-    <meta name="description" content="Aircraft recognition training quiz" />
-
-    <meta
-      name="theme-color"
-      content="#f5f7fa"
-      media="(prefers-color-scheme: light)"
-    />
-
-    <meta
-      name="theme-color"
-      content="#12161a"
-      media="(prefers-color-scheme: dark)"
-    />
-
     <title>Aircraft Recognition Trainer</title>
-
-    <link rel="icon" type="image/png" href="favicon.svg" />
-
     <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
   </head>
-
   <body>
-    <main class="app">
-      <!-- Header -->
+    <main class="app" aria-describedby="keyboard-shortcuts-help">
       <header class="header">
         <h1>Aircraft Recognition Trainer</h1>
-
         <div id="score" class="score" aria-live="polite">Score: 0/0 (0%)</div>
       </header>
-
-      <!-- Controls -->
       <section class="controls" aria-label="Quiz settings">
-        <label>
-          Category
-          <select id="category"></select>
+        <label for="category"
+          >Category
+          <select id="category" name="category">
+            <option value="All">All</option>
+          </select>
         </label>
-
-        <label>
-          Question
-          <select id="question-type">
-            <option value="photo">Photo</option>
-            <option value="name">Name</option>
-            <option value="icao">ICAO</option>
-            <option value="cruise-speed">Cruise speed</option>
-            <option value="speed">Faster or slower</option>
+        <label for="question-type"
+          >Question
+          <select id="question-type" name="question-type">
+            <option value="photo">Photo → identify</option>
+            <option value="name">Name → identify</option>
+            <option value="icao">ICAO → identify</option>
+            <option value="speed">Compare speeds</option>
+            <option value="cruise-speed">Estimate speed</option>
+            <option value="rank-speed">Rank speeds</option>
             <option value="wake">Wake category</option>
           </select>
         </label>
-
-        <label id="answer-type-label">
-          Answer
-          <select id="answer-type">
-            <option value="name">Name</option>
-            <option value="icao">ICAO</option>
-            <option value="photo">Photo</option>
-            <option value="enter-name">Type name</option>
-            <option value="enter-icao">Type ICAO</option>
+        <label id="answer-type-label" for="answer-type"
+          >Answer
+          <select id="answer-type" name="answer-type">
+            <option value="name">Name (choose)</option>
+            <option value="icao">ICAO (choose)</option>
+            <option value="photo">Photo (choose)</option>
+            <option value="enter-name">Name (type)</option>
+            <option value="enter-icao">ICAO (type)</option>
           </select>
         </label>
       </section>
-
-      <!-- Aircraft image for normal modes and wake category questions -->
-      <button id="photo-toggle" type="button">Show photo</button>
+      <button id="photo-toggle" class="photo-toggle" type="button" hidden>
+        Show photos
+      </button>
       <section
         id="image-container"
         class="image-container"
         aria-label="Aircraft image"
       >
-        <div
-          id="loading-message"
-          class="loading-message"
-          role="status"
-          aria-live="polite"
-        >
+        <img
+          id="aircraft-image"
+          alt="Aircraft recognition question"
+          draggable="false"
+        />
+        <div id="loading-message" class="loading-message hidden">
           Loading aircraft…
         </div>
-
-        <img id="aircraft-image" alt="" draggable="false" />
       </section>
-
-      <!-- Question -->
-      <div id="prompt" class="prompt" aria-live="polite"></div>
-
-      <!-- Typed answer -->
-      <section id="type-answer-container" class="type-answer-container" hidden>
-        <label class="visually-hidden" for="type-answer-input">
-          Type your answer
-        </label>
-
+      <p
+        id="prompt"
+        class="prompt"
+        aria-live="polite"
+        aria-atomic="true"
+        tabindex="-1"
+      >
+        Loading aircraft…
+      </p>
+      <section
+        id="speed-ranking"
+        class="speed-ranking"
+        hidden
+        aria-label="Aircraft speed ranking"
+      >
+        <ol id="speed-ranking-list"></ol>
+        <button id="check-ranking" type="button">Check ranking</button>
+      </section>
+      <section id="answers" class="answers" aria-label="Answer choices">
+        <button type="button" disabled>Option 1</button>
+        <button type="button" disabled>Option 2</button>
+        <button type="button" disabled>Option 3</button>
+        <button type="button" disabled>Option 4</button>
+      </section>
+      <form id="type-answer-container" class="type-answer-container" hidden>
+        <label class="visually-hidden" for="type-answer-input"
+          >Your answer</label
+        >
         <input
           id="type-answer-input"
           class="type-answer-input"
           type="text"
           autocomplete="off"
-          autocapitalize="none"
+          autocapitalize="off"
           spellcheck="false"
-          placeholder="Type your answer..."
+          placeholder="Type your answer"
           disabled
         />
-
         <button id="submit-answer" class="submit-answer" type="button" disabled>
           Submit
         </button>
-      </section>
-
-      <!-- Multiple choice / reverse photo / special question answers -->
-      <section id="answers" class="answers" aria-label="Answer choices">
-        <button type="button" data-index="0" disabled></button>
-
-        <button type="button" data-index="1" disabled></button>
-
-        <button type="button" data-index="2" disabled></button>
-
-        <button type="button" data-index="3" disabled></button>
-      </section>
-
-      <!-- Bottom -->
+      </form>
       <footer class="bottom">
-        <div class="status" aria-live="polite">
-          <div id="feedback" class="feedback"></div>
+        <div class="status">
+          <div
+            id="feedback"
+            class="feedback"
+            aria-live="polite"
+            aria-atomic="true"
+          ></div>
         </div>
-
         <button id="next" class="next-button" type="button" disabled>
           Next aircraft
         </button>
       </footer>
     </main>
-
-    <script src="app.js"></script>
   </body>
 </html>
