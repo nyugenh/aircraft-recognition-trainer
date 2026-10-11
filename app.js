@@ -835,9 +835,9 @@ function updatePhotoVisibility() {
   if (ranking) ranking.hidden = questionType !== 'rank-speed';
   if (questionType === 'rank-speed') {
     byId('speed-ranking-list')
-      ?.querySelectorAll('.ranking-photo')
-      .forEach((img) => {
-        img.hidden = !photosVisible;
+      ?.querySelectorAll('.ranking-photo-wrap')
+      .forEach((wrap) => {
+        wrap.hidden = !photosVisible;
       });
   }
   if (questionType === 'wake') imageElement.hidden = !showPhotos;
@@ -977,7 +977,13 @@ function setFeedback(type, resultText, detailText = '', answerText = '') {
 
 function revealCorrectPhotoNames() {
   answerButtons.forEach((button) => {
-    button.querySelector('.photo-choice-name')?.classList.remove('hidden-name');
+    const name = button.querySelector('.photo-choice-name');
+    if (!name) return;
+
+    // Explicitly reveal every label as well as removing the hiding class.
+    // The inline visibility helps avoid stale CSS visibility rendering on iOS Safari.
+    name.classList.remove('hidden-name');
+    name.style.visibility = 'visible';
   });
 }
 
@@ -1022,14 +1028,9 @@ function ensurePhotoChoiceLoadingStyles() {
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-      gap: 0;
       width: 100%;
       min-height: 140px;
-      color: var(--muted, #666);
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-align: center;
+      pointer-events: none;
     }
   `;
   document.head.appendChild(style);
@@ -1056,7 +1057,10 @@ async function displayPhotoAnswerChoices(choices) {
     placeholder.className = 'photo-choice-placeholder';
     placeholder.setAttribute('role', 'status');
     placeholder.setAttribute('aria-label', `Loading photo option ${index + 1}`);
-    placeholder.textContent = loadingMessage.textContent.trim();
+    const loadingBadge = document.createElement('span');
+    loadingBadge.className = 'loading-message';
+    loadingBadge.textContent = loadingMessage.textContent.trim();
+    placeholder.appendChild(loadingBadge);
     button.appendChild(placeholder);
     button.dataset.answer = choice.text;
     button.dataset.correct = String(choice.aircraft === currentAircraft);
@@ -1145,10 +1149,76 @@ function displaySpecialChoices(choices, correctAnswer, disabled = false) {
 
 // Special question rendering
 
+function ensureGeneralImageLoadingStyles() {
+  if (byId('general-image-loading-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'general-image-loading-styles';
+  style.textContent = `
+    .speed-aircraft-photo {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 140px;
+    }
+    .speed-aircraft-photo img[hidden] { display: none; }
+    .speed-aircraft-photo img:not([hidden]) {
+      display: block;
+      width: 100%;
+      height: clamp(150px, 28vh, 260px);
+      object-fit: contain;
+      object-position: center;
+    }
+    .speed-aircraft-photo .loading-message { white-space: normal; }
+    .ranking-photo-wrap {
+      position: relative;
+      display: flex;
+      flex: 0 0 180px;
+      align-items: center;
+      justify-content: center;
+      width: 180px;
+      min-height: 60px;
+    }
+    .ranking-photo-wrap[hidden] { display: none; }
+    .ranking-photo-wrap .ranking-photo[hidden] { display: none; }
+    .ranking-photo-wrap .loading-message {
+      max-width: calc(100% - 8px);
+      padding: 6px 8px;
+      font-size: 0.75rem;
+      white-space: normal;
+      text-align: center;
+    }
+    @media (max-width: 550px) {
+      .speed-aircraft-photo { min-height: 120px; }
+      .speed-aircraft-photo img:not([hidden]) { height: clamp(120px, 22vh, 180px); }
+      .ranking-photo-wrap { flex-basis: 88px; width: 88px; }
+    }
+    @media (max-width: 480px) and (min-height: 701px) and (orientation: portrait) {
+      .speed-aircraft-photo { min-height: 70px; }
+      .speed-aircraft-photo img:not([hidden]) { height: clamp(70px, 12vh, 105px); }
+    }
+    @media (max-width: 380px) {
+      .ranking-photo-wrap { flex-basis: 64px; width: 64px; }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function createImageLoadingPlaceholder(label = 'Loading aircraft…') {
+  const placeholder = document.createElement('span');
+  placeholder.className = 'loading-message';
+  placeholder.setAttribute('role', 'status');
+  placeholder.textContent = loadingMessage.textContent.trim() || label;
+  placeholder.setAttribute('aria-label', label);
+  return placeholder;
+}
+
 function displaySpeedComparison(pair) {
   imageContainer.querySelector('.speed-comparison')?.remove();
   imageElement.hidden = true;
   loadingMessage.classList.add('hidden');
+  ensureGeneralImageLoadingStyles();
   const comparison = document.createElement('div');
   comparison.className = 'speed-comparison';
   comparison.setAttribute('aria-label', 'Compare aircraft');
@@ -1159,14 +1229,34 @@ function displaySpeedComparison(pair) {
   for (const { item, label } of entries) {
     const card = document.createElement('div');
     card.className = 'speed-aircraft';
+    const photoArea = document.createElement('div');
+    photoArea.className = 'speed-aircraft-photo';
     const image = document.createElement('img');
-    image.src = getRandomImagePath(item);
     image.alt = label;
     image.draggable = false;
+    image.hidden = true;
+    const placeholder = createImageLoadingPlaceholder(`Loading ${label}`);
+    image.addEventListener(
+      'load',
+      () => {
+        image.hidden = false;
+        placeholder.remove();
+      },
+      { once: true },
+    );
+    image.addEventListener(
+      'error',
+      () => {
+        placeholder.textContent = 'Unable to load aircraft';
+      },
+      { once: true },
+    );
+    photoArea.append(image, placeholder);
+    image.src = getRandomImagePath(item);
     const name = document.createElement('p');
     name.className = 'speed-aircraft-name';
     name.textContent = label;
-    card.append(image, name);
+    card.append(photoArea, name);
     comparison.appendChild(card);
   }
   imageContainer.appendChild(comparison);
@@ -1790,15 +1880,36 @@ function displaySpeedRanking(entries) {
     position.textContent = String(index + 1);
     const details = document.createElement('div');
     details.className = 'ranking-details';
+    ensureGeneralImageLoadingStyles();
+    const photoWrap = document.createElement('span');
+    photoWrap.className = 'ranking-photo-wrap';
+    photoWrap.hidden = !photosVisible;
     const img = document.createElement('img');
     img.className = 'ranking-photo';
-    img.src = getRandomImagePath(entry.item) || '';
     img.alt = getSpecialAircraftIdentifier(entry.item);
-    img.hidden = !photosVisible;
+    img.hidden = true;
+    const placeholder = createImageLoadingPlaceholder(`Loading ${img.alt}`);
+    img.addEventListener(
+      'load',
+      () => {
+        img.hidden = false;
+        placeholder.remove();
+      },
+      { once: true },
+    );
+    img.addEventListener(
+      'error',
+      () => {
+        placeholder.textContent = 'Unable to load';
+      },
+      { once: true },
+    );
+    photoWrap.append(img, placeholder);
+    img.src = getRandomImagePath(entry.item) || '';
     const name = document.createElement('span');
     name.className = 'ranking-name';
     name.textContent = getSpecialAircraftIdentifier(entry.item);
-    details.append(img, name);
+    details.append(photoWrap, name);
     const controls = document.createElement('div');
     controls.className = 'ranking-controls';
     const up = document.createElement('button');
