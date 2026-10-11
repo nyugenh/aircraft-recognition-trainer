@@ -423,13 +423,16 @@ function getSpeedSegment(item, unit) {
   if (!range) return null;
   const speed = (range.min + range.max) / 2;
   const segments = getSpeedSegments(unit);
-  return (
-    segments.find((segment, index) =>
-      index === segments.length - 1
-        ? speed > segment.min
-        : speed >= segment.min && speed <= segment.max,
-    ) || null
-  );
+  if (unit === 'mach') {
+    if (speed < 0.75) return segments[0];
+    if (speed <= 0.8) return segments[1];
+    if (speed <= 0.85) return segments[2];
+    return segments[3];
+  }
+  if (speed < 150) return segments[0];
+  if (speed <= 250) return segments[1];
+  if (speed <= 350) return segments[2];
+  return segments[3];
 }
 
 function getSpeedChoices(unit) {
@@ -454,8 +457,8 @@ function displayCruiseSpeedQuestion(item, unit) {
   const representativeSpeed = (speedRange.min + speedRange.max) / 2;
   const feedbackAnswer =
     unit === 'mach'
-      ? `Mach ${representativeSpeed.toFixed(2)}`
-      : `${Math.round(representativeSpeed)} kt`;
+      ? `Mach ${Number(representativeSpeed.toFixed(3))}`
+      : `${Number(representativeSpeed.toFixed(3))} kt`;
   specialQuestionData = {
     type: 'cruise-speed',
     correctAnswer,
