@@ -333,7 +333,7 @@ function getAircraftDisplayName(item) {
 }
 
 function getSpecialAircraftIdentifier(item) {
-  const type = getAnswerMode() === 'icao' ? 'icao' : 'name';
+  const type = getAnswerSemanticType() === 'icao' ? 'icao' : 'name';
   return getAnswerValue(item, type) || getAircraftDisplayName(item);
 }
 
@@ -401,21 +401,20 @@ function getSpeedRange(item, unit) {
 }
 
 function getSpeedSegments(unit) {
-  // Fixed, memorable bands that stay the same for every question.
-  // Boundaries are lower-inclusive and upper-exclusive, except the final band.
   if (unit === 'mach') {
     return [
-      { min: 0.65, max: 0.75, label: 'Below Mach 0.75' },
+      { min: -Infinity, max: 0.75, label: 'Below Mach 0.75' },
       { min: 0.75, max: 0.8, label: 'Mach 0.75–0.80' },
       { min: 0.8, max: 0.85, label: 'Mach 0.80–0.85' },
-      { min: 0.85, max: Infinity, label: 'Mach 0.85 and above' },
+      { min: 0.85, max: Infinity, label: 'Above Mach 0.85' },
     ];
   }
+
   return [
     { min: -Infinity, max: 150, label: 'Below 150 kt' },
     { min: 150, max: 250, label: '150–250 kt' },
     { min: 250, max: 350, label: '250–350 kt' },
-    { min: 350, max: Infinity, label: '350 kt and above' },
+    { min: 350, max: Infinity, label: 'Above 350 kt' },
   ];
 }
 
@@ -427,8 +426,8 @@ function getSpeedSegment(item, unit) {
   return (
     segments.find((segment, index) =>
       index === segments.length - 1
-        ? speed >= segment.min
-        : speed >= segment.min && speed < segment.max,
+        ? speed > segment.min
+        : speed >= segment.min && speed <= segment.max,
     ) || null
   );
 }
@@ -466,7 +465,7 @@ function displayCruiseSpeedQuestion(item, unit) {
   promptElement.replaceChildren();
   promptElement.appendChild(
     document.createTextNode(
-      `What is the cruise speed of a ${getAircraftDisplayName(item)}?`,
+      `What is the cruise speed of ${getIndefiniteArticle(getSpecialAircraftIdentifier(item))} ${getSpecialAircraftIdentifier(item)}?`,
     ),
   );
   appendCategoryHint(promptElement, item.category, 'Category');
@@ -613,7 +612,10 @@ function filterPoolForCombination(pool) {
         (Boolean(getCruiseSpeedRange(item)) ||
           Boolean(getMachCruiseRange(item))) &&
         Boolean(
-          getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
+          getAnswerValue(
+            item,
+            getAnswerSemanticType() === 'icao' ? 'icao' : 'name',
+          ),
         ),
     );
   }
@@ -624,7 +626,10 @@ function filterPoolForCombination(pool) {
         (Boolean(getCruiseSpeedRange(item)) ||
           Boolean(getMachCruiseRange(item))) &&
         Boolean(
-          getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
+          getAnswerValue(
+            item,
+            getAnswerSemanticType() === 'icao' ? 'icao' : 'name',
+          ),
         ),
     );
   }
@@ -634,7 +639,10 @@ function filterPoolForCombination(pool) {
         getAircraftImages(item).length > 0 &&
         Boolean(getWakeCategory(item)) &&
         Boolean(
-          getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
+          getAnswerValue(
+            item,
+            getAnswerSemanticType() === 'icao' ? 'icao' : 'name',
+          ),
         ),
     );
   }
@@ -764,15 +772,17 @@ function buildPhotoChoices(correctAircraft) {
 
 function getIndefiniteArticle(value) {
   const text = displayText(value).trim();
-  // Account for common aircraft names and letter/number designations whose
-  // spoken first sound begins with a vowel (e.g. Airbus, Embraer, F-35).
-  if (
-    /^(airbus|embraer|atr\b|antonov|ilyushin|airbus|a\d|f-?\d|m-?\d|x-?\d|e-?\d)/i.test(
-      text,
-    )
-  )
-    return 'an';
-  return /^[aeiou]/i.test(text) ? 'an' : 'a';
+  // These names begin with a vowel sound when spoken.
+  if (/^(airbus|embraer|atr\b|antonov|ilyushin)/i.test(text)) return 'an';
+
+  // ICAO designators are often spoken letter by letter. F, L, M, N, R, S,
+  // and X are pronounced with a vowel sound at the start (e.g. "eff jay
+  // thirty" for FJ30), so use "an" for those alphanumeric designators.
+  if (/^[flmnrsx][a-z0-9-]*\d[a-z0-9-]*$/i.test(text)) return 'an';
+
+  // Aircraft designations beginning with A, E, or other vowel sounds.
+  if (/^[aeiou]/i.test(text)) return 'an';
+  return 'a';
 }
 
 function appendCategoryHint(container, category, labelPrefix = 'Category') {
@@ -796,7 +806,7 @@ function displayQuestion() {
     text =
       getAnswerSemanticType(answerMode) === 'icao'
         ? 'What is its ICAO code?'
-        : 'Identify this aircraft.';
+        : 'Which aircraft is this?';
   } else if (questionType === 'name') {
     text =
       answerMode === 'photo'
@@ -805,7 +815,7 @@ function displayQuestion() {
   } else if (questionType === 'icao') {
     text =
       answerMode === 'photo'
-        ? `Which photo shows an aircraft with ICAO code ${code}?`
+        ? `Which photo shows ${getIndefiniteArticle(code)} ${code}?`
         : `Which aircraft has ICAO code ${code}?`;
   }
   promptElement.appendChild(document.createTextNode(text));
@@ -976,15 +986,39 @@ function setFeedback(type, resultText, detailText = '', answerText = '') {
 }
 
 function revealCorrectPhotoNames() {
-  answerButtons.forEach((button) => {
-    const name = button.querySelector('.photo-choice-name');
-    if (!name) return;
+  // Query the live DOM: on iOS Safari, grid children can retain a stale visual
+  // state until a repaint even after their visibility class has been removed.
+  const revealLabels = () => {
+    const labels = answerContainer.querySelectorAll('.photo-choice-name');
+    labels.forEach((label) => {
+      label.classList.remove('hidden-name');
+      label.hidden = false;
+      label.removeAttribute('aria-hidden');
+      label.style.setProperty('display', 'block', 'important');
+      label.style.setProperty('visibility', 'visible', 'important');
+      label.style.setProperty('opacity', '1', 'important');
+      label.style.setProperty('max-height', 'none', 'important');
+      label.style.setProperty('height', '1.8em', 'important');
+      label.style.setProperty('overflow', 'visible', 'important');
+      label.style.setProperty('color', 'inherit', 'important');
+    });
 
-    // Explicitly reveal every label as well as removing the hiding class.
-    // The inline visibility helps avoid stale CSS visibility rendering on iOS Safari.
-    name.classList.remove('hidden-name');
-    name.style.visibility = 'visible';
-  });
+    // A visibility cycle on the grid forces Safari to repaint all four cards,
+    // rather than only the selected/correct card. Restore the stylesheet layout.
+    answerContainer.style.setProperty('visibility', 'hidden', 'important');
+    void answerContainer.offsetHeight;
+    answerContainer.style.removeProperty('visibility');
+    void answerContainer.offsetHeight;
+    answerContainer.classList.add('photo-names-revealed');
+  };
+
+  revealLabels();
+
+  // Repeat after the current event and after Safari's next paint opportunity.
+  // This covers mobile Safari compositing cases where the first update is stale.
+  if (typeof requestAnimationFrame === 'function') {
+    requestAnimationFrame(() => requestAnimationFrame(revealLabels));
+  }
 }
 
 function finishAnswer() {
@@ -1256,7 +1290,8 @@ function displaySpeedComparison(pair) {
     const name = document.createElement('p');
     name.className = 'speed-aircraft-name';
     name.textContent = label;
-    card.append(photoArea, name);
+    // Keep identifiers in the question, but don't print names beneath photos.
+    card.append(photoArea);
     comparison.appendChild(card);
   }
   imageContainer.appendChild(comparison);
