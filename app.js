@@ -466,9 +466,7 @@ function displayCruiseSpeedQuestion(item, unit) {
   promptElement.replaceChildren();
   promptElement.appendChild(
     document.createTextNode(
-      unit === 'mach'
-        ? `What is the cruise Mach of ${getIndefiniteArticle(getSpecialAircraftIdentifier(item))} ${getSpecialAircraftIdentifier(item)}?`
-        : `What is the estimated speed of ${getIndefiniteArticle(getSpecialAircraftIdentifier(item))} ${getSpecialAircraftIdentifier(item)}?`,
+      `What is the cruise speed of a ${getAircraftDisplayName(item)}?`,
     ),
   );
   appendCategoryHint(promptElement, item.category, 'Category');
@@ -1025,26 +1023,13 @@ function ensurePhotoChoiceLoadingStyles() {
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0;
       width: 100%;
       min-height: 140px;
       color: var(--muted, #666);
       font-size: 0.9rem;
+      font-weight: 600;
       text-align: center;
-    }
-    .photo-choice-spinner {
-      width: 1.5rem;
-      height: 1.5rem;
-      border: 3px solid currentColor;
-      border-right-color: transparent;
-      border-radius: 50%;
-      animation: photo-choice-spin 0.8s linear infinite;
-    }
-    @keyframes photo-choice-spin {
-      to { transform: rotate(360deg); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .photo-choice-spinner { animation: none; }
     }
   `;
   document.head.appendChild(style);
@@ -1071,12 +1056,7 @@ async function displayPhotoAnswerChoices(choices) {
     placeholder.className = 'photo-choice-placeholder';
     placeholder.setAttribute('role', 'status');
     placeholder.setAttribute('aria-label', `Loading photo option ${index + 1}`);
-    const spinner = document.createElement('span');
-    spinner.className = 'photo-choice-spinner';
-    spinner.setAttribute('aria-hidden', 'true');
-    const loadingText = document.createElement('span');
-    loadingText.textContent = 'Loading photo…';
-    placeholder.append(spinner, loadingText);
+    placeholder.textContent = loadingMessage.textContent.trim();
     button.appendChild(placeholder);
     button.dataset.answer = choice.text;
     button.dataset.correct = String(choice.aircraft === currentAircraft);
@@ -1846,8 +1826,8 @@ function displaySpeedRanking(entries) {
     li.addEventListener('pointerdown', (event) => {
       if (
         answered ||
-        event.pointerType !== 'mouse' ||
-        event.button !== 0 ||
+        !event.isPrimary ||
+        (event.pointerType === 'mouse' && event.button !== 0) ||
         event.target.closest('button')
       )
         return;
