@@ -1,6 +1,6 @@
 /* =========================================================
    Aircraft Recognition Trainer
-   Responsive & Accessible Stylesheet (Fully Refactored)
+   Responsive & Accessible Stylesheet
    ========================================================= */
 
 /* 1. Design Tokens */
@@ -322,6 +322,21 @@ button:disabled {
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
+  animation: photoFadeIn 0.25s ease-out forwards;
+}
+
+/* Universal Image Fade-In Animation */
+img {
+  animation: photoFadeIn 0.25s ease-out forwards;
+}
+
+@keyframes photoFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Loading Spinner */
@@ -523,6 +538,23 @@ button:disabled {
 
 .app.reverse-mode .answers.reverse button .option-number {
   display: none !important;
+}
+
+/* Photo Choice Image Wrapper with stable height and spinner support */
+.app.reverse-mode .answers.reverse button .photo-choice-img-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: clamp(
+    90px,
+    16vw,
+    140px
+  ); /* Guarantees card holds shape and reserves spinner space */
+  overflow: hidden;
+  background: transparent;
 }
 
 .app.reverse-mode .answers.reverse button img {
@@ -766,14 +798,15 @@ input:focus-visible {
   background: transparent;
   padding: 0;
   box-shadow: none;
+  margin-bottom: 0;
 }
 
 .speed-comparison {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-3);
+  gap: var(--space-2);
   width: 100%;
-  margin: auto;
+  margin: 0 auto;
   align-self: center;
 }
 
@@ -812,12 +845,8 @@ input:focus-visible {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: clamp(
-    130px,
-    22vw,
-    180px
-  ); /* Responsive height that shrinks smoothly on smaller screens */
-  min-height: 120px; /* Reserves space for loading spinner safely */
+  height: clamp(120px, 20vw, 160px);
+  min-height: 110px;
   padding: 0;
   margin: 0;
   background: transparent;
@@ -836,6 +865,7 @@ input:focus-visible {
   background: transparent;
   border: none;
   border-radius: inherit;
+  animation: photoFadeIn 0.25s ease-out forwards;
 }
 
 /* 15. Speed Ranking Mode */
