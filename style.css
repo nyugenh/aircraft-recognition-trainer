@@ -1,6 +1,6 @@
 /* =========================================================
    Aircraft Recognition Trainer
-   Responsive & Accessible Stylesheet
+   Responsive & Accessible Stylesheet (Fully Unified Edition)
    ========================================================= */
 
 /* 1. Design Tokens */
@@ -293,14 +293,14 @@ button:disabled {
   border-color: var(--border-hover);
 }
 
-/* 6. Aircraft Image Container & Container Queries */
+/* 6. Aircraft Image Container & Universal Fade/Spinner Rules */
 .image-container {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 0;
-  min-height: 0;
+  min-height: 140px;
   overflow: hidden;
   border: 1px solid var(--border-light);
   border-radius: var(--radius);
@@ -339,7 +339,7 @@ img {
   }
 }
 
-/* Loading Spinner */
+/* Universal Loading Spinner */
 .loading-message {
   position: absolute;
   top: 50%;
@@ -540,7 +540,7 @@ img {
   display: none !important;
 }
 
-/* Photo Choice Image Wrapper with stable height and spinner support */
+/* Photo Choice Image Wrapper with stable shape and guaranteed spinner container */
 .app.reverse-mode .answers.reverse button .photo-choice-img-wrap {
   position: relative;
   display: flex;
@@ -548,11 +548,7 @@ img {
   justify-content: center;
   width: 100%;
   height: 100%;
-  min-height: clamp(
-    90px,
-    16vw,
-    140px
-  ); /* Guarantees card holds shape and reserves spinner space */
+  min-height: 110px;
   overflow: hidden;
   background: transparent;
 }
@@ -828,15 +824,6 @@ input:focus-visible {
   background: var(--surface);
   overflow: hidden;
   box-shadow: var(--shadow-card);
-  will-change: transform;
-  transition:
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
-}
-
-.speed-aircraft:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover);
 }
 
 .speed-aircraft-photo {
@@ -996,7 +983,7 @@ input:focus-visible {
   flex: 0 0 72px;
   width: 72px;
   height: 100%;
-  min-height: 44px;
+  min-height: 48px;
   padding: 0;
   margin: 0;
   background: transparent;
@@ -1020,6 +1007,7 @@ input:focus-visible {
   object-fit: contain;
   object-position: center;
   border-radius: 4px;
+  animation: photoFadeIn 0.25s ease-out forwards;
 }
 
 .ranking-photo[hidden] {
@@ -1228,6 +1216,7 @@ body.aircraft-photo-viewer-open {
   will-change: transform;
   touch-action: none;
   cursor: grab;
+  animation: photoFadeIn 0.25s ease-out forwards;
 }
 
 .aircraft-photo-viewer-image:active {

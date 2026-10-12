@@ -212,29 +212,35 @@ function normaliseAnswer(value) {
 // 5. Image Loading & Transition Management
 // ============================================================================
 function preparePhotoFadeIn(image) {
-  if (!(image instanceof HTMLImageElement) || image === imageElement) return;
-  if (image.dataset.fadeInPrepared === 'true') return;
+  if (!(image instanceof HTMLImageElement)) return;
+  if (image.dataset.fadeInPrepared === 'true' && image.style.animationName)
+    return;
   image.dataset.fadeInPrepared = 'true';
-  image.classList.add('photo-fade-in');
-  image.classList.remove('photo-fade-in-visible');
 
-  const revealWhenLoaded = () => {
-    if (!image.isConnected || !image.naturalWidth) return;
-    requestAnimationFrame(() => {
-      if (image.isConnected) image.classList.add('photo-fade-in-visible');
-    });
-  };
+  // Re-trigger the fade-in animation cleanly
+  image.style.animation = 'none';
+  image.offsetHeight; // Trigger DOM reflow
+  image.style.animation = 'photoFadeIn 0.25s ease-out forwards';
+}
 
-  if (image.complete && image.naturalWidth > 0) {
-    revealWhenLoaded();
-  } else {
-    image.addEventListener('load', revealWhenLoaded, { once: true });
-    image.addEventListener(
-      'error',
-      () => image.classList.add('photo-fade-in-visible'),
-      { once: true },
-    );
-  }
+function loadQuestionImage(path, altText) {
+  return new Promise((resolve, reject) => {
+    // Reset/re-trigger fade animation on the main aircraft image element
+    imageElement.style.animation = 'none';
+    imageElement.offsetHeight;
+
+    imageElement.onload = () => {
+      imageElement.style.animation = 'photoFadeIn 0.25s ease-out forwards';
+      if (imageZoomTrigger) imageZoomTrigger.hidden = false;
+      resolve();
+    };
+    imageElement.onerror = () => {
+      if (imageZoomTrigger) imageZoomTrigger.hidden = true;
+      reject(new Error(`Unable to load aircraft image: ${path}`));
+    };
+    imageElement.alt = altText;
+    imageElement.src = path;
+  });
 }
 
 function preparePhotosIn(node) {
@@ -265,21 +271,6 @@ photoFadeObserver.observe(document.documentElement, {
   attributes: true,
   attributeFilter: ['src'],
 });
-
-function loadQuestionImage(path, altText) {
-  return new Promise((resolve, reject) => {
-    imageElement.onload = () => {
-      if (imageZoomTrigger) imageZoomTrigger.hidden = false;
-      resolve();
-    };
-    imageElement.onerror = () => {
-      if (imageZoomTrigger) imageZoomTrigger.hidden = true;
-      reject(new Error(`Unable to load aircraft image: ${path}`));
-    };
-    imageElement.alt = altText;
-    imageElement.src = path;
-  });
-}
 
 function cleanPath(value) {
   return displayText(value).replace(/\\/g, '/').replace(/^\/+/, '');
