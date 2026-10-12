@@ -1,6 +1,6 @@
 /* =========================================================
    Aircraft Recognition Trainer
-   Responsive & Accessible Stylesheet
+   Responsive & Accessible Stylesheet (Fully Refactored)
    ========================================================= */
 
 /* 1. Design Tokens */
@@ -235,7 +235,9 @@ button:disabled {
   line-height: 1.2;
   font-weight: 700;
   letter-spacing: -0.02em;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .score {
@@ -517,6 +519,10 @@ button:disabled {
   box-shadow:
     inset 0 0 0 1px rgb(165 42 42 / 15%),
     var(--shadow-card);
+}
+
+.app.reverse-mode .answers.reverse button .option-number {
+  display: none !important;
 }
 
 .app.reverse-mode .answers.reverse button img {
@@ -806,9 +812,14 @@ input:focus-visible {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
-  max-height: 220px;
+  height: clamp(
+    130px,
+    22vw,
+    180px
+  ); /* Responsive height that shrinks smoothly on smaller screens */
+  min-height: 120px; /* Reserves space for loading spinner safely */
   padding: 0;
+  margin: 0;
   background: transparent;
   border: none;
   border-radius: inherit;
@@ -819,9 +830,9 @@ input:focus-visible {
   display: block;
   width: 100%;
   height: 100%;
-  max-height: 200px;
   object-fit: contain;
   padding: 0;
+  margin: 0;
   background: transparent;
   border: none;
   border-radius: inherit;
