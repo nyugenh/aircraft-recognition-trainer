@@ -148,7 +148,13 @@
       "code": "C210",
       "category": "Light Singles",
       "query": "Cessna 210 Centurion",
-      "images": ["000.jpg", "001.jpg", "002.jpg", "003.jpg", "004.jpg"],
+      "images": [
+        "000.jpg",
+        "001.jpg",
+        "002.jpg",
+        "003.jpg",
+        "004.jpg"
+      ],
       "cruise_speed_kt": {
         "min": 170,
         "max": 170
@@ -254,7 +260,10 @@
         "012.jpg",
         "013.jpg",
         "014.jpg",
-        "015.jpg"
+        "015.jpg",
+        "016.jpg",
+        "017.jpg",
+        "018.jpg"
       ],
       "cruise_speed_kt": {
         "min": 130,
@@ -360,7 +369,13 @@
       "code": "BE35",
       "category": "Light Singles",
       "query": "Bonanza 35",
-      "images": ["000.jpg", "002.jpg", "004.jpg", "008.jpg", "009.jpg"],
+      "images": [
+        "000.jpg",
+        "002.jpg",
+        "004.jpg",
+        "008.jpg",
+        "009.jpg"
+      ],
       "cruise_speed_kt": {
         "min": 160,
         "max": 180
@@ -682,7 +697,9 @@
         "018.jpg",
         "019.jpg",
         "021.jpg",
-        "022.jpg"
+        "022.jpg",
+        "024.jpg",
+        "025.jpg"
       ],
       "cruise_speed_kt": {
         "min": 175,
@@ -1095,7 +1112,13 @@
       "code": "B350",
       "category": "Turboprops",
       "query": "B350 King Air",
-      "images": ["000.jpg", "001.jpg"],
+      "images": [
+        "000.jpg",
+        "001.jpg",
+        "002.jpg",
+        "003.jpg",
+        "004.jpg"
+      ],
       "cruise_speed_kt": {
         "min": 300,
         "max": 300
@@ -1454,7 +1477,8 @@
         "007.jpg",
         "008.jpg",
         "009.jpg",
-        "011.jpg"
+        "011.jpg",
+        "013.jpg"
       ],
       "cruise_speed_kt": {
         "min": 400,
@@ -1481,7 +1505,6 @@
         "009.jpg",
         "010.jpg",
         "011.jpg",
-        "012.jpg",
         "013.jpg"
       ],
       "cruise_speed_kt": {
@@ -1513,7 +1536,8 @@
         "009.jpg",
         "010.jpg",
         "013.jpg",
-        "014.jpg"
+        "014.jpg",
+        "015.jpg"
       ],
       "cruise_speed_kt": {
         "min": 470,
@@ -1555,7 +1579,13 @@
       "code": "GLF6",
       "category": "Business Jets",
       "query": "Gulfstream 6",
-      "images": ["000.jpg", "001.jpg", "002.jpg", "003.jpg", "004.jpg"],
+      "images": [
+        "000.jpg",
+        "001.jpg",
+        "002.jpg",
+        "003.jpg",
+        "004.jpg"
+      ],
       "cruise_speed_kt": {
         "min": 470,
         "max": 490
@@ -1588,7 +1618,8 @@
         "012.jpg",
         "013.jpg",
         "014.jpg",
-        "015.jpg"
+        "015.jpg",
+        "016.jpg"
       ],
       "cruise_speed_kt": {
         "min": 490,
@@ -1722,23 +1753,18 @@
       "query": "Cessna Citation X",
       "images": [
         "000.jpg",
-        "001.jpg",
         "002.jpg",
         "003.jpg",
         "004.jpg",
         "005.jpg",
         "006.jpg",
-        "007.jpg",
-        "008.jpg",
         "009.jpg",
         "010.jpg",
-        "013.jpg",
         "014.jpg",
         "015.jpg",
-        "016.jpg",
         "017.jpg",
-        "018.jpg",
-        "019.jpg"
+        "019.jpg",
+        "020.jpg"
       ],
       "cruise_speed_kt": null,
       "cruise_speed_mach": {
@@ -1794,7 +1820,14 @@
       "code": "WW24",
       "category": "Business Jets",
       "query": "Westwind",
-      "images": ["000.jpg", "001.jpg", "003.jpg", "004.jpg", "005.jpg"],
+      "images": [
+        "000.jpg",
+        "001.jpg",
+        "003.jpg",
+        "004.jpg",
+        "005.jpg",
+        "007.jpg"
+      ],
       "cruise_speed_kt": {
         "min": 400,
         "max": 450
@@ -2014,7 +2047,10 @@
         "011.jpg",
         "012.jpg",
         "013.jpg",
-        "014.jpg"
+        "014.jpg",
+        "015.jpg",
+        "016.jpg",
+        "017.jpg"
       ],
       "cruise_speed_kt": null,
       "cruise_speed_mach": {
@@ -2231,7 +2267,10 @@
         "008.jpg",
         "009.jpg",
         "010.jpg",
-        "013.jpg"
+        "013.jpg",
+        "015.jpg",
+        "020.jpg",
+        "021.jpg"
       ],
       "cruise_speed_kt": null,
       "cruise_speed_mach": {
@@ -2525,7 +2564,6 @@
       "images": [
         "000.jpg",
         "001.jpg",
-        "002.jpg",
         "003.jpg",
         "004.jpg",
         "005.jpg",
@@ -2540,7 +2578,10 @@
         "014.jpg",
         "015.jpg",
         "016.jpg",
-        "017.jpg"
+        "017.jpg",
+        "018.jpg",
+        "019.jpg",
+        "020.jpg"
       ],
       "cruise_speed_kt": null,
       "cruise_speed_mach": {
@@ -2981,7 +3022,13 @@
       "code": "R22",
       "category": "Helicopters",
       "query": "Robinson 22 Helicopter",
-      "images": ["000.jpg", "001.jpg", "004.jpg", "005.jpg", "006.jpg"],
+      "images": [
+        "000.jpg",
+        "001.jpg",
+        "004.jpg",
+        "005.jpg",
+        "006.jpg"
+      ],
       "cruise_speed_kt": {
         "min": 82,
         "max": 82
@@ -3074,7 +3121,11 @@
         "014.jpg",
         "015.jpg",
         "016.jpg",
-        "017.jpg"
+        "017.jpg",
+        "018.jpg",
+        "019.jpg",
+        "021.jpg",
+        "022.jpg"
       ],
       "cruise_speed_kt": {
         "min": 150,
@@ -3236,8 +3287,8 @@
         "016.jpg",
         "017.jpg",
         "019.jpg",
-        "020.jpg",
-        "021.jpg"
+        "021.jpg",
+        "022.jpg"
       ],
       "cruise_speed_kt": null,
       "cruise_speed_mach": {
@@ -3264,7 +3315,11 @@
         "012.jpg",
         "013.jpg",
         "014.jpg",
-        "016.jpg"
+        "016.jpg",
+        "018.jpg",
+        "019.jpg",
+        "020.jpg",
+        "021.jpg"
       ],
       "cruise_speed_kt": null,
       "cruise_speed_mach": {
@@ -3483,7 +3538,12 @@
       "code": "KC30",
       "category": "Military",
       "query": "KC-30A",
-      "images": ["000.jpg", "001.jpg", "002.jpg", "003.jpg"],
+      "images": [
+        "000.jpg",
+        "001.jpg",
+        "002.jpg",
+        "003.jpg"
+      ],
       "cruise_speed_kt": null,
       "cruise_speed_mach": {
         "min": 0.81,

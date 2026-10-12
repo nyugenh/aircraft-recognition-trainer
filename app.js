@@ -51,7 +51,6 @@ let answerTypeSelect = byId('answer-type');
 let answerTypeLabel = byId('answer-type-label');
 let answerTypeCaption = null;
 
-// Ensure answer-type control exists in the DOM
 if (!answerTypeSelect) {
   const controlsElement = $('.controls');
   if (controlsElement) {
@@ -69,7 +68,6 @@ if (!answerTypeSelect) {
   }
 }
 
-// Setup answer type caption
 if (answerTypeLabel) {
   const existingCaptionNode = [...answerTypeLabel.childNodes].find(
     (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim(),
@@ -106,7 +104,6 @@ photoToggleButton.className = 'photo-toggle';
 photoToggleButton.hidden = true;
 photoToggleButton.setAttribute('aria-pressed', 'false');
 
-// Photo toggle icon and label setup
 const photoToggleIcon = document.createElementNS(
   'http://www.w3.org/2000/svg',
   'svg',
@@ -874,7 +871,8 @@ function resetAnswerUI() {
     button.disabled = true;
     button.hidden = false;
     button.classList.remove('correct', 'incorrect');
-    button.replaceChildren();
+    const optionText = button.querySelector('.option-text');
+    if (optionText) optionText.textContent = '';
     delete button.dataset.answer;
     delete button.dataset.correct;
     button.removeAttribute('aria-hidden');
@@ -992,8 +990,9 @@ function displayTextAnswerChoices(choices, disabled = false) {
   answerContainer.hidden = false;
   answerButtons.forEach((button, index) => {
     const choice = choices[index];
+    const optionText = button.querySelector('.option-text') || button;
     if (!choice) {
-      button.replaceChildren();
+      if (optionText !== button) optionText.textContent = '';
       button.disabled = true;
       button.hidden = true;
       button.setAttribute('aria-hidden', 'true');
@@ -1001,8 +1000,16 @@ function displayTextAnswerChoices(choices, disabled = false) {
     }
     button.hidden = false;
     button.removeAttribute('aria-hidden');
-    button.replaceChildren();
-    button.textContent = choice.text;
+    if (optionText !== button) {
+      optionText.textContent = choice.text;
+    } else {
+      const badge = button.querySelector('.shortcut-badge');
+      button.replaceChildren(badge || '');
+      const span = document.createElement('span');
+      span.className = 'option-text';
+      span.textContent = choice.text;
+      button.appendChild(span);
+    }
     button.dataset.answer = choice.text;
     button.dataset.correct = String(choice.aircraft === currentAircraft);
     button.disabled = disabled;
@@ -1077,7 +1084,10 @@ async function displayPhotoAnswerChoices(choices) {
       const name = document.createElement('span');
       name.className = 'photo-choice-name hidden-name';
       name.textContent = choice.text;
-      button.replaceChildren(image, name);
+      const numBadge = document.createElement('span');
+      numBadge.className = 'option-number';
+      numBadge.textContent = String(index + 1);
+      button.replaceChildren(numBadge, image, name);
       button.setAttribute('aria-label', `Photo option ${index + 1}`);
     });
     photoOptions.forEach(({ button }) => {
@@ -1099,8 +1109,8 @@ function displaySpecialChoices(choices, correctAnswer, disabled = false) {
   answerContainer.hidden = false;
   answerButtons.forEach((button, index) => {
     const choice = choices[index];
-    button.replaceChildren();
     button.classList.remove('correct', 'incorrect');
+    const badge = button.querySelector('.shortcut-badge');
     if (!choice) {
       button.hidden = true;
       button.disabled = true;
@@ -1109,7 +1119,11 @@ function displaySpecialChoices(choices, correctAnswer, disabled = false) {
     }
     button.hidden = false;
     button.removeAttribute('aria-hidden');
-    button.textContent = choice;
+    button.replaceChildren(badge || '');
+    const span = document.createElement('span');
+    span.className = 'option-text';
+    span.textContent = choice;
+    button.appendChild(span);
     button.dataset.answer = choice;
     button.dataset.correct = String(choice === correctAnswer);
     button.disabled = disabled;
@@ -1287,7 +1301,6 @@ async function displayWakeQuestion(item) {
   }
 }
 
-// Speed ranking data & helpers
 const FALLBACK_CRUISE_SPEED_KT = {
   C150: [90, 105],
   C172: [110, 125],
@@ -2310,7 +2323,7 @@ start();
 
   const MIN_ZOOM = 1;
   const MAX_ZOOM = 5;
-  let overlay, enlargedImage, previousFocus;
+  let overlay, enlargedImage, previousFocus, statusRegion;
   let scale = 1,
     panX = 0,
     panY = 0;
@@ -2327,6 +2340,10 @@ start();
   const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
   const midpoint = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
 
+  function announceStatus(message) {
+    if (statusRegion) statusRegion.textContent = message;
+  }
+
   function renderTransform() {
     enlargedImage.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
     enlargedImage.style.cursor = scale > 1 ? 'grab' : 'zoom-in';
@@ -2337,6 +2354,7 @@ start();
     panX = 0;
     panY = 0;
     renderTransform();
+    announceStatus('Zoom reset to 100%');
   }
 
   function zoomAt(nextScale, point) {
@@ -2355,6 +2373,7 @@ start();
     panX = anchor.x - center.x - imageX * scale;
     panY = anchor.y - center.y - imageY * scale;
     renderTransform();
+    announceStatus(`Zoom ${Math.round(scale * 100)}%`);
   }
 
   function ensureViewer() {
@@ -2367,19 +2386,41 @@ start();
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute(
       'aria-label',
-      'Enlarged aircraft photo. Pinch or scroll to zoom, drag to move, Escape to close.',
+      'Enlarged aircraft photo viewer. Use toolbar buttons or pinch gestures to zoom.',
     );
-    overlay.innerHTML = '<img class="aircraft-photo-viewer-image" alt="">';
-    enlargedImage = overlay.querySelector('img');
+
+    overlay.innerHTML = `
+      <div class="aircraft-viewer-status visually-hidden" aria-live="polite"></div>
+      <div class="aircraft-viewer-toolbar" role="toolbar" aria-label="Photo zoom controls">
+        <button type="button" class="viewer-btn viewer-zoom-in" aria-label="Zoom in">+</button>
+        <button type="button" class="viewer-btn viewer-zoom-out" aria-label="Zoom out">−</button>
+        <button type="button" class="viewer-btn viewer-zoom-reset" aria-label="Reset zoom">1:1</button>
+        <button type="button" class="viewer-btn viewer-close" aria-label="Close photo viewer">×</button>
+      </div>
+      <div class="aircraft-viewer-canvas">
+        <img class="aircraft-photo-viewer-image" alt="">
+      </div>
+    `;
+
+    enlargedImage = overlay.querySelector('.aircraft-photo-viewer-image');
+    statusRegion = overlay.querySelector('.aircraft-viewer-status');
     document.body.append(overlay);
+
+    overlay
+      .querySelector('.viewer-zoom-in')
+      .addEventListener('click', () => zoomAt(scale * 1.35));
+    overlay
+      .querySelector('.viewer-zoom-out')
+      .addEventListener('click', () => zoomAt(scale / 1.35));
+    overlay
+      .querySelector('.viewer-zoom-reset')
+      .addEventListener('click', resetZoom);
+    overlay
+      .querySelector('.viewer-close')
+      .addEventListener('click', closeViewer);
 
     overlay.addEventListener('click', (event) => {
       if (event.target === overlay && !moved) closeViewer();
-    });
-    enlargedImage.addEventListener('click', (event) => {
-      event.stopPropagation();
-      if (!moved && scale === 1) closeViewer();
-      moved = false;
     });
 
     overlay.addEventListener(
@@ -2487,6 +2528,7 @@ start();
     overlay.hidden = false;
     document.body.classList.add('aircraft-photo-viewer-open');
     overlay.focus({ preventScroll: true });
+    announceStatus('Photo viewer opened.');
   }
 
   function closeViewer() {
@@ -2499,6 +2541,17 @@ start();
       previousFocus.focus({ preventScroll: true });
     }
   }
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('#image-zoom-trigger');
+    if (trigger) {
+      event.preventDefault();
+      const currentImage = document.querySelector('#aircraft-image');
+      if (currentImage && canZoomPhoto(currentImage)) {
+        openViewer(currentImage);
+      }
+    }
+  });
 
   function makeStandalonePhotosKeyboardAccessible(root = document) {
     root.querySelectorAll(IMAGE_SELECTOR).forEach((image) => {
