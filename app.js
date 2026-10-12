@@ -225,34 +225,31 @@ function preparePhotoFadeIn(image) {
 
 function loadQuestionImage(path, altText) {
   return new Promise((resolve, reject) => {
-    // If there is no current image loaded yet (initial load), show spinner directly on blank container
-    if (
-      !imageElement.src ||
-      imageElement.src === window.location.href ||
-      imageElement.naturalWidth === 0
-    ) {
+    // Check if there is already a valid image currently displayed
+    const hasCurrentValidImage =
+      imageElement.src &&
+      imageElement.src !== window.location.href &&
+      imageElement.naturalWidth > 0 &&
+      !imageElement.src.startsWith('data:image/svg+xml');
+
+    // If NO current image exists (first load, mode switch, or photo toggle), show spinner on blank container
+    if (!hasCurrentValidImage) {
       if (typeof setLoading === 'function') setLoading(true);
-      imageElement.onload = () => {
-        if (typeof setLoading === 'function') setLoading(false);
-        imageElement.style.animation = 'photoFadeIn 0.25s ease-out forwards';
-        if (imageZoomTrigger) imageZoomTrigger.hidden = false;
-        resolve();
-      };
-      imageElement.onerror = () => {
-        if (typeof setLoading === 'function') setLoading(false);
-        if (imageZoomTrigger) imageZoomTrigger.hidden = true;
-        reject(new Error(`Unable to load aircraft image: ${path}`));
-      };
-      imageElement.alt = altText;
-      imageElement.src = path;
-      return;
+      imageElement.removeAttribute('src'); // Clean blank slate
+    } else {
+      // If a previous image IS present, show the high-visibility spinner ON TOP of the current image
+      if (typeof setLoading === 'function') setLoading(true);
     }
 
-    // For subsequent images, preload in background while keeping the current image visible
+    // Preload the new image off-DOM in the background so the old image stays visible
     const preloader = new Image();
+
     preloader.onload = () => {
+      if (typeof setLoading === 'function') setLoading(false);
+
       imageElement.style.animation = 'none';
       imageElement.offsetHeight; // Trigger reflow
+
       imageElement.alt = altText;
       imageElement.src = path;
       imageElement.style.animation = 'photoFadeIn 0.25s ease-out forwards';
@@ -260,10 +257,13 @@ function loadQuestionImage(path, altText) {
       if (imageZoomTrigger) imageZoomTrigger.hidden = false;
       resolve();
     };
+
     preloader.onerror = () => {
+      if (typeof setLoading === 'function') setLoading(false);
       if (imageZoomTrigger) imageZoomTrigger.hidden = true;
       reject(new Error(`Unable to load aircraft image: ${path}`));
     };
+
     preloader.src = path;
   });
 }
