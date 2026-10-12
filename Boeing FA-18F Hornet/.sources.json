@@ -372,5 +372,22 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"Boeing F-18F Super Hornet\" by Pavel Vanka is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+  },
+  "022.jpg": {
+    "openverse_id": "3664d18c-2bf8-4183-8398-1eb91a0ebb4a",
+    "title": "US Navy FA-18F Super Hornets 503 JNU 725",
+    "url": "https://live.staticflickr.com/1753/40805512740_206dee8f29_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/3664d18c-2bf8-4183-8398-1eb91a0ebb4a/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/12914838@N00/40805512740",
+    "creator": "Gillfoto",
+    "creator_url": "https://www.flickr.com/photos/12914838@N00",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 659,
+    "attribution": "\"US Navy FA-18F Super Hornets 503 JNU 725\" by Gillfoto is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   }
 }

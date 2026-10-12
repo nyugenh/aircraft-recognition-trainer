@@ -255,20 +255,20 @@
     "attribution": "\"N794MH - Untitled Gulfstream G-IV\" by AndrewC75 is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
   },
   "015.jpg": {
-    "openverse_id": "acd612e6-948b-4180-934c-53e16dd025a8",
-    "title": "GV At MillionAir",
-    "url": "https://live.staticflickr.com/203/449031080_6b8d78d7cc_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/acd612e6-948b-4180-934c-53e16dd025a8/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/27263019@N00/449031080",
-    "creator": "Kevin Boydston",
-    "creator_url": "https://www.flickr.com/photos/27263019@N00",
-    "license": "by-nc-nd",
+    "openverse_id": "cc0d0c2b-fec5-4559-b6f7-2779d803148d",
+    "title": "N450JE - Gulfstream 4 [ZRH 8.12]",
+    "url": "https://live.staticflickr.com/8503/8445312226_2d953c0c61_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/cc0d0c2b-fec5-4559-b6f7-2779d803148d/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/91964767@N07/8445312226",
+    "creator": "Chaika12",
+    "creator_url": "https://www.flickr.com/photos/91964767@N07",
+    "license": "by-nc-sa",
     "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
     "source": "flickr",
     "provider": "flickr",
     "width": 1024,
-    "height": 682,
-    "attribution": "\"GV At MillionAir\" by Kevin Boydston is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+    "height": 687,
+    "attribution": "\"N450JE - Gulfstream 4 [ZRH 8.12]\" by Chaika12 is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   }
 }

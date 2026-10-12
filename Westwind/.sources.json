@@ -102,20 +102,37 @@
     "attribution": "\"IMGP0644\" by zkarj is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
   },
   "006.jpg": {
-    "openverse_id": "6a6fb2cc-559b-4c97-8039-264b7118c529",
-    "title": "Untitled",
-    "url": "https://live.staticflickr.com/65535/49323697057_745ab2e758_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/6a6fb2cc-559b-4c97-8039-264b7118c529/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/23503104@N07/49323697057",
-    "creator": "Steve Jerrim",
-    "creator_url": "https://www.flickr.com/photos/23503104@N07",
-    "license": "by-nd",
+    "openverse_id": "6386ab32-f375-4f43-a423-d98485194417",
+    "title": "Hamilton Westwind IV at The BC Aviation Museum",
+    "url": "https://live.staticflickr.com/8880/29073864430_e60fa51076_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/6386ab32-f375-4f43-a423-d98485194417/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/74812833@N05/29073864430",
+    "creator": "fsll2",
+    "creator_url": "https://www.flickr.com/photos/74812833@N05",
+    "license": "by-nc",
     "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-nd/2.0/",
+    "license_url": "https://creativecommons.org/licenses/by-nc/2.0/",
     "source": "flickr",
     "provider": "flickr",
     "width": 1024,
-    "height": 679,
-    "attribution": "This work by Steve Jerrim is licensed under CC BY-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nd/2.0/."
+    "height": 683,
+    "attribution": "\"Hamilton Westwind IV at The BC Aviation Museum\" by fsll2 is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+  },
+  "007.jpg": {
+    "openverse_id": "4e796eba-e3ec-44e2-be70-a03a041995e1",
+    "title": "Israel Aircraft Industries 1124 Westwind I ‘N78PT’",
+    "url": "https://live.staticflickr.com/65535/49470657731_c2fd46b630_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/4e796eba-e3ec-44e2-be70-a03a041995e1/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/65001151@N03/49470657731",
+    "creator": "HawkeyeUK",
+    "creator_url": "https://www.flickr.com/photos/65001151@N03",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Israel Aircraft Industries 1124 Westwind I ‘N78PT’\" by HawkeyeUK is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   }
 }

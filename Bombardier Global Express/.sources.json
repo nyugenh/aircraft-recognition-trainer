@@ -270,5 +270,22 @@
     "width": 1024,
     "height": 682,
     "attribution": "\"Untitled Bombardier Global Express (BD-700-1A10) P4-VVF\" by Martin Oertle is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "016.jpg": {
+    "openverse_id": "ed941caa-a941-45bb-903b-5fdb027ff7e5",
+    "title": "OE-LHU Bombardier Global Express 5000 (Avcon Jet AG)",
+    "url": "https://live.staticflickr.com/65535/53384353345_a67aa53f24_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/ed941caa-a941-45bb-903b-5fdb027ff7e5/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/95512093@N05/53384353345",
+    "creator": "Aircaft @ Gloucestershire Airport By James",
+    "creator_url": "https://www.flickr.com/photos/95512093@N05",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 768,
+    "attribution": "\"OE-LHU Bombardier Global Express 5000 (Avcon Jet AG)\" by Aircaft @ Gloucestershire Airport By James is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   }
 }

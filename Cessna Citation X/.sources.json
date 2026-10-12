@@ -338,5 +338,22 @@
     "width": 1024,
     "height": 676,
     "attribution": "\"Cessna 750 Citation X N287TG\" by Dawlad Ast is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "020.jpg": {
+    "openverse_id": "67f6d500-5bc2-48fc-9df0-3d9db5ac0962",
+    "title": "Dimitri Vegas & Like Mike's Citation",
+    "url": "https://live.staticflickr.com/65535/52684144607_9065e2f173_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/67f6d500-5bc2-48fc-9df0-3d9db5ac0962/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/27549320@N00/52684144607",
+    "creator": "joseluiscel (Aviapics)",
+    "creator_url": "https://www.flickr.com/photos/27549320@N00",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Dimitri Vegas & Like Mike's Citation\" by joseluiscel (Aviapics) is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   }
 }
