@@ -225,21 +225,46 @@ function preparePhotoFadeIn(image) {
 
 function loadQuestionImage(path, altText) {
   return new Promise((resolve, reject) => {
-    // Reset/re-trigger fade animation on the main aircraft image element
-    imageElement.style.animation = 'none';
-    imageElement.offsetHeight;
+    // If there is no current image loaded yet (initial load), show spinner directly on blank container
+    if (
+      !imageElement.src ||
+      imageElement.src === window.location.href ||
+      imageElement.naturalWidth === 0
+    ) {
+      if (typeof setLoading === 'function') setLoading(true);
+      imageElement.onload = () => {
+        if (typeof setLoading === 'function') setLoading(false);
+        imageElement.style.animation = 'photoFadeIn 0.25s ease-out forwards';
+        if (imageZoomTrigger) imageZoomTrigger.hidden = false;
+        resolve();
+      };
+      imageElement.onerror = () => {
+        if (typeof setLoading === 'function') setLoading(false);
+        if (imageZoomTrigger) imageZoomTrigger.hidden = true;
+        reject(new Error(`Unable to load aircraft image: ${path}`));
+      };
+      imageElement.alt = altText;
+      imageElement.src = path;
+      return;
+    }
 
-    imageElement.onload = () => {
+    // For subsequent images, preload in background while keeping the current image visible
+    const preloader = new Image();
+    preloader.onload = () => {
+      imageElement.style.animation = 'none';
+      imageElement.offsetHeight; // Trigger reflow
+      imageElement.alt = altText;
+      imageElement.src = path;
       imageElement.style.animation = 'photoFadeIn 0.25s ease-out forwards';
+
       if (imageZoomTrigger) imageZoomTrigger.hidden = false;
       resolve();
     };
-    imageElement.onerror = () => {
+    preloader.onerror = () => {
       if (imageZoomTrigger) imageZoomTrigger.hidden = true;
       reject(new Error(`Unable to load aircraft image: ${path}`));
     };
-    imageElement.alt = altText;
-    imageElement.src = path;
+    preloader.src = path;
   });
 }
 
@@ -1058,21 +1083,32 @@ async function displayPhotoAnswerChoices(choices) {
     }
     button.hidden = false;
     button.removeAttribute('aria-hidden');
-    button.replaceChildren();
-    const placeholder = document.createElement('span');
-    placeholder.className = 'photo-choice-placeholder';
-    placeholder.setAttribute('role', 'status');
-    placeholder.setAttribute('aria-label', `Loading photo option ${index + 1}`);
-    button.appendChild(placeholder);
+
+    // Create container wrapper, loading spinner, and name label immediately
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'photo-choice-img-wrap';
+
+    const spinner = document.createElement('span');
+    spinner.className = 'loading-message'; // Ensures spinner is visible immediately
+    imgWrap.appendChild(spinner);
+
+    const name = document.createElement('span');
+    name.className = 'photo-choice-name hidden-name';
+    name.textContent = choice.text;
+
+    button.replaceChildren(imgWrap, name);
     button.dataset.answer = choice.text;
     button.dataset.correct = String(choice.aircraft === currentAircraft);
     button.disabled = true;
     button.setAttribute('aria-label', `Photo option ${index + 1}, loading`);
     button.setAttribute('aria-keyshortcuts', String(index + 1));
+
     const imagePath = getRandomImagePath(choice.aircraft);
-    photoOptions.push({ button, choice, index, imagePath });
+    photoOptions.value = photoOptions.value || [];
+    photoOptions.push({ button, choice, index, imagePath, imgWrap });
   });
 
+  // Fetch and load images smoothly
   try {
     const loadedOptions = await Promise.all(
       photoOptions.map(
@@ -1098,19 +1134,21 @@ async function displayPhotoAnswerChoices(choices) {
           }),
       ),
     );
+
     loadedOptions.forEach(({ index, image }) => {
-      const { button, choice } = photoOptions.find(
+      const { button, choice, imgWrap } = photoOptions.find(
         (option) => option.index === index,
       );
-      const name = document.createElement('span');
-      name.className = 'photo-choice-name hidden-name';
-      name.textContent = choice.text;
-      const numBadge = document.createElement('span');
-      numBadge.className = 'option-number';
-      numBadge.textContent = String(index + 1);
-      button.replaceChildren(numBadge, image, name);
+      // Append the successfully loaded image into the wrapper (spinner is replaced/hidden)
+      image.style.animation = 'photoFadeIn 0.25s ease-out forwards';
+      imgWrap.replaceChildren(image);
+
+      const name = button.querySelector('.photo-choice-name');
+      if (name) name.textContent = choice.text;
+
       button.setAttribute('aria-label', `Photo option ${index + 1}`);
     });
+
     photoOptions.forEach(({ button }) => {
       button.disabled = false;
     });

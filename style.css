@@ -344,15 +344,17 @@ img {
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 2;
+  z-index: 10;
   display: none;
-  width: 26px;
-  height: 26px;
-  margin: -13px 0 0 -13px;
-  border: 3px solid var(--border-light);
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 4px solid rgb(255 255 255 / 30%);
   border-top-color: var(--primary);
   border-radius: 50%;
-  background: transparent;
+  background: rgb(255 255 255 / 85%);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  backdrop-filter: blur(4px);
   animation: app-spin 0.75s linear infinite;
   pointer-events: none;
 }
@@ -503,44 +505,8 @@ img {
   overflow: hidden;
   cursor: pointer;
   box-shadow: var(--shadow-card);
-  will-change: transform;
-  transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast),
-    transform var(--transition-fast);
 }
 
-.app.reverse-mode .answers.reverse button:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--surface) 85%, var(--primary));
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover);
-}
-
-.app.reverse-mode .answers.reverse button.correct {
-  background: var(--correct-bg);
-  border-color: var(--correct-border);
-  color: var(--correct-text);
-  box-shadow:
-    inset 0 0 0 1px rgb(38 115 59 / 15%),
-    var(--shadow-card);
-}
-
-.app.reverse-mode .answers.reverse button.incorrect {
-  background: var(--incorrect-bg);
-  border-color: var(--incorrect-border);
-  color: var(--incorrect-text);
-  box-shadow:
-    inset 0 0 0 1px rgb(165 42 42 / 15%),
-    var(--shadow-card);
-}
-
-.app.reverse-mode .answers.reverse button .option-number {
-  display: none !important;
-}
-
-/* Photo Choice Image Wrapper with stable shape and guaranteed spinner container */
 .app.reverse-mode .answers.reverse button .photo-choice-img-wrap {
   position: relative;
   display: flex;
@@ -548,7 +514,7 @@ img {
   justify-content: center;
   width: 100%;
   height: 100%;
-  min-height: 110px;
+  min-height: 110px; /* Holds card shape before image loads */
   overflow: hidden;
   background: transparent;
 }
@@ -557,16 +523,13 @@ img {
   display: block;
   width: 100%;
   height: 100%;
-  min-width: 0;
-  min-height: 0;
-  max-width: 100%;
-  max-height: 100%;
   object-fit: contain;
   padding: 0;
   background: transparent;
   border: none;
   border-radius: var(--radius);
   user-select: none;
+  animation: photoFadeIn 0.25s ease-out forwards;
 }
 
 .app.reverse-mode .answers.reverse .photo-choice-name {
@@ -582,10 +545,6 @@ img {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.app.reverse-mode .answers.reverse .photo-choice-name.hidden-name {
-  visibility: hidden;
 }
 
 .app.reverse-mode .answers.reverse .photo-choice-name:not(.hidden-name) {
@@ -1287,6 +1246,12 @@ body.aircraft-photo-viewer-open {
   .image-container {
     border-color: var(--border-light);
     background: #181d21;
+  }
+
+  .loading-message {
+    border-color: rgb(0 0 0 / 30%);
+    border-top-color: #fff;
+    background: rgb(32 38 43 / 85%);
   }
 
   .answers button,
