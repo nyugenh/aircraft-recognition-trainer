@@ -43,6 +43,8 @@
   --content-width: 1100px;
   --transition-fast: 120ms ease;
   --transition-normal: 160ms ease;
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 4%), 0 1px 2px rgb(0 0 0 / 8%);
+  --shadow-card-hover: 0 6px 16px rgb(0 0 0 / 8%), 0 2px 4px rgb(0 0 0 / 4%);
 }
 
 /* 2. Reset & Base */
@@ -78,6 +80,25 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border);
+}
+
 button,
 input,
 select {
@@ -89,6 +110,7 @@ select {
 button {
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
+  will-change: transform;
 }
 
 button:active:not(:disabled) {
@@ -259,13 +281,17 @@ button:disabled {
   font: inherit;
   font-weight: 500;
   cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
 }
 
 .controls select:hover {
   border-color: var(--border-hover);
 }
 
-/* 6. Aircraft Image & Loading */
+/* 6. Aircraft Image Container & Container Queries */
 .image-container {
   position: relative;
   display: flex;
@@ -275,8 +301,11 @@ button:disabled {
   min-height: 0;
   overflow: hidden;
   border: 1px solid var(--border-light);
-  border-radius: 10px;
+  border-radius: var(--radius);
   background: var(--surface);
+  padding: 0;
+  box-shadow: var(--shadow-card);
+  container-type: inline-size;
 }
 
 #aircraft-image {
@@ -288,42 +317,26 @@ button:disabled {
   object-fit: contain;
   object-position: center;
   border-radius: inherit;
-  opacity: 1;
   user-select: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
-  transition: opacity var(--transition-normal);
 }
 
-#aircraft-image.loading {
-  opacity: 0;
-}
-
-img.photo-fade-in {
-  opacity: 0 !important;
-  transition: opacity var(--transition-normal);
-}
-
-img.photo-fade-in.photo-fade-in-visible {
-  opacity: 1 !important;
-}
-
+/* Loading Spinner */
 .loading-message {
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 2;
   display: none;
-  transform: translate(-50%, -50%);
-  padding: 8px 14px;
-  border: 1px solid rgb(255 255 255 / 18%);
-  border-radius: 8px;
-  background: rgb(0 0 0 / 78%);
-  color: #fff;
-  font-size: 0.9rem;
-  line-height: 1.3;
-  font-weight: 600;
-  white-space: nowrap;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  background: transparent;
+  animation: app-spin 0.75s linear infinite;
   pointer-events: none;
 }
 
@@ -331,40 +344,10 @@ img.photo-fade-in.photo-fade-in-visible {
   display: block;
 }
 
-.image-zoom-trigger {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  z-index: 5;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 48px;
-  min-width: 48px;
-  padding: 10px 14px;
-  border: 1px solid rgb(255 255 255 / 30%);
-  border-radius: 24px;
-  background: rgb(0 0 0 / 75%);
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
-  backdrop-filter: blur(4px);
-  transition:
-    background-color 150ms ease,
-    transform 150ms ease;
-}
-
-.image-zoom-trigger svg {
-  width: 20px;
-  height: 20px;
-  flex: none;
-}
-
-.image-zoom-trigger:hover {
-  background: rgb(0 0 0 / 90%);
-  transform: scale(1.03);
+@keyframes app-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 7. Question Prompt & Category Hint */
@@ -435,31 +418,21 @@ img.photo-fade-in.photo-fade-in-visible {
   text-align: center;
   overflow-wrap: anywhere;
   cursor: pointer;
+  box-shadow: var(--shadow-card);
+  will-change: transform;
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
     box-shadow var(--transition-fast),
+    transform var(--transition-fast),
     opacity var(--transition-fast);
 }
 
-.shortcut-badge {
-  position: absolute;
-  left: 12px;
-  display: inline-grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--border-light);
-  border-radius: 4px;
-  background: var(--surface-muted);
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
 .answers button:hover:not(:disabled) {
-  background: #eef3f7;
+  background: color-mix(in srgb, var(--surface) 85%, var(--primary));
   border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .answers button:disabled {
@@ -471,7 +444,9 @@ img.photo-fade-in.photo-fade-in-visible {
   background: var(--correct-bg);
   border-color: var(--correct-border);
   color: var(--correct-text);
-  box-shadow: inset 0 0 0 1px rgb(38 115 59 / 15%);
+  box-shadow:
+    inset 0 0 0 1px rgb(38 115 59 / 15%),
+    var(--shadow-card);
 }
 
 .answers button.incorrect,
@@ -479,29 +454,9 @@ img.photo-fade-in.photo-fade-in-visible {
   background: var(--incorrect-bg);
   border-color: var(--incorrect-border);
   color: var(--incorrect-text);
-  box-shadow: inset 0 0 0 1px rgb(165 42 42 / 15%);
-}
-
-.answers button.correct::before,
-.answers button.incorrect::before {
-  position: absolute;
-  top: 50%;
-  right: 14px;
-  transform: translateY(-50%);
-  font-size: 1.15rem;
-  line-height: 1;
-  font-weight: 800;
-  pointer-events: none;
-}
-
-.answers button.correct::before {
-  content: '✓';
-  color: var(--correct-border);
-}
-
-.answers button.incorrect::before {
-  content: '✕';
-  color: var(--incorrect-border);
+  box-shadow:
+    inset 0 0 0 1px rgb(165 42 42 / 15%),
+    var(--shadow-card);
 }
 
 /* 9. Choose Photo Mode */
@@ -515,49 +470,53 @@ img.photo-fade-in.photo-fade-in-visible {
 }
 
 .app.reverse-mode .answers.reverse button {
+  position: relative;
   display: grid;
   grid-template-rows: minmax(0, 1fr) 1.8em;
   align-items: center;
   justify-items: center;
-  gap: 4px;
+  gap: 0;
   width: 100%;
   height: 100%;
   min-height: 0;
-  padding: 8px;
+  padding: 0;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
   overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  will-change: transform;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 }
 
-.app.reverse-mode .answers.reverse button::before {
-  content: none !important;
+.app.reverse-mode .answers.reverse button:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--surface) 85%, var(--primary));
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
 }
 
-.app.reverse-mode .answers.reverse button .option-number {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  display: inline-grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  z-index: 1;
-  border: 1px solid #fff;
-  border-radius: 50%;
-  background: #17202a;
-  color: #fff;
-  font-size: 0.82rem;
-  line-height: 1;
-  font-weight: 800;
-  pointer-events: none;
-}
-
-.app.reverse-mode .answers.reverse button.correct .option-number {
-  background: var(--correct-border);
+.app.reverse-mode .answers.reverse button.correct {
+  background: var(--correct-bg);
   border-color: var(--correct-border);
+  color: var(--correct-text);
+  box-shadow:
+    inset 0 0 0 1px rgb(38 115 59 / 15%),
+    var(--shadow-card);
 }
 
-.app.reverse-mode .answers.reverse button.incorrect .option-number {
-  background: var(--incorrect-border);
+.app.reverse-mode .answers.reverse button.incorrect {
+  background: var(--incorrect-bg);
   border-color: var(--incorrect-border);
+  color: var(--incorrect-text);
+  box-shadow:
+    inset 0 0 0 1px rgb(165 42 42 / 15%),
+    var(--shadow-card);
 }
 
 .app.reverse-mode .answers.reverse button img {
@@ -569,7 +528,10 @@ img.photo-fade-in.photo-fade-in-visible {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  border-radius: 5px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius);
   user-select: none;
 }
 
@@ -618,6 +580,7 @@ img.photo-fade-in.photo-fade-in-visible {
   font-size: 1.1rem;
   font-weight: 500;
   outline: none;
+  box-shadow: var(--shadow-card);
   transition:
     background-color var(--transition-normal),
     border-color var(--transition-normal),
@@ -669,9 +632,12 @@ img.photo-fade-in.photo-fade-in-visible {
   line-height: 1.3;
   font-weight: 700;
   cursor: pointer;
+  box-shadow: var(--shadow-card);
+  will-change: transform;
   transition:
     background-color var(--transition-fast),
     border-color var(--transition-fast),
+    transform var(--transition-fast),
     opacity var(--transition-fast);
 }
 
@@ -685,12 +651,15 @@ img.photo-fade-in.photo-fade-in-visible {
 .next-button:hover:not(:disabled) {
   background: var(--primary-hover);
   border-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .submit-answer:disabled,
 .next-button:disabled {
   opacity: 0.5;
   cursor: default;
+  transform: none;
 }
 
 .photo-toggle {
@@ -711,6 +680,15 @@ img.photo-fade-in.photo-fade-in-visible {
   line-height: 1.3;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: var(--shadow-card);
+  will-change: transform;
+  transition:
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.photo-toggle:hover {
+  transform: translateY(-1px);
 }
 
 .photo-toggle svg {
@@ -766,15 +744,24 @@ img.photo-fade-in.photo-fade-in-visible {
   row-gap: var(--space-2);
 }
 
-/* 13. Focus States */
+/* 13. Focus States with Outline Offset */
 button:focus-visible,
 select:focus-visible,
 input:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 25%, transparent);
+  border-color: var(--focus);
 }
 
-/* 14. Speed Comparison Component */
+/* 14. Speed Comparison Component & Container Queries */
+.image-container:has(.speed-comparison) {
+  border: none;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
 .speed-comparison {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -784,24 +771,60 @@ input:focus-visible {
   align-self: center;
 }
 
+@container (max-width: 400px) {
+  .speed-comparison {
+    grid-template-columns: 1fr;
+  }
+}
+
 .speed-aircraft {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   min-width: 0;
-  padding: 10px;
-  overflow: hidden;
+  padding: 0;
   border: 1px solid var(--border-light);
   border-radius: 12px;
   background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  will-change: transform;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.speed-aircraft:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.speed-aircraft-photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-height: 220px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: inherit;
+  overflow: hidden;
 }
 
 .speed-aircraft img {
   display: block;
   width: 100%;
-  height: clamp(150px, 28vh, 260px);
+  height: 100%;
+  max-height: 200px;
   object-fit: contain;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: inherit;
 }
 
 /* 15. Speed Ranking Mode */
@@ -842,21 +865,32 @@ input:focus-visible {
   position: relative;
   display: flex;
   touch-action: none;
-  align-items: stretch;
-  gap: 0.65rem;
+  align-items: center;
+  gap: 0.75rem;
   width: 100%;
   min-width: 0;
-  padding: 6px;
+  padding: 8px 12px;
   overflow: visible;
   border: 2px solid var(--border-light);
   border-radius: var(--radius);
   background: var(--surface);
   cursor: grab;
   box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  box-shadow: var(--shadow-card);
+  will-change: transform;
   transition:
     background-color var(--transition-normal),
     border-color var(--transition-normal),
-    box-shadow var(--transition-normal);
+    box-shadow var(--transition-normal),
+    transform var(--transition-fast);
+}
+
+.ranking-item:hover:not(.ranking-dragging) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .ranking-item:active {
@@ -907,27 +941,44 @@ input:focus-visible {
 
 .ranking-details {
   display: flex;
-  flex: 1 1 auto;
   align-items: center;
   gap: 0.75rem;
+  flex: 1 1 0;
   min-width: 0;
+}
+
+.ranking-photo-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 72px;
+  width: 72px;
+  height: 100%;
+  min-height: 44px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ranking-photo-wrap[hidden] {
+  display: none !important;
 }
 
 .ranking-photo {
   display: block;
-  flex: 0 0 180px;
-  width: 180px;
-  height: auto;
-  min-height: 0;
-  max-height: none;
-  align-self: center;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: 3px;
   background: transparent;
   object-fit: contain;
   object-position: center;
+  border-radius: 4px;
 }
 
 .ranking-photo[hidden] {
@@ -935,9 +986,8 @@ input:focus-visible {
 }
 
 .ranking-name {
-  flex: 1 1 auto;
+  flex: 1 1 0;
   min-width: 0;
-  align-self: center;
   font-weight: 600;
   line-height: 1.25;
   overflow-wrap: break-word;
@@ -961,6 +1011,7 @@ input:focus-visible {
   color: var(--text);
   font-weight: 700;
   cursor: pointer;
+  box-shadow: var(--shadow-card);
 }
 
 .ranking-controls button {
@@ -971,6 +1022,7 @@ input:focus-visible {
 #check-ranking:disabled {
   opacity: 0.45;
   cursor: default;
+  box-shadow: none;
 }
 
 #check-ranking {
@@ -980,6 +1032,12 @@ input:focus-visible {
   border-color: var(--primary);
   background: var(--primary);
   color: var(--primary-text);
+  will-change: transform;
+  transition: transform var(--transition-fast);
+}
+
+#check-ranking:hover:not(:disabled) {
+  transform: translateY(-1px);
 }
 
 .ranking-drag-ghost {
@@ -998,6 +1056,23 @@ input:focus-visible {
   transform: scale(1.025) rotate(0.35deg);
 }
 
+@media (max-width: 550px) {
+  .ranking-photo-wrap {
+    flex-basis: 60px;
+    width: 60px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px), (max-height: 700px) {
+  .app {
+    height: auto;
+    min-height: 100dvh;
+    grid-template-rows: repeat(7, max-content);
+    align-content: start;
+  }
+}
+
 /* 16. Full-Screen Aircraft Photo Viewer */
 body.aircraft-photo-viewer-open {
   overflow: hidden;
@@ -1014,6 +1089,11 @@ body.aircraft-photo-viewer-open {
   background: rgb(0 0 0 / 94%);
   touch-action: none;
   overscroll-behavior: contain;
+  cursor: grab;
+}
+
+.aircraft-photo-viewer:active {
+  cursor: grabbing;
 }
 
 .aircraft-photo-viewer[hidden] {
@@ -1022,37 +1102,56 @@ body.aircraft-photo-viewer-open {
 
 .aircraft-viewer-toolbar {
   position: absolute;
-  top: max(16px, env(safe-area-inset-top));
-  right: max(16px, env(safe-area-inset-right));
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
   z-index: 10002;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   padding: 6px;
-  border-radius: 12px;
-  background: rgb(30 35 40 / 85%);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 20px rgb(0 0 0 / 40%);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card-hover);
+  cursor: default;
 }
 
 .viewer-btn {
   display: inline-grid;
   place-items: center;
-  min-width: 48px;
-  min-height: 48px;
-  padding: 0;
-  border: 1px solid rgb(255 255 255 / 20%);
-  border-radius: 8px;
-  background: rgb(50 58 66 / 90%);
-  color: #fff;
-  font-size: 1.25rem;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0 10px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-small);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-}
+  box-shadow: var(--shadow-card);
+  will-change: transform;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
 
-.viewer-zoom-reset {
-  font-size: 0.85rem;
-  font-weight: 800;
+  &:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--surface) 85%, var(--primary));
+    border-color: var(--border-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &.viewer-zoom-reset {
+    font-size: 0.8rem;
+  }
 }
 
 .aircraft-viewer-canvas {
@@ -1066,6 +1165,11 @@ body.aircraft-photo-viewer-open {
     max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom))
     max(16px, env(safe-area-inset-left));
   overflow: hidden;
+  cursor: grab;
+}
+
+.aircraft-viewer-canvas:active {
+  cursor: grabbing;
 }
 
 .aircraft-photo-viewer-image {
@@ -1077,13 +1181,43 @@ body.aircraft-photo-viewer-open {
   object-fit: contain;
   user-select: none;
   -webkit-user-select: none;
+  -moz-user-select: none;
   -webkit-user-drag: none;
   transform-origin: center center;
   will-change: transform;
   touch-action: none;
+  cursor: grab;
 }
 
-/* 17. Dark Mode Support */
+.aircraft-photo-viewer-image:active {
+  cursor: grabbing;
+}
+
+/* 17. Accessibility & Motion Media Queries */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  button,
+  select,
+  input,
+  .image-container,
+  .speed-aircraft,
+  .ranking-item,
+  .viewer-btn {
+    border: 1px solid CanvasText !important;
+  }
+}
+
+/* 18. Dark Mode Support */
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
@@ -1099,6 +1233,9 @@ body.aircraft-photo-viewer-open {
     --primary: #d9e2e8;
     --primary-hover: #fff;
     --primary-text: #17202a;
+    --shadow-card: 0 1px 3px rgb(0 0 0 / 20%), 0 1px 2px rgb(0 0 0 / 30%);
+    --shadow-card-hover:
+      0 6px 16px rgb(0 0 0 / 40%), 0 2px 4px rgb(0 0 0 / 20%);
   }
 
   .controls select {
@@ -1125,14 +1262,21 @@ body.aircraft-photo-viewer-open {
   .answers button,
   .ranking-item,
   .ranking-controls button,
-  .type-answer-input {
+  .type-answer-input,
+  .viewer-btn {
     background: var(--surface);
     color: var(--text);
     border-color: var(--border);
   }
 
-  .answers button:hover:not(:disabled) {
-    background: #2b3339;
+  .aircraft-viewer-toolbar {
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    border-color: var(--border-light);
+  }
+
+  .answers button:hover:not(:disabled),
+  .viewer-btn:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--surface) 80%, var(--primary));
     border-color: var(--border-hover);
   }
 

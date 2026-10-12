@@ -88,6 +88,7 @@ if (answerTypeLabel) {
 const imageContainer = byId('image-container');
 const imageElement = byId('aircraft-image');
 const loadingMessage = byId('loading-message');
+const imageZoomTrigger = byId('image-zoom-trigger');
 const promptElement = byId('prompt');
 const answerContainer = byId('answers');
 const answerButtons = [...document.querySelectorAll('#answers button')];
@@ -267,9 +268,14 @@ photoFadeObserver.observe(document.documentElement, {
 
 function loadQuestionImage(path, altText) {
   return new Promise((resolve, reject) => {
-    imageElement.onload = () => resolve();
-    imageElement.onerror = () =>
+    imageElement.onload = () => {
+      if (imageZoomTrigger) imageZoomTrigger.hidden = false;
+      resolve();
+    };
+    imageElement.onerror = () => {
+      if (imageZoomTrigger) imageZoomTrigger.hidden = true;
       reject(new Error(`Unable to load aircraft image: ${path}`));
+    };
     imageElement.alt = altText;
     imageElement.src = path;
   });
@@ -821,6 +827,7 @@ function updatePhotoVisibility() {
     'aria-controls',
     questionType === 'rank-speed' ? 'speed-ranking-list' : 'image-container',
   );
+
   if (questionType === 'speed' && comparison) comparison.hidden = !showPhotos;
   if (ranking) ranking.hidden = questionType !== 'rank-speed';
   if (questionType === 'rank-speed') {
@@ -859,6 +866,7 @@ function setLoading(loading) {
 }
 
 function resetAnswerUI() {
+  if (imageZoomTrigger) imageZoomTrigger.hidden = true;
   imageContainer.querySelector('.speed-comparison')?.remove();
   const ranking = byId('speed-ranking');
   const rankingList = byId('speed-ranking-list');
@@ -990,9 +998,7 @@ function displayTextAnswerChoices(choices, disabled = false) {
   answerContainer.hidden = false;
   answerButtons.forEach((button, index) => {
     const choice = choices[index];
-    const optionText = button.querySelector('.option-text') || button;
     if (!choice) {
-      if (optionText !== button) optionText.textContent = '';
       button.disabled = true;
       button.hidden = true;
       button.setAttribute('aria-hidden', 'true');
@@ -1000,21 +1006,49 @@ function displayTextAnswerChoices(choices, disabled = false) {
     }
     button.hidden = false;
     button.removeAttribute('aria-hidden');
-    if (optionText !== button) {
-      optionText.textContent = choice.text;
-    } else {
-      const badge = button.querySelector('.shortcut-badge');
-      button.replaceChildren(badge || '');
-      const span = document.createElement('span');
+
+    let span = button.querySelector('.option-text');
+    if (!span) {
+      span = document.createElement('span');
       span.className = 'option-text';
-      span.textContent = choice.text;
-      button.appendChild(span);
     }
+    span.textContent = choice.text;
+
+    button.replaceChildren(span);
     button.dataset.answer = choice.text;
     button.dataset.correct = String(choice.aircraft === currentAircraft);
     button.disabled = disabled;
-    button.setAttribute('aria-label', `Option ${index + 1}: ${choice.text}`);
-    button.setAttribute('aria-keyshortcuts', String(index + 1));
+    button.setAttribute('aria-label', choice.text);
+  });
+}
+
+function displaySpecialChoices(choices, correctAnswer, disabled = false) {
+  answerContainer.classList.remove('reverse');
+  answerContainer.hidden = false;
+  answerButtons.forEach((button, index) => {
+    const choice = choices[index];
+    button.classList.remove('correct', 'incorrect');
+    if (!choice) {
+      button.hidden = true;
+      button.disabled = true;
+      button.setAttribute('aria-hidden', 'true');
+      return;
+    }
+    button.hidden = false;
+    button.removeAttribute('aria-hidden');
+
+    let span = button.querySelector('.option-text');
+    if (!span) {
+      span = document.createElement('span');
+      span.className = 'option-text';
+    }
+    span.textContent = choice;
+
+    button.replaceChildren(span);
+    button.dataset.answer = choice;
+    button.dataset.correct = String(choice === correctAnswer);
+    button.disabled = disabled;
+    button.setAttribute('aria-label', choice);
   });
 }
 
@@ -1038,10 +1072,6 @@ async function displayPhotoAnswerChoices(choices) {
     placeholder.className = 'photo-choice-placeholder';
     placeholder.setAttribute('role', 'status');
     placeholder.setAttribute('aria-label', `Loading photo option ${index + 1}`);
-    const loadingBadge = document.createElement('span');
-    loadingBadge.className = 'loading-message';
-    loadingBadge.textContent = loadingMessage.textContent.trim();
-    placeholder.appendChild(loadingBadge);
     button.appendChild(placeholder);
     button.dataset.answer = choice.text;
     button.dataset.correct = String(choice.aircraft === currentAircraft);
@@ -1104,34 +1134,6 @@ async function displayPhotoAnswerChoices(choices) {
   }
 }
 
-function displaySpecialChoices(choices, correctAnswer, disabled = false) {
-  answerContainer.classList.remove('reverse');
-  answerContainer.hidden = false;
-  answerButtons.forEach((button, index) => {
-    const choice = choices[index];
-    button.classList.remove('correct', 'incorrect');
-    const badge = button.querySelector('.shortcut-badge');
-    if (!choice) {
-      button.hidden = true;
-      button.disabled = true;
-      button.setAttribute('aria-hidden', 'true');
-      return;
-    }
-    button.hidden = false;
-    button.removeAttribute('aria-hidden');
-    button.replaceChildren(badge || '');
-    const span = document.createElement('span');
-    span.className = 'option-text';
-    span.textContent = choice;
-    button.appendChild(span);
-    button.dataset.answer = choice;
-    button.dataset.correct = String(choice === correctAnswer);
-    button.disabled = disabled;
-    button.setAttribute('aria-label', `Option ${index + 1}: ${choice}`);
-    button.setAttribute('aria-keyshortcuts', String(index + 1));
-  });
-}
-
 // ============================================================================
 // 13. Special Questions (Cruise Speed, Wake, Comparisons, Rankings)
 // ============================================================================
@@ -1155,9 +1157,10 @@ function displayCruiseSpeedQuestion(item, unit) {
       : `${Math.round(representativeSpeed)} kt`;
   specialQuestionData = { type: 'cruise-speed', correctAnswer, feedbackAnswer };
   promptElement.replaceChildren();
+  const identifier = getSpecialAircraftIdentifier(item);
   promptElement.appendChild(
     document.createTextNode(
-      `What is the cruise speed of a ${getAircraftDisplayName(item)}?`,
+      `What is the cruise speed of ${getIndefiniteArticle(identifier)} ${identifier}?`,
     ),
   );
   appendCategoryHint(promptElement, item.category, 'Category');
@@ -1234,9 +1237,10 @@ function displaySpeedComparison(pair) {
     image.alt = label;
     image.draggable = false;
     image.hidden = true;
+
     const placeholder = document.createElement('span');
     placeholder.className = 'loading-message';
-    placeholder.textContent = `Loading ${label}`;
+
     image.addEventListener(
       'load',
       () => {
@@ -1248,7 +1252,8 @@ function displaySpeedComparison(pair) {
     image.addEventListener(
       'error',
       () => {
-        placeholder.textContent = 'Unable to load aircraft';
+        placeholder.className = 'loading-error';
+        placeholder.textContent = 'Unable to load';
       },
       { once: true },
     );
@@ -1592,9 +1597,9 @@ function displaySpeedRanking(entries) {
     img.className = 'ranking-photo';
     img.alt = getSpecialAircraftIdentifier(entry.item);
     img.hidden = true;
+
     const placeholder = document.createElement('span');
     placeholder.className = 'loading-message';
-    placeholder.textContent = `Loading ${img.alt}`;
 
     img.addEventListener(
       'load',
@@ -1607,6 +1612,7 @@ function displaySpeedRanking(entries) {
     img.addEventListener(
       'error',
       () => {
+        placeholder.className = 'loading-error';
         placeholder.textContent = 'Unable to load';
       },
       { once: true },
@@ -2323,7 +2329,7 @@ start();
 
   const MIN_ZOOM = 1;
   const MAX_ZOOM = 5;
-  let overlay, enlargedImage, previousFocus, statusRegion;
+  let overlay, enlargedImage, canvasElement, previousFocus, statusRegion;
   let scale = 1,
     panX = 0,
     panY = 0;
@@ -2345,8 +2351,9 @@ start();
   }
 
   function renderTransform() {
+    if (!enlargedImage) return;
     enlargedImage.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
-    enlargedImage.style.cursor = scale > 1 ? 'grab' : 'zoom-in';
+    enlargedImage.style.cursor = 'grab';
   }
 
   function resetZoom() {
@@ -2357,21 +2364,24 @@ start();
     announceStatus('Zoom reset to 100%');
   }
 
+  // Stable container-relative zoom to eliminate jumping
   function zoomAt(nextScale, point) {
     const oldScale = scale;
     const newScale = clamp(nextScale, MIN_ZOOM, MAX_ZOOM);
     if (newScale === oldScale) return;
-    const rect = enlargedImage.getBoundingClientRect();
-    const center = {
-      x: rect.left + rect.width / 2,
-      y: rect.top + rect.height / 2,
-    };
-    const anchor = point || center;
-    const imageX = (anchor.x - center.x - panX) / oldScale;
-    const imageY = (anchor.y - center.y - panY) / oldScale;
+
+    const canvasRect = canvasElement.getBoundingClientRect();
+    const centerX = canvasRect.left + canvasRect.width / 2;
+    const centerY = canvasRect.top + canvasRect.height / 2;
+
+    const anchor = point || { x: centerX, y: centerY };
+    const fx = anchor.x - centerX;
+    const fy = anchor.y - centerY;
+
     scale = newScale;
-    panX = anchor.x - center.x - imageX * scale;
-    panY = anchor.y - center.y - imageY * scale;
+    panX = fx - (fx - panX) * (newScale / oldScale);
+    panY = fy - (fy - panY) * (newScale / oldScale);
+
     renderTransform();
     announceStatus(`Zoom ${Math.round(scale * 100)}%`);
   }
@@ -2398,11 +2408,23 @@ start();
         <button type="button" class="viewer-btn viewer-close" aria-label="Close photo viewer">×</button>
       </div>
       <div class="aircraft-viewer-canvas">
-        <img class="aircraft-photo-viewer-image" alt="">
+        <img class="aircraft-photo-viewer-image" alt="" draggable="false">
       </div>
     `;
 
     enlargedImage = overlay.querySelector('.aircraft-photo-viewer-image');
+    enlargedImage.draggable = false;
+    enlargedImage.addEventListener('dragstart', (event) =>
+      event.preventDefault(),
+    );
+    enlargedImage.addEventListener('selectstart', (event) =>
+      event.preventDefault(),
+    );
+    enlargedImage.addEventListener('contextmenu', (event) =>
+      event.preventDefault(),
+    );
+
+    canvasElement = overlay.querySelector('.aircraft-viewer-canvas');
     statusRegion = overlay.querySelector('.aircraft-viewer-status');
     document.body.append(overlay);
 
@@ -2420,7 +2442,12 @@ start();
       .addEventListener('click', closeViewer);
 
     overlay.addEventListener('click', (event) => {
-      if (event.target === overlay && !moved) closeViewer();
+      if (
+        (event.target === overlay || event.target === canvasElement) &&
+        !moved
+      ) {
+        closeViewer();
+      }
     });
 
     overlay.addEventListener(
@@ -2436,9 +2463,10 @@ start();
       { passive: false },
     );
 
-    enlargedImage.addEventListener('pointerdown', (event) => {
+    canvasElement.addEventListener('pointerdown', (event) => {
       if (event.pointerType === 'mouse' && event.button !== 0) return;
-      enlargedImage.setPointerCapture?.(event.pointerId);
+      event.preventDefault();
+      canvasElement.setPointerCapture(event.pointerId);
       pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
       moved = false;
       if (pointers.size === 1) {
@@ -2453,7 +2481,7 @@ start();
       }
     });
 
-    enlargedImage.addEventListener('pointermove', (event) => {
+    canvasElement.addEventListener('pointermove', (event) => {
       if (!pointers.has(event.pointerId)) return;
       pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
       if (pointers.size >= 2) {
@@ -2461,40 +2489,47 @@ start();
         const currentDistance = distance(pts[0], pts[1]);
         const currentMidpoint = midpoint(pts[0], pts[1]);
         if (pinchStartDistance > 0) {
-          const oldScale = scale;
+          const canvasRect = canvasElement.getBoundingClientRect();
+          const centerX = canvasRect.left + canvasRect.width / 2;
+          const centerY = canvasRect.top + canvasRect.height / 2;
+
           const nextScale = clamp(
             (pinchStartScale * currentDistance) / pinchStartDistance,
             MIN_ZOOM,
             MAX_ZOOM,
           );
+
+          const mx = pinchStartMidpoint.x - centerX;
+          const my = pinchStartMidpoint.y - centerY;
+          const ratio = nextScale / pinchStartScale;
+
           scale = nextScale;
-          panX = pinchStartPan.x + currentMidpoint.x - pinchStartMidpoint.x;
-          panY = pinchStartPan.y + currentMidpoint.y - pinchStartMidpoint.y;
-          if (
-            oldScale !== scale ||
-            Math.abs(currentDistance - pinchStartDistance) > 3
-          )
-            moved = true;
+          panX =
+            mx -
+            (mx - pinchStartPan.x) * ratio +
+            (currentMidpoint.x - pinchStartMidpoint.x);
+          panY =
+            my -
+            (my - pinchStartPan.y) * ratio +
+            (currentMidpoint.y - pinchStartMidpoint.y);
+          moved = true;
           renderTransform();
         }
-      } else if (scale > 1 && startPoint) {
+      } else if (startPoint) {
         const dx = event.clientX - startPoint.x;
         const dy = event.clientY - startPoint.y;
-        if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
+        if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
         panX = startPan.x + dx;
         panY = startPan.y + dy;
         renderTransform();
-      } else if (
-        startPoint &&
-        Math.hypot(event.clientX - startPoint.x, event.clientY - startPoint.y) >
-          8
-      ) {
-        moved = true;
       }
     });
 
     const endPointer = (event) => {
       pointers.delete(event.pointerId);
+      if (canvasElement.hasPointerCapture(event.pointerId)) {
+        canvasElement.releasePointerCapture(event.pointerId);
+      }
       if (pointers.size < 2) pinchStartDistance = 0;
       if (pointers.size === 0) {
         startPoint = null;
@@ -2505,9 +2540,10 @@ start();
         startPan = { x: panX, y: panY };
       }
     };
-    enlargedImage.addEventListener('pointerup', endPointer);
-    enlargedImage.addEventListener('pointercancel', endPointer);
-    enlargedImage.addEventListener('lostpointercapture', endPointer);
+    canvasElement.addEventListener('pointerup', endPointer);
+    canvasElement.addEventListener('pointercancel', endPointer);
+    canvasElement.addEventListener('lostpointercapture', endPointer);
+
     enlargedImage.addEventListener('dblclick', (event) => {
       event.preventDefault();
       if (scale > 1) resetZoom();
@@ -2541,17 +2577,6 @@ start();
       previousFocus.focus({ preventScroll: true });
     }
   }
-
-  document.addEventListener('click', (event) => {
-    const trigger = event.target.closest('#image-zoom-trigger');
-    if (trigger) {
-      event.preventDefault();
-      const currentImage = document.querySelector('#aircraft-image');
-      if (currentImage && canZoomPhoto(currentImage)) {
-        openViewer(currentImage);
-      }
-    }
-  });
 
   function makeStandalonePhotosKeyboardAccessible(root = document) {
     root.querySelectorAll(IMAGE_SELECTOR).forEach((image) => {
