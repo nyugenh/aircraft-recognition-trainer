@@ -225,23 +225,11 @@ function preparePhotoFadeIn(image) {
 
 function loadQuestionImage(path, altText) {
   return new Promise((resolve, reject) => {
-    // Check if there is already a valid image currently displayed
-    const hasCurrentValidImage =
-      imageElement.src &&
-      imageElement.src !== window.location.href &&
-      imageElement.naturalWidth > 0 &&
-      !imageElement.src.startsWith('data:image/svg+xml');
+    // Always show the loading spinner and clear the image to start from blank
+    if (typeof setLoading === 'function') setLoading(true);
+    imageElement.removeAttribute('src');
+    imageElement.style.opacity = '0';
 
-    // If NO current image exists (first load, mode switch, or photo toggle), show spinner on blank container
-    if (!hasCurrentValidImage) {
-      if (typeof setLoading === 'function') setLoading(true);
-      imageElement.removeAttribute('src'); // Clean blank slate
-    } else {
-      // If a previous image IS present, show the high-visibility spinner ON TOP of the current image
-      if (typeof setLoading === 'function') setLoading(true);
-    }
-
-    // Preload the new image off-DOM in the background so the old image stays visible
     const preloader = new Image();
 
     preloader.onload = () => {
@@ -252,6 +240,7 @@ function loadQuestionImage(path, altText) {
 
       imageElement.alt = altText;
       imageElement.src = path;
+      imageElement.style.opacity = '1';
       imageElement.style.animation = 'photoFadeIn 0.25s ease-out forwards';
 
       if (imageZoomTrigger) imageZoomTrigger.hidden = false;
