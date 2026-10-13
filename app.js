@@ -1078,7 +1078,7 @@ async function displayPhotoAnswerChoices(choices) {
     imgWrap.className = 'photo-choice-img-wrap';
 
     const spinner = document.createElement('span');
-    spinner.className = 'loading-message'; // Ensures spinner is visible immediately
+    spinner.className = 'loading-message';
     imgWrap.appendChild(spinner);
 
     const name = document.createElement('span');
@@ -1758,10 +1758,9 @@ function checkSpeedRanking() {
     : correctPositions > 0
       ? 'partial'
       : 'incorrect';
-  const feedbackIcon = correct ? '✓' : correctPositions > 0 ? '◐' : '✕';
   setFeedback(
     feedbackType,
-    `${feedbackIcon} ${correct ? 'Correct' : correctPositions > 0 ? 'Partially correct' : 'Incorrect'}`,
+    `${correct ? 'Correct' : correctPositions > 0 ? 'Partially correct' : 'Incorrect'}`,
     `${correctPositions}/${rows.length} positions`,
   );
   finishAnswer();
@@ -1814,7 +1813,7 @@ function submitTypedAnswer() {
   if (points === 1) {
     typeAnswerInput.classList.add('correct');
     typeAnswerContainer.classList.add('correct');
-    setFeedback('correct', '✓ Correct!', 'Correct answer:', feedbackAnswer);
+    setFeedback('correct', 'Correct!', 'Correct answer:', feedbackAnswer);
   } else if (points > 0) {
     typeAnswerInput.classList.add('partial');
     typeAnswerContainer.classList.add('partial');
@@ -1827,7 +1826,7 @@ function submitTypedAnswer() {
   } else {
     typeAnswerInput.classList.add('incorrect');
     typeAnswerContainer.classList.add('incorrect');
-    setFeedback('incorrect', '✕ Incorrect', 'Correct answer:', feedbackAnswer);
+    setFeedback('incorrect', 'Incorrect', 'Correct answer:', feedbackAnswer);
   }
   typeAnswerInput.disabled = true;
   submitAnswerButton.disabled = true;
@@ -1844,7 +1843,7 @@ function answerSpecialQuestion(button) {
     button.classList.add('correct');
     setFeedback(
       'correct',
-      '✓ Correct!',
+      'Correct!',
       'Answer:',
       specialQuestionData.feedbackAnswer,
     );
@@ -1856,7 +1855,7 @@ function answerSpecialQuestion(button) {
     });
     setFeedback(
       'incorrect',
-      '✕ Incorrect',
+      'Incorrect',
       'Correct answer:',
       specialQuestionData.feedbackAnswer,
     );
@@ -1876,10 +1875,10 @@ function answerMultipleChoice(button) {
   if (isCorrect) {
     score += 1;
     button.classList.add('correct');
-    setFeedback('correct', '✓ Correct!', 'Answer:', feedbackAnswer);
+    setFeedback('correct', 'Correct!', 'Answer:', feedbackAnswer);
   } else {
     button.classList.add('incorrect');
-    setFeedback('incorrect', '✕ Incorrect', 'Correct answer:', feedbackAnswer);
+    setFeedback('incorrect', 'Incorrect', 'Correct answer:', feedbackAnswer);
     answerButtons.forEach((answerButton) => {
       if (answerButton.dataset.correct === 'true')
         answerButton.classList.add('correct');
@@ -1901,7 +1900,7 @@ function answerReversePhoto(button) {
   if (isCorrect) {
     score += 1;
     button.classList.add('correct');
-    setFeedback('correct', '✓ Correct!', 'Answer:', feedbackAnswer);
+    setFeedback('correct', 'Correct!', 'Answer:', feedbackAnswer);
   } else {
     button.classList.add('incorrect');
     setFeedback('incorrect', '✕ Incorrect', 'Correct photo:', feedbackAnswer);
@@ -2340,6 +2339,7 @@ start();
     '#aircraft-image',
     '.speed-comparison img',
     '.speed-aircraft-photo img',
+    '.photo-choice-img-wrap img',
     '#speed-ranking img',
     '.speed-ranking img',
     '.ranking-photo',

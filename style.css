@@ -1,335 +1,340 @@
-/* =========================================================
+/* ==========================================================================
    Aircraft Recognition Trainer
-   Responsive & Accessible Stylesheet (Fully Unified Edition)
-   ========================================================= */
+   Mobile-first, light + dark (follows system), keyboard + touch friendly.
+   Sections: 1 Tokens · 2 Base · 3 Layout · 4 Controls · 5 Image · 6 Prompt
+             7 Answers · 8 Typed answer · 9 Speed comparison · 10 Ranking
+             11 Footer + feedback · 12 Photo viewer · 13 Preferences
+   ========================================================================== */
 
-/* 1. Design Tokens */
+/* 1. Tokens ---------------------------------------------------------------- */
 :root {
-  color-scheme: light;
-  --page-bg: #f5f7fa;
-  --surface: #fff;
-  --surface-muted: #eef2f5;
-  --text: #17202a;
-  --text-muted: #53616d;
-  --text-disabled: #7c858d;
-  --border: #687481;
-  --border-light: #d8dee3;
-  --border-hover: #3f4d5a;
-  --primary: #263746;
-  --primary-hover: #172630;
-  --primary-text: #fff;
-  --focus: #e09b00;
-  --correct-bg: #dff3e4;
-  --correct-border: #26733b;
-  --correct-text: #164d27;
-  --partial-bg: #fff3d6;
-  --partial-border: #c28700;
-  --partial-text: #6b4b00;
-  --incorrect-bg: #f9dddd;
-  --incorrect-border: #a52a2a;
-  --incorrect-text: #6e1b1b;
-  --radius: 9px;
-  --radius-small: 6px;
-  --control-height: 52px;
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --page-gap: var(--space-3);
-  --control-gap: var(--space-4);
-  --answer-gap: var(--space-2);
-  --page-padding: 12px;
-  --content-width: 1100px;
-  --transition-fast: 120ms ease;
-  --transition-normal: 160ms ease;
-  --shadow-card: 0 1px 3px rgb(0 0 0 / 4%), 0 1px 2px rgb(0 0 0 / 8%);
-  --shadow-card-hover: 0 6px 16px rgb(0 0 0 / 8%), 0 2px 4px rgb(0 0 0 / 4%);
+  color-scheme: light dark;
+
+  /* Light palette */
+  --bg: #eef2f6;
+  --surface: #ffffff;
+  --surface-2: #f4f7fa;
+  --ink: #14202b;
+  --ink-muted: #475869;
+  --line: #bcc8d4;
+  --accent: #0b5cad;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3eefa;
+  --focus: #0b5cad;
+
+  --correct: #0d6b38;
+  --correct-bg: #e2f4e9;
+  --partial: #7a4f00;
+  --partial-bg: #fcf0d4;
+  --incorrect: #a8211a;
+  --incorrect-bg: #fbe6e4;
+  --on-state: #ffffff;
+
+  --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23475869' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+  /* Type */
+  --font:
+    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+
+  /* Shape + space */
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --target: 2.75rem; /* 44px minimum touch target */
+  --gutter: clamp(0.875rem, 4vw, 1.5rem);
+  --shadow: 0 1px 2px rgb(20 32 43 / 0.08), 0 4px 14px rgb(20 32 43 / 0.06);
+  --ease: cubic-bezier(0.2, 0.75, 0.25, 1);
 }
 
-/* 2. Reset & Base */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e151e;
+    --surface: #17212d;
+    --surface-2: #1e2b3a;
+    --ink: #e8eef5;
+    --ink-muted: #a6b5c5;
+    --line: #3a4c60;
+    --accent: #7ab8ff;
+    --accent-ink: #08121d;
+    --accent-soft: #1b2e45;
+    --focus: #9ccbff;
+
+    --correct: #6fdc9a;
+    --correct-bg: #11301f;
+    --partial: #f2c25a;
+    --partial-bg: #35280a;
+    --incorrect: #ff9890;
+    --incorrect-bg: #3a1614;
+    --on-state: #08121d;
+
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23a6b5c5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 18px rgb(0 0 0 / 0.3);
+  }
+}
+
+/* 2. Base ------------------------------------------------------------------ */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-[hidden] {
-  display: none !important;
-}
-
 html {
-  min-height: 100%;
-  color-scheme: light;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scroll-padding-block: 1rem 8rem;
 }
 
 body {
-  min-width: 280px;
-  min-height: 100%;
   margin: 0;
-  background: var(--page-bg);
-  color: var(--text);
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-    sans-serif;
-  font-size: 16px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1rem;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  overflow-wrap: anywhere;
 }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border-light);
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--border);
+[hidden],
+.hidden {
+  display: none !important;
 }
 
 button,
 input,
 select {
   font: inherit;
-  min-height: 48px;
-  min-width: 48px;
+  color: inherit;
 }
 
 button {
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
-  will-change: transform;
 }
 
-button:active:not(:disabled) {
-  transform: scale(0.98);
+img {
+  max-width: 100%;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
-button:disabled {
-  cursor: default;
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Programmatic focus on the prompt shouldn't draw a ring on mouse/touch. */
+.prompt:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .visually-hidden {
-  position: absolute;
+  position: absolute !important;
   width: 1px;
   height: 1px;
-  padding: 0;
   margin: -1px;
+  padding: 0;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
 
-/* 3. Application Layout */
+/* 3. Layout ---------------------------------------------------------------- */
 .app {
-  display: grid;
-  grid-template-rows: auto auto auto minmax(0, 1fr) auto auto auto;
-  grid-template-areas:
-    'header'
-    'controls'
-    'photo-toggle'
-    'image'
-    'prompt'
-    'answers'
-    'bottom';
-  gap: var(--page-gap);
-  width: min(100%, var(--content-width));
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
-  margin-inline: auto;
-  padding: max(var(--page-padding), env(safe-area-inset-top))
-    max(var(--page-padding), env(safe-area-inset-right))
-    max(var(--page-padding), env(safe-area-inset-bottom))
-    max(var(--page-padding), env(safe-area-inset-left));
-}
-
-.header {
-  grid-area: header;
-}
-.controls {
-  grid-area: controls;
-}
-.photo-toggle {
-  grid-area: photo-toggle;
-}
-.image-container {
-  grid-area: image;
-}
-.prompt {
-  grid-area: prompt;
-}
-.type-answer-container,
-.answers {
-  grid-area: answers;
-}
-.bottom {
-  grid-area: bottom;
-}
-
-.app:has(.type-answer-container:not([hidden])) .answers {
-  display: none;
-}
-
-.app.no-image {
-  height: auto;
-  min-height: 100dvh;
-  grid-template-rows: repeat(6, max-content);
-  grid-template-areas:
-    'header'
-    'controls'
-    'photo-toggle'
-    'prompt'
-    'answers'
-    'bottom';
-  align-content: start;
-}
-
-.app.no-image .image-container {
-  display: none;
-}
-
-.app.no-image .answers {
-  width: min(800px, 100%);
-  margin-inline: auto;
-}
-
-.app.reverse-mode {
-  grid-template-rows: auto auto auto minmax(260px, 1fr) auto;
-  grid-template-areas:
-    'header'
-    'controls'
-    'prompt'
-    'answers'
-    'bottom';
-  align-content: stretch;
-}
-
-/* 4. Header & Score */
-.header {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-3);
-  min-width: 0;
+  flex-direction: column;
+  gap: 1rem;
+  width: min(100%, 46rem);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding: max(var(--gutter), env(safe-area-inset-top)) var(--gutter) 0;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left))
+    max(var(--gutter), env(safe-area-inset-right));
 }
 
-.header h1 {
-  min-width: 0;
-  margin: 0;
-  font-size: clamp(1.35rem, 3vw, 2rem);
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.score {
-  flex-shrink: 0;
-  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-  line-height: 1.3;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-/* 5. Quiz Controls */
-.controls {
+.header {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  column-gap: var(--control-gap);
-  row-gap: var(--space-2);
-  width: 100%;
-  min-width: 0;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(1.25rem, 1rem + 1.4vw, 1.75rem);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.score {
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.9375rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* 4. Quiz settings + photo toggle ------------------------------------------ */
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: 0.75rem;
+  padding: 0.875rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
 }
 
 .controls label {
-  display: flex;
-  flex: 1 1 260px;
-  align-items: center;
-  column-gap: var(--space-2);
+  display: grid;
+  gap: 0.25rem;
   min-width: 0;
-  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
-  line-height: 1.3;
+  font-size: 0.875rem;
   font-weight: 600;
+  color: var(--ink-muted);
 }
 
-.controls select {
-  flex: 1 1 0;
+.answer-type-caption {
+  display: block;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
   width: 100%;
-  min-width: 0;
-  min-height: 48px;
-  padding: 8px 36px 8px 12px;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text);
-  font: inherit;
+  min-height: var(--target);
+  padding: 0.5rem 2.25rem 0.5rem 0.75rem;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2) var(--chevron) no-repeat right 0.875rem center /
+    0.75rem 0.5rem;
+  color: var(--ink);
+  font-size: 1rem; /* 16px+ prevents iOS zoom on focus */
   font-weight: 500;
+  text-overflow: ellipsis;
   cursor: pointer;
-  box-shadow: var(--shadow-card);
+}
+
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.photo-toggle {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.5rem;
+  min-height: var(--target);
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-weight: 600;
+  cursor: pointer;
   transition:
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast);
+    background-color 0.15s,
+    border-color 0.15s;
 }
 
-.controls select:hover {
-  border-color: var(--border-hover);
+.photo-toggle svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
 }
 
-/* 6. Aircraft Image Container & Universal Fade/Spinner Rules */
+.photo-toggle[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* 5. Image area ------------------------------------------------------------ */
 .image-container {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-  min-height: 140px;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  max-height: min(60dvh, 48rem);
+  width: 100%;
   overflow: hidden;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface);
-  padding: 0;
-  box-shadow: var(--shadow-card);
-  container-type: inline-size;
+  background: var(--surface-2);
+}
+
+.image-container:has(.speed-comparison) {
+  aspect-ratio: auto;
+  max-height: none;
+  overflow: visible;
+  border: 0;
+  background: none;
 }
 
 #aircraft-image {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-width: 0;
-  min-height: 0;
   object-fit: contain;
-  object-position: center;
-  border-radius: inherit;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-user-drag: none;
-  animation: photoFadeIn 0.25s ease-out forwards;
+  transition: opacity 0.2s;
 }
 
-/* Universal Image Fade-In Animation */
-img {
-  animation: photoFadeIn 0.25s ease-out forwards;
+#aircraft-image.loading {
+  opacity: 0.35;
 }
 
+#aircraft-image:not([src]) {
+  visibility: hidden;
+}
+
+/* Spinner (also used inside photo cards and ranking rows) */
+.loading-message {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.loading-message::before {
+  content: '';
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loading-error {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  color: var(--incorrect);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* app.js re-triggers this by name on every new photo */
 @keyframes photoFadeIn {
   from {
     opacity: 0;
@@ -339,729 +344,793 @@ img {
   }
 }
 
-/* Universal Loading Spinner */
-.loading-message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 10;
-  display: none;
-  width: 36px;
-  height: 36px;
-  margin: -18px 0 0 -18px;
-  border: 4px solid rgb(255 255 255 / 30%);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  background: rgb(255 255 255 / 85%);
-  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
-  backdrop-filter: blur(4px);
-  animation: app-spin 0.75s linear infinite;
-  pointer-events: none;
-}
-
-.loading-message:not(.hidden) {
-  display: block;
-}
-
-@keyframes app-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* 7. Question Prompt & Category Hint */
+/* 6. Question prompt ------------------------------------------------------- */
 .prompt {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem 0.5rem;
-  min-width: 0;
-  min-height: 0;
-  height: auto;
   margin: 0;
-  padding: 0;
-  align-self: start;
-  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+  font-size: clamp(1.125rem, 1rem + 0.8vw, 1.375rem);
+  font-weight: 650;
   line-height: 1.35;
-  font-weight: 700;
-  text-align: center;
-  overflow-wrap: anywhere;
-}
-
-.app.no-image .prompt {
-  min-height: 0;
-  font-size: clamp(1.25rem, 2.8vw, 1.65rem);
+  text-wrap: balance;
 }
 
 .category-hint {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0.12rem 0.45rem;
-  border: 1px solid #aeb7bf;
+  display: inline-block;
+  margin-inline-start: 0.5rem;
+  padding: 0.125rem 0.625rem;
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--surface-muted);
-  color: var(--text-muted);
-  font-size: 0.62em;
-  line-height: 1.2;
+  background: var(--surface);
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
   font-weight: 600;
-  white-space: nowrap;
+  vertical-align: middle;
 }
 
-/* 8. Multiple-Choice Answers */
+/* 7. Answer choices -------------------------------------------------------- */
 .answers {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--answer-gap);
-  min-width: 0;
+  grid-template-columns: 1fr;
+  gap: 0.625rem;
+  counter-reset: option;
 }
 
 .answers button {
+  counter-increment: option;
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.75rem;
   width: 100%;
-  min-width: 0;
-  min-height: var(--control-height);
-  padding: 10px 16px;
-  border: 2px solid var(--border);
+  min-height: 3.5rem;
+  padding: 0.625rem 0.875rem;
+  border: 2px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  color: var(--text);
-  font-size: clamp(1rem, 1.8vw, 1.15rem);
-  line-height: 1.3;
+  box-shadow: var(--shadow);
+  text-align: start;
   font-weight: 600;
-  text-align: center;
-  overflow-wrap: anywhere;
+  line-height: 1.3;
   cursor: pointer;
-  box-shadow: var(--shadow-card);
-  will-change: transform;
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast),
-    transform var(--transition-fast),
-    opacity var(--transition-fast);
+    border-color 0.15s,
+    background-color 0.15s,
+    transform 0.1s;
 }
 
-.answers button:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--surface) 85%, var(--primary));
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-card-hover);
+.shortcut-badge {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.875rem;
+  height: 1.875rem;
+  border: 1px solid var(--line);
+  border-bottom-width: 3px; /* keycap */
+  border-radius: 0.4rem;
+  background: var(--surface-2);
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.option-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.answers button:active:not(:disabled) {
+  transform: scale(0.985);
 }
 
 .answers button:disabled {
   cursor: default;
 }
 
+/* Dim only the options that weren't the right answer or the chosen one */
+.answers button:disabled:not(.correct):not(.incorrect) {
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+/* Result states: colour + border + a mark, never colour alone */
 .answers button.correct,
-#speed-ranking-list .ranking-item.correct {
+.ranking-item.correct {
+  border-color: var(--correct);
   background: var(--correct-bg);
-  border-color: var(--correct-border);
-  color: var(--correct-text);
-  box-shadow:
-    inset 0 0 0 1px rgb(38 115 59 / 15%),
-    var(--shadow-card);
 }
 
 .answers button.incorrect,
-#speed-ranking-list .ranking-item.incorrect {
+.ranking-item.incorrect {
+  border-color: var(--incorrect);
   background: var(--incorrect-bg);
-  border-color: var(--incorrect-border);
-  color: var(--incorrect-text);
-  box-shadow:
-    inset 0 0 0 1px rgb(165 42 42 / 15%),
-    var(--shadow-card);
 }
 
-/* 9. Choose Photo Mode */
-.app.reverse-mode .answers.reverse {
+.answers button.incorrect {
+  border-style: dashed;
+}
+
+.answers button.correct::after,
+.answers button.incorrect::after {
+  flex: none;
   display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--bg);
+}
+
+.answers button.correct::after {
+  content: '\2713';
+  content: '\2713' / 'Correct answer';
+  background: var(--correct);
+}
+
+.answers button.incorrect::after {
+  content: '\2715';
+  content: '\2715' / 'Incorrect answer';
+  background: var(--incorrect);
+}
+
+@media (min-width: 36rem) {
+  .answers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .answers button:hover:not(:disabled),
+  .photo-toggle:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  select:hover:not(:disabled) {
+    border-color: var(--accent);
+  }
+}
+
+/* Touch-only devices have no number keys */
+@media (hover: none) and (pointer: coarse) {
+  .shortcut-badge {
+    display: none;
+  }
+}
+
+/* Photo answers (reverse mode) */
+.answers.reverse {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: var(--answer-gap);
-  width: 100%;
-  height: 100%;
+  gap: 0.5rem;
 }
 
-.app.reverse-mode .answers.reverse button {
-  position: relative;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) 1.8em;
-  align-items: center;
-  justify-items: center;
+/* Any mode that shows photos gets a much wider, tighter layout.
+   Text-only modes (.no-image) keep the narrow reading width. */
+.app:not(.no-image),
+.app:has(.ranking-photo-wrap:not([hidden])) {
+  --gutter: clamp(0.5rem, 2vw, 1.5rem);
+  width: min(100%, 90rem);
+}
+
+.answers.reverse button {
+  flex-direction: column;
+  align-items: stretch;
   gap: 0;
-  width: 100%;
-  height: 100%;
   min-height: 0;
   padding: 0;
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
   overflow: hidden;
-  cursor: pointer;
-  box-shadow: var(--shadow-card);
 }
 
-.app.reverse-mode .answers.reverse button .photo-choice-img-wrap {
+.photo-choice-img-wrap {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  min-height: 110px; /* Holds card shape before image loads */
-  overflow: hidden;
-  background: transparent;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  background: var(--surface-2);
 }
 
-.app.reverse-mode .answers.reverse button img {
+/* Reserve space only while the spinner is showing; once the photo loads it
+   sets its own height, so it is never cropped or letterboxed. */
+.photo-choice-img-wrap:has(.loading-message, .loading-error) {
+  aspect-ratio: 3 / 2;
+}
+
+.photo-choice-img-wrap img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 50dvh;
   object-fit: contain;
-  padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius);
-  user-select: none;
-  animation: photoFadeIn 0.25s ease-out forwards;
 }
 
-.app.reverse-mode .answers.reverse .photo-choice-name {
+/* The name strip is always reserved (two lines on phones, one on wide
+   screens) so revealing the answer never makes the cards jump. */
+.photo-choice-name {
   display: block;
-  width: 100%;
-  height: 1.8em;
-  padding: 2px 5px 3px;
-  overflow: hidden;
-  color: transparent;
-  font-size: clamp(0.78rem, 1.5vw, 0.95rem);
-  line-height: 1.2;
-  font-weight: 700;
+  flex: none;
+  min-height: calc(2 * 1.3em + 1rem);
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9375rem;
+  line-height: 1.3;
   text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
-.app.reverse-mode .answers.reverse .photo-choice-name:not(.hidden-name) {
-  visibility: visible;
-  color: var(--text);
+@media (min-width: 40rem) {
+  .photo-choice-name {
+    min-height: calc(1.3em + 1rem);
+  }
 }
 
-/* 10. Typed Answers */
+/* Hidden but still occupying its space until the answer is revealed
+   (app.js then overrides visibility inline). */
+.photo-choice-name.hidden-name {
+  visibility: hidden;
+}
+
+.answers.reverse button::before {
+  content: counter(option);
+  position: absolute;
+  z-index: 2;
+  inset: 0.5rem auto auto 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--line);
+  border-bottom-width: 3px;
+  border-radius: 0.4rem;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .answers.reverse button::before {
+    display: none;
+  }
+}
+
+.answers.reverse button.correct::after,
+.answers.reverse button.incorrect::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0.5rem 0.5rem auto auto;
+}
+
+/* 8. Typed answer ---------------------------------------------------------- */
 .type-answer-container {
   display: flex;
-  align-items: stretch;
-  justify-content: center;
-  gap: var(--space-2);
-  min-width: 0;
+  gap: 0.5rem;
 }
 
 .type-answer-input {
   flex: 1;
   min-width: 0;
-  min-height: 48px;
-  padding: 10px 14px;
-  border: 2px solid var(--border);
+  min-height: 3.25rem;
+  padding: 0.5rem 0.875rem;
+  border: 2px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  color: var(--text);
-  font-size: 1.1rem;
-  font-weight: 500;
-  outline: none;
-  box-shadow: var(--shadow-card);
-  transition:
-    background-color var(--transition-normal),
-    border-color var(--transition-normal),
-    box-shadow var(--transition-normal),
-    color var(--transition-normal);
+  font-size: 1.125rem;
 }
 
-.type-answer-input:hover:not(:disabled) {
-  border-color: var(--border-hover);
+.type-answer-input::placeholder {
+  color: var(--ink-muted);
+  opacity: 1;
 }
 
-.type-answer-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgb(224 155 0 / 35%);
+.type-answer-input:focus-visible {
+  border-color: var(--focus);
+  outline-offset: 0;
+}
+
+.type-answer-input:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
 }
 
 .type-answer-input.correct {
+  border-color: var(--correct);
   background: var(--correct-bg);
-  border-color: var(--correct-border);
-  color: var(--correct-text);
-  box-shadow: 0 0 0 3px rgb(38 115 59 / 14%);
 }
 
 .type-answer-input.partial {
+  border-color: var(--partial);
   background: var(--partial-bg);
-  border-color: var(--partial-border);
-  color: var(--partial-text);
-  box-shadow: 0 0 0 3px rgb(194 135 0 / 14%);
+  border-style: double;
+  border-width: 4px;
 }
 
 .type-answer-input.incorrect {
+  border-color: var(--incorrect);
   background: var(--incorrect-bg);
-  border-color: var(--incorrect-border);
-  color: var(--incorrect-text);
-  box-shadow: 0 0 0 3px rgb(165 42 42 / 14%);
+  border-style: dashed;
 }
 
-/* 11. Buttons & Photo-Toggle */
+/* Shared primary button */
 .submit-answer,
+#check-ranking,
 .next-button {
-  min-height: 48px;
-  min-width: 48px;
-  padding: 10px 20px;
-  border: 2px solid var(--primary);
+  min-height: 3.25rem;
+  padding: 0.5rem 1.25rem;
+  border: 2px solid transparent;
   border-radius: var(--radius);
-  background: var(--primary);
-  color: var(--primary-text);
-  font-size: clamp(1rem, 1.8vw, 1.1rem);
-  line-height: 1.3;
+  background: var(--accent);
+  color: var(--accent-ink);
   font-weight: 700;
   cursor: pointer;
-  box-shadow: var(--shadow-card);
-  will-change: transform;
   transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    transform var(--transition-fast),
-    opacity var(--transition-fast);
+    filter 0.15s,
+    transform 0.1s;
 }
 
-.submit-answer {
-  flex-shrink: 0;
-  min-width: 110px;
-  padding-inline: 18px;
-}
-
-.submit-answer:hover:not(:disabled),
-.next-button:hover:not(:disabled) {
-  background: var(--primary-hover);
-  border-color: var(--primary-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-card-hover);
+.submit-answer:active:not(:disabled),
+#check-ranking:active:not(:disabled),
+.next-button:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .submit-answer:disabled,
+#check-ranking:disabled,
 .next-button:disabled {
-  opacity: 0.5;
-  cursor: default;
-  transform: none;
+  background: var(--surface-2);
+  border-color: var(--line);
+  color: var(--ink-muted);
+  cursor: not-allowed;
 }
 
-.photo-toggle {
-  justify-self: end;
-  align-self: center;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 48px;
-  min-width: 48px;
-  padding: 5px 12px;
-  margin: 0;
-  border: 1px solid var(--border-light);
-  border-radius: 7px;
-  background: var(--surface);
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  line-height: 1.3;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--shadow-card);
-  will-change: transform;
-  transition:
-    border-color var(--transition-fast),
-    transform var(--transition-fast);
-}
-
-.photo-toggle:hover {
-  transform: translateY(-1px);
-}
-
-.photo-toggle svg {
-  display: block;
-  width: 16px;
-  height: 16px;
-  flex: none;
-}
-
-/* 12. Feedback & Bottom Area */
-.feedback {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 3px 7px;
-  min-height: 1.35em;
-  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
-  line-height: 1.35;
-  font-weight: 600;
-  text-align: left;
-  overflow-wrap: anywhere;
-}
-
-.feedback-result,
-.feedback-answer {
-  font-weight: 700;
-}
-
-.feedback-detail {
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.feedback-answer {
-  color: var(--text);
-}
-
-.feedback.correct-feedback .feedback-result {
-  color: var(--correct-border);
-}
-.feedback.partial-feedback .feedback-result {
-  color: var(--partial-border);
-}
-.feedback.incorrect-feedback .feedback-result {
-  color: var(--incorrect-border);
-}
-
-.bottom {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  column-gap: var(--space-4);
-  row-gap: var(--space-2);
-}
-
-/* 13. Focus States with Outline Offset */
-button:focus-visible,
-select:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 25%, transparent);
-  border-color: var(--focus);
-}
-
-/* 14. Speed Comparison Component & Container Queries */
-.image-container:has(.speed-comparison) {
-  border: none;
-  background: transparent;
-  padding: 0;
-  box-shadow: none;
-  margin-bottom: 0;
-}
-
-.speed-comparison {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-2);
-  width: 100%;
-  margin: 0 auto;
-  align-self: center;
-}
-
-@container (max-width: 400px) {
-  .speed-comparison {
-    grid-template-columns: 1fr;
+@media (hover: hover) and (pointer: fine) {
+  .submit-answer:hover:not(:disabled),
+  #check-ranking:hover:not(:disabled),
+  .next-button:hover:not(:disabled) {
+    filter: brightness(1.1);
   }
 }
 
+/* 9. Speed comparison ------------------------------------------------------ */
+.speed-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+}
+
 .speed-aircraft {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-  padding: 0;
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  background: var(--surface);
   overflow: hidden;
-  box-shadow: var(--shadow-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
 }
 
 .speed-aircraft-photo {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: clamp(120px, 20vw, 160px);
-  min-height: 110px;
-  padding: 0;
-  margin: 0;
-  background: transparent;
-  border: none;
-  border-radius: inherit;
-  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: var(--surface-2);
 }
 
-.speed-aircraft img {
+/* Reserve a box only while loading; afterwards the photo sets its own height */
+.speed-aircraft-photo:has(.loading-message, .loading-error) {
+  aspect-ratio: 4 / 3;
+}
+
+.speed-aircraft-photo img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 0;
-  margin: 0;
-  background: transparent;
-  border: none;
-  border-radius: inherit;
-  animation: photoFadeIn 0.25s ease-out forwards;
-}
-
-/* 15. Speed Ranking Mode */
-.app:has(#speed-ranking:not([hidden])) {
   height: auto;
-  min-height: 100dvh;
-  grid-template-rows: repeat(6, max-content);
-  grid-template-areas:
-    'header'
-    'controls'
-    'photo-toggle'
-    'prompt'
-    'answers'
-    'bottom';
-  align-content: start;
+  max-height: 50dvh;
+  object-fit: contain;
 }
 
+/* 10. Speed ranking -------------------------------------------------------- */
 .speed-ranking {
-  grid-area: answers;
-  width: 100%;
-  min-width: 0;
-  max-width: none;
-  margin: 0;
+  display: grid;
+  gap: 0.75rem;
 }
 
 #speed-ranking-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  width: 100%;
-  min-width: 0;
+  display: grid;
+  gap: 0.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .ranking-item {
-  position: relative;
-  display: flex;
-  touch-action: none;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.75rem;
-  width: 100%;
-  min-width: 0;
-  padding: 8px 12px;
-  overflow: visible;
-  border: 2px solid var(--border-light);
+  padding: 0.625rem 0.75rem;
+  border: 2px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
+  box-shadow: var(--shadow);
   cursor: grab;
-  box-sizing: border-box;
+  touch-action: none; /* lets pointer-drag reorder work on touch */
   user-select: none;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  box-shadow: var(--shadow-card);
-  will-change: transform;
-  transition:
-    background-color var(--transition-normal),
-    border-color var(--transition-normal),
-    box-shadow var(--transition-normal),
-    transform var(--transition-fast);
 }
 
-.ranking-item:hover:not(.ranking-dragging) {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-card-hover);
-}
-
-.ranking-item:active {
-  cursor: grabbing;
-}
-
-.ranking-item.ranking-dragging {
-  z-index: 5;
-  opacity: 1;
-  touch-action: none;
-  user-select: none;
-  box-shadow: 0 8px 22px #0002;
-}
-
-.ranking-item.ranking-placeholder {
-  visibility: hidden;
+.ranking-item .ranking-controls {
+  touch-action: manipulation;
 }
 
 .ranking-position {
   display: grid;
   place-items: center;
-  flex: 0 0 2rem;
   width: 2rem;
   height: 2rem;
-  align-self: center;
-  margin: 0;
-  border: 1px solid transparent;
   border-radius: 50%;
-  background: var(--surface-muted);
-  color: var(--text);
-  font-size: 1rem;
-  font-weight: 800;
-  line-height: 1;
-  box-sizing: border-box;
-}
-
-#speed-ranking-list .ranking-item.correct .ranking-position {
-  border-color: var(--correct-border);
-  background: var(--correct-border);
-  color: #fff;
-}
-
-#speed-ranking-list .ranking-item.incorrect .ranking-position {
-  border-color: var(--incorrect-border);
-  background: var(--incorrect-border);
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
 }
 
 .ranking-details {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  flex: 1 1 0;
   min-width: 0;
 }
 
 .ranking-photo-wrap {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 72px;
-  width: 72px;
-  height: 100%;
-  min-height: 48px;
-  padding: 0;
-  margin: 0;
-  background: transparent;
-  border: none;
-  border-radius: 4px;
+  flex: none;
+  width: clamp(6rem, 34vw, 18rem);
+  aspect-ratio: 3 / 2;
   overflow: hidden;
-}
-
-.ranking-photo-wrap[hidden] {
-  display: none !important;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
 }
 
 .ranking-photo {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
   object-fit: contain;
-  object-position: center;
-  border-radius: 4px;
-  animation: photoFadeIn 0.25s ease-out forwards;
-}
-
-.ranking-photo[hidden] {
-  display: none;
 }
 
 .ranking-name {
-  flex: 1 1 0;
-  min-width: 0;
-  font-weight: 600;
-  line-height: 1.25;
-  overflow-wrap: break-word;
+  font-weight: 650;
+  line-height: 1.3;
 }
 
 .ranking-controls {
   display: flex;
-  flex: none;
-  align-self: center;
-  gap: 0.35rem;
-  margin: 0 2px 0 0;
-}
-
-.ranking-controls button,
-#check-ranking {
-  min-width: 2.75rem;
-  min-height: 2.75rem;
-  border: 2px solid var(--border);
-  border-radius: var(--radius-small);
-  background: var(--surface);
-  color: var(--text);
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: var(--shadow-card);
+  gap: 0.25rem;
 }
 
 .ranking-controls button {
-  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: var(--target);
+  height: var(--target);
+  padding: 0;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.ranking-controls button:disabled,
-#check-ranking:disabled {
-  opacity: 0.45;
-  cursor: default;
+.ranking-controls button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ranking-controls button:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+}
+
+.ranking-item.correct .ranking-name::after {
+  content: ' \2713';
+  content: ' \2713' / ' Correct position';
+  color: var(--correct);
+  font-weight: 800;
+}
+
+.ranking-item.incorrect {
+  border-style: dashed;
+}
+
+.ranking-item.incorrect .ranking-name::after {
+  content: ' \2715';
+  content: ' \2715' / ' Wrong position';
+  color: var(--incorrect);
+  font-weight: 800;
+}
+
+.ranking-item.correct .ranking-controls,
+.ranking-item.incorrect .ranking-controls {
+  opacity: 0.6;
+}
+
+/* Drag states (class names come from app.js) */
+.ranking-placeholder {
+  border-style: dashed;
+  border-color: var(--accent);
+  background: var(--accent-soft);
   box-shadow: none;
 }
 
-#check-ranking {
-  display: block;
-  width: 100%;
-  margin-top: 0.75rem;
-  border-color: var(--primary);
-  background: var(--primary);
-  color: var(--primary-text);
-  will-change: transform;
-  transition: transform var(--transition-fast);
-}
-
-#check-ranking:hover:not(:disabled) {
-  transform: translateY(-1px);
+.ranking-placeholder > * {
+  opacity: 0.25;
 }
 
 .ranking-drag-ghost {
-  position: fixed !important;
-  z-index: 9999 !important;
-  display: flex !important;
-  pointer-events: none !important;
-  opacity: 0.98;
+  position: fixed;
+  z-index: 60;
+  margin: 0;
+  pointer-events: none;
+  border-color: var(--accent);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
   cursor: grabbing;
-  background: var(--surface);
-  border: 2px solid var(--primary) !important;
+  transform: scale(1.02);
+}
+
+body.ranking-is-dragging,
+body.ranking-is-dragging * {
+  cursor: grabbing !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+#check-ranking {
+  width: 100%;
+}
+
+@media (min-width: 36rem) {
+  #check-ranking {
+    width: auto;
+    justify-self: end;
+    min-width: 12rem;
+  }
+}
+
+/* 11. Footer, status, feedback --------------------------------------------- */
+.bottom {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  display: grid;
+  gap: 0.625rem;
+  margin: auto calc(var(--gutter) * -1) 0;
+  padding: 0.75rem var(--gutter) max(0.75rem, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.status {
+  min-width: 0;
+}
+
+/* Plain messages (e.g. "couldn't load a photo") */
+.feedback {
+  padding: 0.5rem 0.875rem;
+  border: 2px solid var(--line);
   border-radius: var(--radius);
-  box-shadow:
-    0 18px 38px rgb(0 0 0 / 24%),
-    0 4px 12px rgb(0 0 0 / 14%) !important;
-  transform: scale(1.025) rotate(0.35deg);
+  background: var(--surface);
+  line-height: 1.4;
 }
 
-@media (max-width: 550px) {
-  .ranking-photo-wrap {
-    flex-basis: 60px;
-    width: 60px;
-    height: 40px;
+.feedback:empty {
+  display: none;
+}
+
+/* Result card (shown in Estimate speed): verdict pill + label + big figure */
+.feedback.correct-feedback {
+  --state: var(--correct);
+}
+
+.feedback.partial-feedback {
+  --state: var(--partial);
+}
+
+.feedback.incorrect-feedback {
+  --state: var(--incorrect);
+}
+
+.feedback:is(.correct-feedback, .partial-feedback, .incorrect-feedback) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'result label'
+    'result value';
+  align-items: center;
+  column-gap: 0.875rem;
+  padding: 0.625rem 1rem 0.625rem 0.625rem;
+  border: 1px solid color-mix(in srgb, var(--state) 55%, var(--line));
+  border-radius: calc(var(--radius) + 0.25rem);
+  background:
+    linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--state) 16%, transparent),
+      transparent 70%
+    ),
+    var(--surface);
+  box-shadow: var(--shadow);
+  animation: feedbackIn 0.22s var(--ease);
+}
+
+.feedback-result {
+  grid-area: result;
+  align-self: center;
+  padding: 0.5rem 0.9rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: var(--state, var(--ink));
+  color: var(--on-state);
+  font-size: 0.9375rem;
+  font-weight: 750;
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.feedback-detail {
+  grid-area: label;
+  align-self: end;
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.feedback-answer {
+  grid-area: value;
+  align-self: start;
+  font-size: clamp(1.25rem, 1rem + 1.1vw, 1.5rem);
+  font-weight: 780;
+  line-height: 1.2;
+  text-wrap: balance;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes feedbackIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.375rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-@media (max-width: 768px), (max-height: 700px) {
+.next-button {
+  width: 100%;
+  font-size: 1.0625rem;
+}
+
+/* The feedback card is hidden (but still announced to screen readers) except
+   in "Estimate speed" mode (the exact figure matters), when the answer is
+   typed (the correct spelling matters), and for plain messages such as
+   "couldn't load a photo", which carry no result class. */
+.bottom .status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:is(
+    .bottom:has(
+      .feedback:not(:empty):not(.correct-feedback):not(.partial-feedback):not(
+          .incorrect-feedback
+        )
+    ),
+    :is(
+        body:has(#question-type option[value='cruise-speed']:checked),
+        body:has(#answer-type option[value^='enter-']:checked):has(
+            #question-type
+              option:is([value='photo'], [value='name'], [value='icao']):checked
+          )
+      )
+      .bottom:has(.feedback:not(:empty))
+  )
+  .status {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+}
+
+@media (min-width: 40rem) {
+  .next-button {
+    justify-self: end;
+    width: auto;
+    min-width: 12rem;
+  }
+}
+
+@media (min-width: 40rem) {
+  :is(
+    .bottom:has(
+      .feedback:not(:empty):not(.correct-feedback):not(.partial-feedback):not(
+          .incorrect-feedback
+        )
+    ),
+    :is(
+        body:has(#question-type option[value='cruise-speed']:checked),
+        body:has(#answer-type option[value^='enter-']:checked):has(
+            #question-type
+              option:is([value='photo'], [value='name'], [value='icao']):checked
+          )
+      )
+      .bottom:has(.feedback:not(:empty))
+  ) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  :is(
+      .bottom:has(
+        .feedback:not(:empty):not(.correct-feedback):not(.partial-feedback):not(
+            .incorrect-feedback
+          )
+      ),
+      :is(
+          body:has(#question-type option[value='cruise-speed']:checked),
+          body:has(#answer-type option[value^='enter-']:checked):has(
+              #question-type
+                option:is(
+                  [value='photo'],
+                  [value='name'],
+                  [value='icao']
+                ):checked
+            )
+        )
+        .bottom:has(.feedback:not(:empty))
+    )
+    .next-button {
+    width: auto;
+    min-width: 9rem;
+  }
+}
+
+/* Short landscape screens: don't let a sticky bar cover the question */
+@media (max-height: 32rem) {
+  .bottom {
+    position: static;
+  }
+
+  .image-container {
+    max-height: 40dvh;
+  }
+
   .app {
-    height: auto;
-    min-height: 100dvh;
-    grid-template-rows: repeat(7, max-content);
-    align-content: start;
+    gap: 0.625rem;
   }
 }
 
-/* 16. Full-Screen Aircraft Photo Viewer */
+/* No-image layouts keep the page compact */
+.app.no-image .prompt {
+  padding-block: 0.5rem;
+}
+
+/* 12. Photo viewer (built by app.js) --------------------------------------- */
 body.aircraft-photo-viewer-open {
   overflow: hidden;
 }
@@ -1069,120 +1138,80 @@ body.aircraft-photo-viewer-open {
 .aircraft-photo-viewer {
   position: fixed;
   inset: 0;
-  z-index: 10000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: rgb(0 0 0 / 94%);
-  touch-action: none;
+  z-index: 100;
+  background: rgb(4 9 15 / 0.95);
+  color: #fff;
   overscroll-behavior: contain;
-  cursor: grab;
 }
 
-.aircraft-photo-viewer:active {
-  cursor: grabbing;
+.aircraft-viewer-canvas {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template: 100% / 100%;
+  place-items: center;
+  overflow: hidden;
+  touch-action: none;
 }
 
-.aircraft-photo-viewer[hidden] {
-  display: none !important;
+.aircraft-photo-viewer-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transform-origin: center;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .aircraft-viewer-toolbar {
   position: absolute;
-  top: max(12px, env(safe-area-inset-top));
-  right: max(12px, env(safe-area-inset-right));
-  z-index: 10002;
+  z-index: 2;
+  inset: max(0.75rem, env(safe-area-inset-top))
+    max(0.75rem, env(safe-area-inset-right)) auto auto;
   display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px;
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  gap: 0.5rem;
+  padding: 0.375rem;
+  border-radius: 999px;
+  background: rgb(20 30 42 / 0.85);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-card-hover);
-  cursor: default;
 }
 
 .viewer-btn {
-  display: inline-grid;
+  display: grid;
   place-items: center;
-  min-width: 42px;
-  min-height: 42px;
-  padding: 0 10px;
-  border: 2px solid var(--border);
-  border-radius: var(--radius-small);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 0.95rem;
+  min-width: var(--target);
+  height: var(--target);
+  padding: 0 0.5rem;
+  border: 2px solid rgb(255 255 255 / 0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font-size: 1.125rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: var(--shadow-card);
-  will-change: transform;
-  transition:
-    background-color var(--transition-fast),
-    border-color var(--transition-fast),
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+}
 
-  &:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--surface) 85%, var(--primary));
-    border-color: var(--border-hover);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-card-hover);
-  }
+.viewer-btn:focus-visible {
+  outline-color: #fff;
+}
 
-  &:active:not(:disabled) {
-    transform: scale(0.98);
-  }
-
-  &.viewer-zoom-reset {
-    font-size: 0.8rem;
+@media (hover: hover) and (pointer: fine) {
+  .viewer-btn:hover {
+    background: rgb(255 255 255 / 0.15);
   }
 }
 
-.aircraft-viewer-canvas {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding: max(50px, env(safe-area-inset-top))
-    max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom))
-    max(16px, env(safe-area-inset-left));
-  overflow: hidden;
-  cursor: grab;
+/* Standalone photos are keyboard-focusable zoom triggers */
+#aircraft-image:focus-visible,
+.speed-aircraft-photo img:focus-visible,
+.ranking-photo:focus-visible {
+  outline-offset: -3px;
 }
 
-.aircraft-viewer-canvas:active {
-  cursor: grabbing;
-}
-
-.aircraft-photo-viewer-image {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  transform-origin: center center;
-  will-change: transform;
-  touch-action: none;
-  cursor: grab;
-  animation: photoFadeIn 0.25s ease-out forwards;
-}
-
-.aircraft-photo-viewer-image:active {
-  cursor: grabbing;
-}
-
-/* 17. Accessibility & Motion Media Queries */
+/* 13. User preferences ----------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1192,136 +1221,92 @@ body.aircraft-photo-viewer-open {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
 
-@media (forced-colors: active) {
-  button,
-  select,
-  input,
-  .image-container,
-  .speed-aircraft,
-  .ranking-item,
-  .viewer-btn {
-    border: 1px solid CanvasText !important;
+  .loading-message::before {
+    animation: none;
+    border-top-color: var(--line);
+    border-right-color: var(--accent);
   }
 }
 
-/* 18. Dark Mode Support */
-@media (prefers-color-scheme: dark) {
+@media (prefers-contrast: more) {
   :root {
-    color-scheme: dark;
-    --page-bg: #12161a;
-    --surface: #20262b;
-    --surface-muted: #252c31;
-    --text: #f1f3f5;
-    --text-muted: #c4cdd3;
-    --text-disabled: #777f86;
-    --border: #7d8790;
-    --border-light: #30383f;
-    --border-hover: #aab4bd;
-    --primary: #d9e2e8;
-    --primary-hover: #fff;
-    --primary-text: #17202a;
-    --shadow-card: 0 1px 3px rgb(0 0 0 / 20%), 0 1px 2px rgb(0 0 0 / 30%);
-    --shadow-card-hover:
-      0 6px 16px rgb(0 0 0 / 40%), 0 2px 4px rgb(0 0 0 / 20%);
+    --line: #5c6e80;
   }
 
-  .controls select {
-    background: var(--surface);
-    color: var(--text);
-    border-color: var(--border);
-  }
-
-  .controls select:hover {
-    border-color: var(--border-hover);
-  }
-
-  .category-hint {
-    border-color: #58636c;
-    background: var(--surface-muted);
-    color: var(--text-muted);
-  }
-
-  .image-container {
-    border-color: var(--border-light);
-    background: #181d21;
-  }
-
-  .loading-message {
-    border-color: rgb(0 0 0 / 30%);
-    border-top-color: #fff;
-    background: rgb(32 38 43 / 85%);
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --line: #8ea2b6;
+    }
   }
 
   .answers button,
   .ranking-item,
-  .ranking-controls button,
+  .feedback {
+    border-width: 3px;
+  }
+}
+
+@media (forced-colors: active) {
+  .answers button,
+  .ranking-item,
+  .photo-toggle,
+  select,
   .type-answer-input,
-  .viewer-btn {
-    background: var(--surface);
-    color: var(--text);
-    border-color: var(--border);
-  }
-
-  .aircraft-viewer-toolbar {
-    background: color-mix(in srgb, var(--surface) 90%, transparent);
-    border-color: var(--border-light);
-  }
-
-  .answers button:hover:not(:disabled),
-  .viewer-btn:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--surface) 80%, var(--primary));
-    border-color: var(--border-hover);
+  .feedback {
+    border: 2px solid ButtonText;
   }
 
   .answers button.correct,
-  .app.reverse-mode .answers.reverse button.correct,
-  #speed-ranking-list .ranking-item.correct {
-    background: #193d26;
-    color: #a9e6b8;
-    border-color: #4c9b61;
+  .ranking-item.correct,
+  .type-answer-input.correct,
+  .feedback.correct-feedback {
+    border-width: 4px;
   }
 
   .answers button.incorrect,
-  .app.reverse-mode .answers.reverse button.incorrect,
-  #speed-ranking-list .ranking-item.incorrect {
-    background: #451f1f;
-    color: #f1aaaa;
-    border-color: #b95b5b;
+  .ranking-item.incorrect,
+  .type-answer-input.incorrect,
+  .feedback.incorrect-feedback {
+    border-style: dashed;
   }
 
-  .type-answer-input.correct {
-    background: #193d26;
-    border-color: #4c9b61;
-    color: #a9e6b8;
+  .answers button:disabled:not(.correct):not(.incorrect) {
+    border-color: GrayText;
+    color: GrayText;
   }
 
-  .type-answer-input.partial {
-    background: #403617;
-    border-color: #c7a33a;
-    color: #f1d98a;
+  :focus-visible {
+    outline: 3px solid Highlight;
   }
 
-  .type-answer-input.incorrect {
-    background: #451f1f;
-    border-color: #b95b5b;
-    color: #f1aaaa;
+  .feedback-result {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
   }
 
-  .feedback.correct-feedback .feedback-result {
-    color: #7fd394;
-  }
-  .feedback.partial-feedback .feedback-result {
-    color: #e2c568;
-  }
-  .feedback.incorrect-feedback .feedback-result {
-    color: #e98b8b;
+  .submit-answer,
+  #check-ranking,
+  .next-button {
+    border-color: ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
   }
 
-  #check-ranking {
-    background: var(--primary);
-    color: var(--primary-text);
-    border-color: var(--primary);
+  .submit-answer:disabled,
+  #check-ranking:disabled,
+  .next-button:disabled {
+    border-color: GrayText;
+    color: GrayText;
+  }
+}
+
+@media print {
+  .controls,
+  .photo-toggle,
+  .bottom,
+  .type-answer-container {
+    display: none !important;
   }
 }
