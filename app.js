@@ -764,6 +764,13 @@ function buildPhotoChoices(correctAircraft) {
   }));
 }
 
+// "a"/"an" for a code that is read out letter by letter: "an" before letters
+// whose name starts with a vowel sound (A E F H I L M N O R S X, and 8),
+// e.g. "a BE76", "an EC35".
+function getIndefiniteArticleForCode(code) {
+  return /^[aefhilmnorsx8]/i.test(displayText(code).trim()) ? 'an' : 'a';
+}
+
 function getIndefiniteArticle(value) {
   const text = displayText(value).trim();
   if (
@@ -805,7 +812,7 @@ function displayQuestion() {
   } else if (questionType === 'icao') {
     text =
       answerMode === 'photo'
-        ? `Which photo shows an aircraft with ICAO code ${code}?`
+        ? `Which photo shows ${getIndefiniteArticleForCode(code)} ${code}?`
         : `Which aircraft has ICAO code ${code}?`;
   }
   promptElement.appendChild(document.createTextNode(text));
