@@ -1,78 +1,45 @@
 /* ==========================================================================
-   Aircraft Recognition Trainer
-   Mobile-first, light + dark (follows system), keyboard + touch friendly.
-   Sections: 1 Tokens · 2 Base · 3 Layout · 4 Controls · 5 Image · 6 Prompt
-             7 Answers · 8 Typed answer · 9 Speed comparison · 10 Ranking
-             11 Footer + feedback · 12 Photo viewer · 13 Preferences
+   Aircraft Recognition Trainer — Refactored Stylesheet
    ========================================================================== */
 
-/* 1. Tokens ---------------------------------------------------------------- */
+/* 1. Design Tokens & Variables -------------------------------------------- */
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
 
-  /* Light palette */
-  --bg: #eef2f6;
-  --surface: #ffffff;
-  --surface-2: #f4f7fa;
-  --ink: #14202b;
-  --ink-muted: #475869;
-  --line: #bcc8d4;
-  --accent: #0b5cad;
-  --accent-ink: #ffffff;
-  --accent-soft: #e3eefa;
-  --focus: #0b5cad;
+  --bg: #0e151e;
+  --surface: #17212d;
+  --surface-2: #1e2b3a;
+  --ink: #e8eef5;
+  --ink-muted: #a6b5c5;
+  --line: #3a4c60;
 
-  --correct: #0d6b38;
-  --correct-bg: #e2f4e9;
-  --partial: #7a4f00;
-  --partial-bg: #fcf0d4;
-  --incorrect: #a8211a;
-  --incorrect-bg: #fbe6e4;
-  --on-state: #ffffff;
+  --accent: #7ab8ff;
+  --accent-ink: #08121d;
+  --accent-soft: #1b2e45;
+  --focus: #9ccbff;
 
-  --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23475869' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --correct: #6fdc9a;
+  --correct-bg: #11301f;
+  --partial: #f2c25a;
+  --partial-bg: #35280a;
+  --incorrect: #ff9890;
+  --incorrect-bg: #3a1614;
+  --on-state: #08121d;
 
-  /* Type */
+  --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23a6b5c5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   --font:
     system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
     sans-serif;
 
-  /* Shape + space */
   --radius: 0.75rem;
   --radius-sm: 0.5rem;
-  --target: 2.75rem; /* 44px minimum touch target */
+  --target: 2.75rem;
   --gutter: clamp(0.875rem, 4vw, 1.5rem);
-  --shadow: 0 1px 2px rgb(20 32 43 / 0.08), 0 4px 14px rgb(20 32 43 / 0.06);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 18px rgb(0 0 0 / 0.3);
   --ease: cubic-bezier(0.2, 0.75, 0.25, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0e151e;
-    --surface: #17212d;
-    --surface-2: #1e2b3a;
-    --ink: #e8eef5;
-    --ink-muted: #a6b5c5;
-    --line: #3a4c60;
-    --accent: #7ab8ff;
-    --accent-ink: #08121d;
-    --accent-soft: #1b2e45;
-    --focus: #9ccbff;
-
-    --correct: #6fdc9a;
-    --correct-bg: #11301f;
-    --partial: #f2c25a;
-    --partial-bg: #35280a;
-    --incorrect: #ff9890;
-    --incorrect-bg: #3a1614;
-    --on-state: #08121d;
-
-    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23a6b5c5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 18px rgb(0 0 0 / 0.3);
-  }
-}
-
-/* 2. Base ------------------------------------------------------------------ */
+/* 2. Resets & Utilities --------------------------------------------------- */
 *,
 *::before,
 *::after {
@@ -126,7 +93,6 @@ img {
   outline-offset: 2px;
 }
 
-/* Programmatic focus on the prompt shouldn't draw a ring on mouse/touch. */
 .prompt:focus:not(:focus-visible) {
   outline: none;
 }
@@ -143,22 +109,21 @@ img {
   border: 0;
 }
 
-/* 3. Layout ---------------------------------------------------------------- */
+/* 3. Layout & Header ------------------------------------------------------ */
 .app {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: min(100%, 46rem);
-  min-height: 100vh;
-  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow-y: auto;
   margin-inline: auto;
-  padding: max(var(--gutter), env(safe-area-inset-top)) var(--gutter) 0;
+  padding: 0 var(--gutter);
   padding-inline: max(var(--gutter), env(safe-area-inset-left))
     max(var(--gutter), env(safe-area-inset-right));
 }
 
-/* Pinned to the top: title + score stay visible while the page scrolls.
-   It bleeds out over the .app padding so it sits flush with the screen edges. */
 .header {
   position: sticky;
   top: 0;
@@ -167,11 +132,11 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin: calc(-1 * max(var(--gutter), env(safe-area-inset-top)))
-    calc(-1 * max(var(--gutter), env(safe-area-inset-right))) 0
-    calc(-1 * max(var(--gutter), env(safe-area-inset-left)));
-  padding: max(0.5rem, env(safe-area-inset-top))
-    max(var(--gutter), env(safe-area-inset-right)) 0.5rem
+  margin-inline: calc(-1 * max(var(--gutter), env(safe-area-inset-left)))
+    calc(-1 * max(var(--gutter), env(safe-area-inset-right)));
+  margin-top: 0;
+  padding: max(0.75rem, env(safe-area-inset-top))
+    max(var(--gutter), env(safe-area-inset-right)) 0.75rem
     max(var(--gutter), env(safe-area-inset-left));
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--bg) 92%, transparent);
@@ -201,7 +166,7 @@ img {
   white-space: nowrap;
 }
 
-/* 4. Quiz settings + photo toggle ------------------------------------------ */
+/* 4. Controls & Settings Panel -------------------------------------------- */
 .controls {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
@@ -236,7 +201,7 @@ select {
   background: var(--surface-2) var(--chevron) no-repeat right 0.875rem center /
     0.75rem 0.5rem;
   color: var(--ink);
-  font-size: 1rem; /* 16px+ prevents iOS zoom on focus */
+  font-size: 1rem;
   font-weight: 500;
   text-overflow: ellipsis;
   cursor: pointer;
@@ -275,13 +240,14 @@ select:disabled {
   background: var(--accent-soft);
 }
 
-/* 5. Image area ------------------------------------------------------------ */
+/* 5. Main Image Display Area ---------------------------------------------- */
 .image-container {
   position: relative;
   display: grid;
   place-items: center;
   aspect-ratio: 4 / 3;
-  max-height: min(60dvh, 48rem);
+  min-height: 12rem;
+  max-height: min(50dvh, 36rem);
   width: 100%;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -290,11 +256,15 @@ select:disabled {
 }
 
 .image-container:has(.speed-comparison) {
+  display: block;
   aspect-ratio: auto;
+  min-height: 0;
   max-height: none;
+  height: auto;
   overflow: visible;
   border: 0;
-  background: none;
+  border-radius: 0;
+  background: transparent;
 }
 
 #aircraft-image {
@@ -314,7 +284,6 @@ select:disabled {
   visibility: hidden;
 }
 
-/* Spinner (also used inside photo cards and ranking rows) */
 .loading-message {
   position: absolute;
   inset: 0;
@@ -351,7 +320,6 @@ select:disabled {
   }
 }
 
-/* app.js re-triggers this by name on every new photo */
 @keyframes photoFadeIn {
   from {
     opacity: 0;
@@ -361,7 +329,7 @@ select:disabled {
   }
 }
 
-/* 6. Question prompt ------------------------------------------------------- */
+/* 6. Question Prompt & Hints ---------------------------------------------- */
 .prompt {
   margin: 0;
   font-size: clamp(1.125rem, 1rem + 0.8vw, 1.375rem);
@@ -383,7 +351,7 @@ select:disabled {
   vertical-align: middle;
 }
 
-/* 7. Answer choices -------------------------------------------------------- */
+/* 7. Answers & Photo Choices ---------------------------------------------- */
 .answers {
   display: grid;
   grid-template-columns: 1fr;
@@ -421,7 +389,7 @@ select:disabled {
   width: 1.875rem;
   height: 1.875rem;
   border: 1px solid var(--line);
-  border-bottom-width: 3px; /* keycap */
+  border-bottom-width: 3px;
   border-radius: 0.4rem;
   background: var(--surface-2);
   color: var(--ink-muted);
@@ -443,13 +411,11 @@ select:disabled {
   cursor: default;
 }
 
-/* Dim only the options that weren't the right answer or the chosen one */
 .answers button:disabled:not(.correct):not(.incorrect) {
   opacity: 0.6;
   box-shadow: none;
 }
 
-/* Result states: colour + border + a mark, never colour alone */
 .answers button.correct,
 .ranking-item.correct {
   border-color: var(--correct);
@@ -460,9 +426,6 @@ select:disabled {
 .ranking-item.incorrect {
   border-color: var(--incorrect);
   background: var(--incorrect-bg);
-}
-
-.answers button.incorrect {
   border-style: dashed;
 }
 
@@ -481,13 +444,11 @@ select:disabled {
 }
 
 .answers button.correct::after {
-  content: '\2713';
   content: '\2713' / 'Correct answer';
   background: var(--correct);
 }
 
 .answers button.incorrect::after {
-  content: '\2715';
   content: '\2715' / 'Incorrect answer';
   background: var(--incorrect);
 }
@@ -510,31 +471,29 @@ select:disabled {
   }
 }
 
-/* Touch-only devices have no number keys */
 @media (hover: none) and (pointer: coarse) {
   .shortcut-badge {
     display: none;
   }
 }
 
-/* Photo answers (reverse mode) */
 .answers.reverse {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-auto-rows: 1fr; /* every row as tall as the tallest card, so all cards match */
+  grid-auto-rows: auto;
+  max-height: calc(100dvh - 14rem);
+  overflow-y: auto;
   align-items: stretch;
   gap: 0.5rem;
 }
 
-/* Small screens: one photo per row, each card sized to its own photo */
 @media (max-width: 30rem) {
   .answers.reverse {
     grid-template-columns: minmax(0, 1fr);
-    grid-auto-rows: auto;
+    max-height: none;
+    overflow-y: visible;
   }
 }
 
-/* Any mode that shows photos gets a much wider, tighter layout.
-   Text-only modes (.no-image) keep the narrow reading width. */
 .app:not(.no-image) {
   --gutter: clamp(0.5rem, 2vw, 1.5rem);
   width: min(100%, 90rem);
@@ -549,34 +508,30 @@ select:disabled {
   overflow: hidden;
 }
 
-/* All cards are the same size; that size is set by the tallest photo, so the
-   only empty space a card ever has is what the tallest photo forces on it.
-   While loading, the spinner box uses a wide 16:9 shape with the same height
-   cap as a loaded photo, so cards never start bigger and then shrink. */
-.photo-choice-img-wrap {
+.answers.reverse .photo-choice-img-wrap {
   position: relative;
   flex: 1 0 auto;
   display: grid;
   place-items: center;
   width: 100%;
+  max-height: clamp(8rem, 20dvh, 22rem);
   background: var(--surface-2);
 }
 
-.photo-choice-img-wrap:has(.loading-message, .loading-error) {
+.answers.reverse .photo-choice-img-wrap:has(.loading-message, .loading-error) {
   aspect-ratio: 16 / 9;
-  max-height: 50dvh;
+  min-height: 6rem;
+  max-height: clamp(8rem, 20dvh, 22rem);
 }
 
-.photo-choice-img-wrap img {
+.answers.reverse .photo-choice-img-wrap img {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 50dvh;
+  max-height: clamp(8rem, 20dvh, 22rem);
   object-fit: contain;
 }
 
-/* The name strip is always reserved (two lines on phones, one on wide
-   screens) so revealing the answer never makes the cards jump. */
 .photo-choice-name {
   display: block;
   flex: none;
@@ -595,8 +550,6 @@ select:disabled {
   }
 }
 
-/* Hidden but still occupying its space until the answer is revealed
-   (app.js then overrides visibility inline). */
 .photo-choice-name.hidden-name {
   visibility: hidden;
 }
@@ -632,7 +585,7 @@ select:disabled {
   inset: 0.5rem 0.5rem auto auto;
 }
 
-/* 8. Typed answer ---------------------------------------------------------- */
+/* 8. Typed Answer Form ---------------------------------------------------- */
 .type-answer-container {
   display: flex;
   gap: 0.5rem;
@@ -682,7 +635,6 @@ select:disabled {
   border-style: dashed;
 }
 
-/* Shared primary button */
 .submit-answer,
 #check-ranking,
 .next-button {
@@ -722,60 +674,137 @@ select:disabled {
   }
 }
 
-/* 9. Speed comparison ------------------------------------------------------ */
+/* 9. Speed Comparison Mode ----------------------------------------------- */
 .speed-comparison {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   align-items: stretch;
-  gap: 0.5rem;
+  gap: clamp(0.5rem, 1.5vw, 0.875rem);
   width: 100%;
+  min-width: 0;
+  margin: 0;
 }
 
 .speed-aircraft {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: start;
+  gap: 0;
+  min-width: 0;
+  min-height: 0;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
+  box-shadow: var(--shadow);
 }
 
 .speed-aircraft-photo {
   position: relative;
-  flex: 1 0 auto;
   display: grid;
   place-items: center;
   width: 100%;
+  height: clamp(5rem, 11dvh, 7rem);
+  min-width: 0;
+  min-height: 0;
+  max-height: 7rem;
+  overflow: hidden;
   background: var(--surface-2);
 }
 
-/* Same rule as photo choice: spinner box is never taller than the photo */
 .speed-aircraft-photo:has(.loading-message, .loading-error) {
-  aspect-ratio: 16 / 9;
-  max-height: 50dvh;
+  height: clamp(5rem, 11dvh, 7rem);
+  min-height: 0;
+  max-height: 7rem;
+  aspect-ratio: auto;
 }
 
 .speed-aircraft-photo img {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 50dvh;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
+  object-position: center;
 }
 
-/* Too narrow for side-by-side: stack the two aircraft */
-@media (max-width: 30rem) {
+.speed-aircraft-photo .loading-message,
+.speed-aircraft-photo .loading-error {
+  max-width: 100%;
+  padding: 0.5rem;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 29.999rem) {
+  .app:has(.speed-comparison) {
+    gap: 0.625rem;
+    max-height: none;
+    min-height: 100dvh;
+    overflow: visible;
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+
+  .image-container:has(.speed-comparison) {
+    width: 100%;
+  }
+
   .speed-comparison {
-    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .speed-aircraft-photo,
+  .speed-aircraft-photo:has(.loading-message, .loading-error) {
+    height: clamp(4.25rem, 9dvh, 5.5rem);
+    max-height: 5.5rem;
+  }
+
+  .app:has(.speed-comparison) .bottom {
+    position: static;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
   }
 }
 
-/* 10. Speed ranking -------------------------------------------------------- */
+@media (min-width: 30rem) {
+  .speed-comparison {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.625rem, 1.5vw, 1rem);
+  }
+
+  .speed-aircraft-photo,
+  .speed-aircraft-photo:has(.loading-message, .loading-error) {
+    height: clamp(10rem, 28dvh, 20rem);
+    max-height: 20rem;
+  }
+}
+
+@media (max-height: 32rem) {
+  .app:has(.speed-comparison) {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .speed-aircraft-photo,
+  .speed-aircraft-photo:has(.loading-message, .loading-error) {
+    height: clamp(4rem, 16dvh, 7rem);
+    max-height: 7rem;
+  }
+
+  .app:has(.speed-comparison) .bottom {
+    position: static;
+  }
+}
+
+/* 10. Speed Ranking Mode -------------------------------------------------- */
 .speed-ranking {
   display: grid;
   gap: 0.75rem;
   width: 100%;
-  max-width: 44rem; /* rows stay compact on wide screens */
+  max-width: 44rem;
   margin-inline: auto;
 }
 
@@ -798,9 +827,61 @@ select:disabled {
   background: var(--surface);
   box-shadow: var(--shadow);
   cursor: grab;
-  touch-action: none; /* lets pointer-drag reorder work on touch */
+  touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+}
+
+.ranking-item.correct,
+.ranking-item.incorrect {
+  animation: rankingFadeIn 0.22s var(--ease);
+}
+
+@keyframes rankingFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ranking-item.correct {
+  border-color: var(--correct);
+  background: var(--correct-bg);
+}
+
+.ranking-item.incorrect {
+  border-color: var(--incorrect);
+  background: var(--incorrect-bg);
+  border-style: dashed;
+}
+
+.ranking-item.correct .ranking-name::after,
+.ranking-item.incorrect .ranking-name::after {
+  content: '';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-inline-start: 0.5rem;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--bg);
+  vertical-align: -0.125em;
+}
+
+.ranking-item.correct .ranking-name::after {
+  content: '\2713' / ' Correct position';
+  background: var(--correct);
+}
+
+.ranking-item.incorrect .ranking-name::after {
+  content: '\2715' / ' Wrong position';
+  background: var(--incorrect);
 }
 
 .ranking-item .ranking-controls {
@@ -826,9 +907,6 @@ select:disabled {
   min-width: 0;
 }
 
-/* The thumbnail fits its photo: no fixed shape, so no empty space above or
-   below it. While loading, the spinner box is 16:9, never taller than a
-   landscape photo, so the row doesn't start big and then shrink. */
 .ranking-photo-wrap {
   position: relative;
   flex: none;
@@ -879,9 +957,6 @@ select:disabled {
   cursor: not-allowed;
 }
 
-/* Phones, photos shown: the photo goes above the name so the name gets the
-   full width of the row instead of wrapping word by word, and the up/down
-   buttons stack to free up a further 48px. */
 @media (max-width: 40rem) {
   .ranking-item:has(.ranking-photo-wrap:not([hidden])) .ranking-details {
     flex-direction: column;
@@ -905,30 +980,11 @@ select:disabled {
   }
 }
 
-.ranking-item.correct .ranking-name::after {
-  content: ' \2713';
-  content: ' \2713' / ' Correct position';
-  color: var(--correct);
-  font-weight: 800;
-}
-
-.ranking-item.incorrect {
-  border-style: dashed;
-}
-
-.ranking-item.incorrect .ranking-name::after {
-  content: ' \2715';
-  content: ' \2715' / ' Wrong position';
-  color: var(--incorrect);
-  font-weight: 800;
-}
-
 .ranking-item.correct .ranking-controls,
 .ranking-item.incorrect .ranking-controls {
   opacity: 0.6;
 }
 
-/* Drag states (class names come from app.js) */
 .ranking-placeholder {
   border-style: dashed;
   border-color: var(--accent);
@@ -970,7 +1026,7 @@ body.ranking-is-dragging * {
   }
 }
 
-/* 11. Footer, status, feedback --------------------------------------------- */
+/* 11. Footer, Status Bar & Feedback --------------------------------------- */
 .bottom {
   position: sticky;
   bottom: 0;
@@ -989,7 +1045,6 @@ body.ranking-is-dragging * {
   min-width: 0;
 }
 
-/* Plain messages (e.g. "couldn't load a photo") */
 .feedback {
   padding: 0.5rem 0.875rem;
   border: 2px solid var(--line);
@@ -1002,15 +1057,12 @@ body.ranking-is-dragging * {
   display: none;
 }
 
-/* Result card (shown in Estimate speed): verdict pill + label + big figure */
 .feedback.correct-feedback {
   --state: var(--correct);
 }
-
 .feedback.partial-feedback {
   --state: var(--partial);
 }
-
 .feedback.incorrect-feedback {
   --state: var(--incorrect);
 }
@@ -1088,10 +1140,6 @@ body.ranking-is-dragging * {
   font-size: 1.0625rem;
 }
 
-/* The feedback card is hidden (but still announced to screen readers) except
-   in "Estimate speed" mode (the exact figure matters), when the answer is
-   typed (the correct spelling matters), and for plain messages such as
-   "couldn't load a photo", which carry no result class. */
 .bottom .status {
   position: absolute;
   width: 1px;
@@ -1102,31 +1150,6 @@ body.ranking-is-dragging * {
   white-space: nowrap;
 }
 
-:is(
-    .bottom:has(
-      .feedback:not(:empty):not(.correct-feedback):not(.partial-feedback):not(
-          .incorrect-feedback
-        )
-    ),
-    :is(
-        body:has(#question-type option[value='cruise-speed']:checked),
-        body:has(#answer-type option[value^='enter-']:checked):has(
-            #question-type
-              option:is([value='photo'], [value='name'], [value='icao']):checked
-          )
-      )
-      .bottom:has(.feedback:not(:empty))
-  )
-  .status {
-  position: static;
-  width: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  clip-path: none;
-  white-space: normal;
-}
-
 @media (min-width: 40rem) {
   .next-button {
     justify-self: end;
@@ -1135,52 +1158,6 @@ body.ranking-is-dragging * {
   }
 }
 
-@media (min-width: 40rem) {
-  :is(
-    .bottom:has(
-      .feedback:not(:empty):not(.correct-feedback):not(.partial-feedback):not(
-          .incorrect-feedback
-        )
-    ),
-    :is(
-        body:has(#question-type option[value='cruise-speed']:checked),
-        body:has(#answer-type option[value^='enter-']:checked):has(
-            #question-type
-              option:is([value='photo'], [value='name'], [value='icao']):checked
-          )
-      )
-      .bottom:has(.feedback:not(:empty))
-  ) {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-  }
-
-  :is(
-      .bottom:has(
-        .feedback:not(:empty):not(.correct-feedback):not(.partial-feedback):not(
-            .incorrect-feedback
-          )
-      ),
-      :is(
-          body:has(#question-type option[value='cruise-speed']:checked),
-          body:has(#answer-type option[value^='enter-']:checked):has(
-              #question-type
-                option:is(
-                  [value='photo'],
-                  [value='name'],
-                  [value='icao']
-                ):checked
-            )
-        )
-        .bottom:has(.feedback:not(:empty))
-    )
-    .next-button {
-    width: auto;
-    min-width: 9rem;
-  }
-}
-
-/* Short landscape screens: don't let a sticky bar cover the question */
 @media (max-height: 32rem) {
   .bottom {
     position: static;
@@ -1195,93 +1172,11 @@ body.ranking-is-dragging * {
   }
 }
 
-/* No-image layouts keep the page compact */
 .app.no-image .prompt {
   padding-block: 0.5rem;
 }
 
-/* 12. Photo viewer (built by app.js) --------------------------------------- */
-body.aircraft-photo-viewer-open {
-  overflow: hidden;
-}
-
-.aircraft-photo-viewer {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: rgb(4 9 15 / 0.95);
-  color: #fff;
-  overscroll-behavior: contain;
-}
-
-.aircraft-viewer-canvas {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template: 100% / 100%;
-  place-items: center;
-  overflow: hidden;
-  touch-action: none;
-}
-
-.aircraft-photo-viewer-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transform-origin: center;
-  will-change: transform;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-}
-
-.aircraft-viewer-toolbar {
-  position: absolute;
-  z-index: 2;
-  inset: max(0.75rem, env(safe-area-inset-top))
-    max(0.75rem, env(safe-area-inset-right)) auto auto;
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.375rem;
-  border-radius: 999px;
-  background: rgb(20 30 42 / 0.85);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-
-.viewer-btn {
-  display: grid;
-  place-items: center;
-  min-width: var(--target);
-  height: var(--target);
-  padding: 0 0.5rem;
-  border: 2px solid rgb(255 255 255 / 0.35);
-  border-radius: 999px;
-  background: transparent;
-  color: #fff;
-  font-size: 1.125rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.viewer-btn:focus-visible {
-  outline-color: #fff;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .viewer-btn:hover {
-    background: rgb(255 255 255 / 0.15);
-  }
-}
-
-/* Standalone photos are keyboard-focusable zoom triggers */
-#aircraft-image:focus-visible,
-.speed-aircraft-photo img:focus-visible,
-.ranking-photo:focus-visible {
-  outline-offset: -3px;
-}
-
-/* 13. User preferences ----------------------------------------------------- */
+/* 12. Accessibility & Media Preferences ----------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1301,74 +1196,13 @@ body.aircraft-photo-viewer-open {
 
 @media (prefers-contrast: more) {
   :root {
-    --line: #5c6e80;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --line: #8ea2b6;
-    }
+    --line: #8ea2b6;
   }
 
   .answers button,
   .ranking-item,
   .feedback {
     border-width: 3px;
-  }
-}
-
-@media (forced-colors: active) {
-  .answers button,
-  .ranking-item,
-  .photo-toggle,
-  select,
-  .type-answer-input,
-  .feedback {
-    border: 2px solid ButtonText;
-  }
-
-  .answers button.correct,
-  .ranking-item.correct,
-  .type-answer-input.correct,
-  .feedback.correct-feedback {
-    border-width: 4px;
-  }
-
-  .answers button.incorrect,
-  .ranking-item.incorrect,
-  .type-answer-input.incorrect,
-  .feedback.incorrect-feedback {
-    border-style: dashed;
-  }
-
-  .answers button:disabled:not(.correct):not(.incorrect) {
-    border-color: GrayText;
-    color: GrayText;
-  }
-
-  :focus-visible {
-    outline: 3px solid Highlight;
-  }
-
-  .feedback-result {
-    border-color: CanvasText;
-    background: Canvas;
-    color: CanvasText;
-  }
-
-  .submit-answer,
-  #check-ranking,
-  .next-button {
-    border-color: ButtonText;
-    background: ButtonFace;
-    color: ButtonText;
-  }
-
-  .submit-answer:disabled,
-  #check-ranking:disabled,
-  .next-button:disabled {
-    border-color: GrayText;
-    color: GrayText;
   }
 }
 

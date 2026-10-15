@@ -88,7 +88,6 @@ if (answerTypeLabel) {
 const imageContainer = byId('image-container');
 const imageElement = byId('aircraft-image');
 const loadingMessage = byId('loading-message');
-const imageZoomTrigger = byId('image-zoom-trigger');
 const promptElement = byId('prompt');
 const answerContainer = byId('answers');
 const answerButtons = [...document.querySelectorAll('#answers button')];
@@ -217,7 +216,6 @@ function preparePhotoFadeIn(image) {
     return;
   image.dataset.fadeInPrepared = 'true';
 
-  // Re-trigger the fade-in animation cleanly
   image.style.animation = 'none';
   image.offsetHeight; // Trigger DOM reflow
   image.style.animation = 'photoFadeIn 0.25s ease-out forwards';
@@ -225,7 +223,6 @@ function preparePhotoFadeIn(image) {
 
 function loadQuestionImage(path, altText) {
   return new Promise((resolve, reject) => {
-    // Always show the loading spinner and clear the image to start from blank
     if (typeof setLoading === 'function') setLoading(true);
     imageElement.removeAttribute('src');
     imageElement.style.opacity = '0';
@@ -242,14 +239,11 @@ function loadQuestionImage(path, altText) {
       imageElement.src = path;
       imageElement.style.opacity = '1';
       imageElement.style.animation = 'photoFadeIn 0.25s ease-out forwards';
-
-      if (imageZoomTrigger) imageZoomTrigger.hidden = false;
       resolve();
     };
 
     preloader.onerror = () => {
       if (typeof setLoading === 'function') setLoading(false);
-      if (imageZoomTrigger) imageZoomTrigger.hidden = true;
       reject(new Error(`Unable to load aircraft image: ${path}`));
     };
 
@@ -764,9 +758,6 @@ function buildPhotoChoices(correctAircraft) {
   }));
 }
 
-// "a"/"an" for a code that is read out letter by letter: "an" before letters
-// whose name starts with a vowel sound (A E F H I L M N O R S X, and 8),
-// e.g. "a BE76", "an EC35".
 function getIndefiniteArticleForCode(code) {
   return /^[aefhilmnorsx8]/i.test(displayText(code).trim()) ? 'an' : 'a';
 }
@@ -878,7 +869,6 @@ function setLoading(loading) {
 }
 
 function resetAnswerUI() {
-  if (imageZoomTrigger) imageZoomTrigger.hidden = true;
   imageContainer.querySelector('.speed-comparison')?.remove();
   const ranking = byId('speed-ranking');
   const rankingList = byId('speed-ranking-list');
@@ -1080,7 +1070,6 @@ async function displayPhotoAnswerChoices(choices) {
     button.hidden = false;
     button.removeAttribute('aria-hidden');
 
-    // Create container wrapper, loading spinner, and name label immediately
     const imgWrap = document.createElement('div');
     imgWrap.className = 'photo-choice-img-wrap';
 
@@ -1104,7 +1093,6 @@ async function displayPhotoAnswerChoices(choices) {
     photoOptions.push({ button, choice, index, imagePath, imgWrap });
   });
 
-  // Fetch and load images smoothly
   try {
     const loadedOptions = await Promise.all(
       photoOptions.map(
@@ -1135,7 +1123,6 @@ async function displayPhotoAnswerChoices(choices) {
       const { button, choice, imgWrap } = photoOptions.find(
         (option) => option.index === index,
       );
-      // Append the successfully loaded image into the wrapper (spinner is replaced/hidden)
       image.style.animation = 'photoFadeIn 0.25s ease-out forwards';
       imgWrap.replaceChildren(image);
 
@@ -1744,10 +1731,12 @@ function checkSpeedRanking() {
   answered = true;
   total += 1;
   score = Math.round((score + correctPositions * 0.25) * 100) / 100;
+
   rows.forEach((row, index) => {
     const isPositionCorrect = row.dataset.typeKey === expected[index];
-    row.classList.toggle('correct', isPositionCorrect);
-    row.classList.toggle('incorrect', !isPositionCorrect);
+    row.classList.remove('correct', 'incorrect');
+    row.offsetHeight; // Force reflow to re-trigger animation
+    row.classList.add(isPositionCorrect ? 'correct' : 'incorrect');
     row.draggable = false;
     const correctRank = expectedPosition.get(row.dataset.typeKey);
     row.querySelector('.ranking-position').textContent = String(correctRank);
@@ -1759,6 +1748,7 @@ function checkSpeedRanking() {
       button.disabled = true;
     });
   });
+
   byId('check-ranking').disabled = true;
   const feedbackType = correct
     ? 'correct'
@@ -2335,385 +2325,3 @@ async function start() {
   }
 }
 start();
-
-// ============================================================================
-// 18. Full-Screen Photo Viewer Module (Zoom, Pan, Pinch)
-// ============================================================================
-(() => {
-  'use strict';
-
-  const IMAGE_SELECTOR = [
-    '#aircraft-image',
-    '.speed-comparison img',
-    '.speed-aircraft-photo img',
-    '.photo-choice-img-wrap img',
-    '#speed-ranking img',
-    '.speed-ranking img',
-    '.ranking-photo',
-  ].join(',');
-
-  const MIN_ZOOM = 1;
-  const MAX_ZOOM = 5;
-  let overlay, enlargedImage, canvasElement, previousFocus, statusRegion;
-  let scale = 1,
-    panX = 0,
-    panY = 0;
-  let pointers = new Map();
-  let startPoint = null,
-    startPan = null;
-  let pinchStartDistance = 0,
-    pinchStartScale = 1;
-  let pinchStartMidpoint = null,
-    pinchStartPan = null;
-  let moved = false;
-
-  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-  const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
-  const midpoint = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
-
-  function announceStatus(message) {
-    if (statusRegion) statusRegion.textContent = message;
-  }
-
-  function renderTransform() {
-    if (!enlargedImage) return;
-    enlargedImage.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
-    enlargedImage.style.cursor = 'grab';
-  }
-
-  function resetZoom() {
-    scale = 1;
-    panX = 0;
-    panY = 0;
-    renderTransform();
-    announceStatus('Zoom reset to 100%');
-  }
-
-  // Stable container-relative zoom to eliminate jumping
-  function zoomAt(nextScale, point) {
-    const oldScale = scale;
-    const newScale = clamp(nextScale, MIN_ZOOM, MAX_ZOOM);
-    if (newScale === oldScale) return;
-
-    const canvasRect = canvasElement.getBoundingClientRect();
-    const centerX = canvasRect.left + canvasRect.width / 2;
-    const centerY = canvasRect.top + canvasRect.height / 2;
-
-    const anchor = point || { x: centerX, y: centerY };
-    const fx = anchor.x - centerX;
-    const fy = anchor.y - centerY;
-
-    scale = newScale;
-    panX = fx - (fx - panX) * (newScale / oldScale);
-    panY = fy - (fy - panY) * (newScale / oldScale);
-
-    renderTransform();
-    announceStatus(`Zoom ${Math.round(scale * 100)}%`);
-  }
-
-  function ensureViewer() {
-    if (overlay) return;
-    overlay = document.createElement('div');
-    overlay.className = 'aircraft-photo-viewer';
-    overlay.hidden = true;
-    overlay.tabIndex = -1;
-    overlay.setAttribute('role', 'dialog');
-    overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute(
-      'aria-label',
-      'Enlarged aircraft photo viewer. Use toolbar buttons or pinch gestures to zoom.',
-    );
-
-    overlay.innerHTML = `
-      <div class="aircraft-viewer-status visually-hidden" aria-live="polite"></div>
-      <div class="aircraft-viewer-toolbar" role="toolbar" aria-label="Photo zoom controls">
-        <button type="button" class="viewer-btn viewer-zoom-in" aria-label="Zoom in">+</button>
-        <button type="button" class="viewer-btn viewer-zoom-out" aria-label="Zoom out">−</button>
-        <button type="button" class="viewer-btn viewer-zoom-reset" aria-label="Reset zoom">1:1</button>
-        <button type="button" class="viewer-btn viewer-close" aria-label="Close photo viewer">×</button>
-      </div>
-      <div class="aircraft-viewer-canvas">
-        <img class="aircraft-photo-viewer-image" alt="" draggable="false">
-      </div>
-    `;
-
-    enlargedImage = overlay.querySelector('.aircraft-photo-viewer-image');
-    enlargedImage.draggable = false;
-    enlargedImage.addEventListener('dragstart', (event) =>
-      event.preventDefault(),
-    );
-    enlargedImage.addEventListener('selectstart', (event) =>
-      event.preventDefault(),
-    );
-    enlargedImage.addEventListener('contextmenu', (event) =>
-      event.preventDefault(),
-    );
-
-    canvasElement = overlay.querySelector('.aircraft-viewer-canvas');
-    statusRegion = overlay.querySelector('.aircraft-viewer-status');
-    document.body.append(overlay);
-
-    overlay
-      .querySelector('.viewer-zoom-in')
-      .addEventListener('click', () => zoomAt(scale * 1.35));
-    overlay
-      .querySelector('.viewer-zoom-out')
-      .addEventListener('click', () => zoomAt(scale / 1.35));
-    overlay
-      .querySelector('.viewer-zoom-reset')
-      .addEventListener('click', resetZoom);
-    overlay
-      .querySelector('.viewer-close')
-      .addEventListener('click', closeViewer);
-
-    overlay.addEventListener('click', (event) => {
-      if (
-        (event.target === overlay || event.target === canvasElement) &&
-        !moved
-      ) {
-        closeViewer();
-      }
-    });
-
-    overlay.addEventListener(
-      'wheel',
-      (event) => {
-        if (overlay.hidden) return;
-        event.preventDefault();
-        zoomAt(scale * (event.deltaY < 0 ? 1.15 : 1 / 1.15), {
-          x: event.clientX,
-          y: event.clientY,
-        });
-      },
-      { passive: false },
-    );
-
-    canvasElement.addEventListener('pointerdown', (event) => {
-      if (event.pointerType === 'mouse' && event.button !== 0) return;
-      event.preventDefault();
-      canvasElement.setPointerCapture(event.pointerId);
-      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-      moved = false;
-      if (pointers.size === 1) {
-        startPoint = { x: event.clientX, y: event.clientY };
-        startPan = { x: panX, y: panY };
-      } else if (pointers.size === 2) {
-        const pts = [...pointers.values()];
-        pinchStartDistance = distance(pts[0], pts[1]);
-        pinchStartScale = scale;
-        pinchStartMidpoint = midpoint(pts[0], pts[1]);
-        pinchStartPan = { x: panX, y: panY };
-      }
-    });
-
-    canvasElement.addEventListener('pointermove', (event) => {
-      if (!pointers.has(event.pointerId)) return;
-      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
-      if (pointers.size >= 2) {
-        const pts = [...pointers.values()];
-        const currentDistance = distance(pts[0], pts[1]);
-        const currentMidpoint = midpoint(pts[0], pts[1]);
-        if (pinchStartDistance > 0) {
-          const canvasRect = canvasElement.getBoundingClientRect();
-          const centerX = canvasRect.left + canvasRect.width / 2;
-          const centerY = canvasRect.top + canvasRect.height / 2;
-
-          const nextScale = clamp(
-            (pinchStartScale * currentDistance) / pinchStartDistance,
-            MIN_ZOOM,
-            MAX_ZOOM,
-          );
-
-          const mx = pinchStartMidpoint.x - centerX;
-          const my = pinchStartMidpoint.y - centerY;
-          const ratio = nextScale / pinchStartScale;
-
-          scale = nextScale;
-          panX =
-            mx -
-            (mx - pinchStartPan.x) * ratio +
-            (currentMidpoint.x - pinchStartMidpoint.x);
-          panY =
-            my -
-            (my - pinchStartPan.y) * ratio +
-            (currentMidpoint.y - pinchStartMidpoint.y);
-          moved = true;
-          renderTransform();
-        }
-      } else if (startPoint) {
-        const dx = event.clientX - startPoint.x;
-        const dy = event.clientY - startPoint.y;
-        if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
-        panX = startPan.x + dx;
-        panY = startPan.y + dy;
-        renderTransform();
-      }
-    });
-
-    const endPointer = (event) => {
-      pointers.delete(event.pointerId);
-      if (canvasElement.hasPointerCapture(event.pointerId)) {
-        canvasElement.releasePointerCapture(event.pointerId);
-      }
-      if (pointers.size < 2) pinchStartDistance = 0;
-      if (pointers.size === 0) {
-        startPoint = null;
-        startPan = null;
-      } else if (pointers.size === 1) {
-        const remaining = [...pointers.values()][0];
-        startPoint = { ...remaining };
-        startPan = { x: panX, y: panY };
-      }
-    };
-    canvasElement.addEventListener('pointerup', endPointer);
-    canvasElement.addEventListener('pointercancel', endPointer);
-    canvasElement.addEventListener('lostpointercapture', endPointer);
-
-    enlargedImage.addEventListener('dblclick', (event) => {
-      event.preventDefault();
-      if (scale > 1) resetZoom();
-      else zoomAt(2, { x: event.clientX, y: event.clientY });
-    });
-  }
-
-  function openViewer(source) {
-    if (!source || !source.src || source.hidden || source.closest('[hidden]'))
-      return;
-    ensureViewer();
-    previousFocus = document.activeElement;
-    enlargedImage.src = source.currentSrc || source.src;
-    enlargedImage.alt = source.alt || 'Aircraft photo';
-    resetZoom();
-    pointers.clear();
-    moved = false;
-    overlay.hidden = false;
-    document.body.classList.add('aircraft-photo-viewer-open');
-    overlay.focus({ preventScroll: true });
-    announceStatus('Photo viewer opened.');
-  }
-
-  function closeViewer() {
-    if (!overlay || overlay.hidden) return;
-    overlay.hidden = true;
-    document.body.classList.remove('aircraft-photo-viewer-open');
-    enlargedImage.removeAttribute('src');
-    pointers.clear();
-    if (previousFocus && typeof previousFocus.focus === 'function') {
-      previousFocus.focus({ preventScroll: true });
-    }
-  }
-
-  function makeStandalonePhotosKeyboardAccessible(root = document) {
-    root.querySelectorAll(IMAGE_SELECTOR).forEach((image) => {
-      if (image.closest('#answers, button, a, input, [onclick]')) return;
-      if (!image.hasAttribute('tabindex')) image.tabIndex = 0;
-      image.setAttribute('role', 'button');
-      image.setAttribute(
-        'aria-label',
-        `View enlarged photo${image.alt ? `: ${image.alt}` : ''}`,
-      );
-    });
-  }
-
-  makeStandalonePhotosKeyboardAccessible();
-  new MutationObserver((records) => {
-    for (const record of records) {
-      for (const node of record.addedNodes) {
-        if (node.nodeType === Node.ELEMENT_NODE)
-          makeStandalonePhotosKeyboardAccessible(node);
-      }
-    }
-  }).observe(document.documentElement, { childList: true, subtree: true });
-
-  document.addEventListener('keydown', (event) => {
-    if (overlay && !overlay.hidden && event.key === 'Escape') {
-      event.preventDefault();
-      closeViewer();
-      return;
-    }
-    if (overlay && !overlay.hidden) {
-      if (event.key === '+' || event.key === '=') zoomAt(scale * 1.2);
-      else if (event.key === '-') zoomAt(scale / 1.2);
-      else if (event.key === '0') resetZoom();
-      return;
-    }
-    if (event.key !== 'Enter' && event.key !== ' ') return;
-    const image = event.target.closest?.(IMAGE_SELECTOR);
-    if (!image || !canZoomPhoto(image)) return;
-    event.preventDefault();
-    openViewer(image);
-  });
-
-  function pointerIsOverPhoto(event, image) {
-    if (!image.complete || !image.naturalWidth || !image.naturalHeight)
-      return false;
-    const rect = image.getBoundingClientRect();
-    const style = getComputedStyle(image);
-    const fit = style.objectFit;
-    if (fit !== 'contain' && fit !== 'scale-down') {
-      return (
-        event.clientX >= rect.left &&
-        event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom
-      );
-    }
-    const containScale = Math.min(
-      rect.width / image.naturalWidth,
-      rect.height / image.naturalHeight,
-    );
-    const imageScale =
-      fit === 'scale-down' ? Math.min(1, containScale) : containScale;
-    const renderedWidth = image.naturalWidth * imageScale;
-    const renderedHeight = image.naturalHeight * imageScale;
-    const left = rect.left + (rect.width - renderedWidth) / 2;
-    const top = rect.top + (rect.height - renderedHeight) / 2;
-    return (
-      event.clientX >= left &&
-      event.clientX <= left + renderedWidth &&
-      event.clientY >= top &&
-      event.clientY <= top + renderedHeight
-    );
-  }
-
-  const canZoomPhoto = (image) =>
-    image instanceof HTMLImageElement &&
-    image.isConnected &&
-    !image.closest('#answers, button, a, input, [onclick]') &&
-    !image.hidden &&
-    !image.closest('[hidden]') &&
-    image.complete &&
-    image.naturalWidth > 0 &&
-    Boolean(image.currentSrc || image.src);
-
-  function clearZoomCursors() {
-    document.querySelectorAll(IMAGE_SELECTOR).forEach((image) => {
-      if (image.style.cursor === 'zoom-in') image.style.cursor = '';
-    });
-  }
-
-  function updateZoomCursor(event) {
-    clearZoomCursors();
-    if (!(event.target instanceof Element)) return;
-    const image = event.target.closest(IMAGE_SELECTOR);
-    if (image && canZoomPhoto(image) && pointerIsOverPhoto(event, image)) {
-      image.style.cursor = 'zoom-in';
-    }
-  }
-
-  document.addEventListener('pointermove', updateZoomCursor);
-  document.addEventListener('pointerover', updateZoomCursor);
-  window.addEventListener('blur', clearZoomCursors);
-
-  document.addEventListener(
-    'click',
-    (event) => {
-      if (!(event.target instanceof Element)) return;
-      const image = event.target.closest(IMAGE_SELECTOR);
-      if (!image || !canZoomPhoto(image) || !pointerIsOverPhoto(event, image))
-        return;
-      openViewer(image);
-    },
-    true,
-  );
-})();
