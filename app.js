@@ -1631,6 +1631,43 @@ function updateRankingPointerDrag(drag) {
       `translate3d(${clientX - drag.offsetX - drag.ghostLeft}px, ` +
       `${clientY - drag.offsetY - drag.ghostTop}px, 0) scale(1.02)`;
   }
+  const rows = drag.rowSlots;
+  if (!rows.length) return;
+  let target = rows.find(
+    ({ top, bottom }) => clientY >= top && clientY <= bottom,
+  );
+  if (!target) {
+    target = rows.reduce(
+      (best, slot) => {
+        const distance = Math.abs(clientY - slot.center);
+        return !best || distance < best.distance
+          ? { slot, distance }
+          : best;
+      },
+      null,
+    )?.slot;
+  }
+  if (!target) return;
+  const list = byId('speed-ranking-list');
+  const insertAfter = clientY > target.center;
+  const needsMove = insertAfter
+    ? target.row.nextElementSibling !== drag.item
+    : target.row !== drag.item.nextElementSibling;
+  if (!needsMove) return;
+  if (insertAfter) list.insertBefore(drag.item, target.row.nextElementSibling);
+  else list.insertBefore(drag.item, target.row);
+  updateRankingMoveButtons();
+  drag.rowSlots = [...list.querySelectorAll('.ranking-item')]
+    .filter((row) => row !== drag.item)
+    .map((row) => {
+      const rect = row.getBoundingClientRect();
+      return {
+        row,
+        top: rect.top,
+        bottom: rect.bottom,
+        center: rect.top + rect.height / 2,
+      };
+    });
 }
 
 function handleRankingPointerMove(event) {
@@ -1666,6 +1703,19 @@ function handleRankingPointerMove(event) {
     drag.item.classList.add('ranking-placeholder');
     drag.item.setAttribute('aria-grabbed', 'true');
     document.body.classList.add('ranking-is-dragging');
+    drag.rowSlots = [
+      ...byId('speed-ranking-list').querySelectorAll('.ranking-item'),
+    ]
+      .filter((row) => row !== drag.item)
+      .map((row) => {
+        const rowRect = row.getBoundingClientRect();
+        return {
+          row,
+          top: rowRect.top,
+          bottom: rowRect.bottom,
+          center: rowRect.top + rowRect.height / 2,
+        };
+      });
   }
   drag.latestPointer = { clientX: event.clientX, clientY: event.clientY };
   if (drag.frame !== null) return;
@@ -1685,31 +1735,6 @@ function finishRankingPointerDrag(event) {
     drag.frame = null;
   }
   updateRankingPointerDrag(drag);
-  if (drag.active) {
-    const list = byId('speed-ranking-list');
-    const rows = [...list.querySelectorAll('.ranking-item')].filter(
-      (row) => row !== drag.item,
-    );
-    let target = rows.find((row) => {
-      const rect = row.getBoundingClientRect();
-      return event.clientY >= rect.top && event.clientY <= rect.bottom;
-    });
-    if (!target) {
-      target = rows.reduce((best, row) => {
-        const rect = row.getBoundingClientRect();
-        const distance = Math.abs(
-          event.clientY - (rect.top + rect.height / 2),
-        );
-        return !best || distance < best.distance ? { row, distance } : best;
-      }, null)?.row;
-    }
-    if (target) {
-      const rect = target.getBoundingClientRect();
-      const insertAfter = event.clientY > rect.top + rect.height / 2;
-      if (insertAfter) list.insertBefore(drag.item, target.nextElementSibling);
-      else list.insertBefore(drag.item, target);
-    }
-  }
   drag.item.classList.remove('ranking-dragging');
   drag.item.removeAttribute('aria-grabbed');
   document.body.classList.remove('ranking-is-dragging');
@@ -1898,10 +1923,17 @@ function updateRankingMoveButtons() {
     buttons[1].disabled = answered || i === rows.length - 1;
   });
   if (rankingPointerDrag?.ghost && rankingPointerDrag.item) {
-    const rank = rows.indexOf(rankingPointerDrag.item) + 1;
-    const ghostRank =
-      rankingPointerDrag.ghost.querySelector('.ranking-position');
-    if (rank > 0 && ghostRank) ghostRank.textContent = String(rank);
+    const index = rows.indexOf(rankingPointerDrag.item);
+    if (index < 0) return;
+    const ghost = rankingPointerDrag.ghost;
+    const rank = index + 1;
+    const ghostRank = ghost.querySelector('.ranking-position');
+    const ghostButtons = ghost.querySelectorAll('.ranking-controls button');
+    if (ghostRank) ghostRank.textContent = String(rank);
+    if (ghostButtons.length === 2) {
+      ghostButtons[0].disabled = answered || index === 0;
+      ghostButtons[1].disabled = answered || index === rows.length - 1;
+    }
   }
 }
 
