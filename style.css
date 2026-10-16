@@ -958,8 +958,7 @@ body.ranking-is-dragging * {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 1rem;
-  width: min(100%, 78rem);
-  margin-inline: auto;
+  width: 100%;
   padding: 0.8rem max(var(--gutter), env(safe-area-inset-right))
     max(0.8rem, env(safe-area-inset-bottom))
     max(var(--gutter), env(safe-area-inset-left));
