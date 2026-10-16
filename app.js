@@ -660,22 +660,6 @@ function getMachCruiseRange(item) {
   return { min, max };
 }
 
-function getComparableCruiseSpeedRange(item) {
-  if (item?.speed_type === 'maximum') return null;
-  const knots = getCruiseSpeedRange(item);
-  if (knots) return { ...knots, unit: 'kt' };
-  const mach = getMachCruiseRange(item);
-  if (mach) {
-    return {
-      min: mach.min * KNOTS_PER_MACH,
-      max: mach.max * KNOTS_PER_MACH,
-      unit: 'kt',
-      convertedFromMach: true,
-    };
-  }
-  return null;
-}
-
 const getSpeedRange = (item, unit) =>
   unit === 'mach' ? getMachCruiseRange(item) : getCruiseSpeedRange(item);
 
@@ -1204,6 +1188,10 @@ function displayTextAnswerChoices(choices, disabled = false) {
 
 function displaySpecialChoices(choices, correctAnswer, disabled = false) {
   answerContainer.classList.remove('reverse');
+  answerContainer.classList.toggle(
+    'speed-comparison-answers',
+    specialQuestionData?.type === 'speed',
+  );
   answerContainer.hidden = false;
   answerButtons.forEach((button, index) => {
     const choice = choices[index];
@@ -1374,37 +1362,58 @@ function displayCruiseSpeedQuestion(item, unit) {
 }
 
 function getSpeedComparisonPair() {
-  const selectedPool = filterPoolForCombination(getSelectedAircraftPool());
-  const allPool = filterPoolForCombination(aircraft);
-  function findPairs(pool, getRange) {
-    const pairs = [];
-    for (let firstIndex = 0; firstIndex < pool.length; firstIndex += 1) {
-      const first = pool[firstIndex];
-      const firstSpeed = getRange(first);
-      if (!firstSpeed) continue;
-      for (
-        let secondIndex = firstIndex + 1;
-        secondIndex < pool.length;
-        secondIndex += 1
+  const pool = aircraft.flatMap((item) => {
+    const speed = getRankingSpeed(item);
+    return speed ? [{ item, speed }] : [];
+  });
+  const pairs = [];
+  const sameSpeedPairs = [];
+  for (let firstIndex = 0; firstIndex < pool.length; firstIndex += 1) {
+    const first = pool[firstIndex];
+    for (
+      let secondIndex = firstIndex + 1;
+      secondIndex < pool.length;
+      secondIndex += 1
+    ) {
+      const second = pool[secondIndex];
+      if (getRankingItemKey(first.item) === getRankingItemKey(second.item))
+        continue;
+      if (
+        Math.round(first.speed.representative) ===
+        Math.round(second.speed.representative)
       ) {
-        const second = pool[secondIndex];
-        if (getAircraftTypeKey(first) === getAircraftTypeKey(second)) continue;
-        const secondSpeed = getRange(second);
-        if (!secondSpeed) continue;
-        if (firstSpeed.min > secondSpeed.max) {
-          pairs.push({ first, second, answer: 'Faster' });
-        } else if (firstSpeed.max < secondSpeed.min) {
-          pairs.push({ first, second, answer: 'Slower' });
-        }
+        sameSpeedPairs.push({
+          first: first.item,
+          second: second.item,
+          answer: 'Same speed',
+        });
+      } else if (first.speed.min > second.speed.max) {
+        pairs.push({
+          first: first.item,
+          second: second.item,
+          answer: 'Faster',
+        });
+      } else if (first.speed.max < second.speed.min) {
+        pairs.push({
+          first: first.item,
+          second: second.item,
+          answer: 'Slower',
+        });
+      } else if (
+        first.speed.min === second.speed.min &&
+        first.speed.max === second.speed.max
+      ) {
+        pairs.push({
+          first: first.item,
+          second: second.item,
+          answer: 'Same speed',
+        });
       }
     }
-    return pairs;
   }
-  for (const pool of [selectedPool, allPool]) {
-    const pairs = findPairs(pool, getComparableCruiseSpeedRange);
-    if (pairs.length) return randomItem(pairs);
-  }
-  return null;
+  if (sameSpeedPairs.length && (!pairs.length || Math.random() < 0.5))
+    return randomItem(sameSpeedPairs);
+  return pairs.length ? randomItem(pairs) : null;
 }
 
 function displaySpeedComparison(pair) {
@@ -1454,8 +1463,12 @@ function displaySpeedComparison(pair) {
   }
   imageContainer.appendChild(comparison);
   updatePhotoVisibility();
-  promptElement.textContent = `Is ${getIndefiniteArticle(getSpecialAircraftIdentifier(pair.first))} ${getSpecialAircraftIdentifier(pair.first)} faster or slower than ${getIndefiniteArticle(getSpecialAircraftIdentifier(pair.second))} ${getSpecialAircraftIdentifier(pair.second)}?`;
-  displaySpecialChoices(['Faster', 'Slower'], pair.answer);
+  const firstName = getSpecialAircraftIdentifier(pair.first);
+  const secondName = getSpecialAircraftIdentifier(pair.second);
+  promptElement.textContent =
+    `Is ${getIndefiniteArticle(firstName)} ${firstName} faster, slower, ` +
+    `or the same speed as ${getIndefiniteArticle(secondName)} ${secondName}?`;
+  displaySpecialChoices(['Faster', 'Slower', 'Same speed'], pair.answer);
 }
 
 async function displayWakeQuestion(item) {
@@ -1496,31 +1509,7 @@ async function displayWakeQuestion(item) {
   }
 }
 
-const FALLBACK_CRUISE_SPEED_KT = {
-  C150: [90, 105],
-  C172: [110, 125],
-  C182: [135, 150],
-  C206: [135, 150],
-  C210: [165, 185],
-  PA38: [95, 110],
-  P28A: [105, 120],
-  P28R: [135, 150],
-  PA32: [135, 150],
-  PA46: [210, 245],
-  BE36: [155, 175],
-  BE35: [145, 165],
-  M20J: [155, 175],
-  SR22: [175, 195],
-  C310: [185, 210],
-  A320: [440, 470],
-  B738: [440, 470],
-  B773: [480, 510],
-  A359: [480, 510],
-  A388: [480, 510],
-};
-
 function getRankingSpeed(item) {
-  if (item?.speed_type === 'maximum') return null;
   const knots = getCruiseSpeedRange(item);
   if (knots)
     return {
@@ -1541,52 +1530,62 @@ function getRankingSpeed(item) {
       convertedFromMach: true,
     };
   }
-  const rawCode = getAircraftCode(item).toUpperCase();
-  const code = rawCode.split('/')[0].trim();
-  const fallback =
-    FALLBACK_CRUISE_SPEED_KT[rawCode] || FALLBACK_CRUISE_SPEED_KT[code];
-  if (fallback)
-    return {
-      unit: 'kt',
-      min: fallback[0],
-      max: fallback[1],
-      representative: (fallback[0] + fallback[1]) / 2,
-    };
   return null;
 }
 
+function getRankingItemKey(item) {
+  const key = displayText(item?.key);
+  if (key) return `key:${key}`;
+  const folder = displayText(item?.folder);
+  if (folder) return `folder:${folder.toLowerCase()}`;
+  return getAircraftTypeKey(item);
+}
+
 function getSpeedRankingItems() {
-  const selected = getSelectedAircraftPool();
-  const all = [...aircraft];
-  for (const pool of [selected, all]) {
-    const unique = new Map();
-    for (const item of pool) {
-      const speed = getRankingSpeed(item);
-      const key = getAircraftTypeKey(item);
-      if (speed && key && !unique.has(key)) {
-        unique.set(key, {
-          item,
-          range: { min: speed.min, max: speed.max },
-          speed: speed.representative,
-          unit: speed.unit,
-        });
+  const entries = aircraft.flatMap((item) => {
+    const speed = getRankingSpeed(item);
+    if (!speed || !getRankingItemKey(item)) return [];
+    return [
+      {
+        item,
+        range: { min: speed.min, max: speed.max },
+        speed: speed.representative,
+        unit: speed.unit,
+      },
+    ];
+  });
+  return entries.length >= 4 ? shuffle(entries).slice(0, 4) : null;
+}
+
+function getSpeedRankingResults(entries, actualKeys) {
+  const actualPosition = new Map(
+    actualKeys.map((key, index) => [key, index]),
+  );
+  const results = new Map();
+  for (const entry of entries) {
+    const key = getRankingItemKey(entry.item);
+    const position = actualPosition.get(key);
+    let correct = true;
+    let slowerCount = 0;
+    let fasterCount = 0;
+    for (const other of entries) {
+      if (entry === other) continue;
+      const otherPosition = actualPosition.get(getRankingItemKey(other.item));
+      if (other.range.max < entry.range.min) {
+        slowerCount += 1;
+        correct = correct && otherPosition < position;
+      } else if (other.range.min > entry.range.max) {
+        fasterCount += 1;
+        correct = correct && otherPosition > position;
       }
     }
-    const usable = [...unique.values()];
-    const speedCounts = new Map();
-    for (const entry of usable) {
-      speedCounts.set(entry.speed, (speedCounts.get(entry.speed) || 0) + 1);
-    }
-    const rankable = usable.filter(
-      (entry) => speedCounts.get(entry.speed) === 1,
-    );
-    if (rankable.length >= 4) {
-      return shuffle([...rankable])
-        .slice(0, 4)
-        .map((x) => ({ ...x, correctSpeed: x.speed }));
-    }
+    results.set(key, {
+      correct,
+      firstRank: slowerCount + 1,
+      lastRank: entries.length - fasterCount,
+    });
   }
-  return null;
+  return results;
 }
 
 function animateRankingReorder(list, mutate, excludeRow = null) {
@@ -1807,7 +1806,7 @@ function displaySpeedRanking(entries) {
   ordered.forEach((entry, index) => {
     const li = document.createElement('li');
     li.className = 'ranking-item';
-    li.dataset.typeKey = getAircraftTypeKey(entry.item);
+    li.dataset.rankingKey = getRankingItemKey(entry.item);
     li.draggable = false;
     li.setAttribute(
       'aria-label',
@@ -1945,30 +1944,30 @@ function checkSpeedRanking() {
   )
     return;
   const rows = [...byId('speed-ranking-list').children];
-  const actual = rows.map((row) => row.dataset.typeKey);
-  const expected = [...specialQuestionData.entries]
-    .sort((a, b) => a.speed - b.speed)
-    .map((x) => getAircraftTypeKey(x.item));
-  const expectedPosition = new Map(
-    expected.map((key, index) => [key, index + 1]),
+  const actual = rows.map((row) => row.dataset.rankingKey);
+  const rankingResults = getSpeedRankingResults(
+    specialQuestionData.entries,
+    actual,
   );
-  const correctPositions = actual.reduce(
-    (count, key, index) => count + (key === expected[index] ? 1 : 0),
-    0,
-  );
+  const correctPositions = [...rankingResults.values()].filter(
+    (result) => result.correct,
+  ).length;
   const correct = correctPositions === rows.length;
   answered = true;
   total += 1;
   score = Math.round((score + correctPositions * 0.25) * 100) / 100;
 
-  rows.forEach((row, index) => {
-    const isPositionCorrect = row.dataset.typeKey === expected[index];
+  rows.forEach((row) => {
+    const result = rankingResults.get(row.dataset.rankingKey);
     row.classList.remove('correct', 'incorrect');
     row.offsetHeight; // Force reflow to re-trigger animation
-    row.classList.add(isPositionCorrect ? 'correct' : 'incorrect');
+    row.classList.add(result.correct ? 'correct' : 'incorrect');
     row.draggable = false;
-    const correctRank = expectedPosition.get(row.dataset.typeKey);
-    row.querySelector('.ranking-position').textContent = String(correctRank);
+    const correctRank =
+      result.firstRank === result.lastRank
+        ? String(result.firstRank)
+        : `${result.firstRank}-${result.lastRank}`;
+    row.querySelector('.ranking-position').textContent = correctRank;
     row.setAttribute(
       'aria-label',
       `${row.querySelector('.ranking-name')?.textContent || 'Aircraft'}, correct rank ${correctRank}.`,
@@ -2184,9 +2183,9 @@ async function nextQuestion() {
     if (!entries) {
       setLoading(false);
       promptElement.textContent =
-        'Not enough aircraft have comparable cruise-speed data.';
+        'Not enough aircraft have usable speed data for ranking.';
       feedbackElement.textContent =
-        'At least four aircraft need cruise-speed ranges in knots or Mach.';
+        'At least four aircraft need speed ranges in knots or Mach.';
       return;
     }
     currentAircraft = entries[0].item;
@@ -2202,7 +2201,7 @@ async function nextQuestion() {
       setLoading(false);
       promptElement.textContent = 'No suitable speed comparisons available.';
       feedbackElement.textContent =
-        'Check that the selected category has at least two aircraft with non-overlapping cruise-speed ranges.';
+        'Check that manifest.json has at least two aircraft with comparable speed ranges.';
       return;
     }
     currentAircraft = pair.first;

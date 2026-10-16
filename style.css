@@ -47,6 +47,7 @@
 html {
   min-width: 320px;
   min-height: 100%;
+  overflow-x: clip;
   scroll-padding-block: 5rem 7rem;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -136,11 +137,20 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-inline: calc(-1 * max(var(--gutter), env(safe-area-inset-left)))
-    calc(-1 * max(var(--gutter), env(safe-area-inset-right)));
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
   padding: max(0.85rem, env(safe-area-inset-top))
-    max(var(--gutter), env(safe-area-inset-right)) 0.85rem
-    max(var(--gutter), env(safe-area-inset-left));
+    max(
+      var(--gutter),
+      calc((100vw - 100%) / 2),
+      env(safe-area-inset-right)
+    )
+    0.85rem
+    max(
+      var(--gutter),
+      calc((100vw - 100%) / 2),
+      env(safe-area-inset-left)
+    );
   border-bottom: 1px solid rgb(255 255 255 / 0.08);
   background: rgb(12 20 27 / 0.9);
   -webkit-backdrop-filter: blur(16px);
@@ -417,6 +427,10 @@ select:disabled {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
   counter-reset: option;
+}
+
+.answers.speed-comparison-answers {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .answers button {
@@ -1331,6 +1345,10 @@ body.ranking-is-dragging * {
   }
 
   .answers {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .answers.speed-comparison-answers {
     grid-template-columns: minmax(0, 1fr);
   }
 
