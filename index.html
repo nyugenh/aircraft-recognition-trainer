@@ -18,9 +18,7 @@
     <main class="app" aria-describedby="keyboard-shortcuts-help">
       <!-- 1. Header & Score -->
       <header class="header">
-        <div class="brand">
-          <h1>Aircraft Recognition Trainer</h1>
-        </div>
+        <h1>Aircraft Recognition Trainer</h1>
         <div id="score" class="score" aria-live="polite" aria-atomic="true">
           Score: 0/0 (0%)
         </div>
@@ -154,5 +152,44 @@
         </button>
       </footer>
     </main>
+    <dialog
+      id="photo-viewer"
+      class="photo-viewer"
+      aria-label="Aircraft photo viewer"
+    >
+      <div class="photo-viewer-panel">
+        <header class="photo-viewer-header">
+          <p id="photo-viewer-title" class="photo-viewer-title">
+            Aircraft photo
+          </p>
+          <button
+            id="photo-viewer-close"
+            class="photo-viewer-close"
+            type="button"
+            aria-label="Close photo viewer"
+          >
+            ×
+          </button>
+        </header>
+        <div id="photo-viewer-stage" class="photo-viewer-stage">
+          <img id="photo-viewer-image" alt="" draggable="false" />
+        </div>
+        <footer class="photo-viewer-controls" aria-label="Photo zoom controls">
+          <button id="photo-zoom-out" type="button" aria-label="Zoom out">
+            −
+          </button>
+          <output id="photo-zoom-level" for="photo-zoom-out photo-zoom-in">
+            100%
+          </output>
+          <button id="photo-zoom-in" type="button" aria-label="Zoom in">
+            +
+          </button>
+          <button id="photo-zoom-reset" type="button">Reset</button>
+          <span class="photo-viewer-help">
+            Scroll or pinch to zoom · drag to move
+          </span>
+        </footer>
+      </div>
+    </dialog>
   </body>
 </html>

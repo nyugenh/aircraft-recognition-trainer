@@ -88,6 +88,24 @@ if (answerTypeLabel) {
 const imageContainer = byId('image-container');
 const imageElement = byId('aircraft-image');
 const loadingMessage = byId('loading-message');
+const photoViewer = byId('photo-viewer');
+const photoViewerImage = byId('photo-viewer-image');
+const photoViewerTitle = byId('photo-viewer-title');
+const photoViewerStage = byId('photo-viewer-stage');
+const photoViewerCloseButton = byId('photo-viewer-close');
+const photoZoomLevel = byId('photo-zoom-level');
+const photoZoomInButton = byId('photo-zoom-in');
+const photoZoomOutButton = byId('photo-zoom-out');
+const photoZoomResetButton = byId('photo-zoom-reset');
+const photoZoomStep = 0.5;
+const photoZoomMaximum = 4;
+let photoZoom = 1;
+let photoPanX = 0;
+let photoPanY = 0;
+let lastFocusedPhoto = null;
+const photoPointers = new Map();
+let photoPinchStart = null;
+let photoDragStart = null;
 const promptElement = byId('prompt');
 const answerContainer = byId('answers');
 const answerButtons = [...document.querySelectorAll('#answers button')];
@@ -103,6 +121,163 @@ photoToggleButton.type = 'button';
 photoToggleButton.className = 'photo-toggle';
 photoToggleButton.hidden = true;
 photoToggleButton.setAttribute('aria-pressed', 'false');
+
+function updatePhotoViewerTransform() {
+  photoViewerImage.style.transform =
+    `translate(${photoPanX}px, ${photoPanY}px) scale(${photoZoom})`;
+  photoViewerImage.style.cursor = photoZoom > 1 ? 'grab' : 'zoom-in';
+  photoZoomLevel.value = `${Math.round(photoZoom * 100)}%`;
+  photoZoomLevel.textContent = `${Math.round(photoZoom * 100)}%`;
+}
+
+function setPhotoZoom(zoom) {
+  photoZoom = Math.max(1, Math.min(photoZoomMaximum, zoom));
+  if (photoZoom === 1) {
+    photoPanX = 0;
+    photoPanY = 0;
+  }
+  updatePhotoViewerTransform();
+}
+
+function showPhotoViewer(image) {
+  if (image.hidden || !image.naturalWidth) return;
+  lastFocusedPhoto = image;
+  photoViewerImage.src = image.currentSrc || image.src;
+  photoViewerImage.alt = image.alt;
+  photoViewerTitle.textContent = image.alt || 'Aircraft photo';
+  setPhotoZoom(1);
+  photoViewer.showModal();
+  photoViewerCloseButton.focus();
+}
+
+function isAircraftPhoto(image) {
+  return image.matches(
+    '#aircraft-image, .speed-aircraft-photo img, .ranking-photo-wrap img',
+  );
+}
+
+function preparePhotoViewerImage(image) {
+  if (!isAircraftPhoto(image)) return;
+  image.setAttribute('aria-label', `Open larger photo: ${image.alt}`);
+  if (!image.closest('button')) {
+    image.tabIndex = 0;
+    image.setAttribute('role', 'button');
+  }
+}
+
+document.addEventListener(
+  'click',
+  (event) => {
+    const image = event.target.closest?.('img');
+    if (!(image instanceof HTMLImageElement) || !isAircraftPhoto(image)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    showPhotoViewer(image);
+  },
+  true,
+);
+
+document.addEventListener(
+  'keydown',
+  (event) => {
+    if (event.key === 'Escape' && photoViewer.open) {
+      event.preventDefault();
+      photoViewer.close();
+      return;
+    }
+    const image = event.target;
+    if (
+      !(image instanceof HTMLImageElement) ||
+      !isAircraftPhoto(image) ||
+      (event.key !== 'Enter' && event.key !== ' ')
+    )
+      return;
+    event.preventDefault();
+    event.stopPropagation();
+    showPhotoViewer(image);
+  },
+  true,
+);
+
+photoViewerCloseButton.addEventListener('click', () => {
+  photoViewer.close();
+});
+
+photoViewer.addEventListener('click', (event) => {
+  if (event.target === photoViewer) photoViewer.close();
+});
+
+photoViewer.addEventListener('close', () => {
+  lastFocusedPhoto?.focus();
+  lastFocusedPhoto = null;
+});
+
+photoZoomInButton.addEventListener('click', () => {
+  setPhotoZoom(photoZoom + photoZoomStep);
+});
+
+photoZoomOutButton.addEventListener('click', () => {
+  setPhotoZoom(photoZoom - photoZoomStep);
+});
+
+photoZoomResetButton.addEventListener('click', () => {
+  setPhotoZoom(1);
+});
+
+photoViewer.addEventListener('wheel', (event) => {
+  event.preventDefault();
+  setPhotoZoom(photoZoom + (event.deltaY < 0 ? photoZoomStep : -photoZoomStep));
+});
+
+photoViewerStage.addEventListener('pointerdown', (event) => {
+  if (event.target !== photoViewerImage) return;
+  event.preventDefault();
+  photoViewerStage.setPointerCapture(event.pointerId);
+  photoPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+  if (photoPointers.size === 2) {
+    const [first, second] = [...photoPointers.values()];
+    photoPinchStart = {
+      distance: Math.hypot(first.x - second.x, first.y - second.y),
+      zoom: photoZoom,
+    };
+    photoDragStart = null;
+  } else if (photoZoom > 1) {
+    photoDragStart = {
+      x: event.clientX,
+      y: event.clientY,
+      panX: photoPanX,
+      panY: photoPanY,
+    };
+    photoViewerImage.style.cursor = 'grabbing';
+  }
+});
+
+photoViewerStage.addEventListener('pointermove', (event) => {
+  if (!photoPointers.has(event.pointerId)) return;
+  photoPointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+  if (photoPointers.size === 2 && photoPinchStart) {
+    const [first, second] = [...photoPointers.values()];
+    const distance = Math.hypot(first.x - second.x, first.y - second.y);
+    setPhotoZoom(photoPinchStart.zoom * (distance / photoPinchStart.distance));
+  } else if (photoDragStart && photoZoom > 1) {
+    photoPanX = photoDragStart.panX + event.clientX - photoDragStart.x;
+    photoPanY = photoDragStart.panY + event.clientY - photoDragStart.y;
+    updatePhotoViewerTransform();
+  }
+});
+
+function finishPhotoPointer(event) {
+  photoPointers.delete(event.pointerId);
+  if (photoPointers.size < 2) photoPinchStart = null;
+  if (photoPointers.size === 0) {
+    photoDragStart = null;
+    if (photoViewer.open) updatePhotoViewerTransform();
+  }
+}
+
+photoViewerStage.addEventListener('pointerup', finishPhotoPointer);
+photoViewerStage.addEventListener('pointercancel', finishPhotoPointer);
 
 const photoToggleIcon = document.createElementNS(
   'http://www.w3.org/2000/svg',
@@ -212,6 +387,7 @@ function normaliseAnswer(value) {
 // ============================================================================
 function preparePhotoFadeIn(image) {
   if (!(image instanceof HTMLImageElement)) return;
+  preparePhotoViewerImage(image);
   if (image.dataset.fadeInPrepared === 'true' && image.style.animationName)
     return;
   image.dataset.fadeInPrepared = 'true';
@@ -267,6 +443,7 @@ const photoFadeObserver = new MutationObserver((mutations) => {
     ) {
       const image = mutation.target;
       if (image !== imageElement && image.getAttribute('src')) {
+        preparePhotoViewerImage(image);
         image.dataset.fadeInPrepared = 'false';
         preparePhotoFadeIn(image);
       }
@@ -279,6 +456,7 @@ photoFadeObserver.observe(document.documentElement, {
   attributes: true,
   attributeFilter: ['src'],
 });
+preparePhotoViewerImage(imageElement);
 
 function cleanPath(value) {
   return displayText(value).replace(/\\/g, '/').replace(/^\/+/, '');
@@ -1755,10 +1933,16 @@ function checkSpeedRanking() {
     : correctPositions > 0
       ? 'partial'
       : 'incorrect';
+  const feedbackResult = correct
+    ? 'Correct'
+    : correctPositions > 0
+      ? 'Partially correct'
+      : 'Incorrect';
   setFeedback(
     feedbackType,
-    `${correct ? 'Correct' : correctPositions > 0 ? 'Partially correct' : 'Incorrect'}`,
-    `${correctPositions}/${rows.length} positions`,
+    feedbackResult,
+    'Correct positions:',
+    `${correctPositions}/${rows.length}`,
   );
   finishAnswer();
 }
