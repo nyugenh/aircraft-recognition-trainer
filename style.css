@@ -522,6 +522,8 @@ select:disabled {
   overflow-y: auto;
   align-items: stretch;
   gap: 0.75rem;
+  margin-top: -3px;
+  padding-top: 3px;
 }
 
 .app:not(.no-image) {

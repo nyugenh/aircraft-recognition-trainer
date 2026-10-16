@@ -1631,32 +1631,6 @@ function updateRankingPointerDrag(drag) {
       `translate3d(${clientX - drag.offsetX - drag.ghostLeft}px, ` +
       `${clientY - drag.offsetY - drag.ghostTop}px, 0) scale(1.02)`;
   }
-  const list = byId('speed-ranking-list');
-  const rows = [...list.querySelectorAll('.ranking-item')].filter(
-    (row) => row !== drag.item,
-  );
-  if (!rows.length) return;
-  let target = rows.find((row) => {
-    const rect = row.getBoundingClientRect();
-    return clientY >= rect.top && clientY <= rect.bottom;
-  });
-  if (!target) {
-    target = rows.reduce((best, row) => {
-      const rect = row.getBoundingClientRect();
-      const distance = Math.abs(clientY - (rect.top + rect.height / 2));
-      return !best || distance < best.distance ? { row, distance } : best;
-    }, null)?.row;
-  }
-  if (!target) return;
-  const rect = target.getBoundingClientRect();
-  const insertAfter = clientY > rect.top + rect.height / 2;
-  const needsMove = insertAfter
-    ? target.nextElementSibling !== drag.item
-    : target !== drag.item.nextElementSibling;
-  if (!needsMove) return;
-  if (insertAfter) list.insertBefore(drag.item, target.nextElementSibling);
-  else list.insertBefore(drag.item, target);
-  updateRankingMoveButtons();
 }
 
 function handleRankingPointerMove(event) {
@@ -1705,16 +1679,42 @@ function finishRankingPointerDrag(event) {
   if (!rankingPointerDrag || rankingPointerDrag.pointerId !== event.pointerId)
     return;
   const drag = rankingPointerDrag;
+  drag.latestPointer = { clientX: event.clientX, clientY: event.clientY };
   if (drag.frame !== null) {
     cancelAnimationFrame(drag.frame);
     drag.frame = null;
-    updateRankingPointerDrag(drag);
+  }
+  updateRankingPointerDrag(drag);
+  if (drag.active) {
+    const list = byId('speed-ranking-list');
+    const rows = [...list.querySelectorAll('.ranking-item')].filter(
+      (row) => row !== drag.item,
+    );
+    let target = rows.find((row) => {
+      const rect = row.getBoundingClientRect();
+      return event.clientY >= rect.top && event.clientY <= rect.bottom;
+    });
+    if (!target) {
+      target = rows.reduce((best, row) => {
+        const rect = row.getBoundingClientRect();
+        const distance = Math.abs(
+          event.clientY - (rect.top + rect.height / 2),
+        );
+        return !best || distance < best.distance ? { row, distance } : best;
+      }, null)?.row;
+    }
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      const insertAfter = event.clientY > rect.top + rect.height / 2;
+      if (insertAfter) list.insertBefore(drag.item, target.nextElementSibling);
+      else list.insertBefore(drag.item, target);
+    }
   }
   drag.item.classList.remove('ranking-dragging');
   drag.item.removeAttribute('aria-grabbed');
   document.body.classList.remove('ranking-is-dragging');
-  rankingPointerDrag = null;
   updateRankingMoveButtons();
+  rankingPointerDrag = null;
   if (drag.ghost && drag.active) {
     const ghost = drag.ghost;
     const from = ghost.getBoundingClientRect();
