@@ -1623,6 +1623,42 @@ function moveRankingItem(item, target, after = false) {
   updateRankingMoveButtons();
 }
 
+function updateRankingPointerDrag(drag) {
+  if (rankingPointerDrag !== drag || !drag.active || answered) return;
+  const { clientX, clientY } = drag.latestPointer;
+  if (drag.ghost) {
+    drag.ghost.style.transform =
+      `translate3d(${clientX - drag.offsetX - drag.ghostLeft}px, ` +
+      `${clientY - drag.offsetY - drag.ghostTop}px, 0) scale(1.02)`;
+  }
+  const list = byId('speed-ranking-list');
+  const rows = [...list.querySelectorAll('.ranking-item')].filter(
+    (row) => row !== drag.item,
+  );
+  if (!rows.length) return;
+  let target = rows.find((row) => {
+    const rect = row.getBoundingClientRect();
+    return clientY >= rect.top && clientY <= rect.bottom;
+  });
+  if (!target) {
+    target = rows.reduce((best, row) => {
+      const rect = row.getBoundingClientRect();
+      const distance = Math.abs(clientY - (rect.top + rect.height / 2));
+      return !best || distance < best.distance ? { row, distance } : best;
+    }, null)?.row;
+  }
+  if (!target) return;
+  const rect = target.getBoundingClientRect();
+  const insertAfter = clientY > rect.top + rect.height / 2;
+  const needsMove = insertAfter
+    ? target.nextElementSibling !== drag.item
+    : target !== drag.item.nextElementSibling;
+  if (!needsMove) return;
+  if (insertAfter) list.insertBefore(drag.item, target.nextElementSibling);
+  else list.insertBefore(drag.item, target);
+  updateRankingMoveButtons();
+}
+
 function handleRankingPointerMove(event) {
   const drag = rankingPointerDrag;
   if (!drag || drag.pointerId !== event.pointerId || answered) return;
@@ -1657,49 +1693,23 @@ function handleRankingPointerMove(event) {
     drag.item.setAttribute('aria-grabbed', 'true');
     document.body.classList.add('ranking-is-dragging');
   }
-  if (drag.ghost) {
-    drag.ghost.style.transform =
-      `translate3d(${event.clientX - drag.offsetX - drag.ghostLeft}px, ` +
-      `${event.clientY - drag.offsetY - drag.ghostTop}px, 0) scale(1.02)`;
-  }
-  const list = byId('speed-ranking-list');
-  const rows = [...list.querySelectorAll('.ranking-item')].filter(
-    (row) => row !== drag.item,
-  );
-  if (!rows.length) return;
-  let target = rows.find((row) => {
-    const rect = row.getBoundingClientRect();
-    return event.clientY >= rect.top && event.clientY <= rect.bottom;
+  drag.latestPointer = { clientX: event.clientX, clientY: event.clientY };
+  if (drag.frame !== null) return;
+  drag.frame = requestAnimationFrame(() => {
+    drag.frame = null;
+    updateRankingPointerDrag(drag);
   });
-  if (!target) {
-    target = rows.reduce((best, row) => {
-      const rect = row.getBoundingClientRect();
-      const distance = Math.abs(event.clientY - (rect.top + rect.height / 2));
-      return !best || distance < best.distance ? { row, distance } : best;
-    }, null)?.row;
-  }
-  if (!target) return;
-  const rect = target.getBoundingClientRect();
-  const insertAfter = event.clientY > rect.top + rect.height / 2;
-  const needsMove = insertAfter
-    ? target.nextElementSibling !== drag.item
-    : target !== drag.item.nextElementSibling;
-  if (!needsMove) return;
-  animateRankingReorder(
-    list,
-    () => {
-      if (insertAfter) list.insertBefore(drag.item, target.nextElementSibling);
-      else list.insertBefore(drag.item, target);
-    },
-    drag.item,
-  );
-  updateRankingMoveButtons();
 }
 
 function finishRankingPointerDrag(event) {
   if (!rankingPointerDrag || rankingPointerDrag.pointerId !== event.pointerId)
     return;
   const drag = rankingPointerDrag;
+  if (drag.frame !== null) {
+    cancelAnimationFrame(drag.frame);
+    drag.frame = null;
+    updateRankingPointerDrag(drag);
+  }
   drag.item.classList.remove('ranking-dragging');
   drag.item.removeAttribute('aria-grabbed');
   document.body.classList.remove('ranking-is-dragging');
@@ -1760,6 +1770,11 @@ function displaySpeedRanking(entries) {
   const list = byId('speed-ranking-list');
   if (!section || !list) return;
   list.replaceChildren();
+  if (
+    rankingPointerDrag?.frame !== null &&
+    rankingPointerDrag?.frame !== undefined
+  )
+    cancelAnimationFrame(rankingPointerDrag.frame);
   if (rankingPointerDrag?.ghost) rankingPointerDrag.ghost.remove();
   rankingPointerDrag = null;
   document.body.classList.remove('ranking-is-dragging');
@@ -1857,6 +1872,7 @@ function displaySpeedRanking(entries) {
         startX: event.clientX,
         startY: event.clientY,
         active: false,
+        frame: null,
       };
     });
     list.append(li);
