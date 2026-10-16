@@ -112,6 +112,8 @@ img {
 }
 
 .app {
+  --bottom-reserve: 7rem;
+
   display: flex;
   flex-direction: column;
   gap: clamp(1rem, 2vw, 1.5rem);
@@ -119,7 +121,8 @@ img {
   min-height: 100vh;
   min-height: 100dvh;
   margin-inline: auto;
-  padding: 0 var(--gutter) max(1.25rem, env(safe-area-inset-bottom));
+  padding: 0 var(--gutter)
+    calc(var(--bottom-reserve) + env(safe-area-inset-bottom));
   padding-inline: max(var(--gutter), env(safe-area-inset-left))
     max(var(--gutter), env(safe-area-inset-right));
 }
@@ -947,14 +950,16 @@ body.ranking-is-dragging * {
 }
 
 .bottom {
-  position: sticky;
+  position: fixed;
   bottom: 0;
+  inset-inline: 0;
   z-index: 10;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 1rem;
-  margin: auto calc(-1 * max(var(--gutter), env(safe-area-inset-left))) 0;
+  width: min(100%, 78rem);
+  margin-inline: auto;
   padding: 0.8rem max(var(--gutter), env(safe-area-inset-right))
     max(0.8rem, env(safe-area-inset-bottom))
     max(var(--gutter), env(safe-area-inset-left));
@@ -1269,6 +1274,10 @@ body.ranking-is-dragging * {
 }
 
 @media (max-width: 36rem) {
+  .app {
+    --bottom-reserve: 9rem;
+  }
+
   .controls {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.75rem;
@@ -1358,7 +1367,6 @@ body.ranking-is-dragging * {
   .app:has(.speed-comparison) {
     gap: 0.75rem;
     min-height: 100dvh;
-    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
   }
 
   .image-container:has(.speed-comparison) {
@@ -1373,12 +1381,6 @@ body.ranking-is-dragging * {
   .speed-aircraft-photo:has(.loading-message, .loading-error) {
     height: clamp(4.5rem, 10dvh, 6rem);
     max-height: 6rem;
-  }
-
-  .app:has(.speed-comparison) .bottom {
-    position: static;
-    margin-top: 0.25rem;
-    margin-bottom: 0;
   }
 }
 
@@ -1415,10 +1417,6 @@ body.ranking-is-dragging * {
   .speed-aircraft-photo:has(.loading-message, .loading-error) {
     height: clamp(4rem, 16dvh, 7rem);
     max-height: 7rem;
-  }
-
-  .app:has(.speed-comparison) .bottom {
-    position: static;
   }
 
   .image-container {
