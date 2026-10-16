@@ -1410,6 +1410,16 @@ body.ranking-is-dragging * {
     height: clamp(4.5rem, 10dvh, 6rem);
     max-height: 6rem;
   }
+
+  .speed-aircraft-photo:not(:has(.loading-message, .loading-error)) {
+    height: auto;
+    max-height: none;
+  }
+
+  .speed-aircraft-photo img {
+    height: auto;
+    max-height: none;
+  }
 }
 
 @media (max-width: 23rem) {
@@ -1437,14 +1447,16 @@ body.ranking-is-dragging * {
     overflow: visible;
   }
 
+  .image-container {
+    max-height: 40dvh;
+  }
+}
+
+@media (max-height: 32rem) and (min-width: 30rem) {
   .speed-aircraft-photo,
   .speed-aircraft-photo:has(.loading-message, .loading-error) {
     height: clamp(4rem, 16dvh, 7rem);
     max-height: 7rem;
-  }
-
-  .image-container {
-    max-height: 40dvh;
   }
 }
 
