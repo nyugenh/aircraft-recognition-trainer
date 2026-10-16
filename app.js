@@ -1637,6 +1637,8 @@ function handleRankingPointerMove(event) {
     const rect = drag.item.getBoundingClientRect();
     drag.offsetX = event.clientX - rect.left;
     drag.offsetY = event.clientY - rect.top;
+    drag.ghostLeft = rect.left;
+    drag.ghostTop = rect.top;
     drag.ghost = drag.item.cloneNode(true);
     drag.ghost.classList.remove(
       'ranking-dragging',
@@ -1656,8 +1658,9 @@ function handleRankingPointerMove(event) {
     document.body.classList.add('ranking-is-dragging');
   }
   if (drag.ghost) {
-    drag.ghost.style.left = `${event.clientX - drag.offsetX}px`;
-    drag.ghost.style.top = `${event.clientY - drag.offsetY}px`;
+    drag.ghost.style.transform =
+      `translate3d(${event.clientX - drag.offsetX - drag.ghostLeft}px, ` +
+      `${event.clientY - drag.offsetY - drag.ghostTop}px, 0) scale(1.02)`;
   }
   const list = byId('speed-ranking-list');
   const rows = [...list.querySelectorAll('.ranking-item')].filter(

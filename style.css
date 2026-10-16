@@ -935,6 +935,7 @@ select:disabled {
   cursor: grabbing;
   pointer-events: none;
   transform: scale(1.02);
+  will-change: transform;
 }
 
 body.ranking-is-dragging,
