@@ -346,6 +346,7 @@ let answered = false;
 let specialQuestionData = null;
 let photosVisible = false;
 let rankingPointerDrag = null;
+let previousQuestion = null;
 
 // ============================================================================
 // 4. General Utilities & Helpers
@@ -614,12 +615,68 @@ function getAircraftTypeKey(item) {
   return '';
 }
 
+function getQuestionAircraftKeys(items, ordered = false) {
+  const keys = items.map(getRankingItemKey);
+  return ordered ? keys : keys.sort();
+}
+
+function isRepeatedQuestion(
+  questionType,
+  items,
+  ordered = false,
+  signature = '',
+) {
+  if (previousQuestion?.type !== questionType) return false;
+  if (signature && previousQuestion.signature)
+    return signature === previousQuestion.signature;
+  if (previousQuestion.answerMode !== getAnswerMode()) return false;
+  const keys = getQuestionAircraftKeys(items, ordered);
+  return (
+    keys.length === previousQuestion.keys.length &&
+    keys.every((key, index) => key === previousQuestion.keys[index])
+  );
+}
+
+function rememberQuestion(
+  questionType,
+  items,
+  ordered = false,
+  signature = '',
+) {
+  previousQuestion = {
+    type: questionType,
+    answerMode: getAnswerMode(),
+    keys: getQuestionAircraftKeys(items, ordered),
+    aircraftTypeKeys: items.map(getAircraftTypeKey),
+    signature,
+  };
+}
+
+function getPreviousSingleQuestionAircraftKey(questionType) {
+  if (
+    previousQuestion?.type === questionType &&
+    previousQuestion.answerMode === getAnswerMode() &&
+    previousQuestion.keys.length === 1
+  )
+    return previousQuestion.aircraftTypeKeys[0];
+  return '';
+}
+
 const getAircraftDisplayName = (item) =>
   getAnswerValue(item, 'name') || getAnswerValue(item, 'icao');
 
 function getSpecialAircraftIdentifier(item) {
   const type = getAnswerMode() === 'icao' ? 'icao' : 'name';
   return getAnswerValue(item, type) || getAircraftDisplayName(item);
+}
+
+function getSpeedComparisonPrompt(first, second) {
+  const firstName = getSpecialAircraftIdentifier(first);
+  const secondName = getSpecialAircraftIdentifier(second);
+  return (
+    `Is ${getIndefiniteArticle(firstName)} ${firstName} faster, slower, ` +
+    `or the same speed as ${getIndefiniteArticle(secondName)} ${secondName}?`
+  );
 }
 
 // ============================================================================
@@ -810,25 +867,14 @@ function filterPoolForCombination(pool) {
   });
 }
 
-function hasEnoughDistinctAnswers(pool) {
-  if (isSpecialQuestionType() || isTypedAnswer()) return pool.length > 0;
-  if (isPhotoAnswer()) return uniqueBy(pool, getAircraftTypeKey).length >= 4;
-  const answerType = getAnswerSemanticType();
-  return (
-    uniqueBy(pool, (item) => getAnswerValue(item, answerType).toLowerCase())
-      .length >= 4
-  );
-}
-
 function getValidAircraftPool() {
-  const selectedPool = filterPoolForCombination(getSelectedAircraftPool());
-  if (isSpecialQuestionType() || isTypedAnswer()) return selectedPool;
-  if (hasEnoughDistinctAnswers(selectedPool)) return selectedPool;
-  return filterPoolForCombination(aircraft);
+  return filterPoolForCombination(getSelectedAircraftPool());
 }
 
-function chooseAircraft() {
-  const pool = getValidAircraftPool();
+function chooseAircraft(excludedKey = '') {
+  const pool = getValidAircraftPool().filter(
+    (item) => getAircraftTypeKey(item) !== excludedKey,
+  );
   if (!pool.length) return null;
   const aircraftByType = new Map();
   for (const item of pool) {
@@ -1362,7 +1408,7 @@ function displayCruiseSpeedQuestion(item, unit) {
 }
 
 function getSpeedComparisonPair() {
-  const pool = aircraft.flatMap((item) => {
+  const pool = getValidAircraftPool().flatMap((item) => {
     const speed = getRankingSpeed(item);
     return speed ? [{ item, speed }] : [];
   });
@@ -1378,6 +1424,13 @@ function getSpeedComparisonPair() {
       const second = pool[secondIndex];
       if (getRankingItemKey(first.item) === getRankingItemKey(second.item))
         continue;
+      const firstName = getAnswerValue(first.item, 'name')
+        .trim()
+        .toLowerCase();
+      const secondName = getAnswerValue(second.item, 'name')
+        .trim()
+        .toLowerCase();
+      if (firstName && firstName === secondName) continue;
       if (
         Math.round(first.speed.representative) ===
         Math.round(second.speed.representative)
@@ -1411,9 +1464,30 @@ function getSpeedComparisonPair() {
       }
     }
   }
-  if (sameSpeedPairs.length && (!pairs.length || Math.random() < 0.5))
-    return randomItem(sameSpeedPairs);
-  return pairs.length ? randomItem(pairs) : null;
+  const availableSameSpeedPairs = sameSpeedPairs.filter(
+    (pair) =>
+      !isRepeatedQuestion(
+        'speed',
+        [pair.first, pair.second],
+        true,
+        getSpeedComparisonPrompt(pair.first, pair.second),
+      ),
+  );
+  const availablePairs = pairs.filter(
+    (pair) =>
+      !isRepeatedQuestion(
+        'speed',
+        [pair.first, pair.second],
+        true,
+        getSpeedComparisonPrompt(pair.first, pair.second),
+      ),
+  );
+  if (
+    availableSameSpeedPairs.length &&
+    (!availablePairs.length || Math.random() < 0.5)
+  )
+    return randomItem(availableSameSpeedPairs);
+  return availablePairs.length ? randomItem(availablePairs) : null;
 }
 
 function displaySpeedComparison(pair) {
@@ -1463,11 +1537,7 @@ function displaySpeedComparison(pair) {
   }
   imageContainer.appendChild(comparison);
   updatePhotoVisibility();
-  const firstName = getSpecialAircraftIdentifier(pair.first);
-  const secondName = getSpecialAircraftIdentifier(pair.second);
-  promptElement.textContent =
-    `Is ${getIndefiniteArticle(firstName)} ${firstName} faster, slower, ` +
-    `or the same speed as ${getIndefiniteArticle(secondName)} ${secondName}?`;
+  promptElement.textContent = getSpeedComparisonPrompt(pair.first, pair.second);
   displaySpecialChoices(['Faster', 'Slower', 'Same speed'], pair.answer);
 }
 
@@ -1542,7 +1612,7 @@ function getRankingItemKey(item) {
 }
 
 function getSpeedRankingItems() {
-  const entries = aircraft.flatMap((item) => {
+  const entries = getSelectedAircraftPool().flatMap((item) => {
     const speed = getRankingSpeed(item);
     if (!speed || !getRankingItemKey(item)) return [];
     return [
@@ -1554,7 +1624,29 @@ function getSpeedRankingItems() {
       },
     ];
   });
-  return entries.length >= 4 ? shuffle(entries).slice(0, 4) : null;
+  if (entries.length < 4) return null;
+
+  let selectionPool = entries;
+  if (
+    previousQuestion?.type === 'rank-speed' &&
+    previousQuestion.answerMode === getAnswerMode()
+  ) {
+    const previousKeyInPool = previousQuestion.keys.find((key) =>
+      entries.some((entry) => getRankingItemKey(entry.item) === key),
+    );
+    if (entries.length > 4 && previousKeyInPool) {
+      selectionPool = entries.filter(
+        (entry) => getRankingItemKey(entry.item) !== previousKeyInPool,
+      );
+    }
+  }
+  const selectedEntries = shuffle(selectionPool).slice(0, 4);
+  return isRepeatedQuestion(
+    'rank-speed',
+    selectedEntries.map((entry) => entry.item),
+  )
+    ? null
+    : selectedEntries;
 }
 
 function getSpeedRankingResults(entries, actualKeys) {
@@ -2182,12 +2274,18 @@ async function nextQuestion() {
     const entries = getSpeedRankingItems();
     if (!entries) {
       setLoading(false);
-      promptElement.textContent =
-        'Not enough aircraft have usable speed data for ranking.';
-      feedbackElement.textContent =
-        'At least four aircraft need speed ranges in knots or Mach.';
+      const repeatedRanking =
+        previousQuestion?.type === questionType &&
+        previousQuestion.answerMode === getAnswerMode();
+      promptElement.textContent = repeatedRanking
+        ? 'No different ranking is available.'
+        : 'Not enough aircraft have usable speed data for ranking.';
+      feedbackElement.textContent = repeatedRanking
+        ? 'The selected category has no different lineup of four aircraft with usable speed data.'
+        : 'At least four aircraft need speed ranges in knots or Mach.';
       return;
     }
+    rememberQuestion(questionType, entries.map((entry) => entry.item));
     currentAircraft = entries[0].item;
     specialQuestionData = { type: 'rank-speed', entries };
     displaySpeedRanking(entries);
@@ -2199,11 +2297,23 @@ async function nextQuestion() {
     const pair = getSpeedComparisonPair();
     if (!pair) {
       setLoading(false);
-      promptElement.textContent = 'No suitable speed comparisons available.';
-      feedbackElement.textContent =
-        'Check that manifest.json has at least two aircraft with comparable speed ranges.';
+      const repeatedComparison =
+        previousQuestion?.type === questionType &&
+        previousQuestion.answerMode === getAnswerMode();
+      promptElement.textContent = repeatedComparison
+        ? 'No different speed comparison is available.'
+        : 'No suitable speed comparisons available.';
+      feedbackElement.textContent = repeatedComparison
+        ? 'The selected category has no other distinct aircraft comparison.'
+        : 'Check that manifest.json has at least two aircraft with comparable speed ranges.';
       return;
     }
+    rememberQuestion(
+      questionType,
+      [pair.first, pair.second],
+      true,
+      getSpeedComparisonPrompt(pair.first, pair.second),
+    );
     currentAircraft = pair.first;
     specialQuestionData = {
       type: 'speed',
@@ -2218,10 +2328,12 @@ async function nextQuestion() {
 
   let item = null;
   let cruiseSpeedUnit = null;
+  const repeatedAircraftKey =
+    getPreviousSingleQuestionAircraftKey(questionType);
   if (questionType === 'cruise-speed') {
     const maxAttempts = Math.max(1, getValidAircraftPool().length);
     for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
-      const candidate = chooseAircraft();
+      const candidate = chooseAircraft(repeatedAircraftKey);
       if (!candidate) break;
       const units = [
         ...(getCruiseSpeedRange(candidate) ? ['kt'] : []),
@@ -2234,23 +2346,29 @@ async function nextQuestion() {
     }
     if (!item) {
       setLoading(false);
-      promptElement.textContent =
-        'No suitable aircraft available for a cruise speed question.';
-      feedbackElement.textContent =
-        'Skipping aircraft without a usable image and valid cruise-speed range.';
+      promptElement.textContent = repeatedAircraftKey
+        ? 'No different aircraft is available for a cruise speed question.'
+        : 'No suitable aircraft available for a cruise speed question.';
+      feedbackElement.textContent = repeatedAircraftKey
+        ? 'The selected category has no other aircraft with a usable image and valid cruise-speed range.'
+        : 'Skipping aircraft without a usable image and valid cruise-speed range.';
       return;
     }
   } else {
-    item = chooseAircraft();
+    item = chooseAircraft(repeatedAircraftKey);
     if (!item) {
       setLoading(false);
-      promptElement.textContent = 'Not enough aircraft available.';
-      feedbackElement.textContent =
-        'Check that the manifest contains enough aircraft with required data.';
+      promptElement.textContent = repeatedAircraftKey
+        ? 'No different aircraft question is available.'
+        : 'Not enough aircraft available.';
+      feedbackElement.textContent = repeatedAircraftKey
+        ? 'The selected category has no other aircraft for this question mode.'
+        : 'Check that the manifest contains enough aircraft with required data.';
       return;
     }
   }
 
+  rememberQuestion(questionType, [item]);
   currentAircraft = item;
   if (questionType === 'cruise-speed') {
     displayCruiseSpeedQuestion(item, cruiseSpeedUnit);
