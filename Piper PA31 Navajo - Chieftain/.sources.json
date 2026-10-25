@@ -306,23 +306,6 @@
     "attribution": "\"G-OUCP Piper Navajo 31 (2 Excel Aviation Ltd)\" by Aircaft @ Gloucestershire Airport By James is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
   "018.jpg": {
-    "openverse_id": "b0dcf9f2-e2ee-41e7-83cc-416de2df90a9",
-    "title": "Piper Navajo",
-    "url": "https://live.staticflickr.com/3231/2451199969_c31fd7122e.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/b0dcf9f2-e2ee-41e7-83cc-416de2df90a9/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/9692677@N07/2451199969",
-    "creator": "Zooomabooma",
-    "creator_url": "https://www.flickr.com/photos/9692677@N07",
-    "license": "by-nc-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
-    "source": "flickr",
-    "provider": "flickr",
-    "width": 500,
-    "height": 371,
-    "attribution": "\"Piper Navajo\" by Zooomabooma is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
-  },
-  "019.jpg": {
     "openverse_id": "95ba4e70-88a6-4e4d-ae37-cf31a8d763a4",
     "title": "G-CITY Piper Navajo City air links CVT 03-09-1980",
     "url": "https://live.staticflickr.com/4520/38148289355_ba3734cb75_b.jpg",
@@ -338,5 +321,39 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"G-CITY Piper Navajo City air links CVT 03-09-1980\" by cvtperson is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+  },
+  "019.jpg": {
+    "openverse_id": "6d5f01cc-cb92-473d-97ed-c6dbc5e9f610",
+    "title": "F-BTMU Piper Navajo Brit Air CVT 27-03-80",
+    "url": "https://live.staticflickr.com/4532/37641121784_4b6e4a9f48_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/6d5f01cc-cb92-473d-97ed-c6dbc5e9f610/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/131806380@N05/37641121784",
+    "creator": "cvtperson",
+    "creator_url": "https://www.flickr.com/photos/131806380@N05",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 682,
+    "attribution": "\"F-BTMU Piper Navajo Brit Air CVT 27-03-80\" by cvtperson is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+  },
+  "020.jpg": {
+    "openverse_id": "ee57739e-cc88-4e66-8334-8a166875c190",
+    "title": "G-IFIT Piper Navajo Chieftan 31",
+    "url": "https://live.staticflickr.com/1496/24987517300_1d810ff48c_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/ee57739e-cc88-4e66-8334-8a166875c190/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/95512093@N05/24987517300",
+    "creator": "Aircaft @ Gloucestershire Airport By James",
+    "creator_url": "https://www.flickr.com/photos/95512093@N05",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 768,
+    "attribution": "\"G-IFIT Piper Navajo Chieftan 31\" by Aircaft @ Gloucestershire Airport By James is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   }
 }

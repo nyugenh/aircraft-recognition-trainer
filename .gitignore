@@ -1,4 +1,6 @@
+*.pt
 *.py
 *.pdf
 aircraft_images
 image_sources.json
+.deleted_images
