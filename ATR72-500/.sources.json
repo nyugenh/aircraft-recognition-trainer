@@ -340,21 +340,21 @@
     "attribution": "\"S2-AFE ATR 72-212 United Airways Rolling for Take Off\" by Faisal Akram Ether is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
   "020.jpg": {
-    "openverse_id": "8bb0c588-3de6-444a-8390-4c9326a533e5",
-    "title": "NAM Air Aerospatiale ATR 72-600; @SRG 2018",
-    "url": "https://live.staticflickr.com/1917/44296698835_e9524bc609_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/8bb0c588-3de6-444a-8390-4c9326a533e5/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/122786907@N03/44296698835",
-    "creator": "PK-REN",
-    "creator_url": "https://www.flickr.com/photos/122786907@N03",
+    "openverse_id": "eb04f2dc-504a-457a-ae38-d9c1a3a3fd5f",
+    "title": "ATR ATR-72-212",
+    "url": "https://live.staticflickr.com/2530/3960852944_ddabe68ef9_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/eb04f2dc-504a-457a-ae38-d9c1a3a3fd5f/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/96937621@N00/3960852944",
+    "creator": "Contando Estrelas",
+    "creator_url": "https://www.flickr.com/photos/96937621@N00",
     "license": "by-sa",
     "license_version": "2.0",
     "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
     "source": "flickr",
     "provider": "flickr",
     "width": 1024,
-    "height": 680,
-    "attribution": "\"NAM Air Aerospatiale ATR 72-600; @SRG 2018\" by PK-REN is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+    "height": 683,
+    "attribution": "\"ATR ATR-72-212\" by Contando Estrelas is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
   "021.jpg": {
     "openverse_id": "345a1ed6-8674-46a5-be36-a1ec11800799",
@@ -372,5 +372,22 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"White Airways > TAP Express CS-DJH ATR 72-600 (72-212A) cn/1323 @ LPPT / LIS 09-01-2017\" by Nabil Molinari Photography is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "022.jpg": {
+    "openverse_id": "8bb0c588-3de6-444a-8390-4c9326a533e5",
+    "title": "NAM Air Aerospatiale ATR 72-600; @SRG 2018",
+    "url": "https://live.staticflickr.com/1917/44296698835_e9524bc609_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/8bb0c588-3de6-444a-8390-4c9326a533e5/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/122786907@N03/44296698835",
+    "creator": "PK-REN",
+    "creator_url": "https://www.flickr.com/photos/122786907@N03",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 680,
+    "attribution": "\"NAM Air Aerospatiale ATR 72-600; @SRG 2018\" by PK-REN is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   }
 }

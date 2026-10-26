@@ -289,6 +289,23 @@
     "attribution": "\"Bombardier’s Learjet 60 XR\" by aeroman3 is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
   "017.jpg": {
+    "openverse_id": "561e2cd2-0f06-452b-bd59-f81933ec250e",
+    "title": "Learjet 60 cn89 N883RA b",
+    "url": "https://live.staticflickr.com/8606/16298998036_e46d575304_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/561e2cd2-0f06-452b-bd59-f81933ec250e/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/15162482@N08/16298998036",
+    "creator": "Bill Word",
+    "creator_url": "https://www.flickr.com/photos/15162482@N08",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Learjet 60 cn89 N883RA b\" by Bill Word is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+  },
+  "018.jpg": {
     "openverse_id": "692ebdf1-9459-490d-b91c-28a81025cb3b",
     "title": "Learjet 60 cn039 N57 Federal Aviation Administration",
     "url": "https://live.staticflickr.com/4298/35431301644_4f87443c31_b.jpg",
@@ -305,7 +322,7 @@
     "height": 682,
     "attribution": "\"Learjet 60 cn039 N57 Federal Aviation Administration\" by Bill Word is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
   },
-  "018.jpg": {
+  "019.jpg": {
     "openverse_id": "990b74be-a064-4905-9ad5-3d4f434ff98e",
     "title": "OE-GSV Learjet 60",
     "url": "https://live.staticflickr.com/3845/14346854358_e559d2c728_b.jpg",
@@ -322,7 +339,7 @@
     "height": 533,
     "attribution": "\"OE-GSV Learjet 60\" by ahisgett is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
   },
-  "019.jpg": {
+  "020.jpg": {
     "openverse_id": "c535b636-c079-4363-acad-d8105b24c6e1",
     "title": "Panaviatic, ES-LVA, Learjet 60",
     "url": "https://live.staticflickr.com/8728/16856435982_1cb2dce449_b.jpg",
@@ -339,7 +356,7 @@
     "height": 683,
     "attribution": "\"Panaviatic, ES-LVA, Learjet 60\" by Anna Zvereva is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
-  "020.jpg": {
+  "021.jpg": {
     "openverse_id": "1c728265-ed82-43dd-9f69-92eed13727fb",
     "title": "Learjet 60 cn60-149 EI-REX Airlink Airways - Ireland a",
     "url": "https://live.staticflickr.com/2939/14257847323_4c212eabde_b.jpg",
@@ -355,23 +372,6 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"Learjet 60 cn60-149 EI-REX Airlink Airways - Ireland a\" by Bill Word is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
-  },
-  "021.jpg": {
-    "openverse_id": "da903592-b9a0-41ab-98ac-85c095b510c4",
-    "title": "Cirrus Aviation Learjet 60 D-CROB",
-    "url": "https://live.staticflickr.com/725/21527874521_95c849ce8a_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/da903592-b9a0-41ab-98ac-85c095b510c4/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/136038106@N05/21527874521",
-    "creator": "M. Oertle",
-    "creator_url": "https://www.flickr.com/photos/136038106@N05",
-    "license": "by-nc-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
-    "source": "flickr",
-    "provider": "flickr",
-    "width": 1024,
-    "height": 683,
-    "attribution": "\"Cirrus Aviation Learjet 60 D-CROB\" by M. Oertle is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
   "022.jpg": {
     "openverse_id": "8ebf04cb-d25b-4e53-8a9b-f13eb6bf60eb",
@@ -391,21 +391,21 @@
     "attribution": "\"1994 LEARJET 60 (N923SK) 1\" by Jack Snell - Thanks for over 26 Million Views is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
   "023.jpg": {
-    "openverse_id": "49e5f369-c9f7-4506-8a21-ef0ca8c5582b",
-    "title": "5A-UAE(cn 60-385)Learjet 60 Government of Libya",
-    "url": "https://live.staticflickr.com/4907/45788951204_a8b3e1d2c5_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/49e5f369-c9f7-4506-8a21-ef0ca8c5582b/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/158802553@N04/45788951204",
-    "creator": "LFSB Planes Pictures",
-    "creator_url": "https://www.flickr.com/photos/158802553@N04",
-    "license": "by-nc-nd",
+    "openverse_id": "64ddc8d7-a826-4052-afc9-62e74d87c844",
+    "title": "N8JR 1996 Learjet 60 C/N 084 - McCarran International Airport, Las Vegas",
+    "url": "https://live.staticflickr.com/65535/53834474143_3833940360_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/64ddc8d7-a826-4052-afc9-62e74d87c844/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/45549579@N05/53834474143",
+    "creator": "TDelCoro",
+    "creator_url": "https://www.flickr.com/photos/45549579@N05",
+    "license": "by-sa",
     "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
     "source": "flickr",
     "provider": "flickr",
     "width": 1024,
-    "height": 682,
-    "attribution": "\"5A-UAE(cn 60-385)Learjet 60 Government of Libya\" by LFSB Planes Pictures is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+    "height": 448,
+    "attribution": "\"N8JR 1996 Learjet 60 C/N 084 - McCarran International Airport, Las Vegas\" by TDelCoro is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
   "024.jpg": {
     "openverse_id": "7215b971-eb9a-4e4e-be6d-36b9654e50e1",
@@ -457,5 +457,73 @@
     "width": 1024,
     "height": 681,
     "attribution": "\"I-PRAD (cn 60-145)Learjet 60 Prada\" by LFSB Planes Pictures is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+  },
+  "027.jpg": {
+    "openverse_id": "6449f39f-4442-4dea-974b-09e4cee2da41",
+    "title": "N383LJ(cn 60-383)Learjet 60 Global Flight Inc",
+    "url": "https://live.staticflickr.com/65535/48287857006_6f704764bf_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/6449f39f-4442-4dea-974b-09e4cee2da41/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/158802553@N04/48287857006",
+    "creator": "LFSB Planes Pictures",
+    "creator_url": "https://www.flickr.com/photos/158802553@N04",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 682,
+    "attribution": "\"N383LJ(cn 60-383)Learjet 60 Global Flight Inc\" by LFSB Planes Pictures is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+  },
+  "028.jpg": {
+    "openverse_id": "c674246b-e4a4-47e3-bf3e-2b447524517f",
+    "title": "Bombardieir LearJet 60 S/N: 60-217 - XA-VLA, at KHOU",
+    "url": "https://live.staticflickr.com/65535/52859350299_cd0d63dbde_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/c674246b-e4a4-47e3-bf3e-2b447524517f/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/44486929@N00/52859350299",
+    "creator": "AV8PIX Christopher Ebdon",
+    "creator_url": "https://www.flickr.com/photos/44486929@N00",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 636,
+    "attribution": "\"Bombardieir LearJet 60 S/N: 60-217 - XA-VLA, at KHOU\" by AV8PIX Christopher Ebdon is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "029.jpg": {
+    "openverse_id": "5588caf2-9117-4d89-afd8-20389d8e40de",
+    "title": "D-CHER (cn 60-148) Learjet 60 Heron Luftfahrt",
+    "url": "https://live.staticflickr.com/4861/45515970634_9f3dd38cc6_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/5588caf2-9117-4d89-afd8-20389d8e40de/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/158802553@N04/45515970634",
+    "creator": "LFSB Planes Pictures",
+    "creator_url": "https://www.flickr.com/photos/158802553@N04",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 681,
+    "attribution": "\"D-CHER (cn 60-148) Learjet 60 Heron Luftfahrt\" by LFSB Planes Pictures is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+  },
+  "030.jpg": {
+    "openverse_id": "3c1e4a54-02e7-481b-aff4-a625a6d21b6b",
+    "title": "ES-LVC (cn 60-281)Learjet 60 Panaviatic",
+    "url": "https://live.staticflickr.com/65535/49633860248_077abf4782_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/3c1e4a54-02e7-481b-aff4-a625a6d21b6b/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/158802553@N04/49633860248",
+    "creator": "LFSB Planes Pictures",
+    "creator_url": "https://www.flickr.com/photos/158802553@N04",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 682,
+    "attribution": "\"ES-LVC (cn 60-281)Learjet 60 Panaviatic\" by LFSB Planes Pictures is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
   }
 }

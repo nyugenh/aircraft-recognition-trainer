@@ -357,6 +357,23 @@
     "attribution": "\"Lufthansa CityLine Fokker 50; D-AFFG@ZRH;08.04.1995\" by Aero Icarus is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
   "021.jpg": {
+    "openverse_id": "713f1e85-59a9-4a19-8c84-bc58e1e2c87e",
+    "title": "ZURICH JUNE 1991 CROSSAIR FOKKER 50 HB-IAR, SPANAIR DOUGLAS MD83 EC-EOZ,KOREAN AIR BOEING 747-400 HL7481",
+    "url": "https://live.staticflickr.com/8681/16145631121_da95a6804e_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/713f1e85-59a9-4a19-8c84-bc58e1e2c87e/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/22317296@N04/16145631121",
+    "creator": "simonbutler2",
+    "creator_url": "https://www.flickr.com/photos/22317296@N04",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 685,
+    "attribution": "\"ZURICH JUNE 1991 CROSSAIR FOKKER 50 HB-IAR, SPANAIR DOUGLAS MD83 EC-EOZ,KOREAN AIR BOEING 747-400 HL7481\" by simonbutler2 is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
+  },
+  "022.jpg": {
     "openverse_id": "3775d664-bb67-451f-b90c-682d574fc1b6",
     "title": "316bk - KLM Cityhopper Fokker 50; PH-KVK@CDG;06.09.2004",
     "url": "https://live.staticflickr.com/4142/5410107323_6e1a08211b_b.jpg",
@@ -373,7 +390,24 @@
     "height": 684,
     "attribution": "\"316bk - KLM Cityhopper Fokker 50; PH-KVK@CDG;06.09.2004\" by Aero Icarus is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
-  "022.jpg": {
+  "023.jpg": {
+    "openverse_id": "47ebcd8f-886c-4dd7-8cd6-c2d236b08a96",
+    "title": "Formosa Airlines 國華航空 fokker-50",
+    "url": "https://live.staticflickr.com/4480/38130611471_be8dbefdb6_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/47ebcd8f-886c-4dd7-8cd6-c2d236b08a96/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/93805071@N04/38130611471",
+    "creator": "馬公哥 (Oscar / Makung)",
+    "creator_url": "https://www.flickr.com/photos/93805071@N04",
+    "license": "by-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 768,
+    "attribution": "\"Formosa Airlines 國華航空 fokker-50\" by 馬公哥 (Oscar / Makung) is licensed under CC BY-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nd/2.0/."
+  },
+  "024.jpg": {
     "openverse_id": "e0986b32-767a-4bdc-b3b9-845b488a6e6c",
     "title": "SE-LFS Fokker 50 Largus Aviation ARN 051214",
     "url": "https://live.staticflickr.com/8681/15952403051_e02c4f2518_b.jpg",
@@ -390,7 +424,7 @@
     "height": 576,
     "attribution": "\"SE-LFS Fokker 50 Largus Aviation ARN 051214\" by kitmasterbloke is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
   },
-  "023.jpg": {
+  "025.jpg": {
     "openverse_id": "43235e16-7b1b-42d0-aabe-654476d76b0e",
     "title": "Fokker 50 PH-KXX IMG_7077",
     "url": "https://live.staticflickr.com/7082/13276544323_36d3141e1c_b.jpg",
@@ -406,5 +440,39 @@
     "width": 1024,
     "height": 574,
     "attribution": "\"Fokker 50 PH-KXX IMG_7077\" by Ronnierob is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+  },
+  "026.jpg": {
+    "openverse_id": "35306149-5a9d-4842-be8e-6de5ae60bdd6",
+    "title": "Virgin Australia Regional Airlines Fokker 50 VH-FNB",
+    "url": "https://live.staticflickr.com/7377/12813000495_e5c9979b2d_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/35306149-5a9d-4842-be8e-6de5ae60bdd6/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/79527366@N06/12813000495",
+    "creator": "Lachlan Gatland Aviation Photography",
+    "creator_url": "https://www.flickr.com/photos/79527366@N06",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Virgin Australia Regional Airlines Fokker 50 VH-FNB\" by Lachlan Gatland Aviation Photography is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+  },
+  "027.jpg": {
+    "openverse_id": "7bba1617-a482-4a84-b7e2-8a8f521cd3ea",
+    "title": "OO-VLR Fokker 50 VLM",
+    "url": "https://live.staticflickr.com/2252/1632582881_908101fd65_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/7bba1617-a482-4a84-b7e2-8a8f521cd3ea/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/33225975@N00/1632582881",
+    "creator": "Jersey Airport Photography",
+    "creator_url": "https://www.flickr.com/photos/33225975@N00",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 768,
+    "attribution": "\"OO-VLR Fokker 50 VLM\" by Jersey Airport Photography is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
   }
 }

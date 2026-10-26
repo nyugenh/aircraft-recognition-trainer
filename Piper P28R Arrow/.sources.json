@@ -372,39 +372,5 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"Piper PA28R-200 Arrow II ‘G-BBFD’\" by HawkeyeUK is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
-  },
-  "022.jpg": {
-    "openverse_id": "f0347d4d-12b2-4d57-9645-0e49a7748efe",
-    "title": "G-BRLG Piper Turbo Cherokee Arrow IV",
-    "url": "https://live.staticflickr.com/8341/29425836051_c90862aca9_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/f0347d4d-12b2-4d57-9645-0e49a7748efe/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/95512093@N05/29425836051",
-    "creator": "Aircaft @ Gloucestershire Airport By James",
-    "creator_url": "https://www.flickr.com/photos/95512093@N05",
-    "license": "by-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-    "source": "flickr",
-    "provider": "flickr",
-    "width": 1024,
-    "height": 768,
-    "attribution": "\"G-BRLG Piper Turbo Cherokee Arrow IV\" by Aircaft @ Gloucestershire Airport By James is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
-  },
-  "023.jpg": {
-    "openverse_id": "ce0fb8e4-0c91-4d8c-85d9-19b843c6bdda",
-    "title": "G-STEA Pa28Cherokee Arrow CVT 16-04-15",
-    "url": "https://live.staticflickr.com/8706/16961269607_3796c9f8e0_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/ce0fb8e4-0c91-4d8c-85d9-19b843c6bdda/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/131806380@N05/16961269607",
-    "creator": "cvtperson",
-    "creator_url": "https://www.flickr.com/photos/131806380@N05",
-    "license": "by-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-    "source": "flickr",
-    "provider": "flickr",
-    "width": 1024,
-    "height": 683,
-    "attribution": "\"G-STEA Pa28Cherokee Arrow CVT 16-04-15\" by cvtperson is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   }
 }

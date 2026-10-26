@@ -423,22 +423,5 @@
     "width": 1024,
     "height": 660,
     "attribution": "\"Thomas Cook Airlines Airbus A320-214; G-DHJZ@MAN;14.05.2011/596ae\" by Aero Icarus is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
-  },
-  "025.jpg": {
-    "openverse_id": "6bf2c8ff-9392-4612-873e-67e54c26b7d6",
-    "title": "VietJetAir Airbus A320-214(WL) cn 6341 F-WWBP // VN-A697",
-    "url": "https://live.staticflickr.com/7559/15473552447_9c3ac6a55e_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/6bf2c8ff-9392-4612-873e-67e54c26b7d6/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/46799619@N04/15473552447",
-    "creator": "Clément Alloing - CAphotography",
-    "creator_url": "https://www.flickr.com/photos/46799619@N04",
-    "license": "by-nc-nd",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
-    "source": "flickr",
-    "provider": "flickr",
-    "width": 1024,
-    "height": 682,
-    "attribution": "\"VietJetAir Airbus A320-214(WL) cn 6341 F-WWBP // VN-A697\" by Clément Alloing - CAphotography is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
   }
 }

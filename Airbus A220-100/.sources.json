@@ -323,6 +323,23 @@
     "attribution": "\"Swiss Airbus A220-100; HB-JBA@ZRH;16.01.2020\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
   "019.jpg": {
+    "openverse_id": "3b2bd32a-a013-44e4-b00b-f859d32dcee6",
+    "title": "Swiss Airbus A220-100; HB-JBE@ZRH;02.08.2021",
+    "url": "https://live.staticflickr.com/65535/51353550493_cd6e7fcd15_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/3b2bd32a-a013-44e4-b00b-f859d32dcee6/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/46423105@N03/51353550493",
+    "creator": "Aero Icarus",
+    "creator_url": "https://www.flickr.com/photos/46423105@N03",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Swiss Airbus A220-100; HB-JBE@ZRH;02.08.2021\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "020.jpg": {
     "openverse_id": "c711be3e-8f23-4966-be1e-8b420b9001ab",
     "title": "Hamburg Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBG | MSN 50016",
     "url": "https://live.staticflickr.com/65535/49739791558_7c4231c3ac_b.jpg",
@@ -339,7 +356,7 @@
     "height": 683,
     "attribution": "\"Hamburg Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBG | MSN 50016\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
   },
-  "020.jpg": {
+  "021.jpg": {
     "openverse_id": "56ee80fd-995f-4ea1-a1b5-c3f943df2e99",
     "title": "Hamburg Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBG | MSN 50016",
     "url": "https://live.staticflickr.com/65535/49740338161_9d53692e3b_b.jpg",
@@ -356,7 +373,7 @@
     "height": 683,
     "attribution": "\"Hamburg Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBG | MSN 50016\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
   },
-  "021.jpg": {
+  "022.jpg": {
     "openverse_id": "1275ef22-0ecc-4bb4-ab3a-af85e2610adc",
     "title": "Swiss Airbus A220-100; HB-JBB@ZRH;08.07.2020",
     "url": "https://live.staticflickr.com/65535/50098785777_e682c07d13_b.jpg",
@@ -373,7 +390,7 @@
     "height": 683,
     "attribution": "\"Swiss Airbus A220-100; HB-JBB@ZRH;08.07.2020\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "022.jpg": {
+  "023.jpg": {
     "openverse_id": "bfce6e12-93c2-4bd3-9716-fe8ba4c4caf1",
     "title": "Swiss Airbus A220-100; HB-JBH@LHR;06.10.2022",
     "url": "https://live.staticflickr.com/65535/52446279072_80db557097_b.jpg",
@@ -390,7 +407,7 @@
     "height": 683,
     "attribution": "\"Swiss Airbus A220-100; HB-JBH@LHR;06.10.2022\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "023.jpg": {
+  "024.jpg": {
     "openverse_id": "3ae2b88f-fa60-4fcb-a679-50bfc753cf30",
     "title": "Swiss Airbus A220-100; HB-JBH@ZRH;22.02.2020",
     "url": "https://live.staticflickr.com/65535/49597838967_5af489fa73_b.jpg",
@@ -407,7 +424,7 @@
     "height": 683,
     "attribution": "\"Swiss Airbus A220-100; HB-JBH@ZRH;22.02.2020\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "024.jpg": {
+  "025.jpg": {
     "openverse_id": "ede3c978-83a7-41e5-b40b-1df0e62c98e5",
     "title": "Frankfurt Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBE | MSN 50014",
     "url": "https://live.staticflickr.com/65535/49003909692_15d224085d_b.jpg",
@@ -424,7 +441,7 @@
     "height": 683,
     "attribution": "\"Frankfurt Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBE | MSN 50014\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
   },
-  "025.jpg": {
+  "026.jpg": {
     "openverse_id": "982080ff-8991-44e8-928d-635883e416b5",
     "title": "Swiss Airbus A220-100; HB-JBH@ZRH;20.02.2022",
     "url": "https://live.staticflickr.com/65535/52068975238_c81d312aa4_b.jpg",
@@ -441,7 +458,7 @@
     "height": 683,
     "attribution": "\"Swiss Airbus A220-100; HB-JBH@ZRH;20.02.2022\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "026.jpg": {
+  "027.jpg": {
     "openverse_id": "3b443315-dd3f-4e4f-b09e-749f59e17e69",
     "title": "Swiss Airbus A220-100; HB-JBH@ZRH;08.07.2020",
     "url": "https://live.staticflickr.com/65535/50098786042_ae333e4223_b.jpg",
@@ -458,7 +475,7 @@
     "height": 683,
     "attribution": "\"Swiss Airbus A220-100; HB-JBH@ZRH;08.07.2020\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "027.jpg": {
+  "028.jpg": {
     "openverse_id": "c6b129ab-50ad-46e3-85a1-a7990c4eef8c",
     "title": "Swiss Airbus A220-100; HB-JBC@FRA;08.07.2020",
     "url": "https://live.staticflickr.com/65535/50097982838_a69e66bf2f_b.jpg",
@@ -475,7 +492,7 @@
     "height": 683,
     "attribution": "\"Swiss Airbus A220-100; HB-JBC@FRA;08.07.2020\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "028.jpg": {
+  "029.jpg": {
     "openverse_id": "634c58c8-8c95-4f83-85cc-023df1bdabeb",
     "title": "Frankfurt Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBA | MSN 50010",
     "url": "https://live.staticflickr.com/65535/48959042703_fb901da22a_b.jpg",
@@ -492,7 +509,7 @@
     "height": 683,
     "attribution": "\"Frankfurt Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBA | MSN 50010\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
   },
-  "029.jpg": {
+  "030.jpg": {
     "openverse_id": "38611f07-c4f5-401a-8d7e-a8789ee9abe8",
     "title": "Swiss Airbus A220-100; HB-JBD@ZRH;02.12.2020",
     "url": "https://live.staticflickr.com/65535/50672513767_e1d7aa7247_b.jpg",
@@ -508,5 +525,260 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"Swiss Airbus A220-100; HB-JBD@ZRH;02.12.2020\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "031.jpg": {
+    "openverse_id": "3676bfdf-655d-4d3b-92c8-ad2a32dd715d",
+    "title": "Flughafen Zürich: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBD | MSN 50013",
+    "url": "https://live.staticflickr.com/65535/49485326486_a01de320ce_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/3676bfdf-655d-4d3b-92c8-ad2a32dd715d/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/103921337@N03/49485326486",
+    "creator": "kevin.hackert",
+    "creator_url": "https://www.flickr.com/photos/103921337@N03",
+    "license": "by-nc",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Flughafen Zürich: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBD | MSN 50013\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+  },
+  "032.jpg": {
+    "openverse_id": "d848b070-84f2-4f24-9a82-3ae299307fb8",
+    "title": "Airbus A220-100 c/n 50011 Swiss registration HB-JBB",
+    "url": "https://live.staticflickr.com/65535/51432312136_a439c95e4f_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/d848b070-84f2-4f24-9a82-3ae299307fb8/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/136548402@N04/51432312136",
+    "creator": "Erwin's photo's",
+    "creator_url": "https://www.flickr.com/photos/136548402@N04",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 577,
+    "attribution": "\"Airbus A220-100 c/n 50011 Swiss registration HB-JBB\" by Erwin's photo's is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "033.jpg": {
+    "openverse_id": "07b35af3-8edb-4910-abb1-6da8f2a112c0",
+    "title": "Flughafen Zürich: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBA | MSN 50010",
+    "url": "https://live.staticflickr.com/65535/49497970203_c12833b1b4_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/07b35af3-8edb-4910-abb1-6da8f2a112c0/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/103921337@N03/49497970203",
+    "creator": "kevin.hackert",
+    "creator_url": "https://www.flickr.com/photos/103921337@N03",
+    "license": "by-nc",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Flughafen Zürich: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBA | MSN 50010\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+  },
+  "034.jpg": {
+    "openverse_id": "09aea4c4-c391-4b0e-a65c-709b7930ec87",
+    "title": "Frankfurt Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBG | MSN 50016",
+    "url": "https://live.staticflickr.com/65535/50126957798_aa4f795f65_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/09aea4c4-c391-4b0e-a65c-709b7930ec87/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/103921337@N03/50126957798",
+    "creator": "kevin.hackert",
+    "creator_url": "https://www.flickr.com/photos/103921337@N03",
+    "license": "by-nc",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Frankfurt Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBG | MSN 50016\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+  },
+  "035.jpg": {
+    "openverse_id": "f2ca9b7c-000d-42c8-8aa0-f7fd7918fe4b",
+    "title": "HB-JBI Swiss Airbus A220-100 3",
+    "url": "https://live.staticflickr.com/65535/52072522571_13c8756051_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/f2ca9b7c-000d-42c8-8aa0-f7fd7918fe4b/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/37804979@N00/52072522571",
+    "creator": "ahisgett",
+    "creator_url": "https://www.flickr.com/photos/37804979@N00",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 615,
+    "attribution": "\"HB-JBI Swiss Airbus A220-100 3\" by ahisgett is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
+  },
+  "036.jpg": {
+    "openverse_id": "f49a0787-3533-464e-8cdc-527c110ff424",
+    "title": "Airbus A220-100 Swiss",
+    "url": "https://live.staticflickr.com/65535/49405979392_3219aab0c6_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/f49a0787-3533-464e-8cdc-527c110ff424/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/186497969@N06/49405979392",
+    "creator": "south.jets",
+    "creator_url": "https://www.flickr.com/photos/186497969@N06",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 576,
+    "attribution": "\"Airbus A220-100 Swiss\" by south.jets is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+  },
+  "037.jpg": {
+    "openverse_id": "e8a987c7-0350-43e1-8f2d-cf3613bab7b1",
+    "title": "Hamburg Airport: Swiss Airbus A220-100 BCS1 HB-JBD MSN 50013",
+    "url": "https://live.staticflickr.com/65535/50564740822_e0ece11d39_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/e8a987c7-0350-43e1-8f2d-cf3613bab7b1/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/103921337@N03/50564740822",
+    "creator": "kevin.hackert",
+    "creator_url": "https://www.flickr.com/photos/103921337@N03",
+    "license": "by-nc",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Hamburg Airport: Swiss Airbus A220-100 BCS1 HB-JBD MSN 50013\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+  },
+  "038.jpg": {
+    "openverse_id": "464dc6ab-7747-489c-842d-6f35e754f967",
+    "title": "Frankfurt Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBI | MSN 50018",
+    "url": "https://live.staticflickr.com/65535/50661644342_d3f6a14250_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/464dc6ab-7747-489c-842d-6f35e754f967/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/103921337@N03/50661644342",
+    "creator": "kevin.hackert",
+    "creator_url": "https://www.flickr.com/photos/103921337@N03",
+    "license": "by-nc",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Frankfurt Airport: Swiss (LX / SWR) | Airbus A220-100 BCS1 | HB-JBI | MSN 50018\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+  },
+  "039.jpg": {
+    "openverse_id": "87cc4631-9d48-4898-a81f-acb11fb7ea76",
+    "title": "Airbus A220-100 ‘HB-JBI’ Swiss International Air Lines",
+    "url": "https://live.staticflickr.com/65535/53751161228_baf07f3849_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/87cc4631-9d48-4898-a81f-acb11fb7ea76/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/65001151@N03/53751161228",
+    "creator": "HawkeyeUK",
+    "creator_url": "https://www.flickr.com/photos/65001151@N03",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Airbus A220-100 ‘HB-JBI’ Swiss International Air Lines\" by HawkeyeUK is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+  },
+  "040.jpg": {
+    "openverse_id": "9a54dffd-dc28-4ccb-9c33-1bb0b8af2f57",
+    "title": "Swiss Airbus A220-100; HB-JBD@ZRH;06.02.2024",
+    "url": "https://live.staticflickr.com/65535/53513372274_a212bf9d67_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/9a54dffd-dc28-4ccb-9c33-1bb0b8af2f57/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/46423105@N03/53513372274",
+    "creator": "Aero Icarus",
+    "creator_url": "https://www.flickr.com/photos/46423105@N03",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Swiss Airbus A220-100; HB-JBD@ZRH;06.02.2024\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "041.jpg": {
+    "openverse_id": "fd2fa9aa-87ea-4c6a-b198-3a10fdfd61cc",
+    "title": "Airbus-A220-100-first-take-off",
+    "url": "https://live.staticflickr.com/1913/45530501082_c4fdb7c730_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/fd2fa9aa-87ea-4c6a-b198-3a10fdfd61cc/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/36442397@N05/45530501082",
+    "creator": "BreakingTravelNews",
+    "creator_url": "https://www.flickr.com/photos/36442397@N05",
+    "license": "by-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Airbus-A220-100-first-take-off\" by BreakingTravelNews is licensed under CC BY-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nd/2.0/."
+  },
+  "042.jpg": {
+    "openverse_id": "fc5f52d6-aa45-49dd-97a0-96f29003b394",
+    "title": "ITA Airways, EI-HLE, Airbus A220-100",
+    "url": "https://live.staticflickr.com/65535/53815962220_f5ce563fa5_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/fc5f52d6-aa45-49dd-97a0-96f29003b394/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/130961247@N06/53815962220",
+    "creator": "Anna Zvereva",
+    "creator_url": "https://www.flickr.com/photos/130961247@N06",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"ITA Airways, EI-HLE, Airbus A220-100\" by Anna Zvereva is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+  },
+  "043.jpg": {
+    "openverse_id": "73f3e65e-b9d3-4c3c-9987-d348649052ac",
+    "title": "Delta's A220 Inaugural Flight",
+    "url": "https://live.staticflickr.com/4855/47016508301_c92629891f_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/73f3e65e-b9d3-4c3c-9987-d348649052ac/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/142938205@N05/47016508301",
+    "creator": "DeltaNewsHub",
+    "creator_url": "https://www.flickr.com/photos/142938205@N05",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Delta's A220 Inaugural Flight\" by DeltaNewsHub is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
+  },
+  "044.jpg": {
+    "openverse_id": "7d88e66d-853e-484e-9b95-79d443492aaa",
+    "title": "YL-CSL Latvia 100 years Livery",
+    "url": "https://live.staticflickr.com/4886/31674378597_c1fa68bbe3_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/7d88e66d-853e-484e-9b95-79d443492aaa/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/7541883@N06/31674378597",
+    "creator": "Martin J. Gallego. Siempre enredando",
+    "creator_url": "https://www.flickr.com/photos/7541883@N06",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"YL-CSL Latvia 100 years Livery\" by Martin J. Gallego. Siempre enredando is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "045.jpg": {
+    "openverse_id": "092c6f5e-5ae3-4124-8be7-73c71faecaf3",
+    "title": "Godinot Gaisa spēku simtgadi, NBS Aviācijas bāzē notiek aviācijas paraugdemonstrējumi",
+    "url": "https://live.staticflickr.com/65535/48025392702_1ed20a713f_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/092c6f5e-5ae3-4124-8be7-73c71faecaf3/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/52010134@N05/48025392702",
+    "creator": "Latvijas armija",
+    "creator_url": "https://www.flickr.com/photos/52010134@N05",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Godinot Gaisa spēku simtgadi, NBS Aviācijas bāzē notiek aviācijas paraugdemonstrējumi\" by Latvijas armija is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
   }
 }

@@ -338,5 +338,39 @@
     "width": 1024,
     "height": 682,
     "attribution": "\"Chinook HC1 RAF\" by Rob Schleiffert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+  },
+  "020.jpg": {
+    "openverse_id": "9a75f4f4-7d27-4aa1-a07f-2d6a9afae736",
+    "title": "CH-47D '0-01641'",
+    "url": "https://live.staticflickr.com/7331/16592316831_a443e939f7_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/9a75f4f4-7d27-4aa1-a07f-2d6a9afae736/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/103579181@N02/16592316831",
+    "creator": "Ian E. Abbott",
+    "creator_url": "https://www.flickr.com/photos/103579181@N02",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"CH-47D '0-01641'\" by Ian E. Abbott is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "021.jpg": {
+    "openverse_id": "87d4c7b7-b46d-4efc-9913-dd104381f4f2",
+    "title": "CHINOOK & NISSAN",
+    "url": "https://live.staticflickr.com/4256/35111134870_8946a7034c_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/87d4c7b7-b46d-4efc-9913-dd104381f4f2/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/7541883@N06/35111134870",
+    "creator": "Martin J. Gallego. Siempre enredando",
+    "creator_url": "https://www.flickr.com/photos/7541883@N06",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"CHINOOK & NISSAN\" by Martin J. Gallego. Siempre enredando is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   }
 }

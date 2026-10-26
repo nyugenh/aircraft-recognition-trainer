@@ -255,6 +255,23 @@
     "attribution": "\"US Navy N327DS / 168438\" by Drewski2112 is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
   },
   "015.jpg": {
+    "openverse_id": "1a3eaa35-8cd3-4dca-b32b-cee96f3783ca",
+    "title": "P-3C VP-16",
+    "url": "https://live.staticflickr.com/8667/16661750405_5397027191_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/1a3eaa35-8cd3-4dca-b32b-cee96f3783ca/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/109661044@N07/16661750405",
+    "creator": "Rob Schleiffert",
+    "creator_url": "https://www.flickr.com/photos/109661044@N07",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 682,
+    "attribution": "\"P-3C VP-16\" by Rob Schleiffert is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+  },
+  "016.jpg": {
     "openverse_id": "150ca58d-7522-4e1f-8aea-eece180fcd48",
     "title": "RAAF P-8",
     "url": "https://live.staticflickr.com/4839/40443310783_58e4d16003_b.jpg",

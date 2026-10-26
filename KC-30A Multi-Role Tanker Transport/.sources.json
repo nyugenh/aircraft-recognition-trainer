@@ -340,23 +340,6 @@
     "attribution": "\"KC-30A A39-001\" by joolsgriff is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
   },
   "020.jpg": {
-    "openverse_id": "58e78218-c96b-4744-a4ba-757096cb1492",
-    "title": "Airbus A310-324 MRTT EC-HLA",
-    "url": "https://live.staticflickr.com/3736/33302700796_a039d9ef94_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/58e78218-c96b-4744-a4ba-757096cb1492/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/97026550@N00/33302700796",
-    "creator": "Pavel Vanka",
-    "creator_url": "https://www.flickr.com/photos/97026550@N00",
-    "license": "by-nc-nd",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
-    "source": "flickr",
-    "provider": "flickr",
-    "width": 1024,
-    "height": 683,
-    "attribution": "\"Airbus A310-324 MRTT EC-HLA\" by Pavel Vanka is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
-  },
-  "021.jpg": {
     "openverse_id": "99e384f2-83dc-4433-8f34-6b0d0044e56f",
     "title": "G-VYGM CHANNEX",
     "url": "https://live.staticflickr.com/65535/48505362916_78eafc18a7_b.jpg",
@@ -373,7 +356,7 @@
     "height": 683,
     "attribution": "\"G-VYGM CHANNEX\" by Martin J. Gallego. Siempre enredando is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "022.jpg": {
+  "021.jpg": {
     "openverse_id": "6809147c-cf8d-4892-8c44-7ee91e8769c0",
     "title": "Avión cisterna Airbus A-310 MRTT",
     "url": "https://live.staticflickr.com/3940/15536028211_6bfe6a1b36_b.jpg",
@@ -390,7 +373,7 @@
     "height": 682,
     "attribution": "\"Avión cisterna Airbus A-310 MRTT\" by Contando Estrelas is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
-  "023.jpg": {
+  "022.jpg": {
     "openverse_id": "037a1117-4454-490f-91ac-dc1bdd8037bb",
     "title": "AIRBUS A330-243 MRTT (MSN 1830)",
     "url": "https://live.staticflickr.com/7808/40354318863_39943057d7_b.jpg",
@@ -407,7 +390,7 @@
     "height": 557,
     "attribution": "\"AIRBUS A330-243 MRTT (MSN 1830)\" by PHOTOGRAPHE31 F-EGUT is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "024.jpg": {
+  "023.jpg": {
     "openverse_id": "330bb4cf-06b1-4808-b9fa-d95a9494742b",
     "title": "Flugbereitschaft BMVg",
     "url": "https://live.staticflickr.com/4122/4857698463_284ea7ea7f_b.jpg",

@@ -272,23 +272,40 @@
     "attribution": "\"ZJ260 Aerospatiale AS355 Ecureil (Squirrel) Defence Helicopter Training School\" by kitmasterbloke is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
   },
   "016.jpg": {
-    "openverse_id": "76192a5b-2259-4006-9a8a-dccee23456bd",
-    "title": "G-SEPA 05",
-    "url": "https://live.staticflickr.com/2262/2067118284_103dd00471_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/76192a5b-2259-4006-9a8a-dccee23456bd/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/78684649@N00/2067118284",
-    "creator": "dModer101",
-    "creator_url": "https://www.flickr.com/photos/78684649@N00",
-    "license": "by-nc-nd",
+    "openverse_id": "83e33850-1456-4ff1-aa0a-1e7a69671aff",
+    "title": "G-WENA",
+    "url": "https://live.staticflickr.com/8102/8489500043_75a17369b2_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/83e33850-1456-4ff1-aa0a-1e7a69671aff/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/41153475@N04/8489500043",
+    "creator": "markyharky",
+    "creator_url": "https://www.flickr.com/photos/41153475@N04",
+    "license": "by",
     "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
     "source": "flickr",
     "provider": "flickr",
     "width": 1024,
-    "height": 683,
-    "attribution": "\"G-SEPA 05\" by dModer101 is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+    "height": 682,
+    "attribution": "\"G-WENA\" by markyharky is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
   },
   "017.jpg": {
+    "openverse_id": "13cbe912-560f-48d4-bffe-65077e124024",
+    "title": "ZJ260 Aerospatiale AS355 Ecureil (Squirrel) Defence Helicopter Training School",
+    "url": "https://live.staticflickr.com/8323/28967788612_1281c8174a_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/13cbe912-560f-48d4-bffe-65077e124024/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/58415659@N00/28967788612",
+    "creator": "kitmasterbloke",
+    "creator_url": "https://www.flickr.com/photos/58415659@N00",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 652,
+    "attribution": "\"ZJ260 Aerospatiale AS355 Ecureil (Squirrel) Defence Helicopter Training School\" by kitmasterbloke is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
+  },
+  "018.jpg": {
     "openverse_id": "c51472c3-e2c9-466f-8a5a-37b2d0f46bfc",
     "title": "ZJ260 Aerospatiale AS355 Ecureil (Squirrel) Defence Helicopter Training School",
     "url": "https://live.staticflickr.com/8434/29073169475_57e8ec990b_b.jpg",
@@ -305,7 +322,7 @@
     "height": 673,
     "attribution": "\"ZJ260 Aerospatiale AS355 Ecureil (Squirrel) Defence Helicopter Training School\" by kitmasterbloke is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
   },
-  "018.jpg": {
+  "019.jpg": {
     "openverse_id": "fb71730c-c89d-4e2e-8508-3cdd4e15884f",
     "title": "G-KLNM",
     "url": "https://live.staticflickr.com/65535/50275339128_01d02a6d02_b.jpg",
@@ -322,7 +339,7 @@
     "height": 683,
     "attribution": "\"G-KLNM\" by Mike Burdett is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
-  "019.jpg": {
+  "020.jpg": {
     "openverse_id": "7cdddd5f-af69-488b-a310-552a612c15ba",
     "title": "G-SEPA 07",
     "url": "https://live.staticflickr.com/2346/2067119122_9e6fbecb6d_b.jpg",
@@ -338,5 +355,22 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"G-SEPA 07\" by dModer101 is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+  },
+  "021.jpg": {
+    "openverse_id": "76192a5b-2259-4006-9a8a-dccee23456bd",
+    "title": "G-SEPA 05",
+    "url": "https://live.staticflickr.com/2262/2067118284_103dd00471_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/76192a5b-2259-4006-9a8a-dccee23456bd/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/78684649@N00/2067118284",
+    "creator": "dModer101",
+    "creator_url": "https://www.flickr.com/photos/78684649@N00",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"G-SEPA 05\" by dModer101 is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
   }
 }

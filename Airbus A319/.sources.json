@@ -374,11 +374,11 @@
     "attribution": "\"United Airlines Airbus A319-131 N816UA / 4016 (cn 871)\" by TDelCoro is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   },
   "022.jpg": {
-    "openverse_id": "6e177d18-639d-4fe6-8636-1a1bfc50ff75",
-    "title": "B-4091 | China United Airlines | Airbus A319-115 | LXA",
-    "url": "https://live.staticflickr.com/3690/11965015706_85e65cf3bc_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/6e177d18-639d-4fe6-8636-1a1bfc50ff75/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/95234688@N07/11965015706",
+    "openverse_id": "cdfc8b01-de16-47ab-ba74-37d008794f08",
+    "title": "B-6438 | Tibet Airlines | Airbus A319-115 | CKG",
+    "url": "https://live.staticflickr.com/7420/9656001546_9ee667d2ab_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/cdfc8b01-de16-47ab-ba74-37d008794f08/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/95234688@N07/9656001546",
     "creator": "byeangel",
     "creator_url": "https://www.flickr.com/photos/95234688@N07",
     "license": "by-sa",
@@ -388,6 +388,23 @@
     "provider": "flickr",
     "width": 1024,
     "height": 683,
-    "attribution": "\"B-4091 | China United Airlines | Airbus A319-115 | LXA\" by byeangel is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+    "attribution": "\"B-6438 | Tibet Airlines | Airbus A319-115 | CKG\" by byeangel is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+  },
+  "023.jpg": {
+    "openverse_id": "cc723fd1-fa75-4a77-b77d-3d3801bab088",
+    "title": "B-6438 | Tibet Airlines | Airbus A319-115 | CKG",
+    "url": "https://live.staticflickr.com/3701/10537090035_f113a85679_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/cc723fd1-fa75-4a77-b77d-3d3801bab088/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/95234688@N07/10537090035",
+    "creator": "byeangel",
+    "creator_url": "https://www.flickr.com/photos/95234688@N07",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"B-6438 | Tibet Airlines | Airbus A319-115 | CKG\" by byeangel is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   }
 }

@@ -423,22 +423,5 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"D-CKPP (cn DC-805B) Fairchild SA-227DC Metro 23 BinAir\" by LFSB Planes Pictures is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
-  },
-  "025.jpg": {
-    "openverse_id": "e9a40c37-a59e-4401-9e7f-d238f05a02f7",
-    "title": "OY-NPE Fairchild Dornier SA227-DC Metro IV SW4 c/n DC-867B > NFA",
-    "url": "https://live.staticflickr.com/4774/25919410947_7115033922_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/e9a40c37-a59e-4401-9e7f-d238f05a02f7/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/78631472@N03/25919410947",
-    "creator": "FlugZüge",
-    "creator_url": "https://www.flickr.com/photos/78631472@N03",
-    "license": "by-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-    "source": "flickr",
-    "provider": "flickr",
-    "width": 1024,
-    "height": 683,
-    "attribution": "\"OY-NPE Fairchild Dornier SA227-DC Metro IV SW4 c/n DC-867B > NFA\" by FlugZüge is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   }
 }

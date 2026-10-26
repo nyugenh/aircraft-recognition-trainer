@@ -459,20 +459,20 @@
     "attribution": "\"2011-08-21 11-12-48 - CPD Bell 206 Jet Range\" by pkrehbiel is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
   "027.jpg": {
-    "openverse_id": "afd23f8c-b94d-4cc2-a851-96ed8c155b9d",
-    "title": "G-WIIZ Bell Jet Ranger 206 (Private)",
-    "url": "https://live.staticflickr.com/928/43727895971_af4a4fe9b2_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/afd23f8c-b94d-4cc2-a851-96ed8c155b9d/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/95512093@N05/43727895971",
-    "creator": "Aircaft @ Gloucestershire Airport By James",
-    "creator_url": "https://www.flickr.com/photos/95512093@N05",
-    "license": "by-sa",
+    "openverse_id": "76474cbc-8252-44de-8ea9-35d23b677f7d",
+    "title": "G-CDYR, Bell 206 Long Ranger, Yorkshire Helicopters, Leeds Coney Park",
+    "url": "https://live.staticflickr.com/65535/53006206095_efeeddd84f_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/76474cbc-8252-44de-8ea9-35d23b677f7d/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/60911558@N04/53006206095",
+    "creator": "Ian A Gratton",
+    "creator_url": "https://www.flickr.com/photos/60911558@N04",
+    "license": "by",
     "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
     "source": "flickr",
     "provider": "flickr",
     "width": 1024,
-    "height": 768,
-    "attribution": "\"G-WIIZ Bell Jet Ranger 206 (Private)\" by Aircaft @ Gloucestershire Airport By James is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+    "height": 683,
+    "attribution": "\"G-CDYR, Bell 206 Long Ranger, Yorkshire Helicopters, Leeds Coney Park\" by Ian A Gratton is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
   }
 }

@@ -372,22 +372,5 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"Qantaslink | VH-TQD | De Havilland Canada DHC-8-300 Dash 8 / 8Q | Sydney Kingsford Smith International Airport (SYD/YSSY)\" by mitchul is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
-  },
-  "022.jpg": {
-    "openverse_id": "4d0708cb-384c-4efb-8f3c-56cc751370db",
-    "title": "Qantaslink | VH-TQM | De Havilland Canada DHC-8-300 Dash 8 / 8Q | Melbourne International Airport (MEL/YMML)",
-    "url": "https://live.staticflickr.com/65535/52541796385_511b56b4f6_b.jpg",
-    "thumbnail": "https://api.openverse.org/v1/images/4d0708cb-384c-4efb-8f3c-56cc751370db/thumb/",
-    "foreign_landing_url": "https://www.flickr.com/photos/142639316@N06/52541796385",
-    "creator": "mitchul",
-    "creator_url": "https://www.flickr.com/photos/142639316@N06",
-    "license": "by-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-    "source": "flickr",
-    "provider": "flickr",
-    "width": 1024,
-    "height": 684,
-    "attribution": "\"Qantaslink | VH-TQM | De Havilland Canada DHC-8-300 Dash 8 / 8Q | Melbourne International Airport (MEL/YMML)\" by mitchul is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   }
 }

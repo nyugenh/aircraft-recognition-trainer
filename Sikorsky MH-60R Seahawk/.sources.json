@@ -340,6 +340,23 @@
     "attribution": "\"101116-N-7498L-028\" by U.S. Pacific Fleet is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
   },
   "020.jpg": {
+    "openverse_id": "6b676ab4-a182-4d8b-84c3-61df46e653b3",
+    "title": "Sikorsky MH-60R Seahawk USN 167071 o",
+    "url": "https://live.staticflickr.com/3873/14936280918_526f1092ec_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/6b676ab4-a182-4d8b-84c3-61df46e653b3/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/15162482@N08/14936280918",
+    "creator": "Bill Word",
+    "creator_url": "https://www.flickr.com/photos/15162482@N08",
+    "license": "by-nc-nd",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Sikorsky MH-60R Seahawk USN 167071 o\" by Bill Word is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+  },
+  "021.jpg": {
     "openverse_id": "83936c78-c79d-40c8-9e9a-700ed70eda31",
     "title": "MH-60R N48-024",
     "url": "https://live.staticflickr.com/65535/52734248840_8426111111_b.jpg",
@@ -356,7 +373,7 @@
     "height": 683,
     "attribution": "\"MH-60R N48-024\" by joolsgriff is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
   },
-  "021.jpg": {
+  "022.jpg": {
     "openverse_id": "a0acd8d4-23d7-480c-aa9f-64c8c9ec08e4",
     "title": "Sikorsky MH-60R Seahawk BuNo 166147 - USN HSM-72 Helicopter Maritime Strike Squadron Seven-Two 'Proud Warriors'",
     "url": "https://live.staticflickr.com/65535/52470639546_279f94163a_b.jpg",
@@ -373,7 +390,7 @@
     "height": 650,
     "attribution": "\"Sikorsky MH-60R Seahawk BuNo 166147 - USN HSM-72 Helicopter Maritime Strike Squadron Seven-Two 'Proud Warriors'\" by AV8PIX Christopher Ebdon is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "022.jpg": {
+  "023.jpg": {
     "openverse_id": "8b7ad1f2-6fc4-4291-b0ad-cf0d0c0b737c",
     "title": "Royal Australian Navy (RAN) Sikorsky MH-60R Seahawk",
     "url": "https://live.staticflickr.com/867/41894997772_89a60d2a1b_b.jpg",

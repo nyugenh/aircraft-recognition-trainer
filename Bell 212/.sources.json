@@ -306,6 +306,23 @@
     "attribution": "\"Bell 212 Sri Lanka Air Force serial SUH547\" by Erwin's photo's is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
   "018.jpg": {
+    "openverse_id": "786e1252-9165-4bfd-af6f-687b212e4ff9",
+    "title": "Bell 212 Huey firefighting helicopters",
+    "url": "https://live.staticflickr.com/65535/52484854606_337dc956a4_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/786e1252-9165-4bfd-af6f-687b212e4ff9/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/13861037@N00/52484854606",
+    "creator": "tropicostation",
+    "creator_url": "https://www.flickr.com/photos/13861037@N00",
+    "license": "by-nc",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Bell 212 Huey firefighting helicopters\" by tropicostation is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+  },
+  "019.jpg": {
     "openverse_id": "c068888c-53e8-49b8-9b03-cfa8c0bf0df3",
     "title": "D-HHPP",
     "url": "https://live.staticflickr.com/3777/13176352744_4659d2207f_b.jpg",
@@ -322,7 +339,7 @@
     "height": 682,
     "attribution": "\"D-HHPP\" by joseluiscel (Aviapics) is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
   },
-  "019.jpg": {
+  "020.jpg": {
     "openverse_id": "7f3701af-2160-4d65-aec7-01092650cd66",
     "title": "AB212 Italian Army",
     "url": "https://live.staticflickr.com/4202/34525837924_5106ab80c2_b.jpg",
