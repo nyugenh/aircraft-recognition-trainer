@@ -314,12 +314,19 @@ select:disabled {
 }
 
 /* Desktop: fit the whole quiz in the viewport so photo and answers show together. */
-@media (min-width: 48rem) and (min-height: 32rem) {
+@media (min-width: 36.0625rem) and (min-height: 32rem) {
   .app {
     --bottom-reserve: 0rem;
 
     min-height: 100dvh;
+    max-height: 100dvh;
     gap: 0.75rem;
+  }
+
+  .image-container:not(:has(.speed-comparison)) {
+    flex: 0 1 auto;
+    min-height: 5rem;
+    max-height: min(49dvh, 40rem);
   }
 
   .controls {
@@ -348,11 +355,6 @@ select:disabled {
     padding-block: 0.6rem;
   }
 
-  .image-container:not(:has(.speed-comparison)) {
-    min-height: 0;
-    max-height: max(9rem, calc(100dvh - 28rem));
-  }
-
   .app .answers.reverse {
     max-height: none;
     overflow-y: visible;
@@ -364,16 +366,12 @@ select:disabled {
     max-height: clamp(6rem, calc(50dvh - 14rem), 21rem);
   }
 
-  .app .ranking-photo {
-    max-height: clamp(4rem, 12dvh, 14rem);
-  }
-
-  .app .ranking-item {
+  html .ranking-item {
     padding-block: 0.3rem;
   }
 
-  .app .ranking-photo-wrap {
-    width: clamp(5rem, 14vw, 13rem);
+  html .ranking-photo-wrap {
+    width: clamp(4rem, min(calc(16dvh - 1.5rem), 22vw), 13rem);
   }
 
   .app #speed-ranking-list {
@@ -796,7 +794,9 @@ select:disabled {
   min-height: 0;
   max-height: 8rem;
   overflow: hidden;
-  background: var(--navy-deep);
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.045) 25%, transparent 25%) 0 0 / 22px 22px,
+    var(--navy-deep);
 }
 
 .speed-aircraft-photo:has(.loading-message, .loading-error) {
@@ -926,20 +926,18 @@ select:disabled {
   position: relative;
   flex: none;
   width: clamp(6rem, 24vw, 13rem);
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 0.55rem;
-  background: var(--navy-deep);
-}
-
-.ranking-photo-wrap:has(.loading-message, .loading-error) {
-  aspect-ratio: 16 / 9;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.045) 25%, transparent 25%) 0 0 / 22px 22px,
+    var(--navy-deep);
 }
 
 .ranking-photo {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 14rem;
+  height: 100%;
   object-fit: contain;
 }
 
@@ -1313,7 +1311,7 @@ body.ranking-is-dragging * {
   }
 }
 
-@media (min-width: 30rem) {
+@media (min-width: 36.0625rem) {
   .speed-comparison {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(0.75rem, 1.5vw, 1rem);
@@ -1326,7 +1324,7 @@ body.ranking-is-dragging * {
   }
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 36.0625rem) {
   .photo-choice-name {
     min-height: calc(1.35em + 1.2rem);
   }
@@ -1338,7 +1336,7 @@ body.ranking-is-dragging * {
   }
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 36rem) {
   .ranking-item:has(.ranking-photo-wrap:not([hidden])) .ranking-details {
     flex-direction: column;
     align-items: stretch;
@@ -1347,6 +1345,7 @@ body.ranking-is-dragging * {
 
   .ranking-item:has(.ranking-photo-wrap:not([hidden])) .ranking-photo-wrap {
     width: 100%;
+    aspect-ratio: 2.6 / 1;
   }
 
   .ranking-item:has(.ranking-photo-wrap:not([hidden])) .ranking-controls {
