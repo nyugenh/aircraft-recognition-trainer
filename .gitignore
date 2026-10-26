@@ -1,6 +1,26 @@
+# Model weights (large; re-downloadable)
 *.pt
-*.py
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# Secrets / local config
+.env
+.env.*
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and scratch
+*.log
+*.tmp
 *.pdf
-aircraft_images
-image_sources.json
-.deleted_images
