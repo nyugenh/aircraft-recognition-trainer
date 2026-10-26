@@ -113,7 +113,7 @@ img {
 }
 
 .app {
-  --bottom-reserve: 7rem;
+  --bottom-reserve: 0rem;
   --content-max-width: 78rem;
 
   display: flex;
@@ -311,6 +311,82 @@ select:disabled {
   height: 100%;
   object-fit: contain;
   transition: opacity 200ms var(--ease);
+}
+
+/* Desktop: fit the whole quiz in the viewport so photo and answers show together. */
+@media (min-width: 48rem) and (min-height: 32rem) {
+  .app {
+    --bottom-reserve: 0rem;
+
+    min-height: 100dvh;
+    gap: 0.75rem;
+  }
+
+  .controls {
+    padding: 0.6rem 0.9rem;
+  }
+
+  .controls label {
+    gap: 0.25rem;
+  }
+
+  .controls select {
+    min-height: 2.5rem;
+    padding-block: 0.4rem;
+  }
+
+  .answers {
+    gap: 0.5rem;
+  }
+
+  .answers:not(.reverse) button {
+    min-height: 3rem;
+    padding-block: 0.5rem;
+  }
+
+  .bottom {
+    padding-block: 0.6rem;
+  }
+
+  .image-container:not(:has(.speed-comparison)) {
+    min-height: 0;
+    max-height: max(9rem, calc(100dvh - 28rem));
+  }
+
+  .app .answers.reverse {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .app .answers.reverse .photo-choice-img-wrap,
+  .app .answers.reverse .photo-choice-img-wrap img,
+  .app .answers.reverse .photo-choice-img-wrap:has(.loading-message, .loading-error) {
+    max-height: clamp(6rem, calc(50dvh - 14rem), 21rem);
+  }
+
+  .app .ranking-photo {
+    max-height: clamp(4rem, 12dvh, 14rem);
+  }
+
+  .app .ranking-item {
+    padding-block: 0.3rem;
+  }
+
+  .app .ranking-photo-wrap {
+    width: clamp(5rem, 14vw, 13rem);
+  }
+
+  .app #speed-ranking-list {
+    gap: 0.4rem;
+  }
+
+  .app .speed-ranking {
+    gap: 0.5rem;
+  }
+
+  .app #check-ranking {
+    min-height: 2.6rem;
+  }
 }
 
 #aircraft-image,
@@ -947,25 +1023,25 @@ body.ranking-is-dragging * {
 }
 
 .bottom {
-  position: fixed;
+  position: sticky;
   bottom: 0;
-  inset-inline: 0;
   z-index: 10;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 1rem;
-  width: 100%;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
   padding: 0.8rem
     max(
       var(--gutter),
-      calc((100% - var(--content-max-width)) / 2 + var(--gutter)),
+      calc((100vw - var(--content-max-width)) / 2 + var(--gutter)),
       env(safe-area-inset-right)
     )
     max(0.8rem, env(safe-area-inset-bottom))
     max(
       var(--gutter),
-      calc((100% - var(--content-max-width)) / 2 + var(--gutter)),
+      calc((100vw - var(--content-max-width)) / 2 + var(--gutter)),
       env(safe-area-inset-left)
     );
   border-top: 1px solid rgb(255 255 255 / 0.08);
@@ -1280,7 +1356,7 @@ body.ranking-is-dragging * {
 
 @media (max-width: 36rem) {
   .app {
-    --bottom-reserve: 9rem;
+    --bottom-reserve: 0rem;
   }
 
   .controls {
@@ -1319,9 +1395,26 @@ body.ranking-is-dragging * {
     min-height: 2.9rem;
   }
 
-  .image-container {
-    aspect-ratio: 1.35 / 1;
-    min-height: 12rem;
+  .image-container:not(:has(.speed-comparison)) {
+    aspect-ratio: auto;
+    min-height: 0;
+    max-height: none;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  .image-container:has(.loading-message:not(.hidden), .loading-error:not(.hidden)) {
+    width: 100%;
+    min-height: 10rem;
+  }
+
+  .image-container:not(:has(.speed-comparison)) #aircraft-image {
+    position: static;
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
     max-height: 45dvh;
   }
 
@@ -1428,7 +1521,7 @@ body.ranking-is-dragging * {
     overflow: visible;
   }
 
-  .image-container {
+  .image-container:not(:has(.speed-comparison)) #aircraft-image {
     max-height: 40dvh;
   }
 }

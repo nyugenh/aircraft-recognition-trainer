@@ -1148,7 +1148,7 @@ function resetAnswerUI() {
     button.removeAttribute('aria-hidden');
     button.setAttribute('aria-label', `Answer option ${index + 1}`);
   });
-  answerContainer.classList.remove('reverse');
+  answerContainer.classList.remove('reverse', 'speed-comparison-answers');
   answerContainer.hidden = false;
   typeAnswerContainer.hidden = true;
   typeAnswerContainer.classList.remove('correct', 'partial', 'incorrect');
@@ -1258,7 +1258,7 @@ function finishAnswer() {
 // 12. Displaying Answer Choices
 // ============================================================================
 function displayTextAnswerChoices(choices, disabled = false) {
-  answerContainer.classList.remove('reverse');
+  answerContainer.classList.remove('reverse', 'speed-comparison-answers');
   answerContainer.hidden = false;
   answerButtons.forEach((button, index) => {
     const choice = choices[index];
@@ -1321,6 +1321,7 @@ function displaySpecialChoices(choices, correctAnswer, disabled = false) {
 }
 
 async function displayPhotoAnswerChoices(choices) {
+  answerContainer.classList.remove('speed-comparison-answers');
   answerContainer.classList.add('reverse');
   answerContainer.hidden = false;
   const photoOptions = [];
