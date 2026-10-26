@@ -31,6 +31,12 @@ const QUESTION_TYPES = new Set([
 ]);
 
 const WAKE_CATEGORIES = ['Light', 'Medium', 'Heavy', 'Super'];
+const WAKE_CATEGORY_INFO = {
+  Light: 'MTOW ≤ 7,000 kg',
+  Medium: 'MTOW > 7,000 kg and < 136,000 kg',
+  Heavy: 'MTOW ≥ 136,000 kg',
+  Super: 'Airbus A380',
+};
 
 const KEYBOARD_HELP =
   'Keyboard shortcuts: 1 through 4 select an answer. ' +
@@ -1607,7 +1613,7 @@ async function displayWakeQuestion(item) {
   specialQuestionData = {
     type: 'wake',
     correctAnswer: correctCategory,
-    feedbackAnswer: correctCategory,
+    feedbackAnswer: `${correctCategory} (${WAKE_CATEGORY_INFO[correctCategory]})`,
   };
   promptElement.replaceChildren();
   promptElement.appendChild(

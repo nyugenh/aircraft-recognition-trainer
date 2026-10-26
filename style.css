@@ -31,6 +31,10 @@
 
   --radius: 1rem;
   --radius-sm: 0.7rem;
+  --shadow-sm: 0 2px 5px rgb(0 0 0 / 0.16);
+  --photo-pattern:
+    linear-gradient(135deg, rgb(255 255 255 / 0.045) 25%, transparent 25%) 0 0 / 22px 22px,
+    var(--navy-deep);
   --target: 2.75rem;
   --gutter: clamp(1rem, 3vw, 2rem);
   --shadow-card: 0 2px 4px rgb(0 0 0 / 0.15), 0 12px 32px rgb(0 0 0 / 0.2);
@@ -313,80 +317,6 @@ select:disabled {
   transition: opacity 200ms var(--ease);
 }
 
-/* Desktop: fit the whole quiz in the viewport so photo and answers show together. */
-@media (min-width: 36.0625rem) and (min-height: 32rem) {
-  .app {
-    --bottom-reserve: 0rem;
-
-    min-height: 100dvh;
-    max-height: 100dvh;
-    gap: 0.75rem;
-  }
-
-  .image-container:not(:has(.speed-comparison)) {
-    flex: 0 1 auto;
-    min-height: 5rem;
-    max-height: min(49dvh, 40rem);
-  }
-
-  .controls {
-    padding: 0.6rem 0.9rem;
-  }
-
-  .controls label {
-    gap: 0.25rem;
-  }
-
-  .controls select {
-    min-height: 2.5rem;
-    padding-block: 0.4rem;
-  }
-
-  .answers {
-    gap: 0.5rem;
-  }
-
-  .answers:not(.reverse) button {
-    min-height: 3rem;
-    padding-block: 0.5rem;
-  }
-
-  .bottom {
-    padding-block: 0.6rem;
-  }
-
-  .app .answers.reverse {
-    max-height: none;
-    overflow-y: visible;
-  }
-
-  .app .answers.reverse .photo-choice-img-wrap,
-  .app .answers.reverse .photo-choice-img-wrap img,
-  .app .answers.reverse .photo-choice-img-wrap:has(.loading-message, .loading-error) {
-    max-height: clamp(6rem, calc(50dvh - 14rem), 21rem);
-  }
-
-  html .ranking-item {
-    padding-block: 0.3rem;
-  }
-
-  html .ranking-photo-wrap {
-    width: clamp(4rem, min(calc(16dvh - 1.5rem), 22vw), 13rem);
-  }
-
-  .app #speed-ranking-list {
-    gap: 0.4rem;
-  }
-
-  .app .speed-ranking {
-    gap: 0.5rem;
-  }
-
-  .app #check-ranking {
-    min-height: 2.6rem;
-  }
-}
-
 #aircraft-image,
 .speed-aircraft-photo img,
 .ranking-photo-wrap img {
@@ -401,11 +331,15 @@ select:disabled {
   visibility: hidden;
 }
 
-.loading-message {
+.loading-message,
+.loading-error {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
+}
+
+.loading-message {
   pointer-events: none;
 }
 
@@ -420,10 +354,6 @@ select:disabled {
 }
 
 .loading-error {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
   padding: 0.75rem;
   color: #ffb0a7;
   font-size: 0.875rem;
@@ -499,7 +429,7 @@ select:disabled {
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   background: var(--surface);
-  box-shadow: 0 2px 5px rgb(0 0 0 / 0.16);
+  box-shadow: var(--shadow-sm);
   color: var(--ink);
   text-align: start;
   font-weight: 660;
@@ -561,8 +491,10 @@ select:disabled {
 }
 
 .answers button.correct::after,
-.answers button.incorrect::after {
-  display: grid;
+.answers button.incorrect::after,
+.ranking-item.correct .ranking-name::after,
+.ranking-item.incorrect .ranking-name::after {
+  display: inline-grid;
   flex: none;
   place-items: center;
   width: 1.55rem;
@@ -615,9 +547,7 @@ select:disabled {
   place-items: center;
   width: 100%;
   max-height: clamp(8rem, 23dvh, 21rem);
-  background:
-    linear-gradient(135deg, rgb(255 255 255 / 0.045) 25%, transparent 25%) 0 0 / 22px 22px,
-    var(--navy-deep);
+  background: var(--photo-pattern);
 }
 
 .answers.reverse .photo-choice-img-wrap:has(.loading-message, .loading-error) {
@@ -794,9 +724,7 @@ select:disabled {
   min-height: 0;
   max-height: 8rem;
   overflow: hidden;
-  background:
-    linear-gradient(135deg, rgb(255 255 255 / 0.045) 25%, transparent 25%) 0 0 / 22px 22px,
-    var(--navy-deep);
+  background: var(--photo-pattern);
 }
 
 .speed-aircraft-photo:has(.loading-message, .loading-error) {
@@ -826,11 +754,6 @@ select:disabled {
   text-align: center;
 }
 
-.speed-aircraft .speed-name,
-.speed-aircraft .aircraft-name {
-  padding: 0.85rem 1rem;
-}
-
 .speed-ranking {
   display: grid;
   gap: 0.85rem;
@@ -854,7 +777,7 @@ select:disabled {
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   background: var(--surface);
-  box-shadow: 0 2px 5px rgb(0 0 0 / 0.16);
+  box-shadow: var(--shadow-sm);
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -863,34 +786,11 @@ select:disabled {
 
 .ranking-item.correct,
 .ranking-item.incorrect {
-  animation: rankingFadeIn 220ms var(--ease);
-}
-
-@keyframes rankingFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  animation: photoFadeIn 220ms var(--ease);
 }
 
 .ranking-item .ranking-controls {
   touch-action: manipulation;
-}
-
-.ranking-item.correct .ranking-name::after,
-.ranking-item.incorrect .ranking-name::after {
-  display: inline-grid;
-  flex: none;
-  place-items: center;
-  width: 1.55rem;
-  height: 1.55rem;
-  border-radius: 50%;
-  color: var(--canvas);
-  font-size: 0.9rem;
-  font-weight: 850;
-  line-height: 1;
 }
 
 .ranking-item.correct .ranking-name::after {
@@ -929,9 +829,8 @@ select:disabled {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 0.55rem;
-  background:
-    linear-gradient(135deg, rgb(255 255 255 / 0.045) 25%, transparent 25%) 0 0 / 22px 22px,
-    var(--navy-deep);
+  background: var(--photo-pattern);
+  background-size: 10px 10px, auto;
 }
 
 .ranking-photo {
@@ -1322,9 +1221,7 @@ body.ranking-is-dragging * {
     height: clamp(10rem, 26dvh, 20rem);
     max-height: 20rem;
   }
-}
 
-@media (min-width: 36.0625rem) {
   .photo-choice-name {
     min-height: calc(1.35em + 1.2rem);
   }
@@ -1351,9 +1248,7 @@ body.ranking-is-dragging * {
   .ranking-item:has(.ranking-photo-wrap:not([hidden])) .ranking-controls {
     flex-direction: column;
   }
-}
 
-@media (max-width: 36rem) {
   .app {
     --bottom-reserve: 0rem;
   }
@@ -1511,6 +1406,72 @@ body.ranking-is-dragging * {
 
   .controls label {
     grid-template-columns: minmax(3.7rem, 0.27fr) minmax(0, 1fr);
+  }
+}
+
+/* Desktop: fit the whole quiz in the viewport so photo and answers show together. */
+@media (min-width: 36.0625rem) and (min-height: 32rem) {
+  .app {
+    --bottom-reserve: 0rem;
+
+    min-height: 100dvh;
+    max-height: 100dvh;
+    gap: 0.75rem;
+  }
+
+  .image-container:not(:has(.speed-comparison)) {
+    flex: 0 1 auto;
+    min-height: 5rem;
+    max-height: min(49dvh, 40rem);
+  }
+
+  .controls {
+    padding: 0.6rem 0.9rem;
+  }
+
+  .controls label {
+    gap: 0.25rem;
+  }
+
+  .controls select {
+    min-height: 2.5rem;
+    padding-block: 0.4rem;
+  }
+
+  .answers:not(.reverse) button {
+    min-height: 3rem;
+    padding-block: 0.5rem;
+  }
+
+  .answers.reverse {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .answers.reverse .photo-choice-img-wrap,
+  .answers.reverse .photo-choice-img-wrap img,
+  .answers.reverse .photo-choice-img-wrap:has(.loading-message, .loading-error) {
+    max-height: clamp(6rem, calc(50dvh - 14rem), 21rem);
+  }
+
+  .ranking-item {
+    padding-block: 0.3rem;
+  }
+
+  .ranking-photo-wrap {
+    width: clamp(4rem, min(calc(16dvh - 1.5rem), 22vw), 13rem);
+  }
+
+  #speed-ranking-list {
+    gap: 0.4rem;
+  }
+
+  .speed-ranking {
+    gap: 0.5rem;
+  }
+
+  #check-ranking {
+    min-height: 2.6rem;
   }
 }
 
