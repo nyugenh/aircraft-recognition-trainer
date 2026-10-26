@@ -29,14 +29,9 @@
         "025.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 90,
-        "max": 100
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 95,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "2",
@@ -65,14 +60,9 @@
         "017.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 122,
-        "max": 122
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 122,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "3",
@@ -103,14 +93,9 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 140,
-        "max": 150
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 145,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "4",
@@ -136,14 +121,9 @@
         "017.jpg",
         "018.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 140,
-        "max": 150
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 145,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "5",
@@ -173,14 +153,9 @@
         "024.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 170,
-        "max": 170
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "6",
@@ -211,14 +186,9 @@
         "023.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 100,
-        "max": 120
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 110,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "7",
@@ -249,14 +219,9 @@
         "029.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 110,
-        "max": 130
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 120,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "8",
@@ -287,14 +252,9 @@
         "020.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 130,
-        "max": 150
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 140,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "9",
@@ -317,14 +277,9 @@
         "014.jpg",
         "016.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 140,
-        "max": 160
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 150,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "10",
@@ -355,14 +310,9 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 200,
-        "max": 200
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "11",
@@ -382,14 +332,9 @@
         "007.jpg",
         "008.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 160,
-        "max": 180
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "12",
@@ -406,14 +351,9 @@
         "004.jpg",
         "005.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 160,
-        "max": 180
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "13",
@@ -436,14 +376,9 @@
         "011.jpg",
         "012.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 150,
-        "max": 170
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 160,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "14",
@@ -474,14 +409,9 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 160,
-        "max": 180
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "15",
@@ -512,14 +442,9 @@
         "019.jpg",
         "020.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 50,
-        "max": 100
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 90,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "16",
@@ -541,14 +466,9 @@
         "015.jpg",
         "016.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 50,
-        "max": 100
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 100,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "17",
@@ -579,14 +499,9 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 180,
-        "max": 180
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 180,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "18",
@@ -617,14 +532,9 @@
         "030.jpg",
         "031.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 150,
-        "max": 180
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "19",
@@ -650,14 +560,9 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 170,
-        "max": 170
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "20",
@@ -686,14 +591,9 @@
         "019.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 180,
-        "max": 220
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "21",
@@ -719,14 +619,9 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 150,
-        "max": 180
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "22",
@@ -757,14 +652,9 @@
         "021.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 175,
-        "max": 175
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 175,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "23",
@@ -795,14 +685,9 @@
         "027.jpg",
         "028.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 150,
-        "max": 180
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "24",
@@ -833,14 +718,9 @@
         "019.jpg",
         "020.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 210,
-        "max": 210
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 210,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "25",
@@ -871,14 +751,9 @@
         "025.jpg",
         "026.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 180,
-        "max": 200
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 190,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "26",
@@ -906,14 +781,9 @@
         "015.jpg",
         "016.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 155,
-        "max": 155
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 155,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "27",
@@ -944,14 +814,9 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 150,
-        "max": 200
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 175,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "28",
@@ -982,14 +847,9 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 140,
-        "max": 160
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 150,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "29",
@@ -1020,14 +880,9 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 130,
-        "max": 150
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 140,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "30",
@@ -1057,14 +912,9 @@
         "024.jpg",
         "025.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 150,
-        "max": 190
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "31",
@@ -1095,14 +945,9 @@
         "021.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 270,
-        "max": 270
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 270,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "32",
@@ -1133,14 +978,9 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 160,
-        "max": 160
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 160,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "33",
@@ -1168,14 +1008,9 @@
         "021.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 240,
-        "max": 280
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 260,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "34",
@@ -1206,14 +1041,9 @@
         "029.jpg",
         "032.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 300,
-        "max": 300
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 300,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "35",
@@ -1244,14 +1074,9 @@
         "019.jpg",
         "020.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 280,
-        "max": 280
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 280,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "36",
@@ -1282,14 +1107,9 @@
         "028.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 290,
-        "max": 290
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 290,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "37",
@@ -1320,14 +1140,9 @@
         "023.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 270,
-        "max": 270
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 270,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "38",
@@ -1358,14 +1173,9 @@
         "026.jpg",
         "028.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 250,
-        "max": 250
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 250,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "39",
@@ -1396,14 +1206,9 @@
         "020.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 250,
-        "max": 250
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 250,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "40",
@@ -1434,14 +1239,9 @@
         "025.jpg",
         "026.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 360,
-        "max": 360
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 360,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "41",
@@ -1468,14 +1268,9 @@
         "019.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 275,
-        "max": 275
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 275,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "42",
@@ -1498,14 +1293,9 @@
         "012.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 240,
-        "max": 270
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 255,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "43",
@@ -1536,14 +1326,9 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 240,
-        "max": 240
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 240,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "44",
@@ -1577,14 +1362,9 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 400,
-        "max": 460
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "45",
@@ -1619,14 +1399,9 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 400,
-        "max": 460
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "46",
@@ -1667,14 +1442,9 @@
         "029.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 400,
-        "max": 460
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "47",
@@ -1705,14 +1475,9 @@
         "023.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 470,
-        "max": 490
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 480,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "48",
@@ -1731,14 +1496,9 @@
         "042.jpg",
         "045.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 480,
-        "max": 480
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 480,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "49",
@@ -1769,14 +1529,9 @@
         "030.jpg",
         "031.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 470,
-        "max": 490
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 488,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "50",
@@ -1807,14 +1562,9 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 490,
-        "max": 490
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 490,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "51",
@@ -1845,14 +1595,9 @@
         "024.jpg",
         "025.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 450,
-        "max": 480
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 465,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "52",
@@ -1883,14 +1628,9 @@
         "027.jpg",
         "028.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 360,
-        "max": 370
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 365,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "53",
@@ -1921,14 +1661,9 @@
         "019.jpg",
         "020.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 430,
-        "max": 470
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "54",
@@ -1955,14 +1690,9 @@
         "027.jpg",
         "028.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.9,
-        "max": 0.9
-      },
+      "cruise_speed_kt": 488,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "55",
@@ -1993,14 +1723,9 @@
         "025.jpg",
         "026.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 450,
-        "max": 480
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 465,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "56",
@@ -2020,14 +1745,9 @@
         "009.jpg",
         "010.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 400,
-        "max": 450
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 425,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "57",
@@ -2058,14 +1778,9 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 430,
-        "max": 460
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "58",
@@ -2096,14 +1811,9 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 400,
-        "max": 440
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 420,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "59",
@@ -2134,14 +1844,9 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.78,
-        "max": 0.78
-      },
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "60",
@@ -2172,14 +1877,9 @@
         "022.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.78,
-        "max": 0.78
-      },
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "61",
@@ -2210,14 +1910,9 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.78,
-        "max": 0.78
-      },
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "62",
@@ -2248,14 +1943,9 @@
         "028.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.78,
-        "max": 0.78
-      },
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "63",
@@ -2282,14 +1972,9 @@
         "041.jpg",
         "042.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.7,
-        "max": 0.7
-      },
+      "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "64",
@@ -2320,14 +2005,9 @@
         "025.jpg",
         "026.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.7,
-        "max": 0.7
-      },
+      "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "65",
@@ -2358,14 +2038,9 @@
         "025.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.78,
-        "max": 0.8
-      },
+      "cruise_speed_kt": 453,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "66",
@@ -2396,14 +2071,9 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.78,
-        "max": 0.8
-      },
+      "cruise_speed_kt": 453,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "67",
@@ -2434,14 +2104,9 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.78,
-        "max": 0.8
-      },
+      "cruise_speed_kt": 453,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "68",
@@ -2472,14 +2137,9 @@
         "055.jpg",
         "056.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.74,
-        "max": 0.76
-      },
+      "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "69",
@@ -2510,14 +2170,9 @@
         "030.jpg",
         "031.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.76,
-        "max": 0.76
-      },
+      "cruise_speed_kt": 440,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "70",
@@ -2548,14 +2203,9 @@
         "023.jpg",
         "025.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.7,
-        "max": 0.7
-      },
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "71",
@@ -2586,14 +2236,9 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.7,
-        "max": 0.7
-      },
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "72",
@@ -2621,14 +2266,9 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.67,
-        "max": 0.67
-      },
+      "cruise_speed_kt": 380,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "73",
@@ -2659,14 +2299,9 @@
         "023.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.67,
-        "max": 0.67
-      },
+      "cruise_speed_kt": 380,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "74",
@@ -2697,14 +2332,9 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.67,
-        "max": 0.67
-      },
+      "cruise_speed_kt": 380,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "75",
@@ -2735,14 +2365,9 @@
         "031.jpg",
         "032.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.78,
-        "max": 0.8
-      },
+      "cruise_speed_kt": 458,
       "wake_category": "Medium",
-      "wake_category_when_leading": "Heavy",
-      "speed_type": "cruise"
+      "wake_category_when_leading": "Heavy"
     },
     {
       "key": "76",
@@ -2773,14 +2398,9 @@
         "022.jpg",
         "025.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.75,
-        "max": 0.78
-      },
+      "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "77",
@@ -2804,14 +2424,9 @@
         "019.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.75,
-        "max": 0.78
-      },
+      "cruise_speed_kt": 447,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "78",
@@ -2842,14 +2457,9 @@
         "025.jpg",
         "026.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.855,
-        "max": 0.855
-      },
+      "cruise_speed_kt": 490,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "79",
@@ -2874,14 +2484,9 @@
         "016.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.84,
-        "max": 0.84
-      },
+      "cruise_speed_kt": 482,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "80",
@@ -2903,14 +2508,9 @@
         "025.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.85,
-        "max": 0.85
-      },
+      "cruise_speed_kt": 488,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "81",
@@ -2941,14 +2541,9 @@
         "033.jpg",
         "035.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.81,
-        "max": 0.81
-      },
+      "cruise_speed_kt": 470,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "82",
@@ -2979,14 +2574,9 @@
         "029.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.82,
-        "max": 0.82
-      },
+      "cruise_speed_kt": 475,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "83",
@@ -3005,14 +2595,9 @@
         "016.jpg",
         "020.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.85,
-        "max": 0.85
-      },
+      "cruise_speed_kt": 488,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "84",
@@ -3032,14 +2617,9 @@
         "021.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.85,
-        "max": 0.85
-      },
+      "cruise_speed_kt": 488,
       "wake_category": "Super",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "85",
@@ -3070,14 +2650,9 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 120,
-        "max": 120
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 120,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "86",
@@ -3098,14 +2673,9 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 125,
-        "max": 125
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 125,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "87",
@@ -3127,14 +2697,9 @@
         "013.jpg",
         "014.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 125,
-        "max": 125
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 125,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "88",
@@ -3158,11 +2723,9 @@
         "015.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 121,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "89",
@@ -3189,14 +2752,9 @@
         "023.jpg",
         "1792992451834721200_019.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 145,
-        "max": 145
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 145,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "90",
@@ -3227,14 +2785,9 @@
         "031.jpg",
         "032.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 124,
-        "max": 124
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 124,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "91",
@@ -3265,14 +2818,9 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 157,
-        "max": 157
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 157,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "92",
@@ -3303,14 +2851,9 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 82,
-        "max": 82
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 82,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "93",
@@ -3341,11 +2884,9 @@
         "022.jpg",
         "025.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 110,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "94",
@@ -3370,14 +2911,9 @@
         "020.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 124,
-        "max": 124
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 124,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "95",
@@ -3396,14 +2932,9 @@
         "015.jpg",
         "018.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 150,
-        "max": 150
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 150,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "96",
@@ -3433,14 +2964,9 @@
         "021.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 150,
-        "max": 150
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 150,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "97",
@@ -3466,14 +2992,9 @@
         "020.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 145,
-        "max": 145
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 145,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "98",
@@ -3501,14 +3022,9 @@
         "022.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 150,
-        "max": 150
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 150,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "99",
@@ -3539,14 +3055,9 @@
         "020.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 135,
-        "max": 135
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 135,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "100",
@@ -3564,14 +3075,9 @@
         "006.jpg",
         "007.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.86,
-        "max": 0.86
-      },
+      "cruise_speed_kt": 570,
       "wake_category": "Unknown",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "101",
@@ -3595,14 +3101,9 @@
         "014.jpg",
         "015.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 1.6,
-        "max": 1.6
-      },
+      "cruise_speed_kt": 610,
       "wake_category": "Unknown",
-      "wake_category_when_leading": null,
-      "speed_type": "maximum"
+      "wake_category_when_leading": null
     },
     {
       "key": "102",
@@ -3633,14 +3134,9 @@
         "032.jpg",
         "034.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.88,
-        "max": 0.88
-      },
+      "cruise_speed_kt": 520,
       "wake_category": "Unknown",
-      "wake_category_when_leading": null,
-      "speed_type": "maximum"
+      "wake_category_when_leading": null
     },
     {
       "key": "103",
@@ -3661,14 +3157,9 @@
         "013.jpg",
         "014.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.76,
-        "max": 0.76
-      },
+      "cruise_speed_kt": 450,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "104",
@@ -3700,14 +3191,9 @@
         "029.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 330,
-        "max": 330
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 330,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "105",
@@ -3729,14 +3215,9 @@
         "014.jpg",
         "016.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.78,
-        "max": 0.8
-      },
+      "cruise_speed_kt": 453,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "106",
@@ -3767,14 +3248,9 @@
         "027.jpg",
         "028.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 370,
-        "max": 370
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 370,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "107",
@@ -3798,14 +3274,9 @@
         "014.jpg",
         "015.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.76,
-        "max": 0.76
-      },
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "108",
@@ -3836,14 +3307,9 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": {
-        "min": 0.81,
-        "max": 0.81
-      },
+      "cruise_speed_kt": 470,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "109",
@@ -3865,14 +3331,9 @@
         "010.jpg",
         "012.jpg"
       ],
-      "cruise_speed_kt": {
-        "min": 240,
-        "max": 240
-      },
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 240,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     },
     {
       "key": "110",
@@ -3903,11 +3364,9 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": null,
-      "cruise_speed_mach": null,
+      "cruise_speed_kt": 488,
       "wake_category": null,
-      "wake_category_when_leading": null,
-      "speed_type": "cruise"
+      "wake_category_when_leading": null
     }
   ]
 }

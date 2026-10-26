@@ -10,7 +10,6 @@
 // ============================================================================
 const MANIFEST_PATH = 'manifest.json';
 const ASSET_FOLDER = '';
-const KNOTS_PER_MACH = 573;
 
 const ANSWER_MODES = [
   { value: 'name', label: 'Name (choose)', semantic: 'name' },
@@ -701,101 +700,32 @@ function getSpeedComparisonPrompt(first, second) {
 // ============================================================================
 // 8. Speed & Wake Calculations
 // ============================================================================
-function getCruiseSpeedRange(item) {
+function getCruiseSpeed(item) {
   const speed = item?.cruise_speed_kt;
-  if (!speed) return null;
-  const min = Number(speed.min);
-  const max = Number(speed.max);
-  if (
-    speed.min == null ||
-    speed.max == null ||
-    !Number.isFinite(min) ||
-    !Number.isFinite(max) ||
-    min < 0 ||
-    min > max
-  ) {
-    return null;
-  }
-  return { min, max };
+  if (speed == null || speed === '') return null;
+  const value = Number(speed);
+  return Number.isFinite(value) && value > 0 ? value : null;
 }
 
-function getMachCruiseRange(item) {
-  const speed =
-    item?.cruise_speed_mach ?? item?.cruise_mach ?? item?.mach_cruise;
+// Bands [min, max) chosen to split the manifest's 80-610 kt values fairly evenly.
+const SPEED_SEGMENTS = [
+  { min: -Infinity, max: 150, label: 'Below 150 kt' },
+  { min: 150, max: 250, label: '150 to below 250 kt' },
+  { min: 250, max: 450, label: '250 to below 450 kt' },
+  { min: 450, max: Infinity, label: '450 kt or above' },
+];
+
+function getSpeedSegment(item) {
+  const speed = getCruiseSpeed(item);
   if (speed == null) return null;
-  const min = Number(typeof speed === 'object' ? speed.min : speed);
-  const max = Number(typeof speed === 'object' ? speed.max : speed);
-  if (
-    !Number.isFinite(min) ||
-    !Number.isFinite(max) ||
-    min <= 0 ||
-    min > max ||
-    max > 2
-  )
-    return null;
-  return { min, max };
-}
-
-const getSpeedRange = (item, unit) =>
-  unit === 'mach' ? getMachCruiseRange(item) : getCruiseSpeedRange(item);
-
-function getSpeedSegments(unit) {
-  const isMach = unit === 'mach';
-  const [first, second, third] = isMach ? [0.75, 0.8, 0.85] : [150, 250, 350];
-  const format = (value) => (isMach ? value.toFixed(2) : `${value} kt`);
-  const prefix = isMach ? 'Mach ' : '';
-
-  return [
-    {
-      min: -Infinity,
-      max: first,
-      minInclusive: false,
-      maxInclusive: false,
-      label: `Below ${prefix}${format(first)}`,
-    },
-    {
-      min: first,
-      max: second,
-      minInclusive: true,
-      maxInclusive: false,
-      label: `${prefix}${format(first)} to below ${format(second)}`,
-    },
-    {
-      min: second,
-      max: third,
-      minInclusive: true,
-      maxInclusive: true,
-      label: `${prefix}${format(second)}–${format(third)}`,
-    },
-    {
-      min: third,
-      max: Infinity,
-      minInclusive: false,
-      maxInclusive: false,
-      label: `Above ${prefix}${format(third)}`,
-    },
-  ];
-}
-
-function getSpeedSegment(item, unit) {
-  const range = getSpeedRange(item, unit);
-  if (!range) return null;
-  const speed = (range.min + range.max) / 2;
   return (
-    getSpeedSegments(unit).find((segment) => {
-      const aboveMinimum = segment.minInclusive
-        ? speed >= segment.min
-        : speed > segment.min;
-      const belowMaximum = segment.maxInclusive
-        ? speed <= segment.max
-        : speed < segment.max;
-      return aboveMinimum && belowMaximum;
-    }) ?? null
+    SPEED_SEGMENTS.find(
+      (segment) => speed >= segment.min && speed < segment.max,
+    ) ?? null
   );
 }
 
-const getSpeedChoices = (unit) =>
-  getSpeedSegments(unit).map((segment) => segment.label);
+const getSpeedChoices = () => SPEED_SEGMENTS.map((segment) => segment.label);
 
 function getWakeCategory(item) {
   const value = displayText(item?.wake_category).toLowerCase();
@@ -850,8 +780,7 @@ function filterPoolForCombination(pool) {
   if (questionType === 'speed') {
     return pool.filter(
       (item) =>
-        (Boolean(getCruiseSpeedRange(item)) ||
-          Boolean(getMachCruiseRange(item))) &&
+        getCruiseSpeed(item) != null &&
         Boolean(
           getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
         ),
@@ -861,8 +790,7 @@ function filterPoolForCombination(pool) {
     return pool.filter(
       (item) =>
         getAircraftImages(item).length > 0 &&
-        (Boolean(getCruiseSpeedRange(item)) ||
-          Boolean(getMachCruiseRange(item))) &&
+        getCruiseSpeed(item) != null &&
         Boolean(
           getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
         ),
@@ -1422,24 +1350,19 @@ async function displayPhotoAnswerChoices(choices) {
 // ============================================================================
 // 13. Special Questions (Cruise Speed, Wake, Comparisons, Rankings)
 // ============================================================================
-function displayCruiseSpeedQuestion(item, unit) {
-  const correctSegment = getSpeedSegment(item, unit);
+function displayCruiseSpeedQuestion(item) {
+  const correctSegment = getSpeedSegment(item);
   const imagePath = getRandomImagePath(item);
-  const choices = getSpeedChoices(unit);
+  const choices = getSpeedChoices();
   if (!correctSegment || !imagePath || choices.length !== 4) {
     setLoading(false);
     promptElement.textContent = 'Unable to create a cruise speed question.';
     feedbackElement.textContent =
-      'Check that cruise-speed ranges are available in manifest.json.';
+      'Check that cruise_speed_kt values are available in manifest.json.';
     return false;
   }
   const correctAnswer = correctSegment.label;
-  const speedRange = getSpeedRange(item, unit);
-  const representativeSpeed = (speedRange.min + speedRange.max) / 2;
-  const feedbackAnswer =
-    unit === 'mach'
-      ? `Mach ${representativeSpeed.toFixed(2)}`
-      : `${Math.round(representativeSpeed)} kt`;
+  const feedbackAnswer = `${Math.round(getCruiseSpeed(item))} kt`;
   specialQuestionData = { type: 'cruise-speed', correctAnswer, feedbackAnswer };
   promptElement.replaceChildren();
   const identifier = getSpecialAircraftIdentifier(item);
@@ -1470,7 +1393,7 @@ function displayCruiseSpeedQuestion(item, unit) {
 
 function getSpeedComparisonPair() {
   const pool = getValidAircraftPool().flatMap((item) => {
-    const speed = getRankingSpeed(item);
+    const speed = getCruiseSpeed(item);
     return speed ? [{ item, speed }] : [];
   });
   const pairs = [];
@@ -1490,35 +1413,17 @@ function getSpeedComparisonPair() {
         .trim()
         .toLowerCase();
       if (firstName && firstName === secondName) continue;
-      if (
-        Math.round(first.speed.representative) ===
-        Math.round(second.speed.representative)
-      ) {
+      if (first.speed === second.speed) {
         sameSpeedPairs.push({
           first: first.item,
           second: second.item,
           answer: 'Same speed',
         });
-      } else if (first.speed.min > second.speed.max) {
+      } else {
         pairs.push({
           first: first.item,
           second: second.item,
-          answer: 'Faster',
-        });
-      } else if (first.speed.max < second.speed.min) {
-        pairs.push({
-          first: first.item,
-          second: second.item,
-          answer: 'Slower',
-        });
-      } else if (
-        first.speed.min === second.speed.min &&
-        first.speed.max === second.speed.max
-      ) {
-        pairs.push({
-          first: first.item,
-          second: second.item,
-          answer: 'Same speed',
+          answer: first.speed > second.speed ? 'Faster' : 'Slower',
         });
       }
     }
@@ -1638,30 +1543,6 @@ async function displayWakeQuestion(item) {
   }
 }
 
-function getRankingSpeed(item) {
-  const knots = getCruiseSpeedRange(item);
-  if (knots)
-    return {
-      unit: 'kt',
-      min: knots.min,
-      max: knots.max,
-      representative: (knots.min + knots.max) / 2,
-    };
-  const mach = getMachCruiseRange(item);
-  if (mach) {
-    const min = mach.min * KNOTS_PER_MACH;
-    const max = mach.max * KNOTS_PER_MACH;
-    return {
-      unit: 'kt',
-      min,
-      max,
-      representative: (min + max) / 2,
-      convertedFromMach: true,
-    };
-  }
-  return null;
-}
-
 function getRankingItemKey(item) {
   const key = displayText(item?.key);
   if (key) return `key:${key}`;
@@ -1672,16 +1553,9 @@ function getRankingItemKey(item) {
 
 function getSpeedRankingItems() {
   const entries = getSelectedAircraftPool().flatMap((item) => {
-    const speed = getRankingSpeed(item);
+    const speed = getCruiseSpeed(item);
     if (!speed || !getRankingItemKey(item)) return [];
-    return [
-      {
-        item,
-        range: { min: speed.min, max: speed.max },
-        speed: speed.representative,
-        unit: speed.unit,
-      },
-    ];
+    return [{ item, speed }];
   });
   if (entries.length < 4) return null;
 
@@ -1720,10 +1594,10 @@ function getSpeedRankingResults(entries, actualKeys) {
     for (const other of entries) {
       if (entry === other) continue;
       const otherPosition = actualPosition.get(getRankingItemKey(other.item));
-      if (other.range.max < entry.range.min) {
+      if (other.speed < entry.speed) {
         slowerCount += 1;
         correct = correct && otherPosition < position;
-      } else if (other.range.min > entry.range.max) {
+      } else if (other.speed > entry.speed) {
         fasterCount += 1;
         correct = correct && otherPosition > position;
       }
@@ -2383,7 +2257,6 @@ async function nextQuestion() {
   }
 
   let item = null;
-  let cruiseSpeedUnit = null;
   const repeatedAircraftKey =
     getPreviousSingleQuestionAircraftKey(questionType);
   if (questionType === 'cruise-speed') {
@@ -2391,13 +2264,9 @@ async function nextQuestion() {
     for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
       const candidate = chooseAircraft(repeatedAircraftKey);
       if (!candidate) break;
-      const units = [
-        ...(getCruiseSpeedRange(candidate) ? ['kt'] : []),
-        ...(getMachCruiseRange(candidate) ? ['mach'] : []),
-      ].filter((unit) => getSpeedSegment(candidate, unit));
-      if (!units.length || !getAircraftImages(candidate).length) continue;
+      if (!getSpeedSegment(candidate) || !getAircraftImages(candidate).length)
+        continue;
       item = candidate;
-      cruiseSpeedUnit = randomItem(units);
       break;
     }
     if (!item) {
@@ -2428,7 +2297,7 @@ async function nextQuestion() {
   currentAircraft = item;
   recordAircraftShown(item);
   if (questionType === 'cruise-speed') {
-    displayCruiseSpeedQuestion(item, cruiseSpeedUnit);
+    displayCruiseSpeedQuestion(item);
     return;
   }
   if (questionType === 'wake') {
