@@ -31,7 +31,8 @@
       ],
       "cruise_speed_kt": 95,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 735
     },
     {
       "key": "2",
@@ -62,7 +63,8 @@
       ],
       "cruise_speed_kt": 122,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1157
     },
     {
       "key": "3",
@@ -95,7 +97,8 @@
       ],
       "cruise_speed_kt": 145,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1406
     },
     {
       "key": "4",
@@ -123,7 +126,8 @@
       ],
       "cruise_speed_kt": 145,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1633
     },
     {
       "key": "5",
@@ -155,7 +159,8 @@
       ],
       "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1814
     },
     {
       "key": "6",
@@ -188,7 +193,8 @@
       ],
       "cruise_speed_kt": 110,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 757
     },
     {
       "key": "7",
@@ -221,7 +227,8 @@
       ],
       "cruise_speed_kt": 120,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1157
     },
     {
       "key": "8",
@@ -254,7 +261,8 @@
       ],
       "cruise_speed_kt": 140,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1247
     },
     {
       "key": "9",
@@ -279,7 +287,8 @@
       ],
       "cruise_speed_kt": 150,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1542
     },
     {
       "key": "10",
@@ -312,7 +321,8 @@
       ],
       "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1996
     },
     {
       "key": "11",
@@ -334,7 +344,8 @@
       ],
       "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1656
     },
     {
       "key": "12",
@@ -353,7 +364,8 @@
       ],
       "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1338
     },
     {
       "key": "13",
@@ -378,7 +390,8 @@
       ],
       "cruise_speed_kt": 160,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1247
     },
     {
       "key": "14",
@@ -411,7 +424,8 @@
       ],
       "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1633
     },
     {
       "key": "15",
@@ -444,7 +458,8 @@
       ],
       "cruise_speed_kt": 90,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 600
     },
     {
       "key": "16",
@@ -468,7 +483,8 @@
       ],
       "cruise_speed_kt": 100,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 600
     },
     {
       "key": "17",
@@ -501,7 +517,8 @@
       ],
       "cruise_speed_kt": 180,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 2495
     },
     {
       "key": "18",
@@ -534,7 +551,8 @@
       ],
       "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 2100
     },
     {
       "key": "19",
@@ -562,7 +580,8 @@
       ],
       "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 3855
     },
     {
       "key": "20",
@@ -593,7 +612,8 @@
       ],
       "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 2721
     },
     {
       "key": "21",
@@ -621,7 +641,8 @@
       ],
       "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1725
     },
     {
       "key": "22",
@@ -654,7 +675,8 @@
       ],
       "cruise_speed_kt": 175,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 2155
     },
     {
       "key": "23",
@@ -687,7 +709,8 @@
       ],
       "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 2359
     },
     {
       "key": "24",
@@ -720,7 +743,8 @@
       ],
       "cruise_speed_kt": 210,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 3175
     },
     {
       "key": "25",
@@ -753,7 +777,8 @@
       ],
       "cruise_speed_kt": 190,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 2495
     },
     {
       "key": "26",
@@ -783,7 +808,8 @@
       ],
       "cruise_speed_kt": 155,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1769
     },
     {
       "key": "27",
@@ -816,7 +842,8 @@
       ],
       "cruise_speed_kt": 175,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 3175
     },
     {
       "key": "28",
@@ -849,7 +876,8 @@
       ],
       "cruise_speed_kt": 150,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1990
     },
     {
       "key": "29",
@@ -882,7 +910,8 @@
       ],
       "cruise_speed_kt": 140,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 2994
     },
     {
       "key": "30",
@@ -914,7 +943,8 @@
       ],
       "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1999
     },
     {
       "key": "31",
@@ -947,7 +977,8 @@
       ],
       "cruise_speed_kt": 270,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 4740
     },
     {
       "key": "32",
@@ -980,7 +1011,8 @@
       ],
       "cruise_speed_kt": 160,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 3629
     },
     {
       "key": "33",
@@ -1010,7 +1042,8 @@
       ],
       "cruise_speed_kt": 260,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 5670
     },
     {
       "key": "34",
@@ -1043,7 +1076,8 @@
       ],
       "cruise_speed_kt": 300,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 6804
     },
     {
       "key": "35",
@@ -1076,7 +1110,8 @@
       ],
       "cruise_speed_kt": 280,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 4468
     },
     {
       "key": "36",
@@ -1109,7 +1144,8 @@
       ],
       "cruise_speed_kt": 290,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 11500
     },
     {
       "key": "37",
@@ -1142,7 +1178,8 @@
       ],
       "cruise_speed_kt": 270,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 7484
     },
     {
       "key": "38",
@@ -1175,7 +1212,8 @@
       ],
       "cruise_speed_kt": 250,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 13155
     },
     {
       "key": "39",
@@ -1208,7 +1246,8 @@
       ],
       "cruise_speed_kt": 250,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 19500
     },
     {
       "key": "40",
@@ -1241,7 +1280,8 @@
       ],
       "cruise_speed_kt": 360,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 29260
     },
     {
       "key": "41",
@@ -1270,7 +1310,8 @@
       ],
       "cruise_speed_kt": 275,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 23000
     },
     {
       "key": "42",
@@ -1295,7 +1336,8 @@
       ],
       "cruise_speed_kt": 255,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 7765
     },
     {
       "key": "43",
@@ -1328,7 +1370,8 @@
       ],
       "cruise_speed_kt": 240,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 20830
     },
     {
       "key": "44",
@@ -1364,7 +1407,8 @@
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 8300
     },
     {
       "key": "45",
@@ -1401,7 +1445,8 @@
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 9752
     },
     {
       "key": "46",
@@ -1444,7 +1489,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 10659
     },
     {
       "key": "47",
@@ -1477,7 +1523,8 @@
       ],
       "cruise_speed_kt": 480,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 33203
     },
     {
       "key": "48",
@@ -1498,7 +1545,8 @@
       ],
       "cruise_speed_kt": 480,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 41277
     },
     {
       "key": "49",
@@ -1531,7 +1579,8 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 43998
     },
     {
       "key": "50",
@@ -1564,7 +1613,8 @@
       ],
       "cruise_speed_kt": 490,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 44452
     },
     {
       "key": "51",
@@ -1597,7 +1647,8 @@
       ],
       "cruise_speed_kt": 465,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 21863
     },
     {
       "key": "52",
@@ -1630,7 +1681,8 @@
       ],
       "cruise_speed_kt": 365,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 6804
     },
     {
       "key": "53",
@@ -1663,7 +1715,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 9979
     },
     {
       "key": "54",
@@ -1692,7 +1745,8 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 16375
     },
     {
       "key": "55",
@@ -1725,7 +1779,8 @@
       ],
       "cruise_speed_kt": 465,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 16556
     },
     {
       "key": "56",
@@ -1747,7 +1802,8 @@
       ],
       "cruise_speed_kt": 425,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 10659
     },
     {
       "key": "57",
@@ -1780,7 +1836,8 @@
       ],
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 12700
     },
     {
       "key": "58",
@@ -1813,7 +1870,8 @@
       ],
       "cruise_speed_kt": 420,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 6950
     },
     {
       "key": "59",
@@ -1846,7 +1904,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 68000
     },
     {
       "key": "60",
@@ -1879,7 +1938,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 78000
     },
     {
       "key": "61",
@@ -1912,7 +1972,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 75500
     },
     {
       "key": "62",
@@ -1945,7 +2006,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 93500
     },
     {
       "key": "63",
@@ -1974,7 +2036,8 @@
       ],
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 60781
     },
     {
       "key": "64",
@@ -2007,7 +2070,8 @@
       ],
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 69900
     },
     {
       "key": "65",
@@ -2040,7 +2104,8 @@
       ],
       "cruise_speed_kt": 453,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 79016
     },
     {
       "key": "66",
@@ -2073,7 +2138,8 @@
       ],
       "cruise_speed_kt": 453,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 70307
     },
     {
       "key": "67",
@@ -2106,7 +2172,8 @@
       ],
       "cruise_speed_kt": 453,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 82191
     },
     {
       "key": "68",
@@ -2139,7 +2206,8 @@
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 68039
     },
     {
       "key": "69",
@@ -2172,7 +2240,8 @@
       ],
       "cruise_speed_kt": 440,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 54885
     },
     {
       "key": "70",
@@ -2205,7 +2274,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 39990
     },
     {
       "key": "71",
@@ -2238,7 +2308,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 45810
     },
     {
       "key": "72",
@@ -2268,7 +2339,8 @@
       ],
       "cruise_speed_kt": 380,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 38102
     },
     {
       "key": "73",
@@ -2301,7 +2373,8 @@
       ],
       "cruise_speed_kt": 380,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 42184
     },
     {
       "key": "74",
@@ -2334,7 +2407,8 @@
       ],
       "cruise_speed_kt": 380,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 44225
     },
     {
       "key": "75",
@@ -2367,7 +2441,8 @@
       ],
       "cruise_speed_kt": 458,
       "wake_category": "Medium",
-      "wake_category_when_leading": "Heavy"
+      "wake_category_when_leading": "Heavy",
+      "mtow_kg": 115680
     },
     {
       "key": "76",
@@ -2400,7 +2475,8 @@
       ],
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 35990
     },
     {
       "key": "77",
@@ -2426,7 +2502,8 @@
       ],
       "cruise_speed_kt": 447,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 51800
     },
     {
       "key": "78",
@@ -2459,7 +2536,8 @@
       ],
       "cruise_speed_kt": 490,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 447696
     },
     {
       "key": "79",
@@ -2486,7 +2564,8 @@
       ],
       "cruise_speed_kt": 482,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 299370
     },
     {
       "key": "80",
@@ -2510,7 +2589,8 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 219532
     },
     {
       "key": "81",
@@ -2543,7 +2623,8 @@
       ],
       "cruise_speed_kt": 470,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 242000
     },
     {
       "key": "82",
@@ -2576,7 +2657,8 @@
       ],
       "cruise_speed_kt": 475,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 275000
     },
     {
       "key": "83",
@@ -2597,7 +2679,8 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 280000
     },
     {
       "key": "84",
@@ -2619,7 +2702,8 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Super",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 575000
     },
     {
       "key": "85",
@@ -2652,7 +2736,8 @@
       ],
       "cruise_speed_kt": 120,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1451
     },
     {
       "key": "86",
@@ -2675,7 +2760,8 @@
       ],
       "cruise_speed_kt": 125,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 5080
     },
     {
       "key": "87",
@@ -2699,7 +2785,8 @@
       ],
       "cruise_speed_kt": 125,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 5398
     },
     {
       "key": "88",
@@ -2725,7 +2812,8 @@
       ],
       "cruise_speed_kt": 121,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 2250
     },
     {
       "key": "89",
@@ -2754,7 +2842,8 @@
       ],
       "cruise_speed_kt": 145,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 4300
     },
     {
       "key": "90",
@@ -2787,7 +2876,8 @@
       ],
       "cruise_speed_kt": 124,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1715
     },
     {
       "key": "91",
@@ -2820,7 +2910,8 @@
       ],
       "cruise_speed_kt": 157,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 6400
     },
     {
       "key": "92",
@@ -2853,7 +2944,8 @@
       ],
       "cruise_speed_kt": 82,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 622
     },
     {
       "key": "93",
@@ -2886,7 +2978,8 @@
       ],
       "cruise_speed_kt": 110,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 1134
     },
     {
       "key": "94",
@@ -2913,7 +3006,8 @@
       ],
       "cruise_speed_kt": 124,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 6000
     },
     {
       "key": "95",
@@ -2934,7 +3028,8 @@
       ],
       "cruise_speed_kt": 150,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 9979
     },
     {
       "key": "96",
@@ -2966,7 +3061,8 @@
       ],
       "cruise_speed_kt": 150,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 10659
     },
     {
       "key": "97",
@@ -2994,7 +3090,8 @@
       ],
       "cruise_speed_kt": 145,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 22680
     },
     {
       "key": "98",
@@ -3024,7 +3121,8 @@
       ],
       "cruise_speed_kt": 150,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 10600
     },
     {
       "key": "99",
@@ -3057,7 +3155,8 @@
       ],
       "cruise_speed_kt": 135,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 2980
     },
     {
       "key": "100",
@@ -3077,7 +3176,8 @@
       ],
       "cruise_speed_kt": 570,
       "wake_category": "Unknown",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 29937
     },
     {
       "key": "101",
@@ -3103,7 +3203,8 @@
       ],
       "cruise_speed_kt": 610,
       "wake_category": "Unknown",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 31800
     },
     {
       "key": "102",
@@ -3136,7 +3237,8 @@
       ],
       "cruise_speed_kt": 520,
       "wake_category": "Unknown",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 9100
     },
     {
       "key": "103",
@@ -3159,7 +3261,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 265350
     },
     {
       "key": "104",
@@ -3193,7 +3296,8 @@
       ],
       "cruise_speed_kt": 330,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 34292
     },
     {
       "key": "105",
@@ -3217,7 +3321,8 @@
       ],
       "cruise_speed_kt": 453,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 85365
     },
     {
       "key": "106",
@@ -3250,7 +3355,8 @@
       ],
       "cruise_speed_kt": 370,
       "wake_category": "Light",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 4250
     },
     {
       "key": "107",
@@ -3276,7 +3382,8 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 77564
     },
     {
       "key": "108",
@@ -3309,7 +3416,8 @@
       ],
       "cruise_speed_kt": 470,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 233000
     },
     {
       "key": "109",
@@ -3333,7 +3441,8 @@
       ],
       "cruise_speed_kt": 240,
       "wake_category": "Medium",
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 30500
     },
     {
       "key": "110",
@@ -3342,31 +3451,11 @@
       "code": "FA7X",
       "category": "Military",
       "query": "Falcon 7X",
-      "images": [
-        "000.jpg",
-        "001.jpg",
-        "002.jpg",
-        "004.jpg",
-        "005.jpg",
-        "009.jpg",
-        "010.jpg",
-        "011.jpg",
-        "012.jpg",
-        "013.jpg",
-        "014.jpg",
-        "017.jpg",
-        "018.jpg",
-        "019.jpg",
-        "020.jpg",
-        "022.jpg",
-        "024.jpg",
-        "025.jpg",
-        "026.jpg",
-        "027.jpg"
-      ],
+      "images": ["000.jpg", "001.jpg", "002.jpg"],
       "cruise_speed_kt": 488,
       "wake_category": null,
-      "wake_category_when_leading": null
+      "wake_category_when_leading": null,
+      "mtow_kg": 31751
     }
   ]
 }

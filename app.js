@@ -36,6 +36,12 @@ const WAKE_CATEGORY_INFO = {
   Heavy: 'MTOW ≥ 136,000 kg',
   Super: 'Airbus A380',
 };
+const WAKE_CATEGORY_CHOICE_LABELS = {
+  Light: 'Light (≤ 7,000 kg)',
+  Medium: 'Medium (7,000–136,000 kg)',
+  Heavy: 'Heavy (≥ 136,000 kg)',
+  Super: 'Super',
+};
 
 const KEYBOARD_HELP =
   'Keyboard shortcuts: 1 through 4 select an answer. ' +
@@ -1505,6 +1511,18 @@ function displaySpeedComparison(pair) {
   displaySpecialChoices(['Faster', 'Slower', 'Same speed'], pair.answer);
 }
 
+function getWakeFeedbackAnswer(item, category) {
+  const mtow = Number(item?.mtow_kg);
+  if (Number.isFinite(mtow) && mtow > 0) {
+    // Below 10,000 kg, rounding to 1,000 would be too coarse to be useful.
+    const step = mtow >= 10000 ? 1000 : 100;
+    const rounded = Math.round(mtow / step) * step;
+    return `${category} (MTOW ≈ ${rounded.toLocaleString('en-US')} kg)`;
+  }
+  const info = WAKE_CATEGORY_INFO[category];
+  return info ? `${category} (${info})` : category;
+}
+
 async function displayWakeQuestion(item) {
   const imagePath = getRandomImagePath(item);
   const correctCategory = getWakeCategory(item);
@@ -1517,8 +1535,8 @@ async function displayWakeQuestion(item) {
   }
   specialQuestionData = {
     type: 'wake',
-    correctAnswer: correctCategory,
-    feedbackAnswer: `${correctCategory} (${WAKE_CATEGORY_INFO[correctCategory]})`,
+    correctAnswer: WAKE_CATEGORY_CHOICE_LABELS[correctCategory],
+    feedbackAnswer: getWakeFeedbackAnswer(item, correctCategory),
   };
   promptElement.replaceChildren();
   promptElement.appendChild(
@@ -1526,7 +1544,11 @@ async function displayWakeQuestion(item) {
       `What is the wake category of ${getIndefiniteArticle(getSpecialAircraftIdentifier(item))} ${getSpecialAircraftIdentifier(item)}?`,
     ),
   );
-  displaySpecialChoices([...WAKE_CATEGORIES], correctCategory, true);
+  displaySpecialChoices(
+    WAKE_CATEGORIES.map((category) => WAKE_CATEGORY_CHOICE_LABELS[category]),
+    WAKE_CATEGORY_CHOICE_LABELS[correctCategory],
+    true,
+  );
   try {
     await loadQuestionImage(imagePath, 'Aircraft wake category question image');
     setLoading(false);
