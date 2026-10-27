@@ -178,6 +178,29 @@
         </button>
       </form>
 
+      <!-- 8b. Speed Estimate Slider -->
+      <div id="speed-slider" class="speed-slider" hidden>
+        <output
+          id="speed-slider-value"
+          class="speed-slider-value"
+          for="speed-slider-input"
+          >0 kt</output
+        >
+        <input
+          id="speed-slider-input"
+          class="speed-slider-input"
+          type="range"
+          aria-label="Estimated speed in knots"
+        />
+        <div class="speed-slider-scale" aria-hidden="true">
+          <span id="speed-slider-min"></span>
+          <span id="speed-slider-max"></span>
+        </div>
+        <button id="speed-slider-submit" class="submit-answer" type="button">
+          Lock in
+        </button>
+      </div>
+
       <!-- 9. Footer, Status & Progression -->
       <footer class="bottom">
         <div class="status">

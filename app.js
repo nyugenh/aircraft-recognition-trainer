@@ -866,9 +866,6 @@ function getSpeedSegment(item) {
 
 const formatApproxSpeed = (speed) => `≈ ${Math.round(speed)} kt`;
 
-const getSpeedChoices = () =>
-  getSpeedQuestion().metric.segments.map((segment) => segment.label);
-
 function getWakeCategory(item) {
   const value = displayText(item?.wake_category).toLowerCase();
   const categories = {
@@ -1258,6 +1255,10 @@ function setLoading(loading) {
 
 function resetAnswerUI() {
   imageContainer.querySelector('.speed-comparison')?.remove();
+  speedSlider.hidden = true;
+  speedSlider.classList.remove('correct', 'partial', 'incorrect');
+  speedSliderInput.disabled = true;
+  speedSliderSubmit.disabled = true;
   const ranking = byId('speed-ranking');
   const rankingList = byId('speed-ranking-list');
   if (ranking) ranking.hidden = true;
@@ -1579,23 +1580,90 @@ async function displayPhotoAnswerChoices(choices) {
 // ============================================================================
 // 13. Special Questions (Cruise Speed, Wake, Comparisons, Rankings)
 // ============================================================================
+const SPEED_SLIDER_STEP = 10;
+// Full points within half a step of the true speed, fading to zero at this error.
+const SPEED_SLIDER_ZERO_POINTS_ERROR = 60;
+const speedSlider = byId('speed-slider');
+const speedSliderInput = byId('speed-slider-input');
+const speedSliderValue = byId('speed-slider-value');
+const speedSliderSubmit = byId('speed-slider-submit');
+
+function getSpeedSliderRange(metric) {
+  const speeds = aircraft
+    .map((item) => getSpeedValue(item, metric))
+    .filter((speed) => speed != null);
+  const bound = 50;
+  return {
+    min: Math.floor(Math.min(...speeds) / bound) * bound,
+    max: Math.ceil(Math.max(...speeds) / bound) * bound,
+  };
+}
+
+function updateSpeedSliderReadout() {
+  speedSliderValue.textContent = `${speedSliderInput.value} kt`;
+}
+
+function scoreSpeedGuess(guess, actual) {
+  const error = Math.abs(guess - actual);
+  const tolerance = SPEED_SLIDER_STEP / 2;
+  if (error <= tolerance) return 1;
+  const points =
+    1 - (error - tolerance) / (SPEED_SLIDER_ZERO_POINTS_ERROR - tolerance);
+  return Math.max(0, Math.round(points * 100) / 100);
+}
+
+function submitSpeedGuess() {
+  if (
+    answered ||
+    !specialQuestionData ||
+    !isSpeedKind('estimate', specialQuestionData.type)
+  )
+    return;
+  const guess = Number(speedSliderInput.value);
+  const points = scoreSpeedGuess(guess, specialQuestionData.speed);
+  answered = true;
+  total += 1;
+  score = Math.round((score + points) * 100) / 100;
+  speedSliderInput.disabled = true;
+  speedSliderSubmit.disabled = true;
+  const feedbackType =
+    points === 1 ? 'correct' : points > 0 ? 'partial' : 'incorrect';
+  speedSlider.classList.add(feedbackType);
+  if (points === 1) {
+    setFeedback(
+      'correct',
+      'Correct!',
+      'Answer:',
+      specialQuestionData.feedbackAnswer,
+    );
+  } else {
+    setFeedback(
+      feedbackType,
+      points > 0
+        ? `◐ Partial · ${formatPointsWithGrammar(points)}`
+        : 'Incorrect',
+      'Correct answer:',
+      specialQuestionData.feedbackAnswer,
+    );
+  }
+  finishAnswer();
+}
+
 function displaySpeedEstimateQuestion(item) {
   const { metric } = getSpeedQuestion();
-  const correctSegment = getSpeedSegment(item);
+  const speed = getSpeedValue(item);
   const imagePath = getRandomImagePath(item);
-  const choices = getSpeedChoices();
-  if (!correctSegment || !imagePath || choices.length !== 4) {
+  if (speed == null || !imagePath) {
     setLoading(false);
     promptElement.textContent = `Unable to create a ${metric.noun} question.`;
     feedbackElement.textContent = `Check that ${metric.field} values are available in manifest.json.`;
     return false;
   }
-  const correctAnswer = correctSegment.label;
-  const feedbackAnswer = formatApproxSpeed(getSpeedValue(item));
+  const { min, max } = getSpeedSliderRange(metric);
   specialQuestionData = {
     type: getQuestionType(),
-    correctAnswer,
-    feedbackAnswer,
+    speed,
+    feedbackAnswer: formatApproxSpeed(speed),
   };
   promptElement.replaceChildren();
   const identifier = getSpecialAircraftIdentifier(item);
@@ -1605,21 +1673,28 @@ function displaySpeedEstimateQuestion(item) {
     ),
   );
   appendCategoryHint(promptElement, item.category, 'Category');
-  displaySpecialChoices(choices, correctAnswer, true);
+  speedSliderInput.min = String(min);
+  speedSliderInput.max = String(max);
+  speedSliderInput.step = String(SPEED_SLIDER_STEP);
+  speedSliderInput.value = String(
+    Math.round((min + max) / 2 / SPEED_SLIDER_STEP) * SPEED_SLIDER_STEP,
+  );
+  byId('speed-slider-min').textContent = `${min} kt`;
+  byId('speed-slider-max').textContent = `${max} kt`;
+  updateSpeedSliderReadout();
+  answerContainer.hidden = true;
+  speedSlider.hidden = false;
+  speedSliderInput.disabled = true;
+  speedSliderSubmit.disabled = true;
   loadQuestionImage(imagePath, `${metric.noun} question image`)
     .then(() => {
       setLoading(false);
-      answerButtons.forEach((button) => {
-        if (!button.hidden) button.disabled = false;
-      });
-      focusFirstAnswer();
+      speedSliderInput.disabled = false;
+      speedSliderSubmit.disabled = false;
     })
     .catch((error) => {
       setLoading(false);
       feedbackElement.textContent = error.message;
-      answerButtons.forEach((button) => {
-        button.disabled = true;
-      });
     });
   return true;
 }
@@ -2861,6 +2936,14 @@ typeAnswerInput.addEventListener('keydown', (event) => {
   }
 });
 byId('check-ranking')?.addEventListener('click', checkSpeedRanking);
+speedSliderInput.addEventListener('input', updateSpeedSliderReadout);
+speedSliderInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !speedSliderSubmit.disabled) {
+    event.preventDefault();
+    submitSpeedGuess();
+  }
+});
+speedSliderSubmit.addEventListener('click', submitSpeedGuess);
 nextButton.addEventListener('click', () => {
   if (!nextButton.disabled) nextQuestion();
 });
