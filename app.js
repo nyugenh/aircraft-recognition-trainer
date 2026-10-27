@@ -1686,9 +1686,11 @@ function submitSpeedGuess() {
   const sliderMin = Number(speedSliderInput.min);
   const sliderMax = Number(speedSliderInput.max);
   const answerMarker = byId('speed-slider-answer');
+  const answerPosition =
+    (specialQuestionData.speed - sliderMin) / (sliderMax - sliderMin);
   answerMarker.style.setProperty(
     '--answer-position',
-    String((specialQuestionData.speed - sliderMin) / (sliderMax - sliderMin)),
+    String(Math.min(1, Math.max(0, answerPosition))),
   );
   answerMarker.dataset.label = `${Math.round(specialQuestionData.speed)} kt`;
   answerMarker.hidden = false;
@@ -1724,10 +1726,11 @@ function displaySpeedEstimateQuestion(item) {
     return false;
   }
   const { min, max } = getSpeedSliderRange(metric);
+  const roundedSpeed = Math.round(speed / SPEED_SLIDER_STEP) * SPEED_SLIDER_STEP;
   specialQuestionData = {
     type: getQuestionType(),
-    speed,
-    feedbackAnswer: formatApproxSpeed(speed),
+    speed: roundedSpeed,
+    feedbackAnswer: formatApproxSpeed(roundedSpeed),
   };
   promptElement.replaceChildren();
   const identifier = getSpecialAircraftIdentifier(item);
