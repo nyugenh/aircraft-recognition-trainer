@@ -1744,6 +1744,7 @@ function displaySpeedEstimateQuestion(item) {
   speedSliderInput.value = String(
     Math.round((min + max) / 2 / SPEED_SLIDER_STEP) * SPEED_SLIDER_STEP,
   );
+  speedSliderInput.dataset.last = speedSliderInput.value;
   byId('speed-slider-min').textContent = `${min} kt`;
   byId('speed-slider-max').textContent = `${max} kt`;
   updateSpeedSliderReadout();
@@ -3009,7 +3010,29 @@ typeAnswerInput.addEventListener('keydown', (event) => {
   }
 });
 byId('check-ranking')?.addEventListener('click', checkSpeedRanking);
-speedSliderInput.addEventListener('input', updateSpeedSliderReadout);
+// Values snap to multiples of 10, except the exact slowest/fastest ends.
+speedSliderInput.addEventListener('input', () => {
+  const step = SPEED_SLIDER_STEP;
+  const min = Number(speedSliderInput.min);
+  const max = Number(speedSliderInput.max);
+  const raw = Number(speedSliderInput.value);
+  const last = Number(speedSliderInput.dataset.last ?? raw);
+  let value;
+  if (raw !== last && Math.abs(raw - last) <= 1) {
+    value =
+      raw > last
+        ? Math.floor(last / step) * step + step
+        : Math.ceil(last / step) * step - step;
+  } else {
+    value = Math.round(raw / step) * step;
+    if (raw - min < step / 2) value = min;
+    else if (max - raw < step / 2) value = max;
+  }
+  value = Math.min(max, Math.max(min, value));
+  speedSliderInput.dataset.last = String(value);
+  speedSliderInput.value = String(value);
+  updateSpeedSliderReadout();
+});
 speedSliderInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter' && !speedSliderSubmit.disabled) {
     event.preventDefault();
