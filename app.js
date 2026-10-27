@@ -1256,6 +1256,7 @@ function setLoading(loading) {
 function resetAnswerUI() {
   imageContainer.querySelector('.speed-comparison')?.remove();
   speedSlider.hidden = true;
+  byId('speed-slider-answer').hidden = true;
   speedSlider.classList.remove('correct', 'partial', 'incorrect');
   speedSliderInput.disabled = true;
   speedSliderSubmit.disabled = true;
@@ -1626,6 +1627,15 @@ function submitSpeedGuess() {
   score = Math.round((score + points) * 100) / 100;
   speedSliderInput.disabled = true;
   speedSliderSubmit.disabled = true;
+  const sliderMin = Number(speedSliderInput.min);
+  const sliderMax = Number(speedSliderInput.max);
+  const answerMarker = byId('speed-slider-answer');
+  answerMarker.style.setProperty(
+    '--answer-position',
+    String((specialQuestionData.speed - sliderMin) / (sliderMax - sliderMin)),
+  );
+  answerMarker.dataset.label = `${Math.round(specialQuestionData.speed)} kt`;
+  answerMarker.hidden = false;
   const feedbackType =
     points === 1 ? 'correct' : points > 0 ? 'partial' : 'incorrect';
   speedSlider.classList.add(feedbackType);
