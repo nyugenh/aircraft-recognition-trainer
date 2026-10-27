@@ -64,6 +64,8 @@ body {
   background:
     radial-gradient(ellipse at 80% 0%, rgb(240 153 99 / 0.09), transparent 29rem),
     linear-gradient(180deg, #131f29 0%, var(--canvas) 32rem);
+  background-repeat: no-repeat;
+  background-color: var(--canvas);
   color: var(--ink);
   font-family: var(--font);
   font-size: 1rem;
@@ -170,6 +172,7 @@ img {
   font-weight: 760;
   line-height: 1.15;
   letter-spacing: -0.045em;
+  white-space: nowrap;
 }
 
 .score {
@@ -221,13 +224,27 @@ img {
 .controls {
   flex-shrink: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(0.65rem, 1.6vw, 1.1rem);
   padding: clamp(1rem, 2.2vw, 1.4rem);
   border: 1px solid rgb(255 255 255 / 0.08);
   border-radius: var(--radius);
   background: var(--surface);
   box-shadow: var(--shadow-card);
+}
+
+@media (min-width: 36.0625rem) {
+  .controls:has(#speed-mode-label[hidden]) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .controls {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+  }
 }
 
 .controls label {
@@ -879,6 +896,14 @@ select:disabled {
   object-fit: contain;
 }
 
+.ranking-speed {
+  margin-left: auto;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .ranking-name {
   display: flex;
   flex-wrap: wrap;
@@ -981,7 +1006,11 @@ body.ranking-is-dragging * {
       env(safe-area-inset-left)
     );
   border-top: 1px solid rgb(255 255 255 / 0.08);
-  background: #0c141b;
+}
+
+/* Solid background only while the bar is pinned over scrolling content. */
+.bottom.is-stuck {
+  background: var(--canvas);
 }
 
 .status {
@@ -1543,7 +1572,7 @@ body.ranking-is-dragging * {
     max-height: min(49dvh, 40rem);
   }
 
-  .app:has(.speed-comparison) {
+  .app:has(.speed-comparison, .speed-ranking:not([hidden])) {
     max-height: none;
   }
 
@@ -1632,7 +1661,6 @@ body.ranking-is-dragging * {
     margin-inline: 0;
     padding-inline: 0;
     border-top: 0;
-    background: transparent;
   }
 
   .app:has(.speed-comparison) {

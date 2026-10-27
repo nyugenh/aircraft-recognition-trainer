@@ -39,7 +39,7 @@
     <main class="app" aria-describedby="keyboard-shortcuts-help">
       <!-- 1. Header & Score -->
       <header class="header">
-        <h1>Aircraft Trainer</h1>
+        <h1 id="app-title" data-full="Aircraft Recognition Trainer" data-short="Aircraft Trainer">Aircraft Recognition Trainer</h1>
         <button id="photo-toggle" class="photo-toggle" type="button" hidden>
           Show photos
         </button>
@@ -76,10 +76,18 @@
             <option value="photo">Photo → identify</option>
             <option value="name">Name → identify</option>
             <option value="icao">ICAO → identify</option>
-            <option value="speed">Compare speeds</option>
-            <option value="cruise-speed">Estimate speed</option>
-            <option value="rank-speed">Rank speeds</option>
+            <option value="cruise">Cruise speed</option>
+            <option value="climb">Climb speed</option>
+            <option value="descent">Descent speed</option>
             <option value="wake">Wake category</option>
+          </select>
+        </label>
+        <label id="speed-mode-label" for="speed-mode" hidden>
+          Mode
+          <select id="speed-mode" name="speed-mode">
+            <option value="estimate">Estimate</option>
+            <option value="compare">Compare</option>
+            <option value="rank">Rank</option>
           </select>
         </label>
         <label id="answer-type-label" for="answer-type">

@@ -27,6 +27,12 @@ const QUESTION_TYPES = new Set([
   'cruise-speed',
   'speed',
   'rank-speed',
+  'climb-speed',
+  'compare-climb',
+  'rank-climb',
+  'descent-speed',
+  'compare-descent',
+  'rank-descent',
   'wake',
 ]);
 
@@ -509,13 +515,20 @@ function getRandomImagePath(item) {
 // ============================================================================
 // 6. Question & Answer Mode Helpers
 // ============================================================================
-const getQuestionType = () => questionTypeSelect.value;
+const speedModeSelect = byId('speed-mode');
+const speedModeLabel = byId('speed-mode-label');
+// The Question select holds cruise/climb/descent; the Mode select picks the format.
+const getQuestionType = () => {
+  const base = questionTypeSelect.value;
+  const metric = SPEED_METRICS[base];
+  return metric ? metric[speedModeSelect.value] : base;
+};
+function syncSpeedModeVisibility() {
+  speedModeLabel.hidden = !SPEED_METRICS[questionTypeSelect.value];
+}
 const getAnswerMode = () => answerTypeSelect.value;
 const isSpecialQuestionType = (type = getQuestionType()) =>
-  type === 'speed' ||
-  type === 'rank-speed' ||
-  type === 'wake' ||
-  type === 'cruise-speed';
+  type === 'wake' || getSpeedQuestion(type) !== null;
 const getAnswerSemanticType = (mode = getAnswerMode()) =>
   ANSWER_MODES.find((item) => item.value === mode)?.semantic ?? '';
 const isTypedAnswer = (mode = getAnswerMode()) =>
@@ -765,6 +778,14 @@ function getSpecialAircraftIdentifier(item) {
 function getSpeedComparisonPrompt(first, second) {
   const firstName = getSpecialAircraftIdentifier(first);
   const secondName = getSpecialAircraftIdentifier(second);
+  const { metric } = getSpeedQuestion();
+  if (metric.key !== 'cruise') {
+    return (
+      `Is the ${metric.noun} of ${getIndefiniteArticle(firstName)} ${firstName} ` +
+      `faster, slower, or the same as that of ` +
+      `${getIndefiniteArticle(secondName)} ${secondName}?`
+    );
+  }
   return (
     `Is ${getIndefiniteArticle(firstName)} ${firstName} faster, slower, ` +
     `or the same speed as ${getIndefiniteArticle(secondName)} ${secondName}?`
@@ -774,32 +795,79 @@ function getSpeedComparisonPrompt(first, second) {
 // ============================================================================
 // 8. Speed & Wake Calculations
 // ============================================================================
-function getCruiseSpeed(item) {
-  const speed = item?.cruise_speed_kt;
+// Each metric has three question types: compare, estimate (choose a band) and rank.
+// Bands [min, max) are chosen to split the manifest's values fairly evenly.
+const makeSpeedSegments = (low, mid, high) => [
+  { min: -Infinity, max: low, label: `Below ${low} kt` },
+  { min: low, max: mid, label: `${low} to below ${mid} kt` },
+  { min: mid, max: high, label: `${mid} to below ${high} kt` },
+  { min: high, max: Infinity, label: `${high} kt or above` },
+];
+
+const SPEED_METRICS = {
+  cruise: {
+    key: 'cruise',
+    field: 'cruise_speed_kt',
+    noun: 'cruise speed',
+    compare: 'speed',
+    estimate: 'cruise-speed',
+    rank: 'rank-speed',
+    segments: makeSpeedSegments(150, 250, 450),
+  },
+  climb: {
+    key: 'climb',
+    field: 'climb_speed_kt',
+    noun: 'climb speed',
+    compare: 'compare-climb',
+    estimate: 'climb-speed',
+    rank: 'rank-climb',
+    segments: makeSpeedSegments(100, 180, 270),
+  },
+  descent: {
+    key: 'descent',
+    field: 'descent_speed_kt',
+    noun: 'descent speed',
+    compare: 'compare-descent',
+    estimate: 'descent-speed',
+    rank: 'rank-descent',
+    segments: makeSpeedSegments(130, 220, 280),
+  },
+};
+
+// Returns { metric, kind } for a speed-based question type, otherwise null.
+function getSpeedQuestion(type = getQuestionType()) {
+  for (const metric of Object.values(SPEED_METRICS)) {
+    for (const kind of ['compare', 'estimate', 'rank']) {
+      if (metric[kind] === type) return { metric, kind };
+    }
+  }
+  return null;
+}
+
+const isSpeedKind = (kind, type = getQuestionType()) =>
+  getSpeedQuestion(type)?.kind === kind;
+
+function getSpeedValue(item, metric = getSpeedQuestion()?.metric) {
+  const speed = item?.[(metric ?? SPEED_METRICS.cruise).field];
   if (speed == null || speed === '') return null;
   const value = Number(speed);
   return Number.isFinite(value) && value > 0 ? value : null;
 }
 
-// Bands [min, max) chosen to split the manifest's 80-610 kt values fairly evenly.
-const SPEED_SEGMENTS = [
-  { min: -Infinity, max: 150, label: 'Below 150 kt' },
-  { min: 150, max: 250, label: '150 to below 250 kt' },
-  { min: 250, max: 450, label: '250 to below 450 kt' },
-  { min: 450, max: Infinity, label: '450 kt or above' },
-];
-
 function getSpeedSegment(item) {
-  const speed = getCruiseSpeed(item);
+  const speed = getSpeedValue(item);
   if (speed == null) return null;
   return (
-    SPEED_SEGMENTS.find(
+    getSpeedQuestion().metric.segments.find(
       (segment) => speed >= segment.min && speed < segment.max,
     ) ?? null
   );
 }
 
-const getSpeedChoices = () => SPEED_SEGMENTS.map((segment) => segment.label);
+const formatApproxSpeed = (speed) => `≈ ${Math.round(speed)} kt`;
+
+const getSpeedChoices = () =>
+  getSpeedQuestion().metric.segments.map((segment) => segment.label);
 
 function getWakeCategory(item) {
   const value = displayText(item?.wake_category).toLowerCase();
@@ -851,20 +919,20 @@ function itemHasRequiredValue(item, type) {
 
 function filterPoolForCombination(pool) {
   const questionType = getQuestionType();
-  if (questionType === 'speed') {
+  if (isSpeedKind('compare', questionType)) {
     return pool.filter(
       (item) =>
-        getCruiseSpeed(item) != null &&
+        getSpeedValue(item) != null &&
         Boolean(
           getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
         ),
     );
   }
-  if (questionType === 'cruise-speed') {
+  if (isSpeedKind('estimate', questionType)) {
     return pool.filter(
       (item) =>
         getAircraftImages(item).length > 0 &&
-        getCruiseSpeed(item) != null &&
+        getSpeedValue(item) != null &&
         Boolean(
           getAnswerValue(item, getAnswerMode() === 'icao' ? 'icao' : 'name'),
         ),
@@ -1094,14 +1162,16 @@ function updatePhotoVisibility() {
     'aria-label',
     photosVisible ? 'Hide aircraft photos' : 'Show aircraft photos',
   );
+  const isRank = isSpeedKind('rank', questionType);
   photoToggleButton.setAttribute(
     'aria-controls',
-    questionType === 'rank-speed' ? 'speed-ranking-list' : 'image-container',
+    isRank ? 'speed-ranking-list' : 'image-container',
   );
 
-  if (questionType === 'speed' && comparison) comparison.hidden = !showPhotos;
-  if (ranking) ranking.hidden = questionType !== 'rank-speed';
-  if (questionType === 'rank-speed') {
+  if (isSpeedKind('compare', questionType) && comparison)
+    comparison.hidden = !showPhotos;
+  if (ranking) ranking.hidden = !isRank;
+  if (isRank) {
     byId('speed-ranking-list')
       ?.querySelectorAll('.ranking-photo-wrap')
       .forEach((wrap) => {
@@ -1109,11 +1179,10 @@ function updatePhotoVisibility() {
       });
   }
   if (questionType === 'wake') imageElement.hidden = !showPhotos;
-  imageContainer.hidden =
-    questionType === 'rank-speed' || (isSpecial && !photosVisible);
+  imageContainer.hidden = isRank || (isSpecial && !photosVisible);
   appElement.classList.toggle(
     'no-image',
-    questionType === 'rank-speed' ||
+    isRank ||
       (isSpecial && !photosVisible) ||
       (!isSpecial && questionType !== 'photo' && getAnswerMode() !== 'photo'),
   );
@@ -1384,7 +1453,8 @@ function displaySpecialChoices(choices, correctAnswer, disabled = false) {
   answerContainer.classList.remove('reverse');
   answerContainer.classList.toggle(
     'speed-comparison-answers',
-    specialQuestionData?.type === 'speed',
+    specialQuestionData?.type &&
+      isSpeedKind('compare', specialQuestionData.type),
   );
   answerContainer.hidden = false;
   answerButtons.forEach((button, index) => {
@@ -1510,30 +1580,34 @@ async function displayPhotoAnswerChoices(choices) {
 // ============================================================================
 // 13. Special Questions (Cruise Speed, Wake, Comparisons, Rankings)
 // ============================================================================
-function displayCruiseSpeedQuestion(item) {
+function displaySpeedEstimateQuestion(item) {
+  const { metric } = getSpeedQuestion();
   const correctSegment = getSpeedSegment(item);
   const imagePath = getRandomImagePath(item);
   const choices = getSpeedChoices();
   if (!correctSegment || !imagePath || choices.length !== 4) {
     setLoading(false);
-    promptElement.textContent = 'Unable to create a cruise speed question.';
-    feedbackElement.textContent =
-      'Check that cruise_speed_kt values are available in manifest.json.';
+    promptElement.textContent = `Unable to create a ${metric.noun} question.`;
+    feedbackElement.textContent = `Check that ${metric.field} values are available in manifest.json.`;
     return false;
   }
   const correctAnswer = correctSegment.label;
-  const feedbackAnswer = `${Math.round(getCruiseSpeed(item))} kt`;
-  specialQuestionData = { type: 'cruise-speed', correctAnswer, feedbackAnswer };
+  const feedbackAnswer = formatApproxSpeed(getSpeedValue(item));
+  specialQuestionData = {
+    type: getQuestionType(),
+    correctAnswer,
+    feedbackAnswer,
+  };
   promptElement.replaceChildren();
   const identifier = getSpecialAircraftIdentifier(item);
   promptElement.appendChild(
     document.createTextNode(
-      `What is the cruise speed of ${getIndefiniteArticle(identifier)} ${identifier}?`,
+      `What is the ${metric.noun} of ${getIndefiniteArticle(identifier)} ${identifier}?`,
     ),
   );
   appendCategoryHint(promptElement, item.category, 'Category');
   displaySpecialChoices(choices, correctAnswer, true);
-  loadQuestionImage(imagePath, 'Cruise speed question image')
+  loadQuestionImage(imagePath, `${metric.noun} question image`)
     .then(() => {
       setLoading(false);
       answerButtons.forEach((button) => {
@@ -1553,7 +1627,7 @@ function displayCruiseSpeedQuestion(item) {
 
 function getSpeedComparisonPair() {
   const pool = getValidAircraftPool().flatMap((item) => {
-    const speed = getCruiseSpeed(item);
+    const speed = getSpeedValue(item);
     return speed ? [{ item, speed }] : [];
   });
   const pairs = [];
@@ -1578,12 +1652,15 @@ function getSpeedComparisonPair() {
           first: first.item,
           second: second.item,
           answer: 'Same speed',
+          feedback: `Same speed (${formatApproxSpeed(first.speed)})`,
         });
       } else {
+        const answer = first.speed > second.speed ? 'Faster' : 'Slower';
         pairs.push({
           first: first.item,
           second: second.item,
-          answer: first.speed > second.speed ? 'Faster' : 'Slower',
+          answer,
+          feedback: `${answer} (${formatApproxSpeed(first.speed)} vs ${formatApproxSpeed(second.speed)})`,
         });
       }
     }
@@ -1591,7 +1668,7 @@ function getSpeedComparisonPair() {
   const availableSameSpeedPairs = sameSpeedPairs.filter(
     (pair) =>
       !isRepeatedQuestion(
-        'speed',
+        getQuestionType(),
         [pair.first, pair.second],
         true,
         getSpeedComparisonPrompt(pair.first, pair.second),
@@ -1600,7 +1677,7 @@ function getSpeedComparisonPair() {
   const availablePairs = pairs.filter(
     (pair) =>
       !isRepeatedQuestion(
-        'speed',
+        getQuestionType(),
         [pair.first, pair.second],
         true,
         getSpeedComparisonPrompt(pair.first, pair.second),
@@ -1729,7 +1806,7 @@ function getRankingItemKey(item) {
 
 function getSpeedRankingItems() {
   const entries = getSelectedAircraftPool().flatMap((item) => {
-    const speed = getCruiseSpeed(item);
+    const speed = getSpeedValue(item);
     if (!speed || !getRankingItemKey(item)) return [];
     return [{ item, speed }];
   });
@@ -1737,7 +1814,7 @@ function getSpeedRankingItems() {
 
   let selectionPool = entries;
   if (
-    previousQuestion?.type === 'rank-speed' &&
+    previousQuestion?.type === getQuestionType() &&
     previousQuestion.answerMode === getAnswerMode()
   ) {
     const previousKeyInPool = previousQuestion.keys.find((key) =>
@@ -1751,7 +1828,7 @@ function getSpeedRankingItems() {
   }
   const selectedEntries = shuffle(selectionPool).slice(0, 4);
   return isRepeatedQuestion(
-    'rank-speed',
+    getQuestionType(),
     selectedEntries.map((entry) => entry.item),
   )
     ? null
@@ -2098,7 +2175,11 @@ function displaySpeedRanking(entries) {
   section.hidden = false;
   answerContainer.hidden = true;
   byId('check-ranking').disabled = false;
-  promptElement.textContent = 'Rank these aircraft from slowest to fastest.';
+  const { metric } = getSpeedQuestion();
+  promptElement.textContent =
+    metric.key === 'cruise'
+      ? 'Rank these aircraft from slowest to fastest.'
+      : `Rank these aircraft from slowest to fastest ${metric.noun}.`;
   feedbackElement.replaceChildren();
 }
 
@@ -2134,7 +2215,7 @@ function checkSpeedRanking() {
   if (
     answered ||
     !specialQuestionData ||
-    specialQuestionData.type !== 'rank-speed'
+    !isSpeedKind('rank', specialQuestionData.type)
   )
     return;
   const rows = [...byId('speed-ranking-list').children];
@@ -2169,6 +2250,15 @@ function checkSpeedRanking() {
     row.querySelectorAll('button').forEach((button) => {
       button.disabled = true;
     });
+    const speedEntry = specialQuestionData.entries.find(
+      (entry) => getRankingItemKey(entry.item) === row.dataset.rankingKey,
+    );
+    if (speedEntry && !row.querySelector('.ranking-speed')) {
+      const speedLabel = document.createElement('span');
+      speedLabel.className = 'ranking-speed';
+      speedLabel.textContent = formatApproxSpeed(speedEntry.speed);
+      row.querySelector('.ranking-details')?.append(speedLabel);
+    }
   });
 
   byId('check-ranking').disabled = true;
@@ -2399,7 +2489,7 @@ async function nextQuestion() {
     return;
   }
 
-  if (questionType === 'rank-speed') {
+  if (isSpeedKind('rank', questionType)) {
     const entries = getSpeedRankingItems();
     if (!entries) {
       setLoading(false);
@@ -2419,13 +2509,13 @@ async function nextQuestion() {
       entries.map((entry) => entry.item),
     );
     currentAircraft = entries[0].item;
-    specialQuestionData = { type: 'rank-speed', entries };
+    specialQuestionData = { type: questionType, entries };
     displaySpeedRanking(entries);
     setLoading(false);
     return;
   }
 
-  if (questionType === 'speed') {
+  if (isSpeedKind('compare', questionType)) {
     const pair = getSpeedComparisonPair();
     if (!pair) {
       setLoading(false);
@@ -2448,9 +2538,9 @@ async function nextQuestion() {
     );
     currentAircraft = pair.first;
     specialQuestionData = {
-      type: 'speed',
+      type: questionType,
       correctAnswer: pair.answer,
-      feedbackAnswer: pair.answer,
+      feedbackAnswer: pair.feedback,
     };
     displaySpeedComparison(pair);
     setLoading(false);
@@ -2461,7 +2551,8 @@ async function nextQuestion() {
   let item = null;
   const repeatedAircraftKey =
     getPreviousSingleQuestionAircraftKey(questionType);
-  if (questionType === 'cruise-speed') {
+  if (isSpeedKind('estimate', questionType)) {
+    const noun = getSpeedQuestion().metric.noun;
     const maxAttempts = Math.max(1, getValidAircraftPool().length);
     for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
       const candidate = chooseAircraft(repeatedAircraftKey);
@@ -2474,11 +2565,11 @@ async function nextQuestion() {
     if (!item) {
       setLoading(false);
       promptElement.textContent = repeatedAircraftKey
-        ? 'No different aircraft is available for a cruise speed question.'
-        : 'No suitable aircraft available for a cruise speed question.';
+        ? `No different aircraft is available for a ${noun} question.`
+        : `No suitable aircraft available for a ${noun} question.`;
       feedbackElement.textContent = repeatedAircraftKey
-        ? 'The selected category has no other aircraft with a usable image and valid cruise-speed range.'
-        : 'Skipping aircraft without a usable image and valid cruise-speed range.';
+        ? `The selected category has no other aircraft with a usable image and valid ${noun}.`
+        : `Skipping aircraft without a usable image and valid ${noun}.`;
       return;
     }
   } else {
@@ -2498,8 +2589,8 @@ async function nextQuestion() {
   rememberQuestion(questionType, [item]);
   currentAircraft = item;
   recordAircraftShown(item);
-  if (questionType === 'cruise-speed') {
-    displayCruiseSpeedQuestion(item);
+  if (isSpeedKind('estimate', questionType)) {
+    displaySpeedEstimateQuestion(item);
     return;
   }
   if (questionType === 'wake') {
@@ -2777,11 +2868,14 @@ nextButton.addEventListener('click', () => {
 categorySelect.addEventListener('change', () => {
   nextQuestion();
 });
-questionTypeSelect.addEventListener('change', () => {
-  if (questionTypeSelect.value === 'rank-speed') photosVisible = false;
+function onQuestionSettingChange() {
+  if (isSpeedKind('rank')) photosVisible = false;
+  syncSpeedModeVisibility();
   syncAnswerOptions();
   nextQuestion();
-});
+}
+questionTypeSelect.addEventListener('change', onQuestionSettingChange);
+speedModeSelect.addEventListener('change', onQuestionSettingChange);
 answerTypeSelect.addEventListener('change', () => {
   nextQuestion();
 });
@@ -2795,6 +2889,7 @@ async function start() {
     setLoading(true);
     await loadManifest();
     populateCategories();
+    syncSpeedModeVisibility();
     syncAnswerOptions();
     updateScore();
     reserveFeedbackSpace();
@@ -2814,4 +2909,33 @@ async function start() {
     promptElement.focus();
   }
 }
+
+// Use the full title unless it overflows its header slot, then fall back to the short one.
+function fitAppTitle() {
+  const title = document.getElementById('app-title');
+  if (!title) return;
+  title.textContent = title.dataset.full;
+  if (title.scrollWidth > title.clientWidth) {
+    title.textContent = title.dataset.short;
+  }
+}
+fitAppTitle();
+new ResizeObserver(fitAppTitle).observe(document.getElementById('app-title'));
+
+// The footer is sticky; give it a background only while content scrolls beneath it.
+function updateFooterStuck() {
+  const bottom = document.querySelector('.bottom');
+  if (!bottom) return;
+  const root = document.documentElement;
+  const pinned =
+    getComputedStyle(bottom).position === 'sticky' &&
+    window.scrollY + window.innerHeight < root.scrollHeight - 1;
+  bottom.classList.toggle('is-stuck', pinned);
+}
+window.addEventListener('scroll', updateFooterStuck, { passive: true });
+window.addEventListener('resize', updateFooterStuck);
+new ResizeObserver(updateFooterStuck).observe(document.body);
+updateFooterStuck();
+document.fonts?.ready.then(fitAppTitle);
+
 start();
