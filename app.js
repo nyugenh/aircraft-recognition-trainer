@@ -477,6 +477,8 @@ function loadQuestionImageWhenRevealed(path, altText) {
     preloader.onload = () => {
       if (imageElement.dataset.pendingSrc !== path) return;
       showSpinner(false);
+      imageElement.style.animation = 'none';
+      imageElement.offsetHeight; // Restart the fade-in
       imageElement.alt = altText;
       imageElement.src = path;
       imageElement.style.opacity = '1';
@@ -1229,10 +1231,10 @@ function setRevealed(element, show, animate) {
   ).matches;
   if (!animate || reduceMotion || !element.animate) {
     element.hidden = !show;
-    return;
+    return Promise.resolve();
   }
   if (show) element.hidden = false;
-  else if (element.hidden) return;
+  else if (element.hidden) return Promise.resolve();
   const parentStyle = getComputedStyle(element.parentElement);
   const isRow =
     parentStyle.display.includes('flex') &&
@@ -1272,6 +1274,10 @@ function setRevealed(element, show, animate) {
   animation.oncancel = () => {
     element.style.overflow = previousOverflow;
   };
+  return animation.finished.then(
+    () => {},
+    () => {},
+  );
 }
 
 function updatePhotoVisibility(animate = false) {
@@ -1306,18 +1312,22 @@ function updatePhotoVisibility(animate = false) {
   if (isSpeedKind('compare', questionType) && comparison && !keepForExit)
     comparison.hidden = !showPhotos;
   if (ranking) ranking.hidden = !isRank;
+  const slides = [];
   if (isRank) {
     byId('speed-ranking-list')
       ?.querySelectorAll('.ranking-photo-wrap')
       .forEach((wrap) => {
-        setRevealed(wrap, photosVisible, animate);
+        slides.push(setRevealed(wrap, photosVisible, animate));
       });
   }
   if (questionType === 'wake' && !keepForExit)
     imageElement.hidden = !showPhotos;
   const showContainer = !isRank && !(isSpecial && !photosVisible);
-  setRevealed(imageContainer, showContainer, animate && isSpecial && !isRank);
-  loadDeferredPhotos();
+  slides.push(
+    setRevealed(imageContainer, showContainer, animate && isSpecial && !isRank),
+  );
+  // Start fetching once the slide settles so the fade-in is visible.
+  Promise.all(slides).then(loadDeferredPhotos);
 }
 
 photoToggleButton.addEventListener('click', () => {
