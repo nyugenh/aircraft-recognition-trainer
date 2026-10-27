@@ -9,6 +9,7 @@
 // 1. Configuration & Constants
 // ============================================================================
 const MANIFEST_PATH = 'manifest.json';
+const CODE_FREE_NAMES_PATH = 'icao-free-names.json';
 const ASSET_FOLDER = '';
 
 const ANSWER_MODES = [
@@ -581,17 +582,80 @@ function syncAnswerOptions() {
 // ============================================================================
 // 7. Aircraft Data & Property Helpers
 // ============================================================================
-const getAircraftCode = (item) =>
-  displayText(
-    item?.code ?? item?.icao ?? item?.icao_code ?? item?.ICAO ?? item?.icaoCode,
+const getAircraftCode = (item) => displayText(item?.icao);
+
+const getFullAircraftName = (item) => displayText(item?.label ?? item?.name);
+
+const normalizeIdentifier = (text) =>
+  text.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+// A name token gives away the ICAO code when it contains the code, or shares
+// a run of at least two digits with it (e.g. "172" for C172, "UH-60M" for H60).
+function tokenRevealsCode(token, code) {
+  const tokenId = normalizeIdentifier(token);
+  const codeId = normalizeIdentifier(code);
+  if (!/\d/.test(tokenId) || codeId.length < 2) return false;
+  if (tokenId.includes(codeId) || (tokenId.length > 1 && codeId.includes(tokenId)))
+    return true;
+  const tokenDigits = tokenId.replace(/\D/g, '');
+  const codeDigits = codeId.replace(/\D/g, '');
+  return (
+    tokenDigits.length >= 2 &&
+    codeDigits.length >= 2 &&
+    (tokenDigits.includes(codeDigits) || codeDigits.includes(tokenDigits))
   );
+}
+
+function stripCodeFromName(item) {
+  const name = getFullAircraftName(item);
+  const code = getAircraftCode(item);
+  if (!name || !code) return name;
+  const tokens = name.split(/\s+/);
+  const kept = tokens.filter((token) => !tokenRevealsCode(token, code));
+  return kept.length === tokens.length ? name : kept.join(' ');
+}
+
+let codeFreeNameCache = null;
+
+// Names come from icao-free-names.json (full label -> shown name). Aircraft
+// missing from that file fall back to automatic stripping, or the full name
+// when stripping would leave it too generic.
+let codeFreeNameOverrides = new Map();
+
+function getCodeFreeName(item) {
+  const override = codeFreeNameOverrides.get(getFullAircraftName(item));
+  if (override) return override;
+  if (!codeFreeNameCache || codeFreeNameCache.source !== aircraft) {
+    const counts = new Map();
+    for (const entry of aircraft) {
+      const key = stripCodeFromName(entry).toLowerCase();
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+    codeFreeNameCache = { source: aircraft, counts };
+  }
+  const full = getFullAircraftName(item);
+  const stripped = stripCodeFromName(item);
+  if (stripped === full) return full;
+  const prefix = `${stripped.toLowerCase()} `;
+  const tooGeneric =
+    !stripped ||
+    (codeFreeNameCache.counts.get(stripped.toLowerCase()) ?? 0) > 1 ||
+    aircraft.some(
+      (other) =>
+        other !== item && getFullAircraftName(other).toLowerCase().startsWith(prefix),
+    );
+  return tooGeneric ? full : stripped;
+}
 
 function getAnswerValue(item, type) {
   if (!item) return '';
   if (type === 'Aircraft name' || type === 'name') {
-    return displayText(item.label ?? item.name)
-      .replace(/\s*\([^)]*\)\s*$/, '')
-      .trim();
+    const hidesCode =
+      (getQuestionType() === 'icao' &&
+        (getAnswerMode() === 'name' || getAnswerMode() === 'enter-name')) ||
+      (getQuestionType() === 'name' &&
+        (getAnswerMode() === 'icao' || getAnswerMode() === 'enter-icao'));
+    return hidesCode ? getCodeFreeName(item) : getFullAircraftName(item);
   }
   if (type === 'ICAO code' || type === 'icao') return getAircraftCode(item);
   return '';
@@ -615,11 +679,15 @@ function getFeedbackDisplayAnswer(item) {
   const questionType = getQuestionType();
   const answerSemantic = getAnswerSemanticType();
   const name = getAnswerValue(item, 'name');
-  const code = getAnswerValue(item, 'icao');
   if (questionType === 'photo') {
     return getFeedbackAnswer(item, answerSemantic === 'icao' ? 'icao' : 'name');
   }
-  if (questionType === 'name' && answerSemantic === 'icao') return code;
+  if (questionType === 'name' && answerSemantic === 'icao') {
+    return getAnswerValue(item, 'icao');
+  }
+  if (questionType === 'icao' && isPhotoAnswer()) {
+    return getFeedbackAnswer(item, 'icao');
+  }
   if (questionType === 'icao' && answerSemantic === 'name') return name;
   return getFeedbackAnswer(item, answerSemantic === 'icao' ? 'icao' : 'name');
 }
@@ -1056,6 +1124,58 @@ photoToggleButton.addEventListener('click', () => {
   updatePhotoVisibility();
 });
 
+const settingsToggleButton = byId('settings-toggle');
+const settingsPanel = byId('quiz-settings');
+
+let settingsAnimation = null;
+
+function animateSettings(open) {
+  settingsAnimation?.cancel();
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (open) settingsPanel.hidden = false;
+  if (reduceMotion || !settingsPanel.animate) {
+    settingsPanel.hidden = !open;
+    return;
+  }
+  const gap = parseFloat(getComputedStyle(settingsPanel.parentElement).rowGap) || 0;
+  const full = {
+    height: `${settingsPanel.getBoundingClientRect().height}px`,
+    opacity: 1,
+    transform: 'none',
+    marginBottom: '0px',
+  };
+  const collapsed = {
+    height: '0px',
+    paddingTop: '0px',
+    paddingBottom: '0px',
+    borderWidth: '0px',
+    opacity: 0,
+    transform: 'translateY(-0.6rem)',
+    marginBottom: `${-gap}px`,
+  };
+  settingsPanel.style.overflow = 'hidden';
+  settingsAnimation = settingsPanel.animate(open ? [collapsed, full] : [full, collapsed], {
+    duration: open ? 320 : 220,
+    easing: open ? 'cubic-bezier(0.22, 1, 0.36, 1)' : 'cubic-bezier(0.4, 0, 1, 1)',
+  });
+  const animation = settingsAnimation;
+  animation.onfinish = () => {
+    settingsPanel.style.overflow = '';
+    if (!open) settingsPanel.hidden = true;
+    settingsAnimation = null;
+  };
+  animation.oncancel = () => {
+    settingsPanel.style.overflow = '';
+  };
+}
+
+settingsToggleButton.addEventListener('click', () => {
+  const open = settingsToggleButton.getAttribute('aria-expanded') !== 'true';
+  settingsToggleButton.setAttribute('aria-expanded', String(open));
+  animateSettings(open);
+  if (open) questionTypeSelect.focus({ preventScroll: true });
+});
+
 function setLoading(loading) {
   imageElement.classList.toggle('loading', loading);
   loadingMessage.classList.toggle('hidden', !loading);
@@ -1174,6 +1294,40 @@ function setFeedback(type, resultText, detailText = '', answerText = '') {
     feedbackElement.appendChild(answer);
   }
 }
+
+// Reserve one inline feedback row so showing feedback doesn't resize the
+// footer; it only grows when the answer text wraps onto extra lines.
+function reserveFeedbackSpace() {
+  const statusElement = feedbackElement.parentElement;
+  statusElement.style.minHeight = '';
+  const probe = document.createElement('div');
+  probe.className = 'feedback partial-feedback';
+  probe.setAttribute('aria-hidden', 'true');
+  probe.style.cssText =
+    'position:absolute;visibility:hidden;pointer-events:none;' +
+    `width:${statusElement.clientWidth}px`;
+  for (const [className, content] of [
+    ['feedback-result', 'Incorrect'],
+    ['feedback-detail', 'Correct answer:'],
+    ['feedback-answer', 'A320'],
+  ]) {
+    const part = document.createElement('span');
+    part.className = className;
+    part.textContent = content;
+    probe.appendChild(part);
+  }
+  statusElement.appendChild(probe);
+  const height = probe.offsetHeight;
+  probe.remove();
+  if (height) statusElement.style.minHeight = `${Math.ceil(height)}px`;
+}
+let reserveFeedbackWidth = 0;
+new ResizeObserver(() => {
+  const width = feedbackElement.parentElement.clientWidth;
+  if (width === reserveFeedbackWidth) return;
+  reserveFeedbackWidth = width;
+  reserveFeedbackSpace();
+}).observe(feedbackElement.parentElement);
 
 function revealCorrectPhotoNames() {
   answerContainer.querySelectorAll('.photo-choice-name').forEach((name) => {
@@ -2070,12 +2224,38 @@ const formatPoints = (points) =>
 const formatPointsWithGrammar = (points) =>
   formatPoints(points) === '1' ? '1 point' : `${formatPoints(points)} points`;
 
+// Loose name marking: full marks if the typed words include the shortened name,
+// or any words from the full name that no other aircraft also contains
+// (e.g. "Skyhawk", "Cessna 172", "172"). Extra words are ignored.
+function scoreTypedName(typed, item) {
+  const typedWords = new Set(normaliseAnswer(typed));
+  if (!typedWords.size) return 0;
+  const shortScore = calculatePartialScore(typed, getCodeFreeName(item));
+  if (shortScore === 1) return 1;
+  const fullWords = new Set(normaliseAnswer(getFullAircraftName(item)));
+  const matched = [...typedWords].filter((word) => fullWords.has(word));
+  if (matched.length) {
+    const ambiguous = aircraft.some(
+      (other) => {
+        if (other === item) return false;
+        const otherWords = new Set(normaliseAnswer(getFullAircraftName(other)));
+        return matched.every((word) => otherWords.has(word));
+      },
+    );
+    if (!ambiguous) return 1;
+  }
+  return Math.max(shortScore, calculatePartialScore(typed, getFullAircraftName(item)));
+}
+
 function submitTypedAnswer() {
   if (answered || !currentAircraft || !isTypedAnswer()) return;
   const correctAnswer = getTypedAnswerValue(currentAircraft);
   if (!correctAnswer) return;
   const feedbackAnswer = getFeedbackDisplayAnswer(currentAircraft);
-  const points = calculatePartialScore(typeAnswerInput.value, correctAnswer);
+  const points =
+    getAnswerMode() === 'enter-name'
+      ? scoreTypedName(typeAnswerInput.value, currentAircraft)
+      : calculatePartialScore(typeAnswerInput.value, correctAnswer);
   answered = true;
   total += 1;
   score = Math.round((score + points) * 100) / 100;
@@ -2174,7 +2354,7 @@ function answerReversePhoto(button) {
     setFeedback('correct', 'Correct!', 'Answer:', feedbackAnswer);
   } else {
     button.classList.add('incorrect');
-    setFeedback('incorrect', '✕ Incorrect', 'Correct photo:', feedbackAnswer);
+    setFeedback('incorrect', 'Incorrect', 'Correct photo:', feedbackAnswer);
     answerButtons.forEach((answerButton) => {
       if (answerButton.dataset.correct === 'true')
         answerButton.classList.add('correct');
@@ -2426,6 +2606,18 @@ async function loadManifest() {
   });
   if (!aircraft.length)
     throw new Error('Manifest contains no usable aircraft.');
+  try {
+    const namesResponse = await fetch(CODE_FREE_NAMES_PATH);
+    if (namesResponse.ok) {
+      codeFreeNameOverrides = new Map(
+        Object.entries(await namesResponse.json()).filter(
+          ([, value]) => typeof value === 'string' && value.trim(),
+        ),
+      );
+    }
+  } catch {
+    // Optional file: automatic stripping is used when it is missing or invalid.
+  }
 }
 
 // ============================================================================
@@ -2605,6 +2797,7 @@ async function start() {
     populateCategories();
     syncAnswerOptions();
     updateScore();
+    reserveFeedbackSpace();
     await nextQuestion();
   } catch (error) {
     console.error(error);

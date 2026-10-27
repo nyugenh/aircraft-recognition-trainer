@@ -39,14 +39,31 @@
     <main class="app" aria-describedby="keyboard-shortcuts-help">
       <!-- 1. Header & Score -->
       <header class="header">
-        <h1>Aircraft Recognition Trainer</h1>
+        <h1>Aircraft Trainer</h1>
+        <button id="photo-toggle" class="photo-toggle" type="button" hidden>
+          Show photos
+        </button>
+        <button
+          id="settings-toggle"
+          class="settings-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="quiz-settings"
+        >
+          Settings
+        </button>
         <div id="score" class="score" aria-live="polite" aria-atomic="true">
           Score: 0/0 (0%)
         </div>
       </header>
 
       <!-- 2. Quiz Controls -->
-      <section class="controls" aria-label="Quiz settings">
+      <section
+        id="quiz-settings"
+        class="controls"
+        aria-label="Quiz settings"
+        hidden
+      >
         <label for="category">
           Category
           <select id="category" name="category">
@@ -77,12 +94,7 @@
         </label>
       </section>
 
-      <!-- 3. Photo Visibility Toggle -->
-      <button id="photo-toggle" class="photo-toggle" type="button" hidden>
-        Show photos
-      </button>
-
-      <!-- 4. Aircraft Image Container -->
+      <!-- 3. Aircraft Image Container -->
       <section
         id="image-container"
         class="image-container"
@@ -189,7 +201,9 @@
             type="button"
             aria-label="Close photo viewer"
           >
-            ×
+            <svg class="viewer-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
           </button>
         </header>
         <div id="photo-viewer-stage" class="photo-viewer-stage">
@@ -197,13 +211,17 @@
         </div>
         <footer class="photo-viewer-controls" aria-label="Photo zoom controls">
           <button id="photo-zoom-out" type="button" aria-label="Zoom out">
-            −
+            <svg class="viewer-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14" />
+            </svg>
           </button>
           <output id="photo-zoom-level" for="photo-zoom-out photo-zoom-in">
             100%
           </output>
           <button id="photo-zoom-in" type="button" aria-label="Zoom in">
-            +
+            <svg class="viewer-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M12 5v14" />
+            </svg>
           </button>
           <button id="photo-zoom-reset" type="button">Reset</button>
           <span class="photo-viewer-help">

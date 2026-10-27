@@ -457,5 +457,39 @@
     "width": 1024,
     "height": 683,
     "attribution": "\"Hamburg Airport: Swiss (LX / SWR) | Airbus A220-300 BCS3 | HB-JCB | MSN 55011\" by kevin.hackert is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+  },
+  "027.jpg": {
+    "openverse_id": "6b80a962-3c76-40c9-a473-45279c472bc8",
+    "title": "Swiss Airbus A220-300; HB-JCD@ZRH;18.12.2022",
+    "url": "https://live.staticflickr.com/65535/52571902445_b1365c06f5_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/6b80a962-3c76-40c9-a473-45279c472bc8/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/46423105@N03/52571902445",
+    "creator": "Aero Icarus",
+    "creator_url": "https://www.flickr.com/photos/46423105@N03",
+    "license": "by-nc-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Swiss Airbus A220-300; HB-JCD@ZRH;18.12.2022\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+  },
+  "028.jpg": {
+    "openverse_id": "381ec34b-880a-4b81-aae2-8a0ae755910d",
+    "title": "Air Baltic, YL-CSI, Airbus A220-300",
+    "url": "https://live.staticflickr.com/1860/42582532520_7a5f60455f_b.jpg",
+    "thumbnail": "https://api.openverse.org/v1/images/381ec34b-880a-4b81-aae2-8a0ae755910d/thumb/",
+    "foreign_landing_url": "https://www.flickr.com/photos/130961247@N06/42582532520",
+    "creator": "Anna Zvereva",
+    "creator_url": "https://www.flickr.com/photos/130961247@N06",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "flickr",
+    "provider": "flickr",
+    "width": 1024,
+    "height": 683,
+    "attribution": "\"Air Baltic, YL-CSI, Airbus A220-300\" by Anna Zvereva is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
   }
 }

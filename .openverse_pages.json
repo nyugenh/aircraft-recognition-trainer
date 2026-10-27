@@ -11,8 +11,8 @@
   },
   "Cessna 182 Skylane": {
     "query": "Cessna 182",
-    "next_page": 5,
-    "next_index": 19
+    "next_page": 6,
+    "next_index": 7
   },
   "Cessna 206 Stationair": {
     "query": "Cessna 206",
@@ -61,7 +61,7 @@
   },
   "Mooney M20J": {
     "query": "Mooney M20",
-    "next_page": 5,
+    "next_page": 6,
     "next_index": 0
   },
   "Cirrus SR22": {
@@ -82,7 +82,7 @@
   "Cessna 310": {
     "query": "Cessna 310",
     "next_page": 7,
-    "next_index": 6
+    "next_index": 7
   },
   "Cessna 337": {
     "query": "Cessna Skymaster",
@@ -91,7 +91,7 @@
   },
   "Cessna 404 Titan": {
     "query": "Cessna 404",
-    "next_page": 6,
+    "next_page": 7,
     "next_index": 0
   },
   "Cessna 340": {
@@ -156,8 +156,8 @@
   },
   "Cessna 208 Caravan": {
     "query": "Cessna Caravan",
-    "next_page": 8,
-    "next_index": 18
+    "next_page": 10,
+    "next_index": 8
   },
   "Beechcraft B200 King Air": {
     "query": "King Air 200",
@@ -231,8 +231,8 @@
   },
   "Gulfstream IV": {
     "query": "Gulfstream IV",
-    "next_page": 5,
-    "next_index": 13
+    "next_page": 8,
+    "next_index": 5
   },
   "Gulfstream V": {
     "query": "Gulfstream V",
@@ -316,8 +316,8 @@
   },
   "Airbus A220-300": {
     "query": "Airbus A220-300",
-    "next_page": 9,
-    "next_index": 7
+    "next_page": 10,
+    "next_index": 6
   },
   "Boeing 737-800": {
     "query": "Boeing 737-800",
@@ -335,14 +335,14 @@
     "next_index": 11
   },
   "Boeing 737-400 Freighter": {
-    "query": "Boeing 737 freighter",
-    "next_page": 8,
-    "next_index": 6
+    "query": "Boeing 737-400F",
+    "next_page": 3,
+    "next_index": 0
   },
   "Boeing 717-200": {
     "query": "Boeing 717",
-    "next_page": 12,
-    "next_index": 16
+    "next_page": 13,
+    "next_index": 0
   },
   "Fokker 70": {
     "query": "Fokker 70",
@@ -548,5 +548,165 @@
     "query": "Falcon 7X",
     "next_page": 5,
     "next_index": 17
+  },
+  "Cessna 150 152": {
+    "query": "Cessna 150",
+    "next_page": 8,
+    "next_index": 6
+  },
+  "Piper PA-32 Cherokee Six": {
+    "query": "Piper Cherokee Six",
+    "next_page": 5,
+    "next_index": 0
+  },
+  "Beechcraft Bonanza 36": {
+    "query": "Bonanza 36",
+    "next_page": 5,
+    "next_index": 0
+  },
+  "Beechcraft Bonanza 35": {
+    "query": "Bonanza 35",
+    "next_page": 5,
+    "next_index": 0
+  },
+  "Aeroprakt A-22 Foxbat": {
+    "query": "Aeroprakt Foxbat",
+    "next_page": 3,
+    "next_index": 9
+  },
+  "Jabiru": {
+    "query": "Jabiru",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Piper PA-44 Seminole": {
+    "query": "Piper Seminole",
+    "next_page": 6,
+    "next_index": 0
+  },
+  "Piper PA-38 Tomahawk": {
+    "query": "Piper Tomahawk",
+    "next_page": 6,
+    "next_index": 10
+  },
+  "Beechcraft Duchess 76": {
+    "query": "Beech Duchess",
+    "next_page": 4,
+    "next_index": 0
+  },
+  "Diamond DA42 Twin Star": {
+    "query": "Diamond Twin Star",
+    "next_page": 9,
+    "next_index": 7
+  },
+  "Sikorsky UH-60M Black Hawk": {
+    "query": "Black Hawk helicopter",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Beechcraft King Air 200": {
+    "query": "King Air 200",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "De Havilland Canada Dash 8-300": {
+    "query": "Dash 8-300",
+    "next_page": 8,
+    "next_index": 11
+  },
+  "De Havilland Canada Dash 8-400": {
+    "query": "Dash 8 Q400",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "ATR 72-500": {
+    "query": "ATR 72",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Beechcraft 1900": {
+    "query": "Beech 1900",
+    "next_page": 10,
+    "next_index": 0
+  },
+  "Cessna Citation II": {
+    "query": "Citation II",
+    "next_page": 5,
+    "next_index": 6
+  },
+  "Cessna Citation III": {
+    "query": "Citation III",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "IAI 1124 Westwind": {
+    "query": "IAI Westwind",
+    "next_page": 3,
+    "next_index": 0
+  },
+  "Piper PA-46 Malibu": {
+    "query": "Piper Malibu",
+    "next_page": 6,
+    "next_index": 6
+  },
+  "Embraer 190": {
+    "query": "Embraer 190",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Airbus AS365 Dauphin": {
+    "query": "Dauphin helicopter",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Eurocopter Tiger ARH": {
+    "query": "Eurocopter Tiger",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Boeing CH-47F Chinook": {
+    "query": "Boeing Chinook",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "MRH-90 Taipan": {
+    "query": "NH90",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Boeing F A-18F Super Hornet": {
+    "query": "Boeing FA-18F Super Hornet",
+    "next_page": 4,
+    "next_index": 0
+  },
+  "Lockheed Martin F-35A Lightning II": {
+    "query": "F-35",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Boeing C-17A Globemaster III": {
+    "query": "C-17",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Boeing P-8A Poseidon": {
+    "query": "P-8 Poseidon",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Pilatus PC-21": {
+    "query": "Pilatus PC-21",
+    "next_page": 10,
+    "next_index": 6
+  },
+  "Boeing E-7A Wedgetail": {
+    "query": "Wedgetail",
+    "next_page": 13,
+    "next_index": 0
+  },
+  "Leonardo C-27J Spartan": {
+    "query": "C-27 Spartan",
+    "next_page": 12,
+    "next_index": 0
   }
 }

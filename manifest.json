@@ -2,10 +2,10 @@
   "aircraft": [
     {
       "key": "1",
-      "label": "Cessna 150 / 152 (C150 / C152)",
-      "folder": "Cessna 150 - 152",
-      "code": "C150",
-      "category": "Light Singles",
+      "label": "Cessna 150",
+      "folder": "Cessna 150",
+      "icao": "C150",
+      "category": "Light Single Pistons",
       "query": "Cessna 150",
       "images": [
         "001.jpg",
@@ -23,23 +23,25 @@
         "016.jpg",
         "017.jpg",
         "018.jpg",
-        "020.jpg",
         "023.jpg",
         "024.jpg",
         "025.jpg",
-        "027.jpg"
+        "027.jpg",
+        "028.jpg"
       ],
       "cruise_speed_kt": 95,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 735
+      "mtow_kg": 757,
+      "climb_speed_kt": 75,
+      "descent_speed_kt": 90
     },
     {
       "key": "2",
-      "label": "Cessna 172 Skyhawk (C172)",
+      "label": "Cessna 172 Skyhawk",
       "folder": "Cessna 172 Skyhawk",
-      "code": "C172",
-      "category": "Light Singles",
+      "icao": "C172",
+      "category": "Light Single Pistons",
       "query": "Cessna 172",
       "images": [
         "001.jpg",
@@ -61,17 +63,19 @@
         "017.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 122,
+      "cruise_speed_kt": 120,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1157
+      "mtow_kg": 1157,
+      "climb_speed_kt": 80,
+      "descent_speed_kt": 105
     },
     {
       "key": "3",
-      "label": "Cessna 182 Skylane (C182)",
+      "label": "Cessna 182 Skylane",
       "folder": "Cessna 182 Skylane",
-      "code": "C182",
-      "category": "Light Singles",
+      "icao": "C182",
+      "category": "Light Single Pistons",
       "query": "Cessna 182",
       "images": [
         "000.jpg",
@@ -91,21 +95,23 @@
         "018.jpg",
         "019.jpg",
         "020.jpg",
-        "021.jpg",
         "022.jpg",
-        "023.jpg"
+        "023.jpg",
+        "025.jpg"
       ],
-      "cruise_speed_kt": 145,
+      "cruise_speed_kt": 140,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1406
+      "mtow_kg": 1406,
+      "climb_speed_kt": 90,
+      "descent_speed_kt": 120
     },
     {
       "key": "4",
-      "label": "Cessna 206 Stationair (C206)",
+      "label": "Cessna 206 Stationair",
       "folder": "Cessna 206 Stationair",
-      "code": "C206",
-      "category": "Light Singles",
+      "icao": "C206",
+      "category": "Light Single Pistons",
       "query": "Cessna 206",
       "images": [
         "000.jpg",
@@ -124,25 +130,25 @@
         "017.jpg",
         "018.jpg"
       ],
-      "cruise_speed_kt": 145,
+      "cruise_speed_kt": 140,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1633
+      "mtow_kg": 1633,
+      "climb_speed_kt": 90,
+      "descent_speed_kt": 120
     },
     {
       "key": "5",
-      "label": "Cessna 210 Centurion (C210)",
+      "label": "Cessna 210 Centurion",
       "folder": "Cessna 210 Centurion",
-      "code": "C210",
-      "category": "Light Singles",
+      "icao": "C210",
+      "category": "Light Single Pistons",
       "query": "Cessna 210",
       "images": [
         "000.jpg",
         "001.jpg",
         "002.jpg",
         "003.jpg",
-        "005.jpg",
-        "008.jpg",
         "009.jpg",
         "011.jpg",
         "012.jpg",
@@ -152,22 +158,23 @@
         "019.jpg",
         "020.jpg",
         "021.jpg",
-        "022.jpg",
         "023.jpg",
         "024.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 170,
+      "cruise_speed_kt": 165,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1814
+      "mtow_kg": 1814,
+      "climb_speed_kt": 100,
+      "descent_speed_kt": 135
     },
     {
       "key": "6",
-      "label": "Piper PA38 Tomahawk (PA38)",
-      "folder": "Piper PA38 Tomahawk",
-      "code": "PA38",
-      "category": "Light Singles",
+      "label": "Piper PA-38 Tomahawk",
+      "folder": "Piper PA-38 Tomahawk",
+      "icao": "PA38",
+      "category": "Light Single Pistons",
       "query": "Piper Tomahawk",
       "images": [
         "001.jpg",
@@ -188,20 +195,22 @@
         "018.jpg",
         "021.jpg",
         "022.jpg",
-        "023.jpg",
-        "024.jpg"
+        "024.jpg",
+        "027.jpg"
       ],
-      "cruise_speed_kt": 110,
+      "cruise_speed_kt": 105,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 757
+      "mtow_kg": 757,
+      "climb_speed_kt": 75,
+      "descent_speed_kt": 90
     },
     {
       "key": "7",
-      "label": "Piper P28A Cherokee/Warrior (P28A)",
-      "folder": "Piper P28A Cherokee - Warrior",
-      "code": "P28A",
-      "category": "Light Singles",
+      "label": "Piper PA-28 Cherokee/Warrior",
+      "folder": "Piper PA-28 Cherokee Warrior",
+      "icao": "P28A",
+      "category": "Light Single Pistons",
       "query": "Piper Cherokee",
       "images": [
         "000.jpg",
@@ -225,17 +234,19 @@
         "029.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": 120,
+      "cruise_speed_kt": 115,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1157
+      "mtow_kg": 1157,
+      "climb_speed_kt": 80,
+      "descent_speed_kt": 105
     },
     {
       "key": "8",
-      "label": "Piper P28R Arrow (P28R)",
-      "folder": "Piper P28R Arrow",
-      "code": "P28R",
-      "category": "Light Singles",
+      "label": "Piper PA-28 Arrow",
+      "folder": "Piper PA-28 Arrow",
+      "icao": "P28R",
+      "category": "Light Single Pistons",
       "query": "Piper Arrow",
       "images": [
         "000.jpg",
@@ -259,17 +270,19 @@
         "020.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": 140,
+      "cruise_speed_kt": 135,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1247
+      "mtow_kg": 1247,
+      "climb_speed_kt": 90,
+      "descent_speed_kt": 120
     },
     {
       "key": "9",
-      "label": "Piper PA32 Cherokee Six (PA32)",
-      "folder": "Piper PA32 Cherokee Six",
-      "code": "PA32",
-      "category": "Light Singles",
+      "label": "Piper PA-32 Cherokee Six",
+      "folder": "Piper PA-32 Cherokee Six",
+      "icao": "PA32",
+      "category": "Light Single Pistons",
       "query": "Piper Cherokee Six",
       "images": [
         "000.jpg",
@@ -285,17 +298,19 @@
         "014.jpg",
         "016.jpg"
       ],
-      "cruise_speed_kt": 150,
+      "cruise_speed_kt": 140,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1542
+      "mtow_kg": 1542,
+      "climb_speed_kt": 95,
+      "descent_speed_kt": 125
     },
     {
       "key": "10",
-      "label": "Piper PA46 Malibu (PA46)",
-      "folder": "Piper PA46 Malibu",
-      "code": "PA46",
-      "category": "Light Singles",
+      "label": "Piper PA-46 Malibu",
+      "folder": "Piper PA-46 Malibu",
+      "icao": "PA46",
+      "category": "Light Single Pistons",
       "query": "Piper Malibu",
       "images": [
         "000.jpg",
@@ -304,7 +319,6 @@
         "003.jpg",
         "004.jpg",
         "005.jpg",
-        "006.jpg",
         "007.jpg",
         "008.jpg",
         "009.jpg",
@@ -317,19 +331,22 @@
         "016.jpg",
         "017.jpg",
         "018.jpg",
-        "019.jpg"
+        "019.jpg",
+        "021.jpg"
       ],
       "cruise_speed_kt": 200,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1996
+      "mtow_kg": 1996,
+      "climb_speed_kt": 120,
+      "descent_speed_kt": 160
     },
     {
       "key": "11",
-      "label": "Beechcraft Bonanza (BE36)",
-      "folder": "Beechcraft Bonanza BE36",
-      "code": "BE36",
-      "category": "Light Singles",
+      "label": "Beechcraft Bonanza 36",
+      "folder": "Beechcraft Bonanza 36",
+      "icao": "BE36",
+      "category": "Light Single Pistons",
       "query": "Bonanza 36",
       "images": [
         "000.jpg",
@@ -342,17 +359,19 @@
         "007.jpg",
         "008.jpg"
       ],
-      "cruise_speed_kt": 170,
+      "cruise_speed_kt": 165,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1656
+      "mtow_kg": 1656,
+      "climb_speed_kt": 110,
+      "descent_speed_kt": 140
     },
     {
       "key": "12",
-      "label": "Beechcraft Bonanza (BE35)",
-      "folder": "Beechcraft Bonanza BE35",
-      "code": "BE35",
-      "category": "Light Singles",
+      "label": "Beechcraft Bonanza 35",
+      "folder": "Beechcraft Bonanza 35",
+      "icao": "BE35",
+      "category": "Light Single Pistons",
       "query": "Bonanza 35",
       "images": [
         "000.jpg",
@@ -360,19 +379,28 @@
         "002.jpg",
         "003.jpg",
         "004.jpg",
-        "005.jpg"
+        "005.jpg",
+        "006.jpg",
+        "007.jpg",
+        "008.jpg",
+        "009.jpg",
+        "010.jpg",
+        "012.jpg",
+        "013.jpg"
       ],
-      "cruise_speed_kt": 170,
+      "cruise_speed_kt": 165,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1338
+      "mtow_kg": 1338,
+      "climb_speed_kt": 105,
+      "descent_speed_kt": 135
     },
     {
       "key": "13",
-      "label": "Mooney (M20J)",
+      "label": "Mooney M20J",
       "folder": "Mooney M20J",
-      "code": "M20J",
-      "category": "Light Singles",
+      "icao": "M20J",
+      "category": "Light Single Pistons",
       "query": "Mooney M20",
       "images": [
         "000.jpg",
@@ -388,17 +416,19 @@
         "011.jpg",
         "012.jpg"
       ],
-      "cruise_speed_kt": 160,
+      "cruise_speed_kt": 155,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1247
+      "mtow_kg": 1247,
+      "climb_speed_kt": 105,
+      "descent_speed_kt": 135
     },
     {
       "key": "14",
-      "label": "Cirrus SR22 (SR22)",
+      "label": "Cirrus SR22",
       "folder": "Cirrus SR22",
-      "code": "SR22",
-      "category": "Light Singles",
+      "icao": "SR22",
+      "category": "Light Single Pistons",
       "query": "Cirrus SR22",
       "images": [
         "000.jpg",
@@ -425,14 +455,16 @@
       "cruise_speed_kt": 170,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1633
+      "mtow_kg": 1633,
+      "climb_speed_kt": 110,
+      "descent_speed_kt": 145
     },
     {
       "key": "15",
-      "label": "Foxbat (AP22)",
-      "folder": "Foxbat AP22",
-      "code": "AP22",
-      "category": "Light Singles",
+      "label": "Aeroprakt A-22 Foxbat",
+      "folder": "Aeroprakt A-22 Foxbat",
+      "icao": "AP22",
+      "category": "Light Single Pistons",
       "query": "Aeroprakt Foxbat",
       "images": [
         "000.jpg",
@@ -442,9 +474,7 @@
         "004.jpg",
         "005.jpg",
         "007.jpg",
-        "008.jpg",
         "009.jpg",
-        "010.jpg",
         "011.jpg",
         "012.jpg",
         "013.jpg",
@@ -452,21 +482,25 @@
         "015.jpg",
         "016.jpg",
         "017.jpg",
-        "018.jpg",
         "019.jpg",
-        "020.jpg"
+        "021.jpg",
+        "022.jpg",
+        "023.jpg",
+        "024.jpg"
       ],
       "cruise_speed_kt": 90,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 600
+      "mtow_kg": 600,
+      "climb_speed_kt": 60,
+      "descent_speed_kt": 75
     },
     {
       "key": "16",
-      "label": "Jabiru (JABI)",
-      "folder": "Jabiru JABI",
-      "code": "JABI",
-      "category": "Light Singles",
+      "label": "Jabiru",
+      "folder": "Jabiru",
+      "icao": "JABI",
+      "category": "Light Single Pistons",
       "query": "Jabiru",
       "images": [
         "002.jpg",
@@ -484,20 +518,21 @@
       "cruise_speed_kt": 100,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 600
+      "mtow_kg": 600,
+      "climb_speed_kt": 65,
+      "descent_speed_kt": 80
     },
     {
       "key": "17",
-      "label": "Cessna 310 (C310)",
+      "label": "Cessna 310",
       "folder": "Cessna 310",
-      "code": "C310",
+      "icao": "C310",
       "category": "Light Multi Pistons",
       "query": "Cessna 310",
       "images": [
         "001.jpg",
         "002.jpg",
         "006.jpg",
-        "007.jpg",
         "009.jpg",
         "010.jpg",
         "011.jpg",
@@ -513,18 +548,21 @@
         "024.jpg",
         "025.jpg",
         "026.jpg",
-        "027.jpg"
+        "027.jpg",
+        "028.jpg"
       ],
       "cruise_speed_kt": 180,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 2495
+      "mtow_kg": 2495,
+      "climb_speed_kt": 120,
+      "descent_speed_kt": 150
     },
     {
       "key": "18",
-      "label": "Cessna 337 (C337)",
-      "folder": "Cessna 337",
-      "code": "C337",
+      "label": "Cessna 337 Skymaster",
+      "folder": "Cessna 337 Skymaster",
+      "icao": "C337",
       "category": "Light Multi Pistons",
       "query": "Cessna Skymaster",
       "images": [
@@ -549,16 +587,18 @@
         "030.jpg",
         "031.jpg"
       ],
-      "cruise_speed_kt": 165,
+      "cruise_speed_kt": 160,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 2100
+      "mtow_kg": 2100,
+      "climb_speed_kt": 105,
+      "descent_speed_kt": 135
     },
     {
       "key": "19",
-      "label": "Cessna 404 Titan (C404)",
+      "label": "Cessna 404 Titan",
       "folder": "Cessna 404 Titan",
-      "code": "C404",
+      "icao": "C404",
       "category": "Light Multi Pistons",
       "query": "Cessna 404",
       "images": [
@@ -581,13 +621,15 @@
       "cruise_speed_kt": 200,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 3855
+      "mtow_kg": 3810,
+      "climb_speed_kt": 130,
+      "descent_speed_kt": 160
     },
     {
       "key": "20",
-      "label": "Cessna 340 (C340)",
+      "label": "Cessna 340",
       "folder": "Cessna 340",
-      "code": "C340",
+      "icao": "C340",
       "category": "Light Multi Pistons",
       "query": "Cessna 340",
       "images": [
@@ -613,13 +655,15 @@
       "cruise_speed_kt": 200,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 2721
+      "mtow_kg": 2721,
+      "climb_speed_kt": 130,
+      "descent_speed_kt": 165
     },
     {
       "key": "21",
-      "label": "Piper PA44 Seminole (PA44)",
-      "folder": "Piper PA44 Seminole",
-      "code": "PA44",
+      "label": "Piper PA-44 Seminole",
+      "folder": "Piper PA-44 Seminole",
+      "icao": "PA44",
       "category": "Light Multi Pistons",
       "query": "Piper Seminole",
       "images": [
@@ -635,20 +679,21 @@
         "010.jpg",
         "011.jpg",
         "013.jpg",
-        "016.jpg",
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 165,
+      "cruise_speed_kt": 160,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1725
+      "mtow_kg": 1725,
+      "climb_speed_kt": 95,
+      "descent_speed_kt": 120
     },
     {
       "key": "22",
-      "label": "Piper PA34 Seneca (PA34)",
-      "folder": "Piper PA34 Seneca",
-      "code": "PA34",
+      "label": "Piper PA-34 Seneca",
+      "folder": "Piper PA-34 Seneca",
+      "icao": "PA34",
       "category": "Light Multi Pistons",
       "query": "Piper Seneca",
       "images": [
@@ -673,16 +718,18 @@
         "021.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": 175,
+      "cruise_speed_kt": 170,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 2155
+      "mtow_kg": 2155,
+      "climb_speed_kt": 105,
+      "descent_speed_kt": 135
     },
     {
       "key": "23",
-      "label": "Piper PA27 Aztec (PA27)",
-      "folder": "Piper PA27 Aztec",
-      "code": "PA27",
+      "label": "Piper PA-27 Aztec",
+      "folder": "Piper PA-27 Aztec",
+      "icao": "PA27",
       "category": "Light Multi Pistons",
       "query": "Piper Aztec",
       "images": [
@@ -707,16 +754,18 @@
         "027.jpg",
         "028.jpg"
       ],
-      "cruise_speed_kt": 165,
+      "cruise_speed_kt": 160,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 2359
+      "mtow_kg": 2359,
+      "climb_speed_kt": 105,
+      "descent_speed_kt": 135
     },
     {
       "key": "24",
-      "label": "Piper PA31 Navajo / Chieftain (PA31)",
-      "folder": "Piper PA31 Navajo - Chieftain",
-      "code": "PA31",
+      "label": "Piper PA-31 Navajo/Chieftain",
+      "folder": "Piper PA-31 Navajo Chieftain",
+      "icao": "PA31",
       "category": "Light Multi Pistons",
       "query": "Piper Navajo",
       "images": [
@@ -741,16 +790,18 @@
         "019.jpg",
         "020.jpg"
       ],
-      "cruise_speed_kt": 210,
+      "cruise_speed_kt": 200,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 3175
+      "mtow_kg": 3175,
+      "climb_speed_kt": 130,
+      "descent_speed_kt": 160
     },
     {
       "key": "25",
-      "label": "Beechcraft BE58 Baron (BE58)",
-      "folder": "Beechcraft BE58 Baron",
-      "code": "BE58",
+      "label": "Beechcraft Baron 58",
+      "folder": "Beechcraft Baron 58",
+      "icao": "BE58",
       "category": "Light Multi Pistons",
       "query": "Beech Baron",
       "images": [
@@ -778,13 +829,15 @@
       "cruise_speed_kt": 190,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 2495
+      "mtow_kg": 2495,
+      "climb_speed_kt": 120,
+      "descent_speed_kt": 155
     },
     {
       "key": "26",
-      "label": "Beechcraft BE76 Duchess (BE76)",
-      "folder": "Beechcraft BE76 Duchess",
-      "code": "BE76",
+      "label": "Beechcraft Duchess 76",
+      "folder": "Beechcraft Duchess 76",
+      "icao": "BE76",
       "category": "Light Multi Pistons",
       "query": "Beech Duchess",
       "images": [
@@ -806,16 +859,18 @@
         "015.jpg",
         "016.jpg"
       ],
-      "cruise_speed_kt": 155,
+      "cruise_speed_kt": 150,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1769
+      "mtow_kg": 1769,
+      "climb_speed_kt": 95,
+      "descent_speed_kt": 120
     },
     {
       "key": "27",
-      "label": "Aero Commander (AC50)",
-      "folder": "Aero Commander AC50",
-      "code": "AC50",
+      "label": "Aero Commander 500",
+      "folder": "Aero Commander 500",
+      "icao": "AC50",
       "category": "Light Multi Pistons",
       "query": "Aero Commander",
       "images": [
@@ -843,13 +898,15 @@
       "cruise_speed_kt": 175,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 3175
+      "mtow_kg": 3062,
+      "climb_speed_kt": 120,
+      "descent_speed_kt": 150
     },
     {
       "key": "28",
-      "label": "Partenavia (P68)",
-      "folder": "Partenavia P68",
-      "code": "P68",
+      "label": "Partenavia P.68",
+      "folder": "Partenavia P.68",
+      "icao": "P68",
       "category": "Light Multi Pistons",
       "query": "Partenavia",
       "images": [
@@ -877,13 +934,15 @@
       "cruise_speed_kt": 150,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1990
+      "mtow_kg": 1990,
+      "climb_speed_kt": 100,
+      "descent_speed_kt": 125
     },
     {
       "key": "29",
-      "label": "Pilatus Britten-Norman Islander (BN2P)",
-      "folder": "Pilatus Britten-Norman Islander",
-      "code": "BN2P",
+      "label": "Britten-Norman BN-2 Islander",
+      "folder": "Britten-Norman BN-2 Islander",
+      "icao": "BN2P",
       "category": "Light Multi Pistons",
       "query": "Britten Norman Islander",
       "images": [
@@ -908,18 +967,20 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": 140,
+      "cruise_speed_kt": 135,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 2994
+      "mtow_kg": 2994,
+      "climb_speed_kt": 85,
+      "descent_speed_kt": 105
     },
     {
       "key": "30",
-      "label": "Diamond DA42 Twin-Star (DA42)",
-      "folder": "Diamond DA42 Twin-Star",
-      "code": "DA42",
+      "label": "Diamond DA42 Twin Star",
+      "folder": "Diamond DA42 Twin Star",
+      "icao": "DA42",
       "category": "Light Multi Pistons",
-      "query": "Diamond Twin-Star",
+      "query": "Diamond Twin Star",
       "images": [
         "000.jpg",
         "001.jpg",
@@ -939,18 +1000,21 @@
         "022.jpg",
         "023.jpg",
         "024.jpg",
-        "025.jpg"
+        "025.jpg",
+        "026.jpg"
       ],
-      "cruise_speed_kt": 170,
+      "cruise_speed_kt": 165,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1999
+      "mtow_kg": 1999,
+      "climb_speed_kt": 95,
+      "descent_speed_kt": 125
     },
     {
       "key": "31",
-      "label": "Pilatus PC-12 (PC12)",
+      "label": "Pilatus PC-12",
       "folder": "Pilatus PC-12",
-      "code": "PC12",
+      "icao": "PC12",
       "category": "Turboprops",
       "query": "Pilatus PC-12",
       "images": [
@@ -978,18 +1042,19 @@
       "cruise_speed_kt": 270,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 4740
+      "mtow_kg": 4740,
+      "climb_speed_kt": 150,
+      "descent_speed_kt": 200
     },
     {
       "key": "32",
-      "label": "Cessna 208 Caravan (C208)",
+      "label": "Cessna 208 Caravan",
       "folder": "Cessna 208 Caravan",
-      "code": "C208",
+      "icao": "C208",
       "category": "Turboprops",
       "query": "Cessna Caravan",
       "images": [
         "000.jpg",
-        "001.jpg",
         "003.jpg",
         "004.jpg",
         "005.jpg",
@@ -1007,18 +1072,21 @@
         "020.jpg",
         "021.jpg",
         "022.jpg",
-        "023.jpg"
+        "023.jpg",
+        "024.jpg"
       ],
       "cruise_speed_kt": 160,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 3629
+      "mtow_kg": 3629,
+      "climb_speed_kt": 110,
+      "descent_speed_kt": 140
     },
     {
       "key": "33",
-      "label": "Beechcraft B200 King Air (BE20)",
-      "folder": "Beechcraft B200 King Air",
-      "code": "BE20",
+      "label": "Beechcraft King Air 200",
+      "folder": "Beechcraft King Air 200",
+      "icao": "BE20",
       "category": "Turboprops",
       "query": "King Air 200",
       "images": [
@@ -1043,13 +1111,15 @@
       "cruise_speed_kt": 260,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 5670
+      "mtow_kg": 5670,
+      "climb_speed_kt": 160,
+      "descent_speed_kt": 210
     },
     {
       "key": "34",
-      "label": "Beechcraft B350 King Air (B350)",
-      "folder": "Beechcraft B350 King Air",
-      "code": "B350",
+      "label": "Beechcraft King Air 350",
+      "folder": "Beechcraft King Air 350",
+      "icao": "B350",
       "category": "Turboprops",
       "query": "King Air 350",
       "images": [
@@ -1077,13 +1147,15 @@
       "cruise_speed_kt": 300,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 6804
+      "mtow_kg": 6804,
+      "climb_speed_kt": 170,
+      "descent_speed_kt": 220
     },
     {
       "key": "35",
-      "label": "Cessna 441 Conquest (C441)",
-      "folder": "Cessna 441 Conquest",
-      "code": "C441",
+      "label": "Cessna 441 Conquest II",
+      "folder": "Cessna 441 Conquest II",
+      "icao": "C441",
       "category": "Turboprops",
       "query": "Cessna 441",
       "images": [
@@ -1108,16 +1180,18 @@
         "019.jpg",
         "020.jpg"
       ],
-      "cruise_speed_kt": 280,
+      "cruise_speed_kt": 290,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 4468
+      "mtow_kg": 4468,
+      "climb_speed_kt": 170,
+      "descent_speed_kt": 220
     },
     {
       "key": "36",
-      "label": "Embraer EMB-120 Brasilia (E120)",
-      "folder": "Embraer EMB-120 Brasilia",
-      "code": "E120",
+      "label": "Embraer EMB 120 Brasilia",
+      "folder": "Embraer EMB 120 Brasilia",
+      "icao": "E120",
       "category": "Turboprops",
       "query": "Embraer Brasilia",
       "images": [
@@ -1142,16 +1216,18 @@
         "028.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": 290,
+      "cruise_speed_kt": 285,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 11500
+      "mtow_kg": 11500,
+      "climb_speed_kt": 180,
+      "descent_speed_kt": 230
     },
     {
       "key": "37",
-      "label": "Fairchild Swearingen SA227 Metro (SW4)",
-      "folder": "Fairchild Swearingen SA227 Metro",
-      "code": "SW4",
+      "label": "Fairchild Swearingen Metroliner",
+      "folder": "Fairchild Swearingen Metroliner",
+      "icao": "SW4",
       "category": "Turboprops",
       "query": "Fairchild Metro",
       "images": [
@@ -1176,18 +1252,20 @@
         "023.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": 270,
+      "cruise_speed_kt": 260,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 7484
+      "mtow_kg": 7484,
+      "climb_speed_kt": 180,
+      "descent_speed_kt": 230
     },
     {
       "key": "38",
-      "label": "SAAB 340 (SF34)",
-      "folder": "SAAB 340",
-      "code": "SF34",
+      "label": "Saab 340",
+      "folder": "Saab 340",
+      "icao": "SF34",
       "category": "Turboprops",
-      "query": "SAAB 340",
+      "query": "Saab 340",
       "images": [
         "000.jpg",
         "002.jpg",
@@ -1213,18 +1291,19 @@
       "cruise_speed_kt": 250,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 13155
+      "mtow_kg": 13155,
+      "climb_speed_kt": 170,
+      "descent_speed_kt": 220
     },
     {
       "key": "39",
-      "label": "Bombardier Dash-8-300 (DH8C)",
-      "folder": "Bombardier Dash-8-300",
-      "code": "DH8C",
+      "label": "De Havilland Canada Dash 8-300",
+      "folder": "De Havilland Canada Dash 8-300",
+      "icao": "DH8C",
       "category": "Turboprops",
       "query": "Dash 8-300",
       "images": [
         "001.jpg",
-        "002.jpg",
         "003.jpg",
         "004.jpg",
         "005.jpg",
@@ -1242,18 +1321,21 @@
         "018.jpg",
         "019.jpg",
         "020.jpg",
-        "021.jpg"
+        "021.jpg",
+        "022.jpg"
       ],
       "cruise_speed_kt": 250,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 19500
+      "mtow_kg": 19500,
+      "climb_speed_kt": 170,
+      "descent_speed_kt": 220
     },
     {
       "key": "40",
-      "label": "Bombardier Dash-8-Q400 (DH8D)",
-      "folder": "Bombardier Dash-8-Q400",
-      "code": "DH8D",
+      "label": "De Havilland Canada Dash 8-400",
+      "folder": "De Havilland Canada Dash 8-400",
+      "icao": "DH8D",
       "category": "Turboprops",
       "query": "Dash 8 Q400",
       "images": [
@@ -1264,7 +1346,6 @@
         "005.jpg",
         "006.jpg",
         "007.jpg",
-        "008.jpg",
         "009.jpg",
         "010.jpg",
         "011.jpg",
@@ -1278,16 +1359,18 @@
         "025.jpg",
         "026.jpg"
       ],
-      "cruise_speed_kt": 360,
+      "cruise_speed_kt": 340,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 29260
+      "mtow_kg": 29260,
+      "climb_speed_kt": 185,
+      "descent_speed_kt": 240
     },
     {
       "key": "41",
-      "label": "ATR72-500 (AT75)",
-      "folder": "ATR72-500",
-      "code": "AT75",
+      "label": "ATR 72-500",
+      "folder": "ATR 72-500",
+      "icao": "AT75",
       "category": "Turboprops",
       "query": "ATR 72",
       "images": [
@@ -1311,13 +1394,15 @@
       "cruise_speed_kt": 275,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 23000
+      "mtow_kg": 22800,
+      "climb_speed_kt": 170,
+      "descent_speed_kt": 220
     },
     {
       "key": "42",
-      "label": "Raytheon Beechcraft 1900 (B190)",
-      "folder": "Raytheon Beechcraft 1900",
-      "code": "B190",
+      "label": "Beechcraft 1900",
+      "folder": "Beechcraft 1900",
+      "icao": "B190",
       "category": "Turboprops",
       "query": "Beech 1900",
       "images": [
@@ -1334,16 +1419,18 @@
         "012.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 255,
+      "cruise_speed_kt": 260,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 7765
+      "mtow_kg": 7764,
+      "climb_speed_kt": 170,
+      "descent_speed_kt": 220
     },
     {
       "key": "43",
-      "label": "Fokker 50 (F50)",
+      "label": "Fokker 50",
       "folder": "Fokker 50",
-      "code": "F50",
+      "icao": "F50",
       "category": "Turboprops",
       "query": "Fokker 50",
       "images": [
@@ -1371,13 +1458,15 @@
       "cruise_speed_kt": 240,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 20830
+      "mtow_kg": 20830,
+      "climb_speed_kt": 170,
+      "descent_speed_kt": 220
     },
     {
       "key": "44",
-      "label": "Learjet 35 (LJ35)",
+      "label": "Learjet 35",
       "folder": "Learjet 35",
-      "code": "LJ35",
+      "icao": "LJ35",
       "category": "Business Jets",
       "query": "Learjet 35",
       "images": [
@@ -1388,10 +1477,7 @@
         "004.jpg",
         "005.jpg",
         "006.jpg",
-        "007.jpg",
-        "008.jpg",
         "009.jpg",
-        "010.jpg",
         "011.jpg",
         "012.jpg",
         "013.jpg",
@@ -1400,7 +1486,6 @@
         "016.jpg",
         "017.jpg",
         "018.jpg",
-        "019.jpg",
         "020.jpg",
         "021.jpg",
         "022.jpg"
@@ -1408,13 +1493,15 @@
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 8300
+      "mtow_kg": 8300,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 250
     },
     {
       "key": "45",
-      "label": "Learjet 45 (LJ45)",
+      "label": "Learjet 45",
       "folder": "Learjet 45",
-      "code": "LJ45",
+      "icao": "LJ45",
       "category": "Business Jets",
       "query": "Learjet 45",
       "images": [
@@ -1424,7 +1511,6 @@
         "003.jpg",
         "004.jpg",
         "005.jpg",
-        "006.jpg",
         "007.jpg",
         "008.jpg",
         "009.jpg",
@@ -1434,83 +1520,67 @@
         "013.jpg",
         "014.jpg",
         "015.jpg",
-        "016.jpg",
-        "017.jpg",
-        "018.jpg",
         "019.jpg",
         "020.jpg",
         "021.jpg",
-        "022.jpg",
         "023.jpg"
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 9752
+      "mtow_kg": 9752,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 250
     },
     {
       "key": "46",
-      "label": "Learjet 60 (LJ60)",
+      "label": "Learjet 60",
       "folder": "Learjet 60",
-      "code": "LJ60",
+      "icao": "LJ60",
       "category": "Business Jets",
       "query": "Learjet 60",
       "images": [
-        "000.jpg",
         "001.jpg",
         "002.jpg",
         "003.jpg",
-        "004.jpg",
-        "005.jpg",
-        "006.jpg",
         "007.jpg",
         "008.jpg",
         "009.jpg",
-        "010.jpg",
         "011.jpg",
-        "012.jpg",
         "013.jpg",
         "014.jpg",
         "015.jpg",
-        "016.jpg",
         "017.jpg",
         "018.jpg",
         "019.jpg",
         "020.jpg",
         "021.jpg",
-        "022.jpg",
-        "023.jpg",
         "025.jpg",
         "026.jpg",
-        "027.jpg",
-        "028.jpg",
-        "029.jpg",
-        "030.jpg"
+        "027.jpg"
       ],
-      "cruise_speed_kt": 450,
+      "cruise_speed_kt": 440,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 10659
+      "mtow_kg": 10659,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 250
     },
     {
       "key": "47",
-      "label": "Gulfstream IV (GLF4)",
+      "label": "Gulfstream IV",
       "folder": "Gulfstream IV",
-      "code": "GLF4",
+      "icao": "GLF4",
       "category": "Business Jets",
       "query": "Gulfstream IV",
       "images": [
         "000.jpg",
         "001.jpg",
-        "002.jpg",
         "003.jpg",
-        "005.jpg",
         "006.jpg",
-        "007.jpg",
         "008.jpg",
         "009.jpg",
         "010.jpg",
-        "011.jpg",
         "012.jpg",
         "013.jpg",
         "015.jpg",
@@ -1519,24 +1589,28 @@
         "019.jpg",
         "020.jpg",
         "023.jpg",
-        "024.jpg"
+        "024.jpg",
+        "026.jpg",
+        "027.jpg",
+        "030.jpg",
+        "031.jpg"
       ],
-      "cruise_speed_kt": 480,
+      "cruise_speed_kt": 460,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 33203
+      "mtow_kg": 33203,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 280
     },
     {
       "key": "48",
-      "label": "Gulfstream V (GLF5)",
+      "label": "Gulfstream V",
       "folder": "Gulfstream V",
-      "code": "GLF5",
+      "icao": "GLF5",
       "category": "Business Jets",
       "query": "Gulfstream V",
       "images": [
-        "003.jpg",
         "005.jpg",
-        "010.jpg",
         "012.jpg",
         "022.jpg",
         "033.jpg",
@@ -1546,13 +1620,15 @@
       "cruise_speed_kt": 480,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 41277
+      "mtow_kg": 41277,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 280
     },
     {
       "key": "49",
-      "label": "Gulfstream VI (GLF6)",
-      "folder": "Gulfstream VI",
-      "code": "GLF6",
+      "label": "Gulfstream G650",
+      "folder": "Gulfstream G650",
+      "icao": "GLF6",
       "category": "Business Jets",
       "query": "Gulfstream G650",
       "images": [
@@ -1580,13 +1656,15 @@
       "cruise_speed_kt": 488,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 43998
+      "mtow_kg": 45178,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 280
     },
     {
       "key": "50",
-      "label": "Bombardier Global Express (GLEX)",
+      "label": "Bombardier Global Express",
       "folder": "Bombardier Global Express",
-      "code": "GLEX",
+      "icao": "GLEX",
       "category": "Business Jets",
       "query": "Global Express",
       "images": [
@@ -1611,18 +1689,20 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 490,
+      "cruise_speed_kt": 480,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 44452
+      "mtow_kg": 44452,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 280
     },
     {
       "key": "51",
-      "label": "Bombardier Challenger (CL60)",
-      "folder": "Bombardier Challenger",
-      "code": "CL60",
+      "label": "Bombardier Challenger 600",
+      "folder": "Bombardier Challenger 600",
+      "icao": "CL60",
       "category": "Business Jets",
-      "query": "Challenger 604",
+      "query": "Challenger 600",
       "images": [
         "000.jpg",
         "001.jpg",
@@ -1645,62 +1725,64 @@
         "024.jpg",
         "025.jpg"
       ],
-      "cruise_speed_kt": 465,
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 21863
+      "mtow_kg": 21863,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 270
     },
     {
       "key": "52",
-      "label": "Cessna Citation 550 (C550)",
-      "folder": "Cessna Citation 550",
-      "code": "C550",
+      "label": "Cessna Citation II",
+      "folder": "Cessna Citation II",
+      "icao": "C550",
       "category": "Business Jets",
-      "query": "Citation 550",
+      "query": "Citation II",
       "images": [
         "000.jpg",
         "001.jpg",
         "002.jpg",
-        "004.jpg",
-        "007.jpg",
-        "009.jpg",
-        "010.jpg",
-        "011.jpg",
-        "013.jpg",
-        "014.jpg",
-        "015.jpg",
-        "016.jpg",
-        "017.jpg",
-        "018.jpg",
-        "019.jpg",
-        "020.jpg",
-        "022.jpg",
-        "023.jpg",
-        "027.jpg",
-        "028.jpg"
-      ],
-      "cruise_speed_kt": 365,
-      "wake_category": "Light",
-      "wake_category_when_leading": null,
-      "mtow_kg": 6804
-    },
-    {
-      "key": "53",
-      "label": "Cessna Citation 650 (C650)",
-      "folder": "Cessna Citation 650",
-      "code": "C650",
-      "category": "Business Jets",
-      "query": "Citation 650",
-      "images": [
-        "000.jpg",
-        "001.jpg",
-        "002.jpg",
+        "003.jpg",
         "004.jpg",
         "005.jpg",
         "006.jpg",
         "007.jpg",
         "008.jpg",
         "009.jpg",
+        "010.jpg",
+        "011.jpg",
+        "012.jpg",
+        "014.jpg",
+        "018.jpg",
+        "019.jpg",
+        "020.jpg",
+        "021.jpg",
+        "023.jpg",
+        "024.jpg"
+      ],
+      "cruise_speed_kt": 365,
+      "wake_category": "Light",
+      "wake_category_when_leading": null,
+      "mtow_kg": 6713,
+      "climb_speed_kt": 220,
+      "descent_speed_kt": 240
+    },
+    {
+      "key": "53",
+      "label": "Cessna Citation III",
+      "folder": "Cessna Citation III",
+      "icao": "C650",
+      "category": "Business Jets",
+      "query": "Citation III",
+      "images": [
+        "000.jpg",
+        "001.jpg",
+        "003.jpg",
+        "005.jpg",
+        "006.jpg",
+        "007.jpg",
+        "008.jpg",
         "010.jpg",
         "011.jpg",
         "012.jpg",
@@ -1711,18 +1793,21 @@
         "017.jpg",
         "018.jpg",
         "019.jpg",
-        "020.jpg"
+        "020.jpg",
+        "021.jpg"
       ],
-      "cruise_speed_kt": 450,
+      "cruise_speed_kt": 440,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 9979
+      "mtow_kg": 10433,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 260
     },
     {
       "key": "54",
-      "label": "Cessna Citation X (C750)",
+      "label": "Cessna Citation X",
       "folder": "Cessna Citation X",
-      "code": "C750",
+      "icao": "C750",
       "category": "Business Jets",
       "query": "Citation X",
       "images": [
@@ -1746,13 +1831,15 @@
       "cruise_speed_kt": 488,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 16375
+      "mtow_kg": 16375,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 280
     },
     {
       "key": "55",
-      "label": "Dassault Falcon 2000 (F2TH)",
+      "label": "Dassault Falcon 2000",
       "folder": "Dassault Falcon 2000",
-      "code": "F2TH",
+      "icao": "F2TH",
       "category": "Business Jets",
       "query": "Falcon 2000",
       "images": [
@@ -1777,16 +1864,18 @@
         "025.jpg",
         "026.jpg"
       ],
-      "cruise_speed_kt": 465,
+      "cruise_speed_kt": 460,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 16556
+      "mtow_kg": 16556,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 270
     },
     {
       "key": "56",
-      "label": "Westwind (WW24)",
-      "folder": "Westwind WW24",
-      "code": "WW24",
+      "label": "IAI 1124 Westwind",
+      "folder": "IAI 1124 Westwind",
+      "icao": "WW24",
       "category": "Business Jets",
       "query": "IAI Westwind",
       "images": [
@@ -1800,16 +1889,18 @@
         "009.jpg",
         "010.jpg"
       ],
-      "cruise_speed_kt": 425,
+      "cruise_speed_kt": 420,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 10659
+      "mtow_kg": 10659,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 260
     },
     {
       "key": "57",
-      "label": "Hawker 800XP (H25B)",
-      "folder": "Hawker 800XP",
-      "code": "H25B",
+      "label": "Hawker 800",
+      "folder": "Hawker 800",
+      "icao": "H25B",
       "category": "Business Jets",
       "query": "Hawker 800",
       "images": [
@@ -1834,16 +1925,18 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": 445,
+      "cruise_speed_kt": 430,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 12700
+      "mtow_kg": 12700,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 260
     },
     {
       "key": "58",
-      "label": "Pilatus PC-24 (PC24)",
+      "label": "Pilatus PC-24",
       "folder": "Pilatus PC-24",
-      "code": "PC24",
+      "icao": "PC24",
       "category": "Business Jets",
       "query": "Pilatus PC-24",
       "images": [
@@ -1871,13 +1964,15 @@
       "cruise_speed_kt": 420,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 6950
+      "mtow_kg": 8500,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 250
     },
     {
       "key": "59",
-      "label": "Airbus A318 (A318)",
+      "label": "Airbus A318",
       "folder": "Airbus A318",
-      "code": "A318",
+      "icao": "A318",
       "category": "Medium Jets",
       "query": "Airbus A318",
       "images": [
@@ -1905,13 +2000,15 @@
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 68000
+      "mtow_kg": 68000,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "60",
-      "label": "Airbus A320 (A320)",
+      "label": "Airbus A320",
       "folder": "Airbus A320",
-      "code": "A320",
+      "icao": "A320",
       "category": "Medium Jets",
       "query": "Airbus A320",
       "images": [
@@ -1939,13 +2036,15 @@
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 78000
+      "mtow_kg": 78000,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "61",
-      "label": "Airbus A319 (A319)",
+      "label": "Airbus A319",
       "folder": "Airbus A319",
-      "code": "A319",
+      "icao": "A319",
       "category": "Medium Jets",
       "query": "Airbus A319",
       "images": [
@@ -1973,13 +2072,15 @@
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 75500
+      "mtow_kg": 75500,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "62",
-      "label": "Airbus A321 (A321)",
+      "label": "Airbus A321",
       "folder": "Airbus A321",
-      "code": "A321",
+      "icao": "A321",
       "category": "Medium Jets",
       "query": "Airbus A321",
       "images": [
@@ -2007,13 +2108,15 @@
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 93500
+      "mtow_kg": 93500,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "63",
-      "label": "Airbus A220-100 (BCS1)",
+      "label": "Airbus A220-100",
       "folder": "Airbus A220-100",
-      "code": "BCS1",
+      "icao": "BCS1",
       "category": "Medium Jets",
       "query": "Airbus A220-100",
       "images": [
@@ -2037,13 +2140,15 @@
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 60781
+      "mtow_kg": 60781,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "64",
-      "label": "Airbus A220-300 (BCS3)",
+      "label": "Airbus A220-300",
       "folder": "Airbus A220-300",
-      "code": "BCS3",
+      "icao": "BCS3",
       "category": "Medium Jets",
       "query": "Airbus A220-300",
       "images": [
@@ -2051,7 +2156,6 @@
         "002.jpg",
         "004.jpg",
         "006.jpg",
-        "007.jpg",
         "008.jpg",
         "009.jpg",
         "010.jpg",
@@ -2066,18 +2170,21 @@
         "023.jpg",
         "024.jpg",
         "025.jpg",
-        "026.jpg"
+        "026.jpg",
+        "028.jpg"
       ],
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 69900
+      "mtow_kg": 69900,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "65",
-      "label": "Boeing 737-800 (B738)",
+      "label": "Boeing 737-800",
       "folder": "Boeing 737-800",
-      "code": "B738",
+      "icao": "B738",
       "category": "Medium Jets",
       "query": "Boeing 737-800",
       "images": [
@@ -2102,16 +2209,18 @@
         "025.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 453,
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 79016
+      "mtow_kg": 79016,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "66",
-      "label": "Boeing 737-700 (B737)",
+      "label": "Boeing 737-700",
       "folder": "Boeing 737-700",
-      "code": "B737",
+      "icao": "B737",
       "category": "Medium Jets",
       "query": "Boeing 737-700",
       "images": [
@@ -2136,16 +2245,18 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": 453,
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 70307
+      "mtow_kg": 70307,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "67",
-      "label": "Boeing 737-8 MAX (B38M)",
-      "folder": "Boeing 737-8 MAX",
-      "code": "B38M",
+      "label": "Boeing 737 MAX 8",
+      "folder": "Boeing 737 MAX 8",
+      "icao": "B38M",
       "category": "Medium Jets",
       "query": "Boeing 737 MAX",
       "images": [
@@ -2170,50 +2281,45 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 453,
+      "cruise_speed_kt": 450,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 82191
+      "mtow_kg": 82191,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "68",
-      "label": "Boeing 737-400 Freighter (B734)",
+      "label": "Boeing 737-400 Freighter",
       "folder": "Boeing 737-400 Freighter",
-      "code": "B734",
+      "icao": "B734",
       "category": "Medium Jets",
-      "query": "Boeing 737 freighter",
+      "query": "Boeing 737-400F",
       "images": [
-        "001.jpg",
-        "002.jpg",
-        "005.jpg",
+        "000.jpg",
+        "003.jpg",
         "006.jpg",
-        "007.jpg",
         "008.jpg",
         "009.jpg",
-        "015.jpg",
-        "019.jpg",
-        "023.jpg",
-        "024.jpg",
-        "026.jpg",
-        "029.jpg",
-        "034.jpg",
-        "035.jpg",
-        "049.jpg",
-        "053.jpg",
-        "054.jpg",
-        "055.jpg",
-        "056.jpg"
+        "010.jpg",
+        "011.jpg",
+        "012.jpg",
+        "013.jpg",
+        "014.jpg",
+        "015.jpg"
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 68039
+      "mtow_kg": 68039,
+      "climb_speed_kt": 270,
+      "descent_speed_kt": 270
     },
     {
       "key": "69",
-      "label": "Boeing 717-200 (B712)",
+      "label": "Boeing 717-200",
       "folder": "Boeing 717-200",
-      "code": "B712",
+      "icao": "B712",
       "category": "Medium Jets",
       "query": "Boeing 717",
       "images": [
@@ -2241,13 +2347,15 @@
       "cruise_speed_kt": 440,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 54885
+      "mtow_kg": 54885,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "70",
-      "label": "Fokker 70 (F70)",
+      "label": "Fokker 70",
       "folder": "Fokker 70",
-      "code": "F70",
+      "icao": "F70",
       "category": "Medium Jets",
       "query": "Fokker 70",
       "images": [
@@ -2272,16 +2380,18 @@
         "023.jpg",
         "025.jpg"
       ],
-      "cruise_speed_kt": 450,
+      "cruise_speed_kt": 430,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 39990
+      "mtow_kg": 39990,
+      "climb_speed_kt": 270,
+      "descent_speed_kt": 270
     },
     {
       "key": "71",
-      "label": "Fokker 100 (F100)",
+      "label": "Fokker 100",
       "folder": "Fokker 100",
-      "code": "F100",
+      "icao": "F100",
       "category": "Medium Jets",
       "query": "Fokker 100",
       "images": [
@@ -2306,16 +2416,18 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 450,
+      "cruise_speed_kt": 430,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 45810
+      "mtow_kg": 45810,
+      "climb_speed_kt": 270,
+      "descent_speed_kt": 270
     },
     {
       "key": "72",
-      "label": "British Aerospace 146-100 (B461)",
+      "label": "British Aerospace 146-100",
       "folder": "British Aerospace 146-100",
-      "code": "B461",
+      "icao": "B461",
       "category": "Medium Jets",
       "query": "BAe 146-100",
       "images": [
@@ -2340,13 +2452,15 @@
       "cruise_speed_kt": 380,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 38102
+      "mtow_kg": 38102,
+      "climb_speed_kt": 220,
+      "descent_speed_kt": 240
     },
     {
       "key": "73",
-      "label": "British Aerospace 146-200 (B462)",
+      "label": "British Aerospace 146-200",
       "folder": "British Aerospace 146-200",
-      "code": "B462",
+      "icao": "B462",
       "category": "Medium Jets",
       "query": "BAe 146-200",
       "images": [
@@ -2374,13 +2488,15 @@
       "cruise_speed_kt": 380,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 42184
+      "mtow_kg": 42184,
+      "climb_speed_kt": 220,
+      "descent_speed_kt": 240
     },
     {
       "key": "74",
-      "label": "British Aerospace 146-300 (B463)",
+      "label": "British Aerospace 146-300",
       "folder": "British Aerospace 146-300",
-      "code": "B463",
+      "icao": "B463",
       "category": "Medium Jets",
       "query": "BAe 146-300",
       "images": [
@@ -2408,13 +2524,15 @@
       "cruise_speed_kt": 380,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 44225
+      "mtow_kg": 44225,
+      "climb_speed_kt": 220,
+      "descent_speed_kt": 240
     },
     {
       "key": "75",
-      "label": "Boeing 757-200 (B752)",
+      "label": "Boeing 757-200",
       "folder": "Boeing 757-200",
-      "code": "B752",
+      "icao": "B752",
       "category": "Medium Jets",
       "query": "Boeing 757",
       "images": [
@@ -2439,16 +2557,18 @@
         "031.jpg",
         "032.jpg"
       ],
-      "cruise_speed_kt": 458,
+      "cruise_speed_kt": 460,
       "wake_category": "Medium",
       "wake_category_when_leading": "Heavy",
-      "mtow_kg": 115680
+      "mtow_kg": 115680,
+      "climb_speed_kt": 290,
+      "descent_speed_kt": 290
     },
     {
       "key": "76",
-      "label": "Embraer ERJ-170 (E170)",
-      "folder": "Embraer ERJ-170",
-      "code": "E170",
+      "label": "Embraer 170",
+      "folder": "Embraer 170",
+      "icao": "E170",
       "category": "Medium Jets",
       "query": "Embraer 170",
       "images": [
@@ -2476,13 +2596,15 @@
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 35990
+      "mtow_kg": 35990,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "77",
-      "label": "Embraer ERJ-190 (E190)",
-      "folder": "Embraer ERJ-190",
-      "code": "E190",
+      "label": "Embraer 190",
+      "folder": "Embraer 190",
+      "icao": "E190",
       "category": "Medium Jets",
       "query": "Embraer 190",
       "images": [
@@ -2500,16 +2622,18 @@
         "019.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": 447,
+      "cruise_speed_kt": 445,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 51800
+      "mtow_kg": 51800,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "78",
-      "label": "Boeing 747-8 (B748)",
+      "label": "Boeing 747-8",
       "folder": "Boeing 747-8",
-      "code": "B748",
+      "icao": "B748",
       "category": "Heavy Jets",
       "query": "Boeing 747",
       "images": [
@@ -2537,13 +2661,15 @@
       "cruise_speed_kt": 490,
       "wake_category": "Heavy",
       "wake_category_when_leading": null,
-      "mtow_kg": 447696
+      "mtow_kg": 447696,
+      "climb_speed_kt": 300,
+      "descent_speed_kt": 290
     },
     {
       "key": "79",
-      "label": "Boeing 777-300 (B773)",
+      "label": "Boeing 777-300",
       "folder": "Boeing 777-300",
-      "code": "B773",
+      "icao": "B773",
       "category": "Heavy Jets",
       "query": "Boeing 777",
       "images": [
@@ -2562,16 +2688,18 @@
         "016.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 482,
+      "cruise_speed_kt": 490,
       "wake_category": "Heavy",
       "wake_category_when_leading": null,
-      "mtow_kg": 299370
+      "mtow_kg": 299370,
+      "climb_speed_kt": 300,
+      "descent_speed_kt": 290
     },
     {
       "key": "80",
-      "label": "Boeing 787-8 Dreamliner (B788)",
+      "label": "Boeing 787-8 Dreamliner",
       "folder": "Boeing 787-8 Dreamliner",
-      "code": "B788",
+      "icao": "B788",
       "category": "Heavy Jets",
       "query": "Dreamliner",
       "images": [
@@ -2590,13 +2718,15 @@
       "cruise_speed_kt": 488,
       "wake_category": "Heavy",
       "wake_category_when_leading": null,
-      "mtow_kg": 219532
+      "mtow_kg": 227930,
+      "climb_speed_kt": 300,
+      "descent_speed_kt": 290
     },
     {
       "key": "81",
-      "label": "Airbus A330-200 (A332)",
+      "label": "Airbus A330-200",
       "folder": "Airbus A330-200",
-      "code": "A332",
+      "icao": "A332",
       "category": "Heavy Jets",
       "query": "Airbus A330",
       "images": [
@@ -2624,13 +2754,15 @@
       "cruise_speed_kt": 470,
       "wake_category": "Heavy",
       "wake_category_when_leading": null,
-      "mtow_kg": 242000
+      "mtow_kg": 242000,
+      "climb_speed_kt": 290,
+      "descent_speed_kt": 280
     },
     {
       "key": "82",
-      "label": "Airbus A340-300 (A343)",
+      "label": "Airbus A340-300",
       "folder": "Airbus A340-300",
-      "code": "A343",
+      "icao": "A343",
       "category": "Heavy Jets",
       "query": "Airbus A340",
       "images": [
@@ -2655,16 +2787,18 @@
         "029.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": 475,
+      "cruise_speed_kt": 470,
       "wake_category": "Heavy",
       "wake_category_when_leading": null,
-      "mtow_kg": 275000
+      "mtow_kg": 275000,
+      "climb_speed_kt": 290,
+      "descent_speed_kt": 280
     },
     {
       "key": "83",
-      "label": "Airbus A350-900 (A359)",
+      "label": "Airbus A350-900",
       "folder": "Airbus A350-900",
-      "code": "A359",
+      "icao": "A359",
       "category": "Heavy Jets",
       "query": "Airbus A350",
       "images": [
@@ -2680,13 +2814,15 @@
       "cruise_speed_kt": 488,
       "wake_category": "Heavy",
       "wake_category_when_leading": null,
-      "mtow_kg": 280000
+      "mtow_kg": 280000,
+      "climb_speed_kt": 300,
+      "descent_speed_kt": 290
     },
     {
       "key": "84",
-      "label": "Airbus A380-800 (A388)",
+      "label": "Airbus A380-800",
       "folder": "Airbus A380-800",
-      "code": "A388",
+      "icao": "A388",
       "category": "Heavy Jets",
       "query": "Airbus A380",
       "images": [
@@ -2703,13 +2839,15 @@
       "cruise_speed_kt": 488,
       "wake_category": "Super",
       "wake_category_when_leading": null,
-      "mtow_kg": 575000
+      "mtow_kg": 575000,
+      "climb_speed_kt": 290,
+      "descent_speed_kt": 280
     },
     {
       "key": "85",
-      "label": "Bell 206 Jet-Ranger / Long-Ranger (B06)",
-      "folder": "Bell 206 Jet-Ranger - Long-Ranger",
-      "code": "B06",
+      "label": "Bell 206 JetRanger/LongRanger",
+      "folder": "Bell 206 JetRanger LongRanger",
+      "icao": "B06",
       "category": "Helicopters",
       "query": "Bell 206",
       "images": [
@@ -2734,16 +2872,18 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 120,
+      "cruise_speed_kt": 115,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1451
+      "mtow_kg": 1451,
+      "climb_speed_kt": 60,
+      "descent_speed_kt": 80
     },
     {
       "key": "86",
-      "label": "Bell 212 (B212)",
+      "label": "Bell 212",
       "folder": "Bell 212",
-      "code": "B212",
+      "icao": "B212",
       "category": "Helicopters",
       "query": "Bell 212",
       "images": [
@@ -2758,16 +2898,18 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 125,
+      "cruise_speed_kt": 100,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 5080
+      "mtow_kg": 5080,
+      "climb_speed_kt": 70,
+      "descent_speed_kt": 90
     },
     {
       "key": "87",
-      "label": "Bell 412 (B412)",
+      "label": "Bell 412",
       "folder": "Bell 412",
-      "code": "B412",
+      "icao": "B412",
       "category": "Helicopters",
       "query": "Bell 412",
       "images": [
@@ -2783,16 +2925,18 @@
         "013.jpg",
         "014.jpg"
       ],
-      "cruise_speed_kt": 125,
+      "cruise_speed_kt": 120,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 5398
+      "mtow_kg": 5398,
+      "climb_speed_kt": 75,
+      "descent_speed_kt": 100
     },
     {
       "key": "88",
-      "label": "Airbus H125 Squirrel (AS50)",
+      "label": "Airbus H125 Squirrel",
       "folder": "Airbus H125 Squirrel",
-      "code": "AS50",
+      "icao": "AS50",
       "category": "Helicopters",
       "query": "Squirrel helicopter",
       "images": [
@@ -2810,16 +2954,18 @@
         "015.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 121,
+      "cruise_speed_kt": 120,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 2250
+      "mtow_kg": 2250,
+      "climb_speed_kt": 70,
+      "descent_speed_kt": 90
     },
     {
       "key": "89",
-      "label": "Aerospatiale/Eurocopter AS365 Dauphin (AS65)",
-      "folder": "Aerospatiale-Eurocopter AS365 Dauphin",
-      "code": "AS65",
+      "label": "Airbus AS365 Dauphin",
+      "folder": "Airbus AS365 Dauphin",
+      "icao": "AS65",
       "category": "Helicopters",
       "query": "Dauphin helicopter",
       "images": [
@@ -2843,13 +2989,15 @@
       "cruise_speed_kt": 145,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 4300
+      "mtow_kg": 4300,
+      "climb_speed_kt": 90,
+      "descent_speed_kt": 120
     },
     {
       "key": "90",
-      "label": "Airbus H120 (EC20)",
-      "folder": "Airbus H120",
-      "code": "EC20",
+      "label": "Airbus H120 Colibri",
+      "folder": "Airbus H120 Colibri",
+      "icao": "EC20",
       "category": "Helicopters",
       "query": "Eurocopter EC120",
       "images": [
@@ -2874,16 +3022,18 @@
         "031.jpg",
         "032.jpg"
       ],
-      "cruise_speed_kt": 124,
+      "cruise_speed_kt": 120,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1715
+      "mtow_kg": 1715,
+      "climb_speed_kt": 70,
+      "descent_speed_kt": 90
     },
     {
       "key": "91",
-      "label": "Leonardo AgustaWestland AW139 (A139)",
+      "label": "Leonardo AgustaWestland AW139",
       "folder": "Leonardo AgustaWestland AW139",
-      "code": "A139",
+      "icao": "A139",
       "category": "Helicopters",
       "query": "AW139",
       "images": [
@@ -2908,16 +3058,18 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 157,
+      "cruise_speed_kt": 150,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 6400
+      "mtow_kg": 6400,
+      "climb_speed_kt": 100,
+      "descent_speed_kt": 130
     },
     {
       "key": "92",
-      "label": "Robinson 22 (R22)",
-      "folder": "Robinson 22",
-      "code": "R22",
+      "label": "Robinson R22",
+      "folder": "Robinson R22",
+      "icao": "R22",
       "category": "Helicopters",
       "query": "Robinson R22",
       "images": [
@@ -2942,16 +3094,18 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": 82,
+      "cruise_speed_kt": 80,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 622
+      "mtow_kg": 622,
+      "climb_speed_kt": 50,
+      "descent_speed_kt": 60
     },
     {
       "key": "93",
-      "label": "Robinson 44 (R44)",
-      "folder": "Robinson 44",
-      "code": "R44",
+      "label": "Robinson R44",
+      "folder": "Robinson R44",
+      "icao": "R44",
       "category": "Helicopters",
       "query": "Robinson R44",
       "images": [
@@ -2979,13 +3133,15 @@
       "cruise_speed_kt": 110,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 1134
+      "mtow_kg": 1134,
+      "climb_speed_kt": 60,
+      "descent_speed_kt": 80
     },
     {
       "key": "94",
-      "label": "Airbus Helicopters Tiger (TIGR)",
-      "folder": "Airbus Helicopters Tiger",
-      "code": "TIGR",
+      "label": "Eurocopter Tiger ARH",
+      "folder": "Eurocopter Tiger ARH",
+      "icao": "TIGR",
       "category": "Helicopters",
       "query": "Eurocopter Tiger",
       "images": [
@@ -2997,45 +3153,46 @@
         "007.jpg",
         "008.jpg",
         "011.jpg",
-        "013.jpg",
         "017.jpg",
         "018.jpg",
         "019.jpg",
         "020.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": 124,
+      "cruise_speed_kt": 135,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 6000
+      "mtow_kg": 6000,
+      "climb_speed_kt": 110,
+      "descent_speed_kt": 140
     },
     {
       "key": "95",
-      "label": "Sikorsky UH-60 Blackhawk (H60)",
-      "folder": "Sikorsky UH-60 Blackhawk",
-      "code": "H60",
+      "label": "Sikorsky UH-60M Black Hawk",
+      "folder": "Sikorsky UH-60M Black Hawk",
+      "icao": "H60",
       "category": "Helicopters",
-      "query": "Sikorsky Blackhawk",
+      "query": "Black Hawk helicopter",
       "images": [
-        "008.jpg",
-        "009.jpg",
-        "010.jpg",
-        "011.jpg",
-        "012.jpg",
-        "014.jpg",
-        "015.jpg",
-        "018.jpg"
+        "002.jpg",
+        "004.jpg",
+        "005.jpg",
+        "006.jpg",
+        "007.jpg",
+        "009.jpg"
       ],
-      "cruise_speed_kt": 150,
+      "cruise_speed_kt": 145,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 9979
+      "mtow_kg": 10660,
+      "climb_speed_kt": 100,
+      "descent_speed_kt": 130
     },
     {
       "key": "96",
-      "label": "Sikorsky MH-60R Seahawk (H60)",
+      "label": "Sikorsky MH-60R Seahawk",
       "folder": "Sikorsky MH-60R Seahawk",
-      "code": "H60",
+      "icao": "H60",
       "category": "Helicopters",
       "query": "Sikorsky Seahawk",
       "images": [
@@ -3059,16 +3216,18 @@
         "021.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": 150,
+      "cruise_speed_kt": 145,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 10659
+      "mtow_kg": 10659,
+      "climb_speed_kt": 100,
+      "descent_speed_kt": 130
     },
     {
       "key": "97",
-      "label": "Boeing H47 Chinook (H47)",
-      "folder": "Boeing H47 Chinook",
-      "code": "H47",
+      "label": "Boeing CH-47F Chinook",
+      "folder": "Boeing CH-47F Chinook",
+      "icao": "H47",
       "category": "Helicopters",
       "query": "Boeing Chinook",
       "images": [
@@ -3091,13 +3250,15 @@
       "cruise_speed_kt": 145,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 22680
+      "mtow_kg": 22680,
+      "climb_speed_kt": 110,
+      "descent_speed_kt": 140
     },
     {
       "key": "98",
-      "label": "Airbus Helicopters MRH90 Taipan (NH90)",
-      "folder": "Airbus Helicopters MRH90 Taipan",
-      "code": "NH90",
+      "label": "MRH-90 Taipan",
+      "folder": "MRH-90 Taipan",
+      "icao": "NH90",
       "category": "Helicopters",
       "query": "NH90",
       "images": [
@@ -3119,16 +3280,18 @@
         "022.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": 150,
+      "cruise_speed_kt": 140,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 10600
+      "mtow_kg": 10600,
+      "climb_speed_kt": 100,
+      "descent_speed_kt": 130
     },
     {
       "key": "99",
-      "label": "Airbus Helicopters H135 (EC35)",
-      "folder": "Airbus Helicopters H135",
-      "code": "EC35",
+      "label": "Airbus H135",
+      "folder": "Airbus H135",
+      "icao": "EC35",
       "category": "Helicopters",
       "query": "EC135",
       "images": [
@@ -3153,16 +3316,18 @@
         "020.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": 135,
+      "cruise_speed_kt": 125,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 2980
+      "mtow_kg": 2980,
+      "climb_speed_kt": 80,
+      "descent_speed_kt": 110
     },
     {
       "key": "100",
-      "label": "Boeing F/A-18F Super Hornet (F18)",
-      "folder": "Boeing FA-18F Super Hornet",
-      "code": "F18",
+      "label": "Boeing F/A-18F Super Hornet",
+      "folder": "Boeing F A-18F Super Hornet",
+      "icao": "F18S",
       "category": "Military",
       "query": "Boeing FA-18F Super Hornet",
       "images": [
@@ -3177,13 +3342,15 @@
       "cruise_speed_kt": 570,
       "wake_category": "Unknown",
       "wake_category_when_leading": null,
-      "mtow_kg": 29937
+      "mtow_kg": 29937,
+      "climb_speed_kt": 350,
+      "descent_speed_kt": 350
     },
     {
       "key": "101",
-      "label": "Lockheed Martin F-35 Lightning II Joint Strike Fighter (F35)",
-      "folder": "Lockheed Martin F-35 Lightning II Joint Strike Fighter",
-      "code": "F35",
+      "label": "Lockheed Martin F-35A Lightning II",
+      "folder": "Lockheed Martin F-35A Lightning II",
+      "icao": "F35",
       "category": "Military",
       "query": "F-35",
       "images": [
@@ -3201,16 +3368,18 @@
         "014.jpg",
         "015.jpg"
       ],
-      "cruise_speed_kt": 610,
+      "cruise_speed_kt": 525,
       "wake_category": "Unknown",
       "wake_category_when_leading": null,
-      "mtow_kg": 31800
+      "mtow_kg": 31800,
+      "climb_speed_kt": 350,
+      "descent_speed_kt": 350
     },
     {
       "key": "102",
-      "label": "British Aerospace Hawk (HAWK)",
-      "folder": "British Aerospace Hawk",
-      "code": "HAWK",
+      "label": "BAE Systems Hawk 127",
+      "folder": "BAE Systems Hawk 127",
+      "icao": "HAWK",
       "category": "Military",
       "query": "BAE Hawk",
       "images": [
@@ -3235,16 +3404,18 @@
         "032.jpg",
         "034.jpg"
       ],
-      "cruise_speed_kt": 520,
+      "cruise_speed_kt": 450,
       "wake_category": "Unknown",
       "wake_category_when_leading": null,
-      "mtow_kg": 9100
+      "mtow_kg": 9100,
+      "climb_speed_kt": 300,
+      "descent_speed_kt": 300
     },
     {
       "key": "103",
-      "label": "Boeing C-17 Globemaster (C17)",
-      "folder": "Boeing C-17 Globemaster",
-      "code": "C17",
+      "label": "Boeing C-17A Globemaster III",
+      "folder": "Boeing C-17A Globemaster III",
+      "icao": "C17",
       "category": "Military",
       "query": "C-17",
       "images": [
@@ -3262,13 +3433,15 @@
       "cruise_speed_kt": 450,
       "wake_category": "Heavy",
       "wake_category_when_leading": null,
-      "mtow_kg": 265350
+      "mtow_kg": 265350,
+      "climb_speed_kt": 300,
+      "descent_speed_kt": 280
     },
     {
       "key": "104",
-      "label": "Lockheed C-130J Hercules (C30J)",
-      "folder": "Lockheed C-130J Hercules",
-      "code": "C30J",
+      "label": "Lockheed Martin C-130J-30 Hercules",
+      "folder": "Lockheed Martin C-130J-30 Hercules",
+      "icao": "C30J",
       "category": "Military",
       "query": "Lockheed Hercules",
       "images": [
@@ -3297,13 +3470,15 @@
       "cruise_speed_kt": 330,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 34292
+      "mtow_kg": 79378,
+      "climb_speed_kt": 180,
+      "descent_speed_kt": 220
     },
     {
       "key": "105",
-      "label": "Boeing 737-P8 Poseidon (P8)",
-      "folder": "Boeing 737-P8 Poseidon",
-      "code": "P8",
+      "label": "Boeing P-8A Poseidon",
+      "folder": "Boeing P-8A Poseidon",
+      "icao": "P8",
       "category": "Military",
       "query": "P-8 Poseidon",
       "images": [
@@ -3319,16 +3494,18 @@
         "014.jpg",
         "016.jpg"
       ],
-      "cruise_speed_kt": 453,
+      "cruise_speed_kt": 440,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 85365
+      "mtow_kg": 85365,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "106",
-      "label": "Pilatus Aircraft PC-21 (PC21)",
-      "folder": "Pilatus Aircraft PC-21",
-      "code": "PC21",
+      "label": "Pilatus PC-21",
+      "folder": "Pilatus PC-21",
+      "icao": "PC21",
       "category": "Military",
       "query": "Pilatus PC-21",
       "images": [
@@ -3347,22 +3524,24 @@
         "021.jpg",
         "022.jpg",
         "023.jpg",
-        "024.jpg",
-        "025.jpg",
-        "026.jpg",
-        "027.jpg",
-        "028.jpg"
+        "028.jpg",
+        "029.jpg",
+        "030.jpg",
+        "032.jpg",
+        "034.jpg"
       ],
-      "cruise_speed_kt": 370,
+      "cruise_speed_kt": 320,
       "wake_category": "Light",
       "wake_category_when_leading": null,
-      "mtow_kg": 4250
+      "mtow_kg": 4250,
+      "climb_speed_kt": 180,
+      "descent_speed_kt": 220
     },
     {
       "key": "107",
-      "label": "Boeing B737-7ES Wedgetail (E737)",
-      "folder": "Boeing B737-7ES Wedgetail",
-      "code": "E737",
+      "label": "Boeing E-7A Wedgetail",
+      "folder": "Boeing E-7A Wedgetail",
+      "icao": "E737",
       "category": "Military",
       "query": "Wedgetail",
       "images": [
@@ -3383,13 +3562,15 @@
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 77564
+      "mtow_kg": 77564,
+      "climb_speed_kt": 280,
+      "descent_speed_kt": 280
     },
     {
       "key": "108",
-      "label": "KC-30A Multi-Role Tanker Transport (A332)",
-      "folder": "KC-30A Multi-Role Tanker Transport",
-      "code": "A332",
+      "label": "Airbus KC-30A Multi-Role Tanker Transport",
+      "folder": "Airbus KC-30A Multi-Role Tanker Transport",
+      "icao": "A332",
       "category": "Military",
       "query": "Airbus MRTT",
       "images": [
@@ -3417,13 +3598,15 @@
       "cruise_speed_kt": 470,
       "wake_category": "Heavy",
       "wake_category_when_leading": null,
-      "mtow_kg": 233000
+      "mtow_kg": 233000,
+      "climb_speed_kt": 290,
+      "descent_speed_kt": 280
     },
     {
       "key": "109",
-      "label": "Alenia C27 Spartan (C27J)",
-      "folder": "Alenia C27 Spartan",
-      "code": "C27J",
+      "label": "Leonardo C-27J Spartan",
+      "folder": "Leonardo C-27J Spartan",
+      "icao": "C27J",
       "category": "Military",
       "query": "C-27 Spartan",
       "images": [
@@ -3439,23 +3622,48 @@
         "010.jpg",
         "012.jpg"
       ],
-      "cruise_speed_kt": 240,
+      "cruise_speed_kt": 290,
       "wake_category": "Medium",
       "wake_category_when_leading": null,
-      "mtow_kg": 30500
+      "mtow_kg": 31800,
+      "climb_speed_kt": 180,
+      "descent_speed_kt": 220
     },
     {
       "key": "110",
-      "label": "Dassault Falcon 7X (FA7X)",
+      "label": "Dassault Falcon 7X",
       "folder": "Dassault Falcon 7X",
-      "code": "FA7X",
+      "icao": "FA7X",
       "category": "Military",
       "query": "Falcon 7X",
-      "images": ["000.jpg", "001.jpg", "002.jpg"],
-      "cruise_speed_kt": 488,
+      "images": [
+        "000.jpg",
+        "001.jpg",
+        "002.jpg",
+        "004.jpg",
+        "005.jpg",
+        "009.jpg",
+        "010.jpg",
+        "011.jpg",
+        "012.jpg",
+        "013.jpg",
+        "014.jpg",
+        "017.jpg",
+        "018.jpg",
+        "019.jpg",
+        "020.jpg",
+        "022.jpg",
+        "024.jpg",
+        "025.jpg",
+        "026.jpg",
+        "027.jpg"
+      ],
+      "cruise_speed_kt": 480,
       "wake_category": null,
       "wake_category_when_leading": null,
-      "mtow_kg": 31751
+      "mtow_kg": 31751,
+      "climb_speed_kt": 250,
+      "descent_speed_kt": 280
     }
   ]
 }
