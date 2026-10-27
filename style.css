@@ -1116,6 +1116,8 @@ body.ranking-is-dragging * {
 .next-button {
   min-width: 12rem;
   font-size: 0.96rem;
+  /* Enabled/disabled swaps must be instant, or the colour visibly fades. */
+  transition: none;
 }
 
 .app.no-image .prompt {
