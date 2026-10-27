@@ -411,6 +411,8 @@ function normaliseAnswer(value) {
 function preparePhotoFadeIn(image) {
   if (!(image instanceof HTMLImageElement)) return;
   preparePhotoViewerImage(image);
+  // Fade only once the pixels exist, otherwise the animation finishes while the image is still blank.
+  if (!image.complete || !image.naturalWidth) return;
   if (image.dataset.fadeInPrepared === 'true' && image.style.animationName)
     return;
   image.dataset.fadeInPrepared = 'true';
@@ -539,6 +541,16 @@ photoFadeObserver.observe(document.documentElement, {
 });
 preparePhotoViewerImage(imageElement);
 
+document.addEventListener(
+  'load',
+  (event) => {
+    const image = event.target;
+    if (!(image instanceof HTMLImageElement) || image === imageElement) return;
+    image.dataset.fadeInPrepared = 'false';
+    preparePhotoFadeIn(image);
+  },
+  true,
+);
 function cleanPath(value) {
   return displayText(value).replace(/\\/g, '/').replace(/^\/+/, '');
 }

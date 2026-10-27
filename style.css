@@ -1009,7 +1009,6 @@ select:disabled {
   overflow: hidden;
   border-radius: 0.55rem;
   background: var(--photo-pattern);
-  background-size: 10px 10px, auto;
 }
 
 .ranking-photo {
