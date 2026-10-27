@@ -1222,7 +1222,59 @@ function displayQuestion() {
 // ============================================================================
 // 11. Layout, UI States, and Visibility
 // ============================================================================
-function updatePhotoVisibility() {
+function setRevealed(element, show, animate) {
+  element.getAnimations?.().forEach((running) => running.cancel());
+  const reduceMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches;
+  if (!animate || reduceMotion || !element.animate) {
+    element.hidden = !show;
+    return;
+  }
+  if (show) element.hidden = false;
+  else if (element.hidden) return;
+  const parentStyle = getComputedStyle(element.parentElement);
+  const isRow =
+    parentStyle.display.includes('flex') &&
+    parentStyle.flexDirection.startsWith('row');
+  const gap = parseFloat(isRow ? parentStyle.columnGap : parentStyle.rowGap) || 0;
+  const rect = element.getBoundingClientRect();
+  const full = {
+    height: `${rect.height}px`,
+    width: `${rect.width}px`,
+    opacity: 1,
+    transform: 'none',
+    marginBottom: '0px',
+    marginRight: '0px',
+  };
+  const collapsed = {
+    height: '0px',
+    paddingTop: '0px',
+    paddingBottom: '0px',
+    borderWidth: '0px',
+    minHeight: '0px',
+    opacity: 0,
+    transform: 'translateY(-0.6rem)',
+    marginBottom: isRow ? '0px' : `${-gap}px`,
+    marginRight: isRow ? `${-gap}px` : '0px',
+    width: isRow ? '0px' : `${rect.width}px`,
+  };
+  const previousOverflow = element.style.overflow;
+  element.style.overflow = 'hidden';
+  const animation = element.animate(show ? [collapsed, full] : [full, collapsed], {
+    duration: show ? 320 : 220,
+    easing: show ? 'cubic-bezier(0.22, 1, 0.36, 1)' : 'cubic-bezier(0.4, 0, 1, 1)',
+  });
+  animation.onfinish = () => {
+    element.style.overflow = previousOverflow;
+    if (!show) element.hidden = true;
+  };
+  animation.oncancel = () => {
+    element.style.overflow = previousOverflow;
+  };
+}
+
+function updatePhotoVisibility(animate = false) {
   const questionType = getQuestionType();
   const isSpecial = isSpecialQuestionType(questionType);
   const showPhotos = isSpecial && photosVisible;
@@ -1241,30 +1293,36 @@ function updatePhotoVisibility() {
     isRank ? 'speed-ranking-list' : 'image-container',
   );
 
-  if (isSpeedKind('compare', questionType) && comparison)
-    comparison.hidden = !showPhotos;
-  if (ranking) ranking.hidden = !isRank;
-  if (isRank) {
-    byId('speed-ranking-list')
-      ?.querySelectorAll('.ranking-photo-wrap')
-      .forEach((wrap) => {
-        wrap.hidden = !photosVisible;
-      });
-  }
-  if (questionType === 'wake') imageElement.hidden = !showPhotos;
-  imageContainer.hidden = isRank || (isSpecial && !photosVisible);
+  // Toggle layout first so the animation measures the final width.
   appElement.classList.toggle(
     'no-image',
     isRank ||
       (isSpecial && !photosVisible) ||
       (!isSpecial && questionType !== 'photo' && getAnswerMode() !== 'photo'),
   );
+
+  // While animating out, the container hides these once it has collapsed.
+  const keepForExit = animate && !showPhotos;
+  if (isSpeedKind('compare', questionType) && comparison && !keepForExit)
+    comparison.hidden = !showPhotos;
+  if (ranking) ranking.hidden = !isRank;
+  if (isRank) {
+    byId('speed-ranking-list')
+      ?.querySelectorAll('.ranking-photo-wrap')
+      .forEach((wrap) => {
+        setRevealed(wrap, photosVisible, animate);
+      });
+  }
+  if (questionType === 'wake' && !keepForExit)
+    imageElement.hidden = !showPhotos;
+  const showContainer = !isRank && !(isSpecial && !photosVisible);
+  setRevealed(imageContainer, showContainer, animate && isSpecial && !isRank);
   loadDeferredPhotos();
 }
 
 photoToggleButton.addEventListener('click', () => {
   photosVisible = !photosVisible;
-  updatePhotoVisibility();
+  updatePhotoVisibility(true);
 });
 
 const settingsToggleButton = byId('settings-toggle');
