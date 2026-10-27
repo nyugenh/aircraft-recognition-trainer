@@ -1827,15 +1827,20 @@ function displaySpeedComparison(pair) {
 }
 
 function getWakeFeedbackAnswer(item, category) {
+  const leading = getWakeCategory({
+    wake_category: item?.wake_category_when_leading,
+  });
+  const leadingNote =
+    leading && leading !== category ? ` · ${leading} when leading` : '';
   const mtow = Number(item?.mtow_kg);
   if (Number.isFinite(mtow) && mtow > 0) {
     // Below 10,000 kg, rounding to 1,000 would be too coarse to be useful.
     const step = mtow >= 10000 ? 1000 : 100;
     const rounded = Math.round(mtow / step) * step;
-    return `${category} (MTOW ≈ ${rounded.toLocaleString('en-US')} kg)`;
+    return `${category} (MTOW ≈ ${rounded.toLocaleString('en-US')} kg)${leadingNote}`;
   }
   const info = WAKE_CATEGORY_INFO[category];
-  return info ? `${category} (${info})` : category;
+  return (info ? `${category} (${info})` : category) + leadingNote;
 }
 
 async function displayWakeQuestion(item) {

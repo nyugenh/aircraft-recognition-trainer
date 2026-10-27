@@ -31,7 +31,6 @@
       ],
       "cruise_speed_kt": 95,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 757,
       "climb_speed_kt": 75,
       "descent_speed_kt": 90
@@ -65,7 +64,6 @@
       ],
       "cruise_speed_kt": 120,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1157,
       "climb_speed_kt": 80,
       "descent_speed_kt": 105
@@ -101,7 +99,6 @@
       ],
       "cruise_speed_kt": 140,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1406,
       "climb_speed_kt": 90,
       "descent_speed_kt": 120
@@ -132,7 +129,6 @@
       ],
       "cruise_speed_kt": 140,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1633,
       "climb_speed_kt": 90,
       "descent_speed_kt": 120
@@ -164,7 +160,6 @@
       ],
       "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1814,
       "climb_speed_kt": 100,
       "descent_speed_kt": 135
@@ -200,7 +195,6 @@
       ],
       "cruise_speed_kt": 105,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 757,
       "climb_speed_kt": 75,
       "descent_speed_kt": 90
@@ -236,7 +230,6 @@
       ],
       "cruise_speed_kt": 115,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1157,
       "climb_speed_kt": 80,
       "descent_speed_kt": 105
@@ -272,7 +265,6 @@
       ],
       "cruise_speed_kt": 135,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1247,
       "climb_speed_kt": 90,
       "descent_speed_kt": 120
@@ -300,7 +292,6 @@
       ],
       "cruise_speed_kt": 140,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1542,
       "climb_speed_kt": 95,
       "descent_speed_kt": 125
@@ -336,7 +327,6 @@
       ],
       "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1996,
       "climb_speed_kt": 120,
       "descent_speed_kt": 160
@@ -361,7 +351,6 @@
       ],
       "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1656,
       "climb_speed_kt": 110,
       "descent_speed_kt": 140
@@ -390,7 +379,6 @@
       ],
       "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1338,
       "climb_speed_kt": 105,
       "descent_speed_kt": 135
@@ -418,7 +406,6 @@
       ],
       "cruise_speed_kt": 155,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1247,
       "climb_speed_kt": 105,
       "descent_speed_kt": 135
@@ -454,7 +441,6 @@
       ],
       "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1633,
       "climb_speed_kt": 110,
       "descent_speed_kt": 145
@@ -490,7 +476,6 @@
       ],
       "cruise_speed_kt": 90,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 600,
       "climb_speed_kt": 60,
       "descent_speed_kt": 75
@@ -517,7 +502,6 @@
       ],
       "cruise_speed_kt": 100,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 600,
       "climb_speed_kt": 65,
       "descent_speed_kt": 80
@@ -553,7 +537,6 @@
       ],
       "cruise_speed_kt": 180,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 2495,
       "climb_speed_kt": 120,
       "descent_speed_kt": 150
@@ -589,7 +572,6 @@
       ],
       "cruise_speed_kt": 160,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 2100,
       "climb_speed_kt": 105,
       "descent_speed_kt": 135
@@ -620,7 +602,6 @@
       ],
       "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 3810,
       "climb_speed_kt": 130,
       "descent_speed_kt": 160
@@ -654,7 +635,6 @@
       ],
       "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 2721,
       "climb_speed_kt": 130,
       "descent_speed_kt": 165
@@ -684,7 +664,6 @@
       ],
       "cruise_speed_kt": 160,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1725,
       "climb_speed_kt": 95,
       "descent_speed_kt": 120
@@ -720,7 +699,6 @@
       ],
       "cruise_speed_kt": 170,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 2155,
       "climb_speed_kt": 105,
       "descent_speed_kt": 135
@@ -756,7 +734,6 @@
       ],
       "cruise_speed_kt": 160,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 2359,
       "climb_speed_kt": 105,
       "descent_speed_kt": 135
@@ -792,7 +769,6 @@
       ],
       "cruise_speed_kt": 200,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 3175,
       "climb_speed_kt": 130,
       "descent_speed_kt": 160
@@ -828,7 +804,6 @@
       ],
       "cruise_speed_kt": 190,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 2495,
       "climb_speed_kt": 120,
       "descent_speed_kt": 155
@@ -861,7 +836,6 @@
       ],
       "cruise_speed_kt": 150,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1769,
       "climb_speed_kt": 95,
       "descent_speed_kt": 120
@@ -897,7 +871,6 @@
       ],
       "cruise_speed_kt": 175,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 3062,
       "climb_speed_kt": 120,
       "descent_speed_kt": 150
@@ -933,7 +906,6 @@
       ],
       "cruise_speed_kt": 150,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1990,
       "climb_speed_kt": 100,
       "descent_speed_kt": 125
@@ -969,7 +941,6 @@
       ],
       "cruise_speed_kt": 135,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 2994,
       "climb_speed_kt": 85,
       "descent_speed_kt": 105
@@ -1005,7 +976,6 @@
       ],
       "cruise_speed_kt": 165,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1999,
       "climb_speed_kt": 95,
       "descent_speed_kt": 125
@@ -1041,7 +1011,6 @@
       ],
       "cruise_speed_kt": 270,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 4740,
       "climb_speed_kt": 150,
       "descent_speed_kt": 200
@@ -1077,7 +1046,6 @@
       ],
       "cruise_speed_kt": 160,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 3629,
       "climb_speed_kt": 110,
       "descent_speed_kt": 140
@@ -1110,7 +1078,6 @@
       ],
       "cruise_speed_kt": 260,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 5670,
       "climb_speed_kt": 160,
       "descent_speed_kt": 210
@@ -1146,7 +1113,6 @@
       ],
       "cruise_speed_kt": 300,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 6804,
       "climb_speed_kt": 170,
       "descent_speed_kt": 220
@@ -1182,7 +1148,6 @@
       ],
       "cruise_speed_kt": 290,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 4468,
       "climb_speed_kt": 170,
       "descent_speed_kt": 220
@@ -1218,7 +1183,6 @@
       ],
       "cruise_speed_kt": 285,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 11500,
       "climb_speed_kt": 180,
       "descent_speed_kt": 230
@@ -1254,7 +1218,6 @@
       ],
       "cruise_speed_kt": 260,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 7484,
       "climb_speed_kt": 180,
       "descent_speed_kt": 230
@@ -1290,7 +1253,6 @@
       ],
       "cruise_speed_kt": 250,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 13155,
       "climb_speed_kt": 170,
       "descent_speed_kt": 220
@@ -1326,7 +1288,6 @@
       ],
       "cruise_speed_kt": 250,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 19500,
       "climb_speed_kt": 170,
       "descent_speed_kt": 220
@@ -1361,7 +1322,6 @@
       ],
       "cruise_speed_kt": 340,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 29260,
       "climb_speed_kt": 185,
       "descent_speed_kt": 240
@@ -1393,7 +1353,6 @@
       ],
       "cruise_speed_kt": 275,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 22800,
       "climb_speed_kt": 170,
       "descent_speed_kt": 220
@@ -1421,7 +1380,6 @@
       ],
       "cruise_speed_kt": 260,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 7764,
       "climb_speed_kt": 170,
       "descent_speed_kt": 220
@@ -1457,7 +1415,6 @@
       ],
       "cruise_speed_kt": 240,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 20830,
       "climb_speed_kt": 170,
       "descent_speed_kt": 220
@@ -1492,7 +1449,6 @@
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 8300,
       "climb_speed_kt": 250,
       "descent_speed_kt": 250
@@ -1527,7 +1483,6 @@
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 9752,
       "climb_speed_kt": 250,
       "descent_speed_kt": 250
@@ -1561,7 +1516,6 @@
       ],
       "cruise_speed_kt": 440,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 10659,
       "climb_speed_kt": 250,
       "descent_speed_kt": 250
@@ -1597,7 +1551,6 @@
       ],
       "cruise_speed_kt": 460,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 33203,
       "climb_speed_kt": 250,
       "descent_speed_kt": 280
@@ -1619,7 +1572,6 @@
       ],
       "cruise_speed_kt": 480,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 41277,
       "climb_speed_kt": 250,
       "descent_speed_kt": 280
@@ -1655,7 +1607,6 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 45178,
       "climb_speed_kt": 250,
       "descent_speed_kt": 280
@@ -1691,7 +1642,6 @@
       ],
       "cruise_speed_kt": 480,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 44452,
       "climb_speed_kt": 250,
       "descent_speed_kt": 280
@@ -1727,7 +1677,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 21863,
       "climb_speed_kt": 250,
       "descent_speed_kt": 270
@@ -1763,7 +1712,6 @@
       ],
       "cruise_speed_kt": 365,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 6713,
       "climb_speed_kt": 220,
       "descent_speed_kt": 240
@@ -1798,7 +1746,6 @@
       ],
       "cruise_speed_kt": 440,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 10433,
       "climb_speed_kt": 250,
       "descent_speed_kt": 260
@@ -1830,7 +1777,6 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 16375,
       "climb_speed_kt": 250,
       "descent_speed_kt": 280
@@ -1866,7 +1812,6 @@
       ],
       "cruise_speed_kt": 460,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 16556,
       "climb_speed_kt": 250,
       "descent_speed_kt": 270
@@ -1892,7 +1837,6 @@
       ],
       "cruise_speed_kt": 420,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 10659,
       "climb_speed_kt": 250,
       "descent_speed_kt": 260
@@ -1928,7 +1872,6 @@
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 12700,
       "climb_speed_kt": 250,
       "descent_speed_kt": 260
@@ -1964,7 +1907,6 @@
       ],
       "cruise_speed_kt": 420,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 8500,
       "climb_speed_kt": 250,
       "descent_speed_kt": 250
@@ -2000,7 +1942,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 68000,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2036,7 +1977,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 78000,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2072,7 +2012,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 75500,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2108,7 +2047,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 93500,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2140,7 +2078,6 @@
       ],
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 60781,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2176,7 +2113,6 @@
       ],
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 69900,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2212,7 +2148,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 79016,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2248,7 +2183,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 70307,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2284,7 +2218,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 82191,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2311,7 +2244,6 @@
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 68039,
       "climb_speed_kt": 270,
       "descent_speed_kt": 270
@@ -2347,7 +2279,6 @@
       ],
       "cruise_speed_kt": 440,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 54885,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2383,7 +2314,6 @@
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 39990,
       "climb_speed_kt": 270,
       "descent_speed_kt": 270
@@ -2419,7 +2349,6 @@
       ],
       "cruise_speed_kt": 430,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 45810,
       "climb_speed_kt": 270,
       "descent_speed_kt": 270
@@ -2452,7 +2381,6 @@
       ],
       "cruise_speed_kt": 380,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 38102,
       "climb_speed_kt": 220,
       "descent_speed_kt": 240
@@ -2488,7 +2416,6 @@
       ],
       "cruise_speed_kt": 380,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 42184,
       "climb_speed_kt": 220,
       "descent_speed_kt": 240
@@ -2524,7 +2451,6 @@
       ],
       "cruise_speed_kt": 380,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 44225,
       "climb_speed_kt": 220,
       "descent_speed_kt": 240
@@ -2596,7 +2522,6 @@
       ],
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 35990,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2625,7 +2550,6 @@
       ],
       "cruise_speed_kt": 445,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 51800,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -2661,7 +2585,6 @@
       ],
       "cruise_speed_kt": 490,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
       "mtow_kg": 447696,
       "climb_speed_kt": 300,
       "descent_speed_kt": 290
@@ -2691,7 +2614,6 @@
       ],
       "cruise_speed_kt": 490,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
       "mtow_kg": 299370,
       "climb_speed_kt": 300,
       "descent_speed_kt": 290
@@ -2718,7 +2640,6 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
       "mtow_kg": 227930,
       "climb_speed_kt": 300,
       "descent_speed_kt": 290
@@ -2754,7 +2675,6 @@
       ],
       "cruise_speed_kt": 470,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
       "mtow_kg": 242000,
       "climb_speed_kt": 290,
       "descent_speed_kt": 280
@@ -2790,7 +2710,6 @@
       ],
       "cruise_speed_kt": 470,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
       "mtow_kg": 275000,
       "climb_speed_kt": 290,
       "descent_speed_kt": 280
@@ -2814,7 +2733,6 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
       "mtow_kg": 280000,
       "climb_speed_kt": 300,
       "descent_speed_kt": 290
@@ -2839,7 +2757,6 @@
       ],
       "cruise_speed_kt": 488,
       "wake_category": "Super",
-      "wake_category_when_leading": null,
       "mtow_kg": 575000,
       "climb_speed_kt": 290,
       "descent_speed_kt": 280
@@ -2875,7 +2792,6 @@
       ],
       "cruise_speed_kt": 115,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1451,
       "climb_speed_kt": 60,
       "descent_speed_kt": 80
@@ -2901,7 +2817,6 @@
       ],
       "cruise_speed_kt": 100,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 5080,
       "climb_speed_kt": 70,
       "descent_speed_kt": 90
@@ -2928,7 +2843,6 @@
       ],
       "cruise_speed_kt": 120,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 5398,
       "climb_speed_kt": 75,
       "descent_speed_kt": 100
@@ -2957,7 +2871,6 @@
       ],
       "cruise_speed_kt": 120,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 2250,
       "climb_speed_kt": 70,
       "descent_speed_kt": 90
@@ -2989,7 +2902,6 @@
       ],
       "cruise_speed_kt": 145,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 4300,
       "climb_speed_kt": 90,
       "descent_speed_kt": 120
@@ -3025,7 +2937,6 @@
       ],
       "cruise_speed_kt": 120,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1715,
       "climb_speed_kt": 70,
       "descent_speed_kt": 90
@@ -3061,7 +2972,6 @@
       ],
       "cruise_speed_kt": 150,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 6400,
       "climb_speed_kt": 100,
       "descent_speed_kt": 130
@@ -3097,7 +3007,6 @@
       ],
       "cruise_speed_kt": 80,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 622,
       "climb_speed_kt": 50,
       "descent_speed_kt": 60
@@ -3133,7 +3042,6 @@
       ],
       "cruise_speed_kt": 110,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 1134,
       "climb_speed_kt": 60,
       "descent_speed_kt": 80
@@ -3162,7 +3070,6 @@
       ],
       "cruise_speed_kt": 135,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 6000,
       "climb_speed_kt": 110,
       "descent_speed_kt": 140
@@ -3184,7 +3091,6 @@
       ],
       "cruise_speed_kt": 145,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 10660,
       "climb_speed_kt": 100,
       "descent_speed_kt": 130
@@ -3219,7 +3125,6 @@
       ],
       "cruise_speed_kt": 145,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 10659,
       "climb_speed_kt": 100,
       "descent_speed_kt": 130
@@ -3250,7 +3155,6 @@
       ],
       "cruise_speed_kt": 145,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 22680,
       "climb_speed_kt": 110,
       "descent_speed_kt": 140
@@ -3283,7 +3187,6 @@
       ],
       "cruise_speed_kt": 140,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 10600,
       "climb_speed_kt": 100,
       "descent_speed_kt": 130
@@ -3319,7 +3222,6 @@
       ],
       "cruise_speed_kt": 125,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 2980,
       "climb_speed_kt": 80,
       "descent_speed_kt": 110
@@ -3342,7 +3244,6 @@
       ],
       "cruise_speed_kt": 570,
       "wake_category": "Unknown",
-      "wake_category_when_leading": null,
       "mtow_kg": 29937,
       "climb_speed_kt": 350,
       "descent_speed_kt": 350
@@ -3371,7 +3272,6 @@
       ],
       "cruise_speed_kt": 525,
       "wake_category": "Unknown",
-      "wake_category_when_leading": null,
       "mtow_kg": 31800,
       "climb_speed_kt": 350,
       "descent_speed_kt": 350
@@ -3407,7 +3307,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Unknown",
-      "wake_category_when_leading": null,
       "mtow_kg": 9100,
       "climb_speed_kt": 300,
       "descent_speed_kt": 300
@@ -3433,7 +3332,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
       "mtow_kg": 265350,
       "climb_speed_kt": 300,
       "descent_speed_kt": 280
@@ -3469,7 +3367,6 @@
       ],
       "cruise_speed_kt": 330,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 79378,
       "climb_speed_kt": 180,
       "descent_speed_kt": 220
@@ -3496,7 +3393,6 @@
       ],
       "cruise_speed_kt": 440,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 85365,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -3532,7 +3428,6 @@
       ],
       "cruise_speed_kt": 320,
       "wake_category": "Light",
-      "wake_category_when_leading": null,
       "mtow_kg": 4250,
       "climb_speed_kt": 180,
       "descent_speed_kt": 220
@@ -3561,7 +3456,6 @@
       ],
       "cruise_speed_kt": 450,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 77564,
       "climb_speed_kt": 280,
       "descent_speed_kt": 280
@@ -3597,7 +3491,6 @@
       ],
       "cruise_speed_kt": 470,
       "wake_category": "Heavy",
-      "wake_category_when_leading": null,
       "mtow_kg": 233000,
       "climb_speed_kt": 290,
       "descent_speed_kt": 280
@@ -3624,7 +3517,6 @@
       ],
       "cruise_speed_kt": 290,
       "wake_category": "Medium",
-      "wake_category_when_leading": null,
       "mtow_kg": 31800,
       "climb_speed_kt": 180,
       "descent_speed_kt": 220
@@ -3660,7 +3552,6 @@
       ],
       "cruise_speed_kt": 480,
       "wake_category": null,
-      "wake_category_when_leading": null,
       "mtow_kg": 31751,
       "climb_speed_kt": 250,
       "descent_speed_kt": 280
