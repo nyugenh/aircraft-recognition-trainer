@@ -676,7 +676,7 @@ function getAnswerValue(item, type) {
 
 function getFeedbackAnswer(item, type) {
   if (!item) return '';
-  const name = getAnswerValue(item, 'name');
+  const name = getFullAircraftName(item);
   const code = getAnswerValue(item, 'icao');
   if (type === 'Aircraft name' || type === 'name') {
     return name && code ? `${name} (${code})` : name || code;
@@ -691,7 +691,7 @@ function getFeedbackDisplayAnswer(item) {
   if (!item) return '';
   const questionType = getQuestionType();
   const answerSemantic = getAnswerSemanticType();
-  const name = getAnswerValue(item, 'name');
+  const name = getFullAircraftName(item);
   if (questionType === 'photo') {
     return getFeedbackAnswer(item, answerSemantic === 'icao' ? 'icao' : 'name');
   }

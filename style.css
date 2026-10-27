@@ -173,6 +173,8 @@ img {
   line-height: 1.15;
   letter-spacing: -0.045em;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .score {
