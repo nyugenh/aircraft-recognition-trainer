@@ -465,15 +465,23 @@ function loadQuestionImageWhenRevealed(path, altText) {
   imageElement.style.opacity = '0';
   imageElement.dataset.pendingSrc = path;
   pendingPhotoLoad = () => {
+    const showSpinner = (loading) => {
+      if (imageElement.dataset.pendingSrc !== path) return;
+      imageElement.classList.toggle('loading', loading);
+      loadingMessage.classList.toggle('hidden', !loading);
+    };
+    showSpinner(true);
     const preloader = new Image();
     preloader.onload = () => {
       if (imageElement.dataset.pendingSrc !== path) return;
+      showSpinner(false);
       imageElement.alt = altText;
       imageElement.src = path;
       imageElement.style.opacity = '1';
       imageElement.style.animation = 'photoFadeIn 0.25s ease-out forwards';
     };
     preloader.onerror = () => {
+      showSpinner(false);
       feedbackElement.textContent = `Unable to load aircraft image: ${path}`;
     };
     preloader.src = path;
@@ -1393,7 +1401,8 @@ function configureAnswerMode() {
 
 function updateScore() {
   const percentage = total ? Math.round((score / total) * 100) : 0;
-  scoreElement.textContent = `Score: ${score}/${total} (${percentage}%)`;
+  const displayScore = Math.round(score * 100) / 100;
+  scoreElement.textContent = `Score: ${displayScore}/${total} (${percentage}%)`;
 }
 
 function setFeedback(type, resultText, detailText = '', answerText = '') {
