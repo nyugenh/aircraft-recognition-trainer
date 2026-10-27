@@ -708,5 +708,10 @@
     "query": "C-27 Spartan",
     "next_page": 12,
     "next_index": 0
+  },
+  "Bombardier Challenger 600": {
+    "query": "Bombardier Challenger 600",
+    "next_page": 6,
+    "next_index": 1
   }
 }

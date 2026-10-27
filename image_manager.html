@@ -111,6 +111,35 @@ button.secondary:hover:not(:disabled) {
     flex-shrink: 0;
 }
 
+.card.name-mismatch {
+    outline: 4px solid #e53935;
+    outline-offset: -2px;
+}
+
+.card.name-mismatch .card-openverse-title {
+    color: #ff6b66;
+    font-weight: 700;
+    opacity: 1;
+}
+
+.card.name-match-dim {
+    opacity: 0.35;
+}
+
+.card-openverse-title {
+    display: block;
+    padding: 0 12px 10px;
+    font-size: 0.85rem;
+    line-height: 1.3;
+    color: inherit;
+    opacity: 0.85;
+    overflow-wrap: anywhere;
+}
+
+a.card-openverse-title {
+    text-decoration: underline;
+}
+
 .title {
     min-width: 0;
 }
@@ -171,6 +200,7 @@ button.secondary:hover:not(:disabled) {
     gap: 8px;
 }
 
+#name-check-select,
 #openverse-aircraft-select {
     max-width: 260px;
     padding: 0 8px;
@@ -784,6 +814,13 @@ body.openverse-mode .openverse-panel {
             Review four candidate images at a time.
         </div>
         <div class="openverse-panel-actions">
+            <select id="name-check-select"
+                title="Check each Openverse title against the aircraft name"
+                aria-label="Name check">
+                <option value="off">Name check: off</option>
+                <option value="highlight">Highlight title mismatches</option>
+                <option value="dim">Dim title matches</option>
+            </select>
             <select id="openverse-aircraft-select"
                 title="Jump to a particular aircraft"
                 aria-label="Jump to aircraft"></select>
@@ -1842,6 +1879,44 @@ function closeLightbox() {
     }
 }
 
+let nameCheckMode = localStorage.getItem("nameCheckMode") || "off";
+const nameCheckSelect = document.getElementById("name-check-select");
+nameCheckSelect.value = nameCheckMode;
+nameCheckSelect.addEventListener("change", () => {
+    nameCheckMode = nameCheckSelect.value;
+    localStorage.setItem("nameCheckMode", nameCheckMode);
+
+    if (currentBatch.length > 0 && !openverseWaiting) {
+        renderBatch();
+        focusFirstDeleteButton();
+    }
+});
+
+function squashText(text) {
+    return String(text || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+// A match requires every word of the aircraft label, query or folder name
+// to appear in the title or in the Openverse tags (its description).
+function titleMatchesAircraft(image) {
+    const text = squashText(
+        [image.openverse_title, ...(image.openverse_tags || [])].join(" ")
+    );
+
+    if (!text) {
+        return false;
+    }
+
+    return [image.label, image.query, image.folder].some(name => {
+        const words = String(name || "")
+            .split(/\s+/)
+            .map(squashText)
+            .filter(Boolean);
+
+        return words.length > 0 && words.every(word => text.includes(word));
+    });
+}
+
 function createCard(image, index) {
     const card = document.createElement("article");
     card.className = "card";
@@ -1931,7 +2006,30 @@ function createCard(image, index) {
     filename.title = image.filename;
 
     meta.append(category, filename);
-    card.append(imageContainer, info, meta);
+
+    const ovTitle = document.createElement(image.openverse_url ? "a" : "div");
+    ovTitle.className = "card-openverse-title";
+    ovTitle.textContent = image.openverse_title || "No Openverse title recorded";
+    ovTitle.title = ovTitle.textContent;
+
+    if (image.openverse_url) {
+        ovTitle.href = image.openverse_url;
+        ovTitle.target = "_blank";
+        ovTitle.rel = "noopener noreferrer";
+    }
+
+    card.append(imageContainer, info, meta, ovTitle);
+
+    if (nameCheckMode !== "off") {
+        const matches = titleMatchesAircraft(image);
+
+        if (!matches && nameCheckMode === "highlight") {
+            card.classList.add("name-mismatch");
+            ovTitle.textContent = `⚠ ${ovTitle.textContent}`;
+        } else if (matches && nameCheckMode === "dim") {
+            card.classList.add("name-match-dim");
+        }
+    }
 
     return card;
 }

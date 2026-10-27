@@ -422,6 +422,24 @@ def describe_aircraft(item: dict[str, Any]) -> dict[str, Any]:
         "folder": item.get("folder", ""),
         "icao": item.get("icao", ""),
         "category": item.get("category", ""),
+        "query": item.get("query", ""),
+    }
+
+
+def image_source_info(
+    item: dict[str, Any], sources: dict[str, Any], filename: str
+) -> dict[str, Any]:
+    source = sources.get(filename)
+
+    if not isinstance(source, dict):
+        return {"openverse_title": None, "openverse_url": None, "openverse_tags": []}
+
+    tags = source.get("tags")
+
+    return {
+        "openverse_title": source.get("title"),
+        "openverse_url": source.get("foreign_landing_url"),
+        "openverse_tags": tags if isinstance(tags, list) else [],
     }
 
 
@@ -464,7 +482,15 @@ def build_image_pool() -> list[dict[str, Any]]:
             continue
 
         summary = describe_aircraft(item)
-        images = [{**summary, "filename": path.name} for path in image_files]
+        sources = load_sources(folder_path)
+        images = [
+            {
+                **summary,
+                "filename": path.name,
+                **image_source_info(item, sources, path.name),
+            }
+            for path in image_files
+        ]
         groups.append({**summary, "image_count": len(image_files), "images": images})
 
     random.shuffle(groups)
@@ -655,6 +681,11 @@ def search_openverse(
                         "width": result.get("width"),
                         "height": result.get("height"),
                         "attribution": result.get("attribution"),
+                        "tags": [
+                            tag.get("name")
+                            for tag in (result.get("tags") or [])
+                            if isinstance(tag, dict) and tag.get("name")
+                        ],
                     }
                 )
 
@@ -2028,6 +2059,7 @@ def process_aircraft(
                 "width": result.get("width"),
                 "height": result.get("height"),
                 "attribution": result.get("attribution"),
+                "tags": result.get("tags") or [],
             }
 
             save_sources(output_dir, sources)
@@ -2236,13 +2268,19 @@ def api_openverse_next():
                     save_manifest(manifest)
 
                 summary = describe_aircraft(item)
+                sources = load_sources(folder)
                 return jsonify(
                     {
                         "success": True,
                         "status": "images",
                         "image_count": image_count,
                         "images": [
-                            {**summary, "filename": filename} for filename in filenames
+                            {
+                                **summary,
+                                "filename": filename,
+                                **image_source_info(item, sources, filename),
+                            }
+                            for filename in filenames
                         ],
                     }
                 )

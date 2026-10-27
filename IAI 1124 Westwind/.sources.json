@@ -14,7 +14,8 @@
     "provider": "flickr",
     "width": 1024,
     "height": 683,
-    "attribution": "\"IAI Westwind 1124 ‘N99PS’\" by HawkeyeUK is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+    "attribution": "\"IAI Westwind 1124 ‘N99PS’\" by HawkeyeUK is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/.",
+    "tags": []
   },
   "001.jpg": {
     "openverse_id": "a5e3eb9d-b6e2-4567-b120-6d68974aa46a",
@@ -31,7 +32,8 @@
     "provider": "flickr",
     "width": 1024,
     "height": 553,
-    "attribution": "\"N300XL 1979 IAI Westwind 1124 s/n 276\" by TDelCoro is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+    "attribution": "\"N300XL 1979 IAI Westwind 1124 s/n 276\" by TDelCoro is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/.",
+    "tags": []
   },
   "002.jpg": {
     "openverse_id": "2a48d7ac-5e7e-4721-9504-8e130c76bd4e",
@@ -48,7 +50,8 @@
     "provider": "flickr",
     "width": 1024,
     "height": 549,
-    "attribution": "\"N300XL 1979 IAI Westwind 1124 s/n 276\" by TDelCoro is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+    "attribution": "\"N300XL 1979 IAI Westwind 1124 s/n 276\" by TDelCoro is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/.",
+    "tags": []
   },
   "003.jpg": {
     "openverse_id": "54121a99-175e-4575-961c-8d4b1b1b8948",
@@ -65,7 +68,16 @@
     "provider": "flickr",
     "width": 1024,
     "height": 683,
-    "attribution": "\"4X-COA\" by joseluiscel (Aviapics) is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+    "attribution": "\"4X-COA\" by joseluiscel (Aviapics) is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/.",
+    "tags": [
+      "hatzerim",
+      "iai",
+      "jetcommander",
+      "llhb",
+      "mig21",
+      "testbed",
+      "westwind"
+    ]
   },
   "004.jpg": {
     "openverse_id": "0845fda4-7faf-4f92-8754-fadb3dcfd4fe",
@@ -82,7 +94,10 @@
     "provider": "flickr",
     "width": 1024,
     "height": 679,
-    "attribution": "\"HR-PHO\" by Alec BHX/KKC is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+    "attribution": "\"HR-PHO\" by Alec BHX/KKC is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/.",
+    "tags": [
+      "hrpho"
+    ]
   },
   "005.jpg": {
     "openverse_id": "85aab1d8-5c37-4444-8da5-b7bad5c033f8",
@@ -99,7 +114,14 @@
     "provider": "flickr",
     "width": 1024,
     "height": 625,
-    "attribution": "\"RP-C5880\" by 湯小沅 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    "attribution": "\"RP-C5880\" by 湯小沅 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+    "tags": [
+      "1124a",
+      "iai",
+      "iai1124awestwind",
+      "rpc5880",
+      "westwind"
+    ]
   },
   "006.jpg": {
     "openverse_id": "c6aa6795-3e5d-4f1f-a336-0b6c3b34fb85",
@@ -116,7 +138,24 @@
     "provider": "flickr",
     "width": 1024,
     "height": 680,
-    "attribution": "\"Private C-GYPV\" by Drewski2112 is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/."
+    "attribution": "\"Private C-GYPV\" by Drewski2112 is licensed under CC BY-NC 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/2.0/.",
+    "tags": [
+      "1",
+      "airport",
+      "beechcraft",
+      "bfi",
+      "boeing",
+      "cgypv",
+      "county",
+      "field",
+      "international",
+      "kbfi",
+      "king",
+      "primer",
+      "prm1",
+      "raytheon",
+      "seattle"
+    ]
   },
   "007.jpg": {
     "openverse_id": "690996c8-f064-4033-a8e1-3c476baa0a1b",
@@ -133,7 +172,8 @@
     "provider": "flickr",
     "width": 1024,
     "height": 682,
-    "attribution": "\"MemphisBelle_11-4-12-2-9.jpg\" by RobBixbyPhotography is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/."
+    "attribution": "\"MemphisBelle_11-4-12-2-9.jpg\" by RobBixbyPhotography is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.",
+    "tags": []
   },
   "008.jpg": {
     "openverse_id": "75a96339-61fb-4a61-acaa-883b7ce79f82",
@@ -150,7 +190,13 @@
     "provider": "flickr",
     "width": 1024,
     "height": 777,
-    "attribution": "\"N41C\" by wiltshirespotter is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/."
+    "attribution": "\"N41C\" by wiltshirespotter is licensed under CC BY-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/2.0/.",
+    "tags": [
+      "1124",
+      "iai",
+      "iai1124",
+      "westwind"
+    ]
   },
   "009.jpg": {
     "openverse_id": "edf1a5c6-c720-41d4-af37-fa7a69452432",
@@ -167,7 +213,34 @@
     "provider": "flickr",
     "width": 1024,
     "height": 681,
-    "attribution": "\"IMGP0644\" by zkarj is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/."
+    "attribution": "\"IMGP0644\" by zkarj is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-nd/2.0/.",
+    "tags": [
+      "iai",
+      "nzwn",
+      "vhajv",
+      "wellingtoninternationalairport",
+      "westwind",
+      "air",
+      "airbus",
+      "aircraft",
+      "airliner",
+      "airplane",
+      "airport",
+      "arrival",
+      "aviate",
+      "cockpit",
+      "commercial",
+      "drive",
+      "engine",
+      "flight",
+      "jet",
+      "private",
+      "runway",
+      "tarmac",
+      "transportation system",
+      "travel",
+      "vehicle"
+    ]
   },
   "010.jpg": {
     "openverse_id": "46834901-b1b6-4068-aa35-31567b294d42",
@@ -184,6 +257,14 @@
     "provider": "flickr",
     "width": 1024,
     "height": 697,
-    "attribution": "\"American Trans Air IAI 1124 Westwind; N711GW, May 1985\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/."
+    "attribution": "\"American Trans Air IAI 1124 Westwind; N711GW, May 1985\" by Aero Icarus is licensed under CC BY-NC-SA 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/2.0/.",
+    "tags": [
+      "aircraft",
+      "avion",
+      "flugzeug",
+      "plane",
+      "predigital",
+      "slidescan"
+    ]
   }
 }
