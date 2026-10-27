@@ -1242,7 +1242,6 @@ settingsToggleButton.addEventListener('click', () => {
   const open = settingsToggleButton.getAttribute('aria-expanded') !== 'true';
   settingsToggleButton.setAttribute('aria-expanded', String(open));
   animateSettings(open);
-  if (open) questionTypeSelect.focus({ preventScroll: true });
 });
 
 function setLoading(loading) {
