@@ -1534,9 +1534,11 @@ body.ranking-is-dragging * {
     margin-inline: auto;
   }
 
-  .image-container:has(.loading-message:not(.hidden), .loading-error:not(.hidden)) {
+  .image-container:not(:has(.speed-comparison)):has(#aircraft-image:not([src])),
+  .image-container:not(:has(.speed-comparison)):has(.loading-message:not(.hidden), .loading-error:not(.hidden)) {
     width: 100%;
-    min-height: 10rem;
+    aspect-ratio: 2.7 / 1;
+    min-height: 0;
   }
 
   .image-container:not(:has(.speed-comparison)) #aircraft-image {
@@ -1618,13 +1620,13 @@ body.ranking-is-dragging * {
 
   .speed-aircraft-photo,
   .speed-aircraft-photo:has(.loading-message, .loading-error) {
-    height: clamp(4.5rem, 10dvh, 6rem);
-    max-height: 6rem;
+    height: auto;
+    max-height: none;
+    aspect-ratio: 2.7 / 1;
   }
 
   .speed-aircraft-photo:not(:has(.loading-message, .loading-error)) {
-    height: auto;
-    max-height: none;
+    aspect-ratio: auto;
   }
 
   .speed-aircraft-photo img {
@@ -1810,9 +1812,11 @@ body.ranking-is-dragging * {
     margin-inline: auto;
   }
 
-  .image-container:has(.loading-message:not(.hidden), .loading-error:not(.hidden)) {
+  .image-container:not(:has(.speed-comparison)):has(#aircraft-image:not([src])),
+  .image-container:not(:has(.speed-comparison)):has(.loading-message:not(.hidden), .loading-error:not(.hidden)) {
     width: 100%;
-    min-height: 8rem;
+    aspect-ratio: 2.7 / 1;
+    min-height: 0;
   }
 
   .image-container:not(:has(.speed-comparison)) #aircraft-image {
