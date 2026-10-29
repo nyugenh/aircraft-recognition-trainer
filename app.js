@@ -27,6 +27,9 @@ const QUESTION_TYPES = new Set([
   'cruise-speed',
   'speed',
   'rank-speed',
+  'approach-speed',
+  'compare-approach',
+  'rank-approach',
   'climb-speed',
   'compare-climb',
   'rank-climb',
@@ -857,6 +860,13 @@ function getSpeedComparisonPrompt(first, second) {
   const firstName = getSpecialAircraftIdentifier(first);
   const secondName = getSpecialAircraftIdentifier(second);
   const { metric } = getSpeedQuestion();
+  if (metric.words === RATE_WORDS) {
+    return (
+      `Is the ${metric.noun} of ${getSpecialArticle(firstName)} ${firstName} ` +
+      `higher, lower, or the same as that of ` +
+      `${getSpecialArticle(secondName)} ${secondName}?`
+    );
+  }
   if (metric.key !== 'cruise') {
     return (
       `Is the ${metric.noun} of ${getSpecialArticle(firstName)} ${firstName} ` +
@@ -883,13 +893,32 @@ const formatSpeed = (kt) =>
     ? `Mach ${(kt / KT_PER_MACH).toFixed(2)}`
     : `${Math.round(kt)} kt`;
 
-const makeSpeedSegments = (low, mid, high) => [
-  { min: -Infinity, max: low, label: `Below ${formatSpeed(low)}` },
-  { min: low, max: mid, label: `${formatSpeed(low)} to below ${formatSpeed(mid)}` },
-  { min: mid, max: high, label: `${formatSpeed(mid)} to below ${formatSpeed(high)}` },
-  { min: high, max: Infinity, label: `${formatSpeed(high)} or above` },
+const formatRate = (ftPerMin) =>
+  `${Math.round(ftPerMin).toLocaleString('en-US')} ft/min`;
+
+const makeSpeedSegments = (low, mid, high, format = formatSpeed) => [
+  { min: -Infinity, max: low, label: `Below ${format(low)}` },
+  { min: low, max: mid, label: `${format(low)} to below ${format(mid)}` },
+  { min: mid, max: high, label: `${format(mid)} to below ${format(high)}` },
+  { min: high, max: Infinity, label: `${format(high)} or above` },
 ];
 
+const SPEED_WORDS = {
+  higher: 'Faster',
+  lower: 'Slower',
+  same: 'Same speed',
+  low: 'slowest',
+  high: 'fastest',
+};
+const RATE_WORDS = {
+  higher: 'Higher',
+  lower: 'Lower',
+  same: 'Same rate',
+  low: 'lowest',
+  high: 'highest',
+};
+
+// step/zeroError drive the estimate slider; maxEstimate leaves outliers out of estimate questions; mach metrics switch to Mach above the threshold.
 const SPEED_METRICS = {
   cruise: {
     key: 'cruise',
@@ -898,28 +927,56 @@ const SPEED_METRICS = {
     compare: 'speed',
     estimate: 'cruise-speed',
     rank: 'rank-speed',
+    format: formatSpeed,
+    words: SPEED_WORDS,
+    mach: true,
+    step: 10,
+    zeroError: 60,
     segments: makeSpeedSegments(150, 250, 450),
+  },
+  approach: {
+    key: 'approach',
+    field: 'approach_speed_kt',
+    noun: 'approach speed',
+    compare: 'compare-approach',
+    estimate: 'approach-speed',
+    rank: 'rank-approach',
+    format: formatSpeed,
+    words: SPEED_WORDS,
+    mach: true,
+    step: 5,
+    zeroError: 30,
+    segments: makeSpeedSegments(75, 110, 130),
   },
   climb: {
     key: 'climb',
-    field: 'climb_speed_kt',
-    noun: 'climb speed',
+    field: 'rate_of_climb_ft_per_min',
+    noun: 'rate of climb',
     compare: 'compare-climb',
     estimate: 'climb-speed',
     rank: 'rank-climb',
-    segments: makeSpeedSegments(100, 180, 270),
+    format: formatRate,
+    words: RATE_WORDS,
+    step: 100,
+    zeroError: 1500,
+    maxEstimate: 4300,
+    segments: makeSpeedSegments(1300, 2000, 3000, formatRate),
   },
   descent: {
     key: 'descent',
-    field: 'descent_speed_kt',
-    noun: 'descent speed',
+    field: 'rate_of_descent_ft_per_min',
+    noun: 'rate of descent',
     compare: 'compare-descent',
     estimate: 'descent-speed',
     rank: 'rank-descent',
-    segments: makeSpeedSegments(130, 220, 280),
+    format: formatRate,
+    words: RATE_WORDS,
+    step: 100,
+    zeroError: 1000,
+    maxEstimate: 3500,
+    segments: makeSpeedSegments(800, 2000, 3000, formatRate),
   },
 };
-
 // Returns { metric, kind } for a speed-based question type, otherwise null.
 function getSpeedQuestion(type = getQuestionType()) {
   for (const metric of Object.values(SPEED_METRICS)) {
@@ -943,6 +1000,7 @@ function getSpeedValue(item, metric = getSpeedQuestion()?.metric) {
 function getSpeedSegment(item) {
   const speed = getSpeedValue(item);
   if (speed == null) return null;
+  if (speed > (getSpeedQuestion().metric.maxEstimate ?? Infinity)) return null;
   return (
     getSpeedQuestion().metric.segments.find(
       (segment) => speed >= segment.min && speed < segment.max,
@@ -950,7 +1008,8 @@ function getSpeedSegment(item) {
   );
 }
 
-const formatApproxSpeed = (speed) => `≈ ${formatSpeed(speed)}`;
+const formatApproxSpeed = (speed, metric = getSpeedQuestion()?.metric) =>
+  `≈ ${(metric?.format ?? formatSpeed)(speed)}`;
 
 function getWakeCategory(item) {
   const value = displayText(item?.wake_category).toLowerCase();
@@ -1735,9 +1794,7 @@ async function displayPhotoAnswerChoices(choices) {
 // ============================================================================
 // 13. Special Questions (Cruise Speed, Wake, Comparisons, Rankings)
 // ============================================================================
-const SPEED_SLIDER_STEP = 10;
-// Full points within half a step of the true speed, fading to zero at this error.
-const SPEED_SLIDER_ZERO_POINTS_ERROR = 60;
+
 const speedSlider = byId('speed-slider');
 const speedSliderInput = byId('speed-slider-input');
 const speedSliderValue = byId('speed-slider-value');
@@ -1746,23 +1803,26 @@ const speedSliderSubmit = byId('speed-slider-submit');
 function getSpeedSliderRange(metric) {
   const speeds = aircraft
     .map((item) => getSpeedValue(item, metric))
-    .filter((speed) => speed != null);
+    .filter((speed) => speed != null && speed <= (metric.maxEstimate ?? Infinity));
   return {
     min: Math.round(Math.min(...speeds)),
     max: Math.round(Math.max(...speeds)),
   };
 }
 
-// Slider stops: 10 kt steps below the Mach threshold, then 0.01 Mach steps.
+// Slider stops use the metric's step; Mach metrics switch to 0.01 Mach steps above the threshold.
 let speedSliderStops = [];
+let speedSliderMetric = SPEED_METRICS.cruise;
 
-function buildSpeedSliderStops(min, max) {
+function buildSpeedSliderStops(metric, min, max) {
   const stops = [];
-  const start = Math.floor(min / SPEED_SLIDER_STEP) * SPEED_SLIDER_STEP;
-  for (let kt = start; kt < MACH_THRESHOLD_KT && kt <= max; kt += SPEED_SLIDER_STEP) {
-    stops.push(kt);
+  const { step } = metric;
+  const start = Math.floor(min / step) * step;
+  const limit = metric.mach ? MACH_THRESHOLD_KT : Infinity;
+  for (let value = start; value < limit && value <= max; value += step) {
+    stops.push(value);
   }
-  if (max >= MACH_THRESHOLD_KT) {
+  if (metric.mach && max >= MACH_THRESHOLD_KT) {
     const first = Math.max(70, Math.floor(min / KT_PER_MACH * 100));
     const last = Math.ceil(max / KT_PER_MACH * 100 - 1e-9);
     for (let hundredths = first; hundredths <= last; hundredths += 1) {
@@ -1786,7 +1846,7 @@ function getSpeedSliderTolerance(speed) {
   const below = speedSliderStops[index] - (speedSliderStops[index - 1] ?? Infinity);
   const above = (speedSliderStops[index + 1] ?? Infinity) - speedSliderStops[index];
   const step = Math.min(below, above);
-  return Number.isFinite(step) ? step / 2 : SPEED_SLIDER_STEP / 2;
+  return Number.isFinite(step) ? step / 2 : speedSliderMetric.step / 2;
 }
 
 function getSpeedSliderGuess() {
@@ -1794,14 +1854,14 @@ function getSpeedSliderGuess() {
 }
 
 function updateSpeedSliderReadout() {
-  speedSliderValue.textContent = formatSpeed(getSpeedSliderGuess());
+  speedSliderValue.textContent = speedSliderMetric.format(getSpeedSliderGuess());
 }
 
 function scoreSpeedGuess(guess, actual) {
   const error = Math.abs(guess - actual);
   const tolerance = getSpeedSliderTolerance(actual) + 0.5;
   if (error <= tolerance) return 1;
-  const zeroError = Math.max(SPEED_SLIDER_ZERO_POINTS_ERROR, tolerance * 4);
+  const zeroError = Math.max(speedSliderMetric.zeroError, tolerance * 4);
   const points = 1 - (error - tolerance) / (zeroError - tolerance);
   return Math.max(0, Math.round(points * 100) / 100);
 }
@@ -1828,7 +1888,7 @@ function submitSpeedGuess() {
     '--answer-position',
     String(Math.min(1, Math.max(0, answerPosition))),
   );
-  answerMarker.dataset.label = formatSpeed(specialQuestionData.speed);
+  answerMarker.dataset.label = speedSliderMetric.format(specialQuestionData.speed);
   answerMarker.hidden = false;
   const feedbackType =
     points === 1 ? 'correct' : points > 0 ? 'partial' : 'incorrect';
@@ -1855,19 +1915,20 @@ function displaySpeedEstimateQuestion(item) {
   const { metric } = getSpeedQuestion();
   const speed = getSpeedValue(item);
   const imagePath = getRandomImagePath(item);
-  if (speed == null || !imagePath) {
+  if (speed == null || speed > (metric.maxEstimate ?? Infinity) || !imagePath) {
     setLoading(false);
     promptElement.textContent = `Unable to create a ${metric.noun} question.`;
     feedbackElement.textContent = `Check that ${metric.field} values are available in manifest.json.`;
     return false;
   }
   const { min, max } = getSpeedSliderRange(metric);
-  speedSliderStops = buildSpeedSliderStops(min, max);
+  speedSliderMetric = metric;
+  speedSliderStops = buildSpeedSliderStops(metric, min, max);
   const roundedSpeed = speedSliderStops[getNearestStopIndex(speed)];
   specialQuestionData = {
     type: getQuestionType(),
     speed: roundedSpeed,
-    feedbackAnswer: formatApproxSpeed(roundedSpeed),
+    feedbackAnswer: formatApproxSpeed(roundedSpeed, metric),
   };
   promptElement.replaceChildren();
   const identifier = getSpecialAircraftIdentifier(item);
@@ -1881,8 +1942,8 @@ function displaySpeedEstimateQuestion(item) {
   speedSliderInput.max = String(speedSliderStops.length - 1);
   speedSliderInput.step = '1';
   speedSliderInput.value = String(Math.round((speedSliderStops.length - 1) / 2));
-  byId('speed-slider-min').textContent = formatSpeed(speedSliderStops[0]);
-  byId('speed-slider-max').textContent = formatSpeed(speedSliderStops.at(-1));
+  byId('speed-slider-min').textContent = metric.format(speedSliderStops[0]);
+  byId('speed-slider-max').textContent = metric.format(speedSliderStops.at(-1));
   updateSpeedSliderReadout();
   answerContainer.hidden = true;
   speedSlider.hidden = false;
@@ -1902,6 +1963,7 @@ function displaySpeedEstimateQuestion(item) {
 }
 
 function getSpeedComparisonPair() {
+  const { words } = getSpeedQuestion().metric;
   const pool = getValidAircraftPool().flatMap((item) => {
     const speed = getSpeedValue(item);
     return speed ? [{ item, speed }] : [];
@@ -1927,11 +1989,12 @@ function getSpeedComparisonPair() {
         sameSpeedPairs.push({
           first: first.item,
           second: second.item,
-          answer: 'Same speed',
-          feedback: `Same speed (${formatApproxSpeed(first.speed)})`,
+          answer: words.same,
+          feedback: `${words.same} (${formatApproxSpeed(first.speed)})`,
         });
       } else {
-        const answer = first.speed > second.speed ? 'Faster' : 'Slower';
+        const answer =
+          first.speed > second.speed ? words.higher : words.lower;
         pairs.push({
           first: first.item,
           second: second.item,
@@ -2015,7 +2078,8 @@ function displaySpeedComparison(pair) {
   imageContainer.appendChild(comparison);
   updatePhotoVisibility();
   promptElement.textContent = getSpeedComparisonPrompt(pair.first, pair.second);
-  displaySpecialChoices(['Faster', 'Slower', 'Same speed'], pair.answer);
+  const { words } = getSpeedQuestion().metric;
+  displaySpecialChoices([words.higher, words.lower, words.same], pair.answer);
 }
 
 function getWakeFeedbackAnswer(item, category) {
@@ -2463,7 +2527,7 @@ function displaySpeedRanking(entries) {
   promptElement.textContent =
     metric.key === 'cruise'
       ? 'Rank these aircraft from slowest to fastest.'
-      : `Rank these aircraft from slowest to fastest ${metric.noun}.`;
+      : `Rank these aircraft from ${metric.words.low} to ${metric.words.high} ${metric.noun}.`;
   feedbackElement.replaceChildren();
 }
 
@@ -2785,7 +2849,7 @@ async function nextQuestion() {
         : 'Not enough aircraft have usable speed data for ranking.';
       feedbackElement.textContent = repeatedRanking
         ? 'The selected category has no different lineup of four aircraft with usable speed data.'
-        : 'At least four aircraft need speed ranges in knots or Mach.';
+        : 'At least four aircraft need usable values for this measure.';
       return;
     }
     rememberQuestion(

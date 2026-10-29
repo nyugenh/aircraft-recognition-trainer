@@ -29,11 +29,12 @@
         "027.jpg",
         "028.jpg"
       ],
-      "cruise_speed_kt": 95,
+      "cruise_speed_kt": 100,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 757,
-      "climb_speed_kt": 75,
-      "descent_speed_kt": 90
+      "rate_of_climb_ft_per_min": 670,
+      "rate_of_descent_ft_per_min": 500
     },
     {
       "key": "2",
@@ -63,10 +64,11 @@
         "019.jpg"
       ],
       "cruise_speed_kt": 120,
+      "approach_speed_kt": 65,
       "wake_category": "Light",
       "mtow_kg": 1157,
-      "climb_speed_kt": 80,
-      "descent_speed_kt": 105
+      "rate_of_climb_ft_per_min": 730,
+      "rate_of_descent_ft_per_min": 500
     },
     {
       "key": "3",
@@ -97,11 +99,12 @@
         "023.jpg",
         "025.jpg"
       ],
-      "cruise_speed_kt": 140,
+      "cruise_speed_kt": 145,
+      "approach_speed_kt": 70,
       "wake_category": "Light",
       "mtow_kg": 1406,
-      "climb_speed_kt": 90,
-      "descent_speed_kt": 120
+      "rate_of_climb_ft_per_min": 925,
+      "rate_of_descent_ft_per_min": 600
     },
     {
       "key": "4",
@@ -127,11 +130,12 @@
         "017.jpg",
         "018.jpg"
       ],
-      "cruise_speed_kt": 140,
+      "cruise_speed_kt": 145,
+      "approach_speed_kt": 75,
       "wake_category": "Light",
       "mtow_kg": 1633,
-      "climb_speed_kt": 90,
-      "descent_speed_kt": 120
+      "rate_of_climb_ft_per_min": 920,
+      "rate_of_descent_ft_per_min": 600
     },
     {
       "key": "5",
@@ -158,11 +162,12 @@
         "024.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 165,
+      "cruise_speed_kt": 170,
+      "approach_speed_kt": 75,
       "wake_category": "Light",
       "mtow_kg": 1814,
-      "climb_speed_kt": 100,
-      "descent_speed_kt": 135
+      "rate_of_climb_ft_per_min": 930,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "6",
@@ -193,11 +198,12 @@
         "024.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 105,
+      "cruise_speed_kt": 100,
+      "approach_speed_kt": 65,
       "wake_category": "Light",
       "mtow_kg": 757,
-      "climb_speed_kt": 75,
-      "descent_speed_kt": 90
+      "rate_of_climb_ft_per_min": 720,
+      "rate_of_descent_ft_per_min": 500
     },
     {
       "key": "7",
@@ -229,10 +235,11 @@
         "030.jpg"
       ],
       "cruise_speed_kt": 115,
+      "approach_speed_kt": 66,
       "wake_category": "Light",
       "mtow_kg": 1157,
-      "climb_speed_kt": 80,
-      "descent_speed_kt": 105
+      "rate_of_climb_ft_per_min": 640,
+      "rate_of_descent_ft_per_min": 500
     },
     {
       "key": "8",
@@ -264,10 +271,11 @@
         "021.jpg"
       ],
       "cruise_speed_kt": 135,
+      "approach_speed_kt": 70,
       "wake_category": "Light",
       "mtow_kg": 1247,
-      "climb_speed_kt": 90,
-      "descent_speed_kt": 120
+      "rate_of_climb_ft_per_min": 830,
+      "rate_of_descent_ft_per_min": 600
     },
     {
       "key": "9",
@@ -291,10 +299,11 @@
         "016.jpg"
       ],
       "cruise_speed_kt": 140,
+      "approach_speed_kt": 72,
       "wake_category": "Light",
       "mtow_kg": 1542,
-      "climb_speed_kt": 95,
-      "descent_speed_kt": 125
+      "rate_of_climb_ft_per_min": 900,
+      "rate_of_descent_ft_per_min": 600
     },
     {
       "key": "10",
@@ -326,10 +335,11 @@
         "021.jpg"
       ],
       "cruise_speed_kt": 200,
+      "approach_speed_kt": 80,
       "wake_category": "Light",
       "mtow_kg": 1996,
-      "climb_speed_kt": 120,
-      "descent_speed_kt": 160
+      "rate_of_climb_ft_per_min": 1100,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "11",
@@ -349,11 +359,12 @@
         "007.jpg",
         "008.jpg"
       ],
-      "cruise_speed_kt": 165,
+      "cruise_speed_kt": 170,
+      "approach_speed_kt": 75,
       "wake_category": "Light",
       "mtow_kg": 1656,
-      "climb_speed_kt": 110,
-      "descent_speed_kt": 140
+      "rate_of_climb_ft_per_min": 1030,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "12",
@@ -378,10 +389,11 @@
         "013.jpg"
       ],
       "cruise_speed_kt": 165,
+      "approach_speed_kt": 75,
       "wake_category": "Light",
       "mtow_kg": 1338,
-      "climb_speed_kt": 105,
-      "descent_speed_kt": 135
+      "rate_of_climb_ft_per_min": 1150,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "13",
@@ -404,11 +416,12 @@
         "011.jpg",
         "012.jpg"
       ],
-      "cruise_speed_kt": 155,
+      "cruise_speed_kt": 150,
+      "approach_speed_kt": 70,
       "wake_category": "Light",
       "mtow_kg": 1247,
-      "climb_speed_kt": 105,
-      "descent_speed_kt": 135
+      "rate_of_climb_ft_per_min": 1050,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "14",
@@ -439,11 +452,12 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 170,
+      "cruise_speed_kt": 175,
+      "approach_speed_kt": 80,
       "wake_category": "Light",
       "mtow_kg": 1633,
-      "climb_speed_kt": 110,
-      "descent_speed_kt": 145
+      "rate_of_climb_ft_per_min": 1270,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "15",
@@ -474,11 +488,12 @@
         "023.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": 90,
+      "cruise_speed_kt": 85,
+      "approach_speed_kt": 50,
       "wake_category": "Light",
       "mtow_kg": 600,
-      "climb_speed_kt": 60,
-      "descent_speed_kt": 75
+      "rate_of_climb_ft_per_min": 1000,
+      "rate_of_descent_ft_per_min": 500
     },
     {
       "key": "16",
@@ -501,10 +516,11 @@
         "016.jpg"
       ],
       "cruise_speed_kt": 100,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 600,
-      "climb_speed_kt": 65,
-      "descent_speed_kt": 80
+      "rate_of_climb_ft_per_min": 700,
+      "rate_of_descent_ft_per_min": 500
     },
     {
       "key": "17",
@@ -536,10 +552,11 @@
         "028.jpg"
       ],
       "cruise_speed_kt": 180,
+      "approach_speed_kt": 85,
       "wake_category": "Light",
       "mtow_kg": 2495,
-      "climb_speed_kt": 120,
-      "descent_speed_kt": 150
+      "rate_of_climb_ft_per_min": 1500,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "18",
@@ -570,11 +587,12 @@
         "030.jpg",
         "031.jpg"
       ],
-      "cruise_speed_kt": 160,
+      "cruise_speed_kt": 165,
+      "approach_speed_kt": 75,
       "wake_category": "Light",
       "mtow_kg": 2100,
-      "climb_speed_kt": 105,
-      "descent_speed_kt": 135
+      "rate_of_climb_ft_per_min": 1100,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "19",
@@ -600,11 +618,12 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 200,
+      "cruise_speed_kt": 190,
+      "approach_speed_kt": 90,
       "wake_category": "Light",
       "mtow_kg": 3810,
-      "climb_speed_kt": 130,
-      "descent_speed_kt": 160
+      "rate_of_climb_ft_per_min": 1500,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "20",
@@ -633,11 +652,12 @@
         "019.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": 200,
+      "cruise_speed_kt": 190,
+      "approach_speed_kt": 90,
       "wake_category": "Light",
       "mtow_kg": 2721,
-      "climb_speed_kt": 130,
-      "descent_speed_kt": 165
+      "rate_of_climb_ft_per_min": 1650,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "21",
@@ -662,11 +682,12 @@
         "018.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 160,
+      "cruise_speed_kt": 155,
+      "approach_speed_kt": 75,
       "wake_category": "Light",
       "mtow_kg": 1725,
-      "climb_speed_kt": 95,
-      "descent_speed_kt": 120
+      "rate_of_climb_ft_per_min": 1300,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "22",
@@ -698,10 +719,11 @@
         "023.jpg"
       ],
       "cruise_speed_kt": 170,
+      "approach_speed_kt": 80,
       "wake_category": "Light",
       "mtow_kg": 2155,
-      "climb_speed_kt": 105,
-      "descent_speed_kt": 135
+      "rate_of_climb_ft_per_min": 1400,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "23",
@@ -733,10 +755,11 @@
         "028.jpg"
       ],
       "cruise_speed_kt": 160,
+      "approach_speed_kt": 80,
       "wake_category": "Light",
       "mtow_kg": 2359,
-      "climb_speed_kt": 105,
-      "descent_speed_kt": 135
+      "rate_of_climb_ft_per_min": 1400,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "24",
@@ -768,10 +791,11 @@
         "020.jpg"
       ],
       "cruise_speed_kt": 200,
+      "approach_speed_kt": 90,
       "wake_category": "Light",
       "mtow_kg": 3175,
-      "climb_speed_kt": 130,
-      "descent_speed_kt": 160
+      "rate_of_climb_ft_per_min": 1250,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "25",
@@ -803,10 +827,11 @@
         "026.jpg"
       ],
       "cruise_speed_kt": 190,
+      "approach_speed_kt": 85,
       "wake_category": "Light",
       "mtow_kg": 2495,
-      "climb_speed_kt": 120,
-      "descent_speed_kt": 155
+      "rate_of_climb_ft_per_min": 1680,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "26",
@@ -835,10 +860,11 @@
         "016.jpg"
       ],
       "cruise_speed_kt": 150,
+      "approach_speed_kt": 75,
       "wake_category": "Light",
       "mtow_kg": 1769,
-      "climb_speed_kt": 95,
-      "descent_speed_kt": 120
+      "rate_of_climb_ft_per_min": 1250,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "27",
@@ -870,10 +896,11 @@
         "027.jpg"
       ],
       "cruise_speed_kt": 175,
+      "approach_speed_kt": 85,
       "wake_category": "Light",
       "mtow_kg": 3062,
-      "climb_speed_kt": 120,
-      "descent_speed_kt": 150
+      "rate_of_climb_ft_per_min": 1350,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "28",
@@ -905,10 +932,11 @@
         "022.jpg"
       ],
       "cruise_speed_kt": 150,
+      "approach_speed_kt": 75,
       "wake_category": "Light",
       "mtow_kg": 1990,
-      "climb_speed_kt": 100,
-      "descent_speed_kt": 125
+      "rate_of_climb_ft_per_min": 1300,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "29",
@@ -939,11 +967,12 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": 135,
+      "cruise_speed_kt": 130,
+      "approach_speed_kt": 70,
       "wake_category": "Light",
       "mtow_kg": 2994,
-      "climb_speed_kt": 85,
-      "descent_speed_kt": 105
+      "rate_of_climb_ft_per_min": 1020,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "30",
@@ -974,11 +1003,12 @@
         "025.jpg",
         "026.jpg"
       ],
-      "cruise_speed_kt": 165,
+      "cruise_speed_kt": 160,
+      "approach_speed_kt": 80,
       "wake_category": "Light",
       "mtow_kg": 1999,
-      "climb_speed_kt": 95,
-      "descent_speed_kt": 125
+      "rate_of_climb_ft_per_min": 1000,
+      "rate_of_descent_ft_per_min": 700
     },
     {
       "key": "31",
@@ -1010,10 +1040,11 @@
         "023.jpg"
       ],
       "cruise_speed_kt": 270,
+      "approach_speed_kt": 85,
       "wake_category": "Light",
       "mtow_kg": 4740,
-      "climb_speed_kt": 150,
-      "descent_speed_kt": 200
+      "rate_of_climb_ft_per_min": 1900,
+      "rate_of_descent_ft_per_min": 1500
     },
     {
       "key": "32",
@@ -1044,11 +1075,12 @@
         "023.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": 160,
+      "cruise_speed_kt": 165,
+      "approach_speed_kt": 80,
       "wake_category": "Light",
       "mtow_kg": 3629,
-      "climb_speed_kt": 110,
-      "descent_speed_kt": 140
+      "rate_of_climb_ft_per_min": 975,
+      "rate_of_descent_ft_per_min": 1000
     },
     {
       "key": "33",
@@ -1076,11 +1108,12 @@
         "021.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 260,
+      "cruise_speed_kt": 270,
+      "approach_speed_kt": 100,
       "wake_category": "Light",
       "mtow_kg": 5670,
-      "climb_speed_kt": 160,
-      "descent_speed_kt": 210
+      "rate_of_climb_ft_per_min": 2450,
+      "rate_of_descent_ft_per_min": 2000
     },
     {
       "key": "34",
@@ -1112,10 +1145,11 @@
         "032.jpg"
       ],
       "cruise_speed_kt": 300,
+      "approach_speed_kt": 105,
       "wake_category": "Light",
       "mtow_kg": 6804,
-      "climb_speed_kt": 170,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 2700,
+      "rate_of_descent_ft_per_min": 2000
     },
     {
       "key": "35",
@@ -1146,11 +1180,12 @@
         "019.jpg",
         "020.jpg"
       ],
-      "cruise_speed_kt": 290,
+      "cruise_speed_kt": 280,
+      "approach_speed_kt": 100,
       "wake_category": "Light",
       "mtow_kg": 4468,
-      "climb_speed_kt": 170,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 2200,
+      "rate_of_descent_ft_per_min": 1800
     },
     {
       "key": "36",
@@ -1181,11 +1216,12 @@
         "028.jpg",
         "030.jpg"
       ],
-      "cruise_speed_kt": 285,
+      "cruise_speed_kt": 280,
+      "approach_speed_kt": 110,
       "wake_category": "Medium",
       "mtow_kg": 11500,
-      "climb_speed_kt": 180,
-      "descent_speed_kt": 230
+      "rate_of_climb_ft_per_min": 2100,
+      "rate_of_descent_ft_per_min": 1800
     },
     {
       "key": "37",
@@ -1217,10 +1253,11 @@
         "024.jpg"
       ],
       "cruise_speed_kt": 260,
+      "approach_speed_kt": 105,
       "wake_category": "Medium",
       "mtow_kg": 7484,
-      "climb_speed_kt": 180,
-      "descent_speed_kt": 230
+      "rate_of_climb_ft_per_min": 2200,
+      "rate_of_descent_ft_per_min": 1800
     },
     {
       "key": "38",
@@ -1252,10 +1289,11 @@
         "028.jpg"
       ],
       "cruise_speed_kt": 250,
+      "approach_speed_kt": 110,
       "wake_category": "Medium",
       "mtow_kg": 13155,
-      "climb_speed_kt": 170,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 2000,
+      "rate_of_descent_ft_per_min": 1800
     },
     {
       "key": "39",
@@ -1287,10 +1325,11 @@
         "022.jpg"
       ],
       "cruise_speed_kt": 250,
+      "approach_speed_kt": 100,
       "wake_category": "Medium",
       "mtow_kg": 19500,
-      "climb_speed_kt": 170,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 1800,
+      "rate_of_descent_ft_per_min": 1800
     },
     {
       "key": "40",
@@ -1320,11 +1359,12 @@
         "025.jpg",
         "026.jpg"
       ],
-      "cruise_speed_kt": 340,
+      "cruise_speed_kt": 360,
+      "approach_speed_kt": 120,
       "wake_category": "Medium",
       "mtow_kg": 29260,
-      "climb_speed_kt": 185,
-      "descent_speed_kt": 240
+      "rate_of_climb_ft_per_min": 2000,
+      "rate_of_descent_ft_per_min": 2000
     },
     {
       "key": "41",
@@ -1352,10 +1392,11 @@
         "022.jpg"
       ],
       "cruise_speed_kt": 275,
+      "approach_speed_kt": 110,
       "wake_category": "Medium",
       "mtow_kg": 22800,
-      "climb_speed_kt": 170,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 1500,
+      "rate_of_descent_ft_per_min": 1800
     },
     {
       "key": "42",
@@ -1378,11 +1419,12 @@
         "012.jpg",
         "019.jpg"
       ],
-      "cruise_speed_kt": 260,
+      "cruise_speed_kt": 250,
+      "approach_speed_kt": 110,
       "wake_category": "Medium",
       "mtow_kg": 7764,
-      "climb_speed_kt": 170,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 2400,
+      "rate_of_descent_ft_per_min": 1800
     },
     {
       "key": "43",
@@ -1413,11 +1455,12 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 240,
+      "cruise_speed_kt": 250,
+      "approach_speed_kt": 110,
       "wake_category": "Medium",
       "mtow_kg": 20830,
-      "climb_speed_kt": 170,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 1800,
+      "rate_of_descent_ft_per_min": 1800
     },
     {
       "key": "44",
@@ -1447,11 +1490,12 @@
         "021.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": 430,
+      "cruise_speed_kt": 440,
+      "approach_speed_kt": 125,
       "wake_category": "Medium",
       "mtow_kg": 8300,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 250
+      "rate_of_climb_ft_per_min": 4300,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "45",
@@ -1481,11 +1525,12 @@
         "021.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": 430,
+      "cruise_speed_kt": 450,
+      "approach_speed_kt": 125,
       "wake_category": "Medium",
       "mtow_kg": 9752,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 250
+      "rate_of_climb_ft_per_min": 4000,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "46",
@@ -1514,11 +1559,12 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 440,
+      "cruise_speed_kt": 450,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 10659,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 250
+      "rate_of_climb_ft_per_min": 3700,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "47",
@@ -1550,10 +1596,11 @@
         "031.jpg"
       ],
       "cruise_speed_kt": 460,
+      "approach_speed_kt": 135,
       "wake_category": "Medium",
       "mtow_kg": 33203,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3800,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "48",
@@ -1571,10 +1618,11 @@
         "045.jpg"
       ],
       "cruise_speed_kt": 480,
+      "approach_speed_kt": 135,
       "wake_category": "Medium",
       "mtow_kg": 41277,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "49",
@@ -1605,11 +1653,12 @@
         "030.jpg",
         "031.jpg"
       ],
-      "cruise_speed_kt": 488,
+      "cruise_speed_kt": 490,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 45178,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3800,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "50",
@@ -1641,10 +1690,11 @@
         "027.jpg"
       ],
       "cruise_speed_kt": 480,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 44452,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "51",
@@ -1676,10 +1726,11 @@
         "022.jpg"
       ],
       "cruise_speed_kt": 450,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 21863,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 270
+      "rate_of_climb_ft_per_min": 3800,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "52",
@@ -1711,10 +1762,11 @@
         "024.jpg"
       ],
       "cruise_speed_kt": 365,
+      "approach_speed_kt": 110,
       "wake_category": "Light",
       "mtow_kg": 6713,
-      "climb_speed_kt": 220,
-      "descent_speed_kt": 240
+      "rate_of_climb_ft_per_min": 3000,
+      "rate_of_descent_ft_per_min": 2500
     },
     {
       "key": "53",
@@ -1745,10 +1797,11 @@
         "021.jpg"
       ],
       "cruise_speed_kt": 440,
+      "approach_speed_kt": 120,
       "wake_category": "Medium",
       "mtow_kg": 10433,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 260
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "54",
@@ -1775,11 +1828,12 @@
         "027.jpg",
         "028.jpg"
       ],
-      "cruise_speed_kt": 488,
+      "cruise_speed_kt": 490,
+      "approach_speed_kt": 120,
       "wake_category": "Medium",
       "mtow_kg": 16375,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "55",
@@ -1811,10 +1865,11 @@
         "026.jpg"
       ],
       "cruise_speed_kt": 460,
+      "approach_speed_kt": 115,
       "wake_category": "Medium",
       "mtow_kg": 16556,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 270
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "56",
@@ -1835,11 +1890,12 @@
         "009.jpg",
         "010.jpg"
       ],
-      "cruise_speed_kt": 420,
+      "cruise_speed_kt": 410,
+      "approach_speed_kt": 120,
       "wake_category": "Medium",
       "mtow_kg": 10659,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 260
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "57",
@@ -1871,10 +1927,11 @@
         "022.jpg"
       ],
       "cruise_speed_kt": 430,
+      "approach_speed_kt": 120,
       "wake_category": "Medium",
       "mtow_kg": 12700,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 260
+      "rate_of_climb_ft_per_min": 3300,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "58",
@@ -1905,11 +1962,12 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": 420,
+      "cruise_speed_kt": 430,
+      "approach_speed_kt": 105,
       "wake_category": "Light",
       "mtow_kg": 8500,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 250
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "59",
@@ -1941,10 +1999,11 @@
         "022.jpg"
       ],
       "cruise_speed_kt": 450,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 68000,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "60",
@@ -1976,10 +2035,11 @@
         "024.jpg"
       ],
       "cruise_speed_kt": 450,
+      "approach_speed_kt": 135,
       "wake_category": "Medium",
       "mtow_kg": 78000,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "61",
@@ -2011,10 +2071,11 @@
         "023.jpg"
       ],
       "cruise_speed_kt": 450,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 75500,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "62",
@@ -2046,10 +2107,11 @@
         "030.jpg"
       ],
       "cruise_speed_kt": 450,
+      "approach_speed_kt": 140,
       "wake_category": "Medium",
       "mtow_kg": 93500,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2000,
+      "rate_of_descent_ft_per_min": 2500
     },
     {
       "key": "63",
@@ -2076,11 +2138,12 @@
         "041.jpg",
         "042.jpg"
       ],
-      "cruise_speed_kt": 445,
+      "cruise_speed_kt": 450,
+      "approach_speed_kt": 125,
       "wake_category": "Medium",
       "mtow_kg": 60781,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "64",
@@ -2111,11 +2174,12 @@
         "026.jpg",
         "028.jpg"
       ],
-      "cruise_speed_kt": 445,
+      "cruise_speed_kt": 450,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 69900,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2800,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "65",
@@ -2146,11 +2210,12 @@
         "025.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 450,
+      "cruise_speed_kt": 460,
+      "approach_speed_kt": 140,
       "wake_category": "Medium",
       "mtow_kg": 79016,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3000,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "66",
@@ -2181,11 +2246,12 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": 450,
+      "cruise_speed_kt": 460,
+      "approach_speed_kt": 135,
       "wake_category": "Medium",
       "mtow_kg": 70307,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "67",
@@ -2216,11 +2282,12 @@
         "026.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 450,
+      "cruise_speed_kt": 460,
+      "approach_speed_kt": 140,
       "wake_category": "Medium",
       "mtow_kg": 82191,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "68",
@@ -2242,11 +2309,12 @@
         "014.jpg",
         "015.jpg"
       ],
-      "cruise_speed_kt": 430,
+      "cruise_speed_kt": 440,
+      "approach_speed_kt": 140,
       "wake_category": "Medium",
       "mtow_kg": 68039,
-      "climb_speed_kt": 270,
-      "descent_speed_kt": 270
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "69",
@@ -2278,10 +2346,11 @@
         "031.jpg"
       ],
       "cruise_speed_kt": 440,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 54885,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "70",
@@ -2313,10 +2382,11 @@
         "025.jpg"
       ],
       "cruise_speed_kt": 430,
+      "approach_speed_kt": 120,
       "wake_category": "Medium",
       "mtow_kg": 39990,
-      "climb_speed_kt": 270,
-      "descent_speed_kt": 270
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "71",
@@ -2348,10 +2418,11 @@
         "027.jpg"
       ],
       "cruise_speed_kt": 430,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 45810,
-      "climb_speed_kt": 270,
-      "descent_speed_kt": 270
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "72",
@@ -2380,10 +2451,11 @@
         "019.jpg"
       ],
       "cruise_speed_kt": 380,
+      "approach_speed_kt": 105,
       "wake_category": "Medium",
       "mtow_kg": 38102,
-      "climb_speed_kt": 220,
-      "descent_speed_kt": 240
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 2500
     },
     {
       "key": "73",
@@ -2415,10 +2487,11 @@
         "024.jpg"
       ],
       "cruise_speed_kt": 380,
+      "approach_speed_kt": 110,
       "wake_category": "Medium",
       "mtow_kg": 42184,
-      "climb_speed_kt": 220,
-      "descent_speed_kt": 240
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 2500
     },
     {
       "key": "74",
@@ -2450,10 +2523,11 @@
         "022.jpg"
       ],
       "cruise_speed_kt": 380,
+      "approach_speed_kt": 115,
       "wake_category": "Medium",
       "mtow_kg": 44225,
-      "climb_speed_kt": 220,
-      "descent_speed_kt": 240
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 2500
     },
     {
       "key": "75",
@@ -2485,11 +2559,12 @@
         "032.jpg"
       ],
       "cruise_speed_kt": 460,
+      "approach_speed_kt": 135,
       "wake_category": "Medium",
       "wake_category_when_leading": "Heavy",
       "mtow_kg": 115680,
-      "climb_speed_kt": 290,
-      "descent_speed_kt": 290
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "76",
@@ -2521,10 +2596,11 @@
         "025.jpg"
       ],
       "cruise_speed_kt": 445,
+      "approach_speed_kt": 125,
       "wake_category": "Medium",
       "mtow_kg": 35990,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "77",
@@ -2549,10 +2625,11 @@
         "021.jpg"
       ],
       "cruise_speed_kt": 445,
+      "approach_speed_kt": 130,
       "wake_category": "Medium",
       "mtow_kg": 51800,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2800,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "78",
@@ -2584,10 +2661,11 @@
         "026.jpg"
       ],
       "cruise_speed_kt": 490,
+      "approach_speed_kt": 150,
       "wake_category": "Heavy",
       "mtow_kg": 447696,
-      "climb_speed_kt": 300,
-      "descent_speed_kt": 290
+      "rate_of_climb_ft_per_min": 2000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "79",
@@ -2613,10 +2691,11 @@
         "019.jpg"
       ],
       "cruise_speed_kt": 490,
+      "approach_speed_kt": 140,
       "wake_category": "Heavy",
       "mtow_kg": 299370,
-      "climb_speed_kt": 300,
-      "descent_speed_kt": 290
+      "rate_of_climb_ft_per_min": 2000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "80",
@@ -2638,11 +2717,12 @@
         "025.jpg",
         "027.jpg"
       ],
-      "cruise_speed_kt": 488,
+      "cruise_speed_kt": 490,
+      "approach_speed_kt": 135,
       "wake_category": "Heavy",
       "mtow_kg": 227930,
-      "climb_speed_kt": 300,
-      "descent_speed_kt": 290
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "81",
@@ -2674,10 +2754,11 @@
         "035.jpg"
       ],
       "cruise_speed_kt": 470,
+      "approach_speed_kt": 135,
       "wake_category": "Heavy",
       "mtow_kg": 242000,
-      "climb_speed_kt": 290,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "82",
@@ -2709,10 +2790,11 @@
         "030.jpg"
       ],
       "cruise_speed_kt": 470,
+      "approach_speed_kt": 140,
       "wake_category": "Heavy",
       "mtow_kg": 275000,
-      "climb_speed_kt": 290,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "83",
@@ -2731,11 +2813,12 @@
         "016.jpg",
         "020.jpg"
       ],
-      "cruise_speed_kt": 488,
+      "cruise_speed_kt": 490,
+      "approach_speed_kt": 140,
       "wake_category": "Heavy",
       "mtow_kg": 280000,
-      "climb_speed_kt": 300,
-      "descent_speed_kt": 290
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "84",
@@ -2755,11 +2838,12 @@
         "021.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": 488,
+      "cruise_speed_kt": 490,
+      "approach_speed_kt": 145,
       "wake_category": "Super",
       "mtow_kg": 575000,
-      "climb_speed_kt": 290,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 1500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "85",
@@ -2791,10 +2875,11 @@
         "027.jpg"
       ],
       "cruise_speed_kt": 115,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 1451,
-      "climb_speed_kt": 60,
-      "descent_speed_kt": 80
+      "rate_of_climb_ft_per_min": 1300,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "86",
@@ -2816,10 +2901,11 @@
         "019.jpg"
       ],
       "cruise_speed_kt": 100,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 5080,
-      "climb_speed_kt": 70,
-      "descent_speed_kt": 90
+      "rate_of_climb_ft_per_min": 1400,
+      "rate_of_descent_ft_per_min": 1000
     },
     {
       "key": "87",
@@ -2842,10 +2928,11 @@
         "014.jpg"
       ],
       "cruise_speed_kt": 120,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 5398,
-      "climb_speed_kt": 75,
-      "descent_speed_kt": 100
+      "rate_of_climb_ft_per_min": 1350,
+      "rate_of_descent_ft_per_min": 1000
     },
     {
       "key": "88",
@@ -2870,10 +2957,11 @@
         "019.jpg"
       ],
       "cruise_speed_kt": 120,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 2250,
-      "climb_speed_kt": 70,
-      "descent_speed_kt": 90
+      "rate_of_climb_ft_per_min": 1700,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "89",
@@ -2901,10 +2989,11 @@
         "1792992451834721200_019.jpg"
       ],
       "cruise_speed_kt": 145,
+      "approach_speed_kt": 70,
       "wake_category": "Light",
       "mtow_kg": 4300,
-      "climb_speed_kt": 90,
-      "descent_speed_kt": 120
+      "rate_of_climb_ft_per_min": 1500,
+      "rate_of_descent_ft_per_min": 1000
     },
     {
       "key": "90",
@@ -2936,10 +3025,11 @@
         "032.jpg"
       ],
       "cruise_speed_kt": 120,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 1715,
-      "climb_speed_kt": 70,
-      "descent_speed_kt": 90
+      "rate_of_climb_ft_per_min": 1200,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "91",
@@ -2971,10 +3061,11 @@
         "019.jpg"
       ],
       "cruise_speed_kt": 150,
+      "approach_speed_kt": 70,
       "wake_category": "Light",
       "mtow_kg": 6400,
-      "climb_speed_kt": 100,
-      "descent_speed_kt": 130
+      "rate_of_climb_ft_per_min": 1700,
+      "rate_of_descent_ft_per_min": 1000
     },
     {
       "key": "92",
@@ -3005,11 +3096,12 @@
         "022.jpg",
         "023.jpg"
       ],
-      "cruise_speed_kt": 80,
+      "cruise_speed_kt": 90,
+      "approach_speed_kt": 55,
       "wake_category": "Light",
       "mtow_kg": 622,
-      "climb_speed_kt": 50,
-      "descent_speed_kt": 60
+      "rate_of_climb_ft_per_min": 1000,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "93",
@@ -3040,11 +3132,12 @@
         "022.jpg",
         "025.jpg"
       ],
-      "cruise_speed_kt": 110,
+      "cruise_speed_kt": 105,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 1134,
-      "climb_speed_kt": 60,
-      "descent_speed_kt": 80
+      "rate_of_climb_ft_per_min": 1000,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "94",
@@ -3068,11 +3161,12 @@
         "020.jpg",
         "022.jpg"
       ],
-      "cruise_speed_kt": 135,
+      "cruise_speed_kt": 140,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 6000,
-      "climb_speed_kt": 110,
-      "descent_speed_kt": 140
+      "rate_of_climb_ft_per_min": 2300,
+      "rate_of_descent_ft_per_min": 1200
     },
     {
       "key": "95",
@@ -3089,11 +3183,12 @@
         "007.jpg",
         "009.jpg"
       ],
-      "cruise_speed_kt": 145,
+      "cruise_speed_kt": 150,
+      "approach_speed_kt": 70,
       "wake_category": "Medium",
       "mtow_kg": 10660,
-      "climb_speed_kt": 100,
-      "descent_speed_kt": 130
+      "rate_of_climb_ft_per_min": 1650,
+      "rate_of_descent_ft_per_min": 1000
     },
     {
       "key": "96",
@@ -3124,10 +3219,11 @@
         "023.jpg"
       ],
       "cruise_speed_kt": 145,
+      "approach_speed_kt": 70,
       "wake_category": "Medium",
       "mtow_kg": 10659,
-      "climb_speed_kt": 100,
-      "descent_speed_kt": 130
+      "rate_of_climb_ft_per_min": 1300,
+      "rate_of_descent_ft_per_min": 1000
     },
     {
       "key": "97",
@@ -3153,11 +3249,12 @@
         "020.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": 145,
+      "cruise_speed_kt": 150,
+      "approach_speed_kt": 70,
       "wake_category": "Medium",
       "mtow_kg": 22680,
-      "climb_speed_kt": 110,
-      "descent_speed_kt": 140
+      "rate_of_climb_ft_per_min": 1500,
+      "rate_of_descent_ft_per_min": 1000
     },
     {
       "key": "98",
@@ -3185,11 +3282,12 @@
         "022.jpg",
         "024.jpg"
       ],
-      "cruise_speed_kt": 140,
+      "cruise_speed_kt": 145,
+      "approach_speed_kt": 70,
       "wake_category": "Medium",
       "mtow_kg": 10600,
-      "climb_speed_kt": 100,
-      "descent_speed_kt": 130
+      "rate_of_climb_ft_per_min": 1500,
+      "rate_of_descent_ft_per_min": 1000
     },
     {
       "key": "99",
@@ -3220,11 +3318,12 @@
         "020.jpg",
         "021.jpg"
       ],
-      "cruise_speed_kt": 125,
+      "cruise_speed_kt": 130,
+      "approach_speed_kt": 60,
       "wake_category": "Light",
       "mtow_kg": 2980,
-      "climb_speed_kt": 80,
-      "descent_speed_kt": 110
+      "rate_of_climb_ft_per_min": 1500,
+      "rate_of_descent_ft_per_min": 800
     },
     {
       "key": "100",
@@ -3242,11 +3341,12 @@
         "006.jpg",
         "007.jpg"
       ],
-      "cruise_speed_kt": 570,
+      "cruise_speed_kt": 490,
+      "approach_speed_kt": 140,
       "wake_category": "Unknown",
       "mtow_kg": 29937,
-      "climb_speed_kt": 350,
-      "descent_speed_kt": 350
+      "rate_of_climb_ft_per_min": 10000,
+      "rate_of_descent_ft_per_min": 5000
     },
     {
       "key": "101",
@@ -3270,11 +3370,12 @@
         "014.jpg",
         "015.jpg"
       ],
-      "cruise_speed_kt": 525,
+      "cruise_speed_kt": 500,
+      "approach_speed_kt": 145,
       "wake_category": "Unknown",
       "mtow_kg": 31800,
-      "climb_speed_kt": 350,
-      "descent_speed_kt": 350
+      "rate_of_climb_ft_per_min": 10000,
+      "rate_of_descent_ft_per_min": 5000
     },
     {
       "key": "102",
@@ -3306,10 +3407,11 @@
         "034.jpg"
       ],
       "cruise_speed_kt": 450,
+      "approach_speed_kt": 125,
       "wake_category": "Unknown",
       "mtow_kg": 9100,
-      "climb_speed_kt": 300,
-      "descent_speed_kt": 300
+      "rate_of_climb_ft_per_min": 6000,
+      "rate_of_descent_ft_per_min": 4000
     },
     {
       "key": "103",
@@ -3331,10 +3433,11 @@
         "014.jpg"
       ],
       "cruise_speed_kt": 450,
+      "approach_speed_kt": 125,
       "wake_category": "Heavy",
       "mtow_kg": 265350,
-      "climb_speed_kt": 300,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "104",
@@ -3366,10 +3469,11 @@
         "030.jpg"
       ],
       "cruise_speed_kt": 330,
+      "approach_speed_kt": 120,
       "wake_category": "Medium",
       "mtow_kg": 79378,
-      "climb_speed_kt": 180,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 2000,
+      "rate_of_descent_ft_per_min": 2000
     },
     {
       "key": "105",
@@ -3391,11 +3495,12 @@
         "014.jpg",
         "016.jpg"
       ],
-      "cruise_speed_kt": 440,
+      "cruise_speed_kt": 450,
+      "approach_speed_kt": 140,
       "wake_category": "Medium",
       "mtow_kg": 85365,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "106",
@@ -3427,10 +3532,11 @@
         "034.jpg"
       ],
       "cruise_speed_kt": 320,
+      "approach_speed_kt": 105,
       "wake_category": "Light",
       "mtow_kg": 4250,
-      "climb_speed_kt": 180,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 4000,
+      "rate_of_descent_ft_per_min": 2500
     },
     {
       "key": "107",
@@ -3455,10 +3561,11 @@
         "015.jpg"
       ],
       "cruise_speed_kt": 450,
+      "approach_speed_kt": 140,
       "wake_category": "Medium",
       "mtow_kg": 77564,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "108",
@@ -3490,10 +3597,11 @@
         "023.jpg"
       ],
       "cruise_speed_kt": 470,
+      "approach_speed_kt": 140,
       "wake_category": "Heavy",
       "mtow_kg": 233000,
-      "climb_speed_kt": 290,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 2000,
+      "rate_of_descent_ft_per_min": 3000
     },
     {
       "key": "109",
@@ -3515,11 +3623,12 @@
         "010.jpg",
         "012.jpg"
       ],
-      "cruise_speed_kt": 290,
+      "cruise_speed_kt": 300,
+      "approach_speed_kt": 105,
       "wake_category": "Medium",
       "mtow_kg": 31800,
-      "climb_speed_kt": 180,
-      "descent_speed_kt": 220
+      "rate_of_climb_ft_per_min": 2500,
+      "rate_of_descent_ft_per_min": 2000
     },
     {
       "key": "110",
@@ -3551,10 +3660,11 @@
         "027.jpg"
       ],
       "cruise_speed_kt": 480,
-      "wake_category": null,
+      "approach_speed_kt": 110,
+      "wake_category": "Medium",
       "mtow_kg": 31751,
-      "climb_speed_kt": 250,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3500
     },
     {
       "key": "111",
@@ -3563,18 +3673,13 @@
       "icao": "B737",
       "category": "Business Jets",
       "query": "Boeing 737 Business Jet",
-      "images": [
-        "001.jpg",
-        "002.jpg",
-        "003.jpg",
-        "005.jpg",
-        "006.jpg"
-      ],
-      "cruise_speed_kt": 450,
+      "images": ["001.jpg", "002.jpg", "003.jpg", "005.jpg", "006.jpg"],
+      "cruise_speed_kt": 460,
+      "approach_speed_kt": 135,
       "wake_category": "Medium",
       "mtow_kg": 70307,
-      "climb_speed_kt": 280,
-      "descent_speed_kt": 280
+      "rate_of_climb_ft_per_min": 3500,
+      "rate_of_descent_ft_per_min": 3500
     }
   ]
 }
