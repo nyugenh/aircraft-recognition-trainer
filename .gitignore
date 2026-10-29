@@ -24,3 +24,10 @@ Thumbs.db
 *.log
 *.tmp
 *.pdf
+
+# Local image-curation state and undo backups
+.blurred_images.json
+.openverse_exhausted.json
+.openverse_pages.json
+.blur_backups/
+.deleted_images/
