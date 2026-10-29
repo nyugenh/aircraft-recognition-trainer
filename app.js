@@ -1252,6 +1252,7 @@ function getIndefiniteArticle(value) {
 }
 
 function appendCategoryHint(container, category, labelPrefix = 'Category') {
+  if (getSpeedQuestion()) return;
   const text = displayText(category);
   if (!text) return;
   const hint = document.createElement('span');
