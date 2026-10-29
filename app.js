@@ -875,11 +875,19 @@ function getSpeedComparisonPrompt(first, second) {
 // ============================================================================
 // Each metric has three question types: compare, estimate (choose a band) and rank.
 // Bands [min, max) are chosen to split the manifest's values fairly evenly.
+// Fast speeds read better as Mach; 573 kt is the speed of sound at typical cruise altitude.
+const MACH_THRESHOLD_KT = 400;
+const KT_PER_MACH = 573;
+const formatSpeed = (kt) =>
+  kt >= MACH_THRESHOLD_KT
+    ? `Mach ${(kt / KT_PER_MACH).toFixed(2)}`
+    : `${Math.round(kt)} kt`;
+
 const makeSpeedSegments = (low, mid, high) => [
-  { min: -Infinity, max: low, label: `Below ${low} kt` },
-  { min: low, max: mid, label: `${low} to below ${mid} kt` },
-  { min: mid, max: high, label: `${mid} to below ${high} kt` },
-  { min: high, max: Infinity, label: `${high} kt or above` },
+  { min: -Infinity, max: low, label: `Below ${formatSpeed(low)}` },
+  { min: low, max: mid, label: `${formatSpeed(low)} to below ${formatSpeed(mid)}` },
+  { min: mid, max: high, label: `${formatSpeed(mid)} to below ${formatSpeed(high)}` },
+  { min: high, max: Infinity, label: `${formatSpeed(high)} or above` },
 ];
 
 const SPEED_METRICS = {
@@ -942,7 +950,7 @@ function getSpeedSegment(item) {
   );
 }
 
-const formatApproxSpeed = (speed) => `≈ ${Math.round(speed)} kt`;
+const formatApproxSpeed = (speed) => `≈ ${formatSpeed(speed)}`;
 
 function getWakeCategory(item) {
   const value = displayText(item?.wake_category).toLowerCase();
@@ -1326,8 +1334,8 @@ function updatePhotoVisibility(animate = false) {
   slides.push(
     setRevealed(imageContainer, showContainer, animate && isSpecial && !isRank),
   );
-  // Start fetching once the slide settles so the fade-in is visible.
-  Promise.all(slides).then(loadDeferredPhotos);
+  // Fetch right away so spinners show while the slide runs.
+  loadDeferredPhotos();
 }
 
 photoToggleButton.addEventListener('click', () => {
@@ -1745,25 +1753,56 @@ function getSpeedSliderRange(metric) {
   };
 }
 
-// The track ends sit on multiples of 10; the end stops report the exact slowest/fastest speeds.
-function getSpeedSliderGuess() {
-  const { exactMin, exactMax } = speedSliderInput.dataset;
-  return Math.min(
-    Number(exactMax),
-    Math.max(Number(exactMin), Number(speedSliderInput.value)),
+// Slider stops: 10 kt steps below the Mach threshold, then 0.01 Mach steps.
+let speedSliderStops = [];
+
+function buildSpeedSliderStops(min, max) {
+  const stops = [];
+  const start = Math.floor(min / SPEED_SLIDER_STEP) * SPEED_SLIDER_STEP;
+  for (let kt = start; kt < MACH_THRESHOLD_KT && kt <= max; kt += SPEED_SLIDER_STEP) {
+    stops.push(kt);
+  }
+  if (max >= MACH_THRESHOLD_KT) {
+    const first = Math.max(70, Math.floor(min / KT_PER_MACH * 100));
+    const last = Math.ceil(max / KT_PER_MACH * 100 - 1e-9);
+    for (let hundredths = first; hundredths <= last; hundredths += 1) {
+      stops.push((hundredths / 100) * KT_PER_MACH);
+    }
+  }
+  return stops;
+}
+
+const getNearestStopIndex = (speed) =>
+  speedSliderStops.reduce(
+    (best, stop, index) =>
+      Math.abs(stop - speed) < Math.abs(speedSliderStops[best] - speed)
+        ? index
+        : best,
+    0,
   );
+
+function getSpeedSliderTolerance(speed) {
+  const index = getNearestStopIndex(speed);
+  const below = speedSliderStops[index] - (speedSliderStops[index - 1] ?? Infinity);
+  const above = (speedSliderStops[index + 1] ?? Infinity) - speedSliderStops[index];
+  const step = Math.min(below, above);
+  return Number.isFinite(step) ? step / 2 : SPEED_SLIDER_STEP / 2;
+}
+
+function getSpeedSliderGuess() {
+  return speedSliderStops[Number(speedSliderInput.value)] ?? 0;
 }
 
 function updateSpeedSliderReadout() {
-  speedSliderValue.textContent = `${getSpeedSliderGuess()} kt`;
+  speedSliderValue.textContent = formatSpeed(getSpeedSliderGuess());
 }
 
 function scoreSpeedGuess(guess, actual) {
   const error = Math.abs(guess - actual);
-  const tolerance = SPEED_SLIDER_STEP / 2;
+  const tolerance = getSpeedSliderTolerance(actual) + 0.5;
   if (error <= tolerance) return 1;
-  const points =
-    1 - (error - tolerance) / (SPEED_SLIDER_ZERO_POINTS_ERROR - tolerance);
+  const zeroError = Math.max(SPEED_SLIDER_ZERO_POINTS_ERROR, tolerance * 4);
+  const points = 1 - (error - tolerance) / (zeroError - tolerance);
   return Math.max(0, Math.round(points * 100) / 100);
 }
 
@@ -1781,16 +1820,15 @@ function submitSpeedGuess() {
   score = Math.round((score + points) * 100) / 100;
   speedSliderInput.disabled = true;
   speedSliderSubmit.disabled = true;
-  const sliderMin = Number(speedSliderInput.min);
-  const sliderMax = Number(speedSliderInput.max);
   const answerMarker = byId('speed-slider-answer');
   const answerPosition =
-    (specialQuestionData.speed - sliderMin) / (sliderMax - sliderMin);
+    getNearestStopIndex(specialQuestionData.speed) /
+    (speedSliderStops.length - 1);
   answerMarker.style.setProperty(
     '--answer-position',
     String(Math.min(1, Math.max(0, answerPosition))),
   );
-  answerMarker.dataset.label = `${Math.round(specialQuestionData.speed)} kt`;
+  answerMarker.dataset.label = formatSpeed(specialQuestionData.speed);
   answerMarker.hidden = false;
   const feedbackType =
     points === 1 ? 'correct' : points > 0 ? 'partial' : 'incorrect';
@@ -1824,7 +1862,8 @@ function displaySpeedEstimateQuestion(item) {
     return false;
   }
   const { min, max } = getSpeedSliderRange(metric);
-  const roundedSpeed = Math.round(speed / SPEED_SLIDER_STEP) * SPEED_SLIDER_STEP;
+  speedSliderStops = buildSpeedSliderStops(min, max);
+  const roundedSpeed = speedSliderStops[getNearestStopIndex(speed)];
   specialQuestionData = {
     type: getQuestionType(),
     speed: roundedSpeed,
@@ -1838,15 +1877,12 @@ function displaySpeedEstimateQuestion(item) {
     ),
   );
   appendCategoryHint(promptElement, item.category, 'Category');
-  const step = SPEED_SLIDER_STEP;
-  speedSliderInput.min = String(Math.floor(min / step) * step);
-  speedSliderInput.max = String(Math.ceil(max / step) * step);
-  speedSliderInput.dataset.exactMin = String(min);
-  speedSliderInput.dataset.exactMax = String(max);
-  speedSliderInput.step = String(step);
-  speedSliderInput.value = String(Math.round((min + max) / 2 / step) * step);
-  byId('speed-slider-min').textContent = `${min} kt`;
-  byId('speed-slider-max').textContent = `${max} kt`;
+  speedSliderInput.min = '0';
+  speedSliderInput.max = String(speedSliderStops.length - 1);
+  speedSliderInput.step = '1';
+  speedSliderInput.value = String(Math.round((speedSliderStops.length - 1) / 2));
+  byId('speed-slider-min').textContent = formatSpeed(speedSliderStops[0]);
+  byId('speed-slider-max').textContent = formatSpeed(speedSliderStops.at(-1));
   updateSpeedSliderReadout();
   answerContainer.hidden = true;
   speedSlider.hidden = false;
@@ -3166,18 +3202,6 @@ async function start() {
   }
 }
 
-// Use the full title unless it overflows its header slot, then fall back to the short one.
-function fitAppTitle() {
-  const title = document.getElementById('app-title');
-  if (!title) return;
-  title.textContent = title.dataset.full;
-  if (title.scrollWidth > title.clientWidth) {
-    title.textContent = title.dataset.short;
-  }
-}
-fitAppTitle();
-new ResizeObserver(fitAppTitle).observe(document.getElementById('app-title'));
-
 // The footer is sticky; give it a background only while content scrolls beneath it.
 function updateFooterStuck() {
   const bottom = document.querySelector('.bottom');
@@ -3192,6 +3216,5 @@ window.addEventListener('scroll', updateFooterStuck, { passive: true });
 window.addEventListener('resize', updateFooterStuck);
 new ResizeObserver(updateFooterStuck).observe(document.body);
 updateFooterStuck();
-document.fonts?.ready.then(fitAppTitle);
 
 start();
