@@ -3526,7 +3526,7 @@
       "label": "Dassault Falcon 7X",
       "folder": "Dassault Falcon 7X",
       "icao": "FA7X",
-      "category": "Military",
+      "category": "Business Jets",
       "query": "Falcon 7X",
       "images": [
         "000.jpg",
@@ -3554,6 +3554,26 @@
       "wake_category": null,
       "mtow_kg": 31751,
       "climb_speed_kt": 250,
+      "descent_speed_kt": 280
+    },
+    {
+      "key": "111",
+      "label": "Boeing Business Jet",
+      "folder": "Boeing Business Jet",
+      "icao": "B737",
+      "category": "Business Jets",
+      "query": "Boeing 737 Business Jet",
+      "images": [
+        "001.jpg",
+        "002.jpg",
+        "003.jpg",
+        "005.jpg",
+        "006.jpg"
+      ],
+      "cruise_speed_kt": 450,
+      "wake_category": "Medium",
+      "mtow_kg": 70307,
+      "climb_speed_kt": 280,
       "descent_speed_kt": 280
     }
   ]

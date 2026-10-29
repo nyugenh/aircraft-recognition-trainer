@@ -713,5 +713,10 @@
     "query": "Bombardier Challenger 600",
     "next_page": 6,
     "next_index": 1
+  },
+  "Boeing Business Jet": {
+    "query": "Boeing 737 Business Jet",
+    "next_page": 2,
+    "next_index": 0
   }
 }
