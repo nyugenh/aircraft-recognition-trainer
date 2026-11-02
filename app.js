@@ -44,11 +44,13 @@ const QUESTION_TYPES = new Set([
   'wake-opposite',
   'wake-distance',
   'wake-rules',
+  'wake-medium-mtow-threshold',
 ]);
 
 // Mode dropdown value -> question type for the Wake category question.
 const WAKE_MODE_TYPES = {
   category: 'wake',
+  mediumThreshold: 'wake-medium-mtow-threshold',
   depart: 'wake-depart',
   intermediate: 'wake-intermediate',
   arrive: 'wake-arrive',
@@ -60,6 +62,7 @@ const WAKE_MODE_TYPES = {
 const WAKE_MODE_LABELS = {
   random: 'Random (all)',
   category: 'Category',
+  mediumThreshold: 'Medium MTOW',
   depart: 'Departure separation',
   intermediate: 'Intermediate departure',
   arrive: 'Arrival separation',
@@ -74,9 +77,12 @@ const SPEED_MODE_LABELS = {
   rank: 'Rank',
 };
 const isWakePairType = (type) =>
-  type?.startsWith('wake-') && type !== 'wake-rules';
+  type?.startsWith('wake-') &&
+  type !== 'wake-rules' &&
+  type !== 'wake-medium-mtow-threshold';
 
 const WAKE_CATEGORIES = ['Light', 'Medium', 'Heavy', 'Super'];
+const WAKE_MEDIUM_MTW_THRESHOLD_TYPE = 'wake-medium-mtow-threshold';
 const WAKE_CATEGORY_INFO = {
   Light: 'MTOW ≤ 7,000 kg',
   Medium: 'MTOW > 7,000 kg and < 136,000 kg',
@@ -700,7 +706,9 @@ function syncAnswerOptions() {
   const specialQuestion = isSpecialQuestionType(questionType);
   const currentValue = answerTypeSelect.value;
   const hideIdentifier =
-    questionTypeSelect.value === 'wake' && speedModeSelect.value === 'rules';
+    (questionTypeSelect.value === 'wake' &&
+      speedModeSelect.value === 'rules') ||
+    questionType === WAKE_MEDIUM_MTW_THRESHOLD_TYPE;
   if (answerTypeLabel) {
     answerTypeLabel.hidden = hideIdentifier;
     if (answerTypeCaption) {
@@ -1153,6 +1161,19 @@ function filterPoolForCombination(pool) {
         ),
     );
   }
+  if (questionType === WAKE_MEDIUM_MTW_THRESHOLD_TYPE) {
+    return pool.filter((item) => {
+      const mtow = Number(item?.mtow_kg);
+      return (
+        getAircraftImages(item).length > 0 &&
+        getWakeCategory(item) === 'Medium' &&
+        displayText(item?.category).toLowerCase() !== 'helicopters' &&
+        Boolean(getSpecialAircraftIdentifier(item)) &&
+        Number.isFinite(mtow) &&
+        mtow > 0
+      );
+    });
+  }
   if (questionType === 'wake' || isWakePairType(questionType)) {
     return pool.filter(
       (item) =>
@@ -1467,7 +1488,11 @@ function updatePhotoVisibility(animate = false) {
         slides.push(setRevealed(wrap, photosVisible, animate));
       });
   }
-  if (questionType === 'wake' && !keepForExit)
+  if (
+    (questionType === 'wake' ||
+      questionType === WAKE_MEDIUM_MTW_THRESHOLD_TYPE) &&
+    !keepForExit
+  )
     imageElement.hidden = !showPhotos;
   const showContainer =
     !isRank && !isRules && !(isSpecial && !photosVisible);
@@ -2014,13 +2039,8 @@ function displaySpeedEstimateQuestion(item) {
     speed: roundedSpeed,
     feedbackAnswer: formatApproxSpeed(roundedSpeed, metric),
   };
-  promptElement.replaceChildren();
   const identifier = getSpecialAircraftIdentifier(item);
-  promptElement.appendChild(
-    document.createTextNode(
-      `What is the ${metric.noun} of ${getSpecialArticle(identifier)} ${identifier}?`,
-    ),
-  );
+  setPromptWithContext(`What is its ${metric.noun}?`, [identifier]);
   appendCategoryHint(promptElement, item.category, 'Category');
   speedSliderInput.min = '0';
   speedSliderInput.max = String(speedSliderStops.length - 1);
@@ -2161,9 +2181,38 @@ function displaySpeedComparison(pair) {
   }
   imageContainer.appendChild(comparison);
   updatePhotoVisibility();
-  promptElement.textContent = getSpeedComparisonPrompt(pair.first, pair.second);
-  const { words } = getSpeedQuestion().metric;
-  displaySpecialChoices([words.higher, words.lower, words.same], pair.answer);
+  const { metric } = getSpeedQuestion();
+  setPromptWithContext(
+    `Compare the ${metric.noun} of these aircraft.`,
+    [
+      getSpecialAircraftIdentifier(pair.first),
+      getSpecialAircraftIdentifier(pair.second),
+    ],
+  );
+  displaySpecialChoices(
+    [metric.words.higher, metric.words.lower, metric.words.same],
+    pair.answer,
+  );
+}
+
+function setPromptWithContext(context, identifiers) {
+  const promptContext = document.createElement('span');
+  promptContext.className = 'prompt-context';
+  promptContext.textContent = context;
+  const promptParts = [promptContext];
+  if (identifiers.length) {
+    const aircraftNames = document.createElement('span');
+    aircraftNames.className = 'prompt-matchup';
+    identifiers.forEach((identifier, index) => {
+      if (index) aircraftNames.append(' vs ');
+      const name = document.createElement('span');
+      name.className = 'prompt-entry';
+      name.textContent = identifier;
+      aircraftNames.appendChild(name);
+    });
+    promptParts.push(aircraftNames);
+  }
+  promptElement.replaceChildren(...promptParts);
 }
 
 function getWakeFeedbackAnswer(item, category) {
@@ -2198,12 +2247,13 @@ async function displayWakeQuestion(item) {
     correctAnswer: WAKE_CATEGORY_CHOICE_LABELS[correctCategory],
     feedbackAnswer: getWakeFeedbackAnswer(item, correctCategory),
   };
-  promptElement.replaceChildren();
-  promptElement.appendChild(
-    document.createTextNode(
-      `What is the wake category of ${getSpecialArticle(getSpecialAircraftIdentifier(item))} ${getSpecialAircraftIdentifier(item)}?`,
-    ),
-  );
+  const promptContext = document.createElement('span');
+  promptContext.className = 'prompt-context';
+  promptContext.textContent = 'What is its wake category?';
+  const aircraftName = document.createElement('span');
+  aircraftName.className = 'prompt-matchup';
+  aircraftName.textContent = getSpecialAircraftIdentifier(item);
+  promptElement.replaceChildren(promptContext, aircraftName);
   displaySpecialChoices(
     WAKE_CATEGORIES.map((category) => WAKE_CATEGORY_CHOICE_LABELS[category]),
     WAKE_CATEGORY_CHOICE_LABELS[correctCategory],
@@ -2470,6 +2520,59 @@ function displayWakeSeparationQuestion(question) {
     pickWakeChoices(WAKE_ANSWER_POOLS[mode], result.answer),
     result.answer,
   );
+}
+
+async function displayMediumMtowThresholdQuestion(item) {
+  const imagePath = getRandomImagePath(item);
+  const mtow = Number(item?.mtow_kg);
+  if (
+    !imagePath ||
+    getWakeCategory(item) !== 'Medium' ||
+    !Number.isFinite(mtow)
+  ) {
+    setLoading(false);
+    promptElement.textContent = 'Unable to create a Medium MTOW question.';
+    feedbackElement.textContent =
+      'Check that this aircraft has an image, a Medium wake category, and a valid MTOW in manifest.json.';
+    return;
+  }
+
+  const isMediumLarge = mtow >= 25000;
+  const correctAnswer = isMediumLarge ? 'Yes' : 'No';
+  const identifier = getSpecialAircraftIdentifier(item);
+  specialQuestionData = {
+    type: WAKE_MEDIUM_MTW_THRESHOLD_TYPE,
+    correctAnswer,
+    feedbackAnswer: `${correctAnswer} · ${mtow.toLocaleString('en-US')} kg · Medium ${
+      isMediumLarge ? 'Large' : 'Small'
+    }`,
+  };
+  const promptContext = document.createElement('span');
+  promptContext.className = 'prompt-context';
+  promptContext.textContent = 'Is its MTOW 25,000 kg or more?';
+  const aircraftName = document.createElement('span');
+  aircraftName.className = 'prompt-matchup';
+  aircraftName.textContent = identifier;
+  promptElement.replaceChildren(promptContext, aircraftName);
+  displaySpecialChoices(['Yes', 'No'], correctAnswer, true);
+
+  try {
+    await loadQuestionImageWhenRevealed(
+      imagePath,
+      'Medium aircraft MTOW question image',
+    );
+    setLoading(false);
+    answerButtons.forEach((button) => {
+      if (!button.hidden) button.disabled = false;
+    });
+    focusFirstAnswer();
+  } catch (error) {
+    setLoading(false);
+    feedbackElement.textContent = error.message;
+    answerButtons.forEach((button) => {
+      button.disabled = true;
+    });
+  }
 }
 
 // Each entry lists the correct option first; options are shuffled when shown.
@@ -2901,10 +3004,12 @@ function displaySpeedRanking(entries) {
   answerContainer.hidden = true;
   byId('check-ranking').disabled = false;
   const { metric } = getSpeedQuestion();
-  promptElement.textContent =
+  setPromptWithContext(
     metric.key === 'cruise'
       ? 'Rank these aircraft from slowest to fastest.'
-      : `Rank these aircraft from ${metric.words.low} to ${metric.words.high} ${metric.noun}.`;
+      : `Rank these aircraft from ${metric.words.low} to ${metric.words.high} ${metric.noun}.`,
+    [],
+  );
   feedbackElement.replaceChildren();
 }
 
@@ -3375,6 +3480,10 @@ async function nextQuestion() {
   recordAircraftShown(item);
   if (isSpeedKind('estimate', questionType)) {
     displaySpeedEstimateQuestion(item);
+    return;
+  }
+  if (questionType === WAKE_MEDIUM_MTW_THRESHOLD_TYPE) {
+    await displayMediumMtowThresholdQuestion(item);
     return;
   }
   if (questionType === 'wake') {
