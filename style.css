@@ -1243,6 +1243,14 @@ body.ranking-is-dragging * {
   animation: feedbackIn 220ms var(--ease);
 }
 
+.feedback:is(.correct-feedback, .partial-feedback, .incorrect-feedback):not(
+    :has(.feedback-detail)
+  ) {
+  grid-template-areas: "result value";
+  align-items: baseline;
+  min-height: 0;
+}
+
 .feedback-result {
   grid-area: result;
   padding: 0.35rem 0.7rem;
@@ -1275,6 +1283,13 @@ body.ranking-is-dragging * {
   text-wrap: balance;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
+}
+
+.feedback:is(.correct-feedback, .partial-feedback, .incorrect-feedback):not(
+    :has(.feedback-detail)
+  )
+  .feedback-answer {
+  align-self: baseline;
 }
 
 @keyframes feedbackIn {
