@@ -706,9 +706,7 @@ function syncAnswerOptions() {
   const specialQuestion = isSpecialQuestionType(questionType);
   const currentValue = answerTypeSelect.value;
   const hideIdentifier =
-    (questionTypeSelect.value === 'wake' &&
-      speedModeSelect.value === 'rules') ||
-    questionType === WAKE_MEDIUM_MTW_THRESHOLD_TYPE;
+    questionTypeSelect.value === 'wake' && speedModeSelect.value === 'rules';
   if (answerTypeLabel) {
     answerTypeLabel.hidden = hideIdentifier;
     if (answerTypeCaption) {
