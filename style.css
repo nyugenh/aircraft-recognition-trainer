@@ -1229,7 +1229,7 @@ body.ranking-is-dragging * {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   grid-template-areas:
-    "result label"
+    ". label"
     "result value";
   align-items: center;
   min-height: 3.35rem;
@@ -1247,7 +1247,6 @@ body.ranking-is-dragging * {
     :has(.feedback-detail)
   ) {
   grid-template-areas: "result value";
-  align-items: baseline;
   min-height: 0;
 }
 
@@ -1275,7 +1274,7 @@ body.ranking-is-dragging * {
 
 .feedback-answer {
   grid-area: value;
-  align-self: start;
+  align-self: center;
   min-width: 0;
   font-size: clamp(1rem, 0.95rem + 0.6vw, 1.3rem);
   font-weight: 780;
@@ -1283,13 +1282,6 @@ body.ranking-is-dragging * {
   text-wrap: balance;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
-}
-
-.feedback:is(.correct-feedback, .partial-feedback, .incorrect-feedback):not(
-    :has(.feedback-detail)
-  )
-  .feedback-answer {
-  align-self: baseline;
 }
 
 @keyframes feedbackIn {

@@ -1983,12 +1983,7 @@ function submitSpeedGuess() {
     points === 1 ? 'correct' : points > 0 ? 'partial' : 'incorrect';
   speedSlider.classList.add(feedbackType);
   if (points === 1) {
-    setFeedback(
-      'correct',
-      'Correct!',
-      'Answer:',
-      specialQuestionData.feedbackAnswer,
-    );
+    setFeedback('correct', 'Correct!', '', specialQuestionData.feedbackAnswer);
   } else {
     setFeedback(
       feedbackType,
@@ -2997,12 +2992,21 @@ function checkSpeedRanking() {
     : correctPositions > 0
       ? 'Partially correct'
       : 'Incorrect';
-  setFeedback(
-    feedbackType,
-    feedbackResult,
-    'Correct positions:',
-    `${correctPositions}/${rows.length}`,
-  );
+  if (correct) {
+    setFeedback(
+      'correct',
+      feedbackResult,
+      '',
+      `${correctPositions}/${rows.length}`,
+    );
+  } else {
+    setFeedback(
+      feedbackType,
+      feedbackResult,
+      'Correct positions:',
+      `${correctPositions}/${rows.length}`,
+    );
+  }
   finishAnswer();
 }
 
@@ -3079,7 +3083,7 @@ function submitTypedAnswer() {
   if (points === 1) {
     typeAnswerInput.classList.add('correct');
     typeAnswerContainer.classList.add('correct');
-    setFeedback('correct', 'Correct!', 'Correct answer:', feedbackAnswer);
+    setFeedback('correct', 'Correct!', '', feedbackAnswer);
   } else if (points > 0) {
     typeAnswerInput.classList.add('partial');
     typeAnswerContainer.classList.add('partial');
@@ -3109,16 +3113,12 @@ function answerSpecialQuestion(button) {
     button.classList.add('correct');
     // The chosen button already shows the answer, so only add the extra detail.
     const [, ...extra] = String(specialQuestionData.feedbackAnswer).split(' · ');
-    if (extra.length) {
-      setFeedback('correct', 'Correct!', '', extra.join(' · '));
-    } else {
-      setFeedback(
-        'correct',
-        'Correct!',
-        'Answer:',
-        specialQuestionData.feedbackAnswer,
-      );
-    }
+    setFeedback(
+      'correct',
+      'Correct!',
+      '',
+      extra.length ? extra.join(' · ') : specialQuestionData.feedbackAnswer,
+    );
   } else {
     button.classList.add('incorrect');
     answerButtons.forEach((answerButton) => {
@@ -3147,7 +3147,7 @@ function answerMultipleChoice(button) {
   if (isCorrect) {
     score += 1;
     button.classList.add('correct');
-    setFeedback('correct', 'Correct!', 'Answer:', feedbackAnswer);
+    setFeedback('correct', 'Correct!', '', feedbackAnswer);
   } else {
     button.classList.add('incorrect');
     setFeedback('incorrect', 'Incorrect', 'Correct answer:', feedbackAnswer);
@@ -3172,7 +3172,7 @@ function answerReversePhoto(button) {
   if (isCorrect) {
     score += 1;
     button.classList.add('correct');
-    setFeedback('correct', 'Correct!', 'Answer:', feedbackAnswer);
+    setFeedback('correct', 'Correct!', '', feedbackAnswer);
   } else {
     button.classList.add('incorrect');
     setFeedback('incorrect', 'Incorrect', 'Correct photo:', feedbackAnswer);
