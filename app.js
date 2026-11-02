@@ -37,7 +37,44 @@ const QUESTION_TYPES = new Set([
   'compare-descent',
   'rank-descent',
   'wake',
+  'wake-depart',
+  'wake-intermediate',
+  'wake-arrive',
+  'wake-displaced',
+  'wake-opposite',
+  'wake-distance',
+  'wake-rules',
 ]);
+
+// Mode dropdown value -> question type for the Wake category question.
+const WAKE_MODE_TYPES = {
+  category: 'wake',
+  depart: 'wake-depart',
+  intermediate: 'wake-intermediate',
+  arrive: 'wake-arrive',
+  displaced: 'wake-displaced',
+  opposite: 'wake-opposite',
+  distance: 'wake-distance',
+  rules: 'wake-rules',
+};
+const WAKE_MODE_LABELS = {
+  random: 'Random (all)',
+  category: 'Category',
+  depart: 'Departure separation',
+  intermediate: 'Intermediate departure',
+  arrive: 'Arrival separation',
+  displaced: 'Displaced threshold',
+  opposite: 'Opposite direction',
+  distance: 'Distance (NM)',
+  rules: 'Rules',
+};
+const SPEED_MODE_LABELS = {
+  estimate: 'Estimate',
+  compare: 'Compare',
+  rank: 'Rank',
+};
+const isWakePairType = (type) =>
+  type?.startsWith('wake-') && type !== 'wake-rules';
 
 const WAKE_CATEGORIES = ['Light', 'Medium', 'Heavy', 'Super'];
 const WAKE_CATEGORY_INFO = {
@@ -593,17 +630,51 @@ function getRandomImagePath(item) {
 const speedModeSelect = byId('speed-mode');
 const speedModeLabel = byId('speed-mode-label');
 // The Question select holds cruise/climb/descent; the Mode select picks the format.
+// Random wake mode resolves once per question so every helper sees the same type.
+let randomWakeType = 'wake';
+function rollRandomWakeType() {
+  if (questionTypeSelect.value !== 'wake' || speedModeSelect.value !== 'random')
+    return;
+  const types = Object.values(WAKE_MODE_TYPES).filter(
+    (type) => type !== randomWakeType,
+  );
+  randomWakeType = randomItem(types);
+}
 const getQuestionType = () => {
   const base = questionTypeSelect.value;
+  if (base === 'wake') {
+    if (speedModeSelect.value === 'random') return randomWakeType;
+    return WAKE_MODE_TYPES[speedModeSelect.value] ?? base;
+  }
   const metric = SPEED_METRICS[base];
-  return metric ? metric[speedModeSelect.value] : base;
+  return metric ? (metric[speedModeSelect.value] ?? base) : base;
 };
 function syncSpeedModeVisibility() {
-  speedModeLabel.hidden = !SPEED_METRICS[questionTypeSelect.value];
+  const base = questionTypeSelect.value;
+  const labels =
+    base === 'wake'
+      ? WAKE_MODE_LABELS
+      : SPEED_METRICS[base]
+        ? SPEED_MODE_LABELS
+        : null;
+  speedModeLabel.hidden = !labels;
+  if (!labels) return;
+  const values = Object.keys(labels);
+  const current = speedModeSelect.value;
+  const same =
+    speedModeSelect.options.length === values.length &&
+    values.every((value, i) => speedModeSelect.options[i].value === value);
+  if (same) return;
+  speedModeSelect.replaceChildren(
+    ...values.map((value) => new Option(labels[value], value)),
+  );
+  speedModeSelect.value = values.includes(current) ? current : values[0];
 }
 const getAnswerMode = () => answerTypeSelect.value;
 const isSpecialQuestionType = (type = getQuestionType()) =>
-  type === 'wake' || getSpeedQuestion(type) !== null;
+  type === 'wake' ||
+  type?.startsWith('wake-') ||
+  getSpeedQuestion(type) !== null;
 const getAnswerSemanticType = (mode = getAnswerMode()) =>
   ANSWER_MODES.find((item) => item.value === mode)?.semantic ?? '';
 const isTypedAnswer = (mode = getAnswerMode()) =>
@@ -628,8 +699,10 @@ function syncAnswerOptions() {
   const questionType = getQuestionType();
   const specialQuestion = isSpecialQuestionType(questionType);
   const currentValue = answerTypeSelect.value;
+  const hideIdentifier =
+    questionTypeSelect.value === 'wake' && speedModeSelect.value === 'rules';
   if (answerTypeLabel) {
-    answerTypeLabel.hidden = false;
+    answerTypeLabel.hidden = hideIdentifier;
     if (answerTypeCaption) {
       answerTypeCaption.textContent = specialQuestion
         ? 'Identifier'
@@ -1080,7 +1153,7 @@ function filterPoolForCombination(pool) {
         ),
     );
   }
-  if (questionType === 'wake') {
+  if (questionType === 'wake' || isWakePairType(questionType)) {
     return pool.filter(
       (item) =>
         getAircraftImages(item).length > 0 &&
@@ -1351,10 +1424,11 @@ function setRevealed(element, show, animate) {
 function updatePhotoVisibility(animate = false) {
   const questionType = getQuestionType();
   const isSpecial = isSpecialQuestionType(questionType);
-  const showPhotos = isSpecial && photosVisible;
+  const isRules = questionType === 'wake-rules';
+  const showPhotos = isSpecial && photosVisible && !isRules;
   const comparison = imageContainer.querySelector('.speed-comparison');
   const ranking = byId('speed-ranking');
-  photoToggleButton.hidden = !isSpecial;
+  photoToggleButton.hidden = !isSpecial || isRules;
   updatePhotoToggleContents(photosVisible);
   photoToggleButton.setAttribute('aria-pressed', String(photosVisible));
   photoToggleButton.setAttribute(
@@ -1371,13 +1445,18 @@ function updatePhotoVisibility(animate = false) {
   appElement.classList.toggle(
     'no-image',
     isRank ||
+      isRules ||
       (isSpecial && !photosVisible) ||
       (!isSpecial && questionType !== 'photo' && getAnswerMode() !== 'photo'),
   );
 
   // While animating out, the container hides these once it has collapsed.
   const keepForExit = animate && !showPhotos;
-  if (isSpeedKind('compare', questionType) && comparison && !keepForExit)
+  if (
+    (isSpeedKind('compare', questionType) || isWakePairType(questionType)) &&
+    comparison &&
+    !keepForExit
+  )
     comparison.hidden = !showPhotos;
   if (ranking) ranking.hidden = !isRank;
   const slides = [];
@@ -1390,7 +1469,8 @@ function updatePhotoVisibility(animate = false) {
   }
   if (questionType === 'wake' && !keepForExit)
     imageElement.hidden = !showPhotos;
-  const showContainer = !isRank && !(isSpecial && !photosVisible);
+  const showContainer =
+    !isRank && !isRules && !(isSpecial && !photosVisible);
   slides.push(
     setRevealed(imageContainer, showContainer, animate && isSpecial && !isRank),
   );
@@ -1468,6 +1548,9 @@ function setLoading(loading) {
 
 function resetAnswerUI() {
   imageContainer.querySelector('.speed-comparison')?.remove();
+  // A stale deferred photo load would otherwise re-show the main spinner behind comparison cards.
+  pendingPhotoLoad = null;
+  delete imageElement.dataset.pendingSrc;
   speedSlider.hidden = true;
   byId('speed-slider-answer').hidden = true;
   speedSlider.classList.remove('correct', 'partial', 'incorrect');
@@ -1636,7 +1719,11 @@ function finishAnswer() {
 // 12. Displaying Answer Choices
 // ============================================================================
 function displayTextAnswerChoices(choices, disabled = false) {
-  answerContainer.classList.remove('reverse', 'speed-comparison-answers');
+  answerContainer.classList.remove('reverse');
+  answerContainer.classList.toggle(
+    'speed-comparison-answers',
+    choices.length === 3,
+  );
   answerContainer.hidden = false;
   answerButtons.forEach((button, index) => {
     const choice = choices[index];
@@ -1668,8 +1755,9 @@ function displaySpecialChoices(choices, correctAnswer, disabled = false) {
   answerContainer.classList.remove('reverse');
   answerContainer.classList.toggle(
     'speed-comparison-answers',
-    specialQuestionData?.type &&
-      isSpeedKind('compare', specialQuestionData.type),
+    (specialQuestionData?.type &&
+      isSpeedKind('compare', specialQuestionData.type)) ||
+      choices.length === 3,
   );
   answerContainer.hidden = false;
   answerButtons.forEach((button, index) => {
@@ -2094,10 +2182,10 @@ function getWakeFeedbackAnswer(item, category) {
     // Below 10,000 kg, rounding to 1,000 would be too coarse to be useful.
     const step = mtow >= 10000 ? 1000 : 100;
     const rounded = Math.round(mtow / step) * step;
-    return `${category} (MTOW ≈ ${rounded.toLocaleString('en-US')} kg)${leadingNote}`;
+    return `${category} · MTOW ≈ ${rounded.toLocaleString('en-US')} kg${leadingNote}`;
   }
   const info = WAKE_CATEGORY_INFO[category];
-  return (info ? `${category} (${info})` : category) + leadingNote;
+  return (info ? `${category} · ${info}` : category) + leadingNote;
 }
 
 async function displayWakeQuestion(item) {
@@ -2143,6 +2231,294 @@ async function displayWakeQuestion(item) {
       button.disabled = true;
     });
   }
+}
+
+// Wake turbulence standards. Values are minutes, NM, or 'D' (distance only).
+const WAKE_STANDARDS = {
+  depart: {
+    Super: { Heavy: 2, Medium: 3, Light: 3 },
+    Heavy: { Heavy: 'D', Medium: 2, Light: 2 },
+    MediumLarge: { Light: 2 },
+  },
+  intermediate: {
+    Super: { Heavy: 4, Medium: 4, Light: 4 },
+    Heavy: { Medium: 3, Light: 3 },
+    MediumLarge: { Light: 3 },
+  },
+  arrive: {
+    Super: { Heavy: 3, Medium: 3, Light: 4 },
+    Heavy: { Heavy: 'D', Medium: 2, Light: 3 },
+    MediumLarge: { Light: 3 },
+  },
+  displaced: {
+    Super: { Heavy: 3, Medium: 3, Light: 3 },
+    Heavy: { Medium: 2, Light: 2 },
+    MediumLarge: { Light: 2 },
+  },
+  opposite: {
+    Super: { Heavy: 3, Medium: 3, Light: 3 },
+    Heavy: { Medium: 2, Light: 2 },
+    MediumLarge: { Light: 2 },
+  },
+  distance: {
+    Super: { Heavy: 6, Medium: 7, Light: 8 },
+    Heavy: { Heavy: 4, Medium: 5, Light: 6 },
+    MediumLarge: { Light: 5 },
+  },
+};
+const WAKE_NONE = 'None required';
+const WAKE_ANSWER_POOLS = {
+  depart: [WAKE_NONE, '2 min', '3 min', 'Distance only'],
+  intermediate: [WAKE_NONE, '3 min', '4 min'],
+  arrive: [WAKE_NONE, '2 min', '3 min', '4 min', 'Distance only'],
+  displaced: [WAKE_NONE, '2 min', '3 min'],
+  opposite: [WAKE_NONE, '2 min', '3 min'],
+  distance: [WAKE_NONE, '4 NM', '5 NM', '6 NM', '7 NM', '8 NM'],
+};
+const WAKE_SCENARIOS = {
+  depart: {
+    text: 'Same-runway departure.',
+    roles: ['Leading', 'Following'],
+  },
+  intermediate: {
+    text: 'Intermediate departure (over 150 m down the runway).',
+    roles: ['Leading', 'Following'],
+  },
+  arrive: {
+    text: 'Same-runway landing.',
+    roles: ['Leading', 'Following'],
+  },
+  displaced: {
+    text: 'Departure behind a landing aircraft (displaced threshold).',
+    roles: ['Landing', 'Departing'],
+  },
+  opposite: {
+    text: 'Opposite-direction runway after a take-off or missed approach.',
+    roles: ['Departed', 'Affected'],
+  },
+  distance: {
+    text: 'Directly behind, within 760 m.',
+    roles: ['Leading', 'Following'],
+  },
+};
+
+// B757, H47 and H53 count as Heavy when leading.
+function getWakeLeadingCategory(item) {
+  const leading = getWakeCategory({
+    wake_category: item?.wake_category_when_leading,
+  });
+  if (leading) return leading;
+  if (/CH-47|Chinook|CH-53/i.test(displayText(item?.label))) return 'Heavy';
+  return getWakeCategory(item);
+}
+
+// Tier of a leading aircraft: Super, Heavy, MediumLarge, MediumSmall or Light.
+function getWakeLeadingTier(item) {
+  const category = getWakeLeadingCategory(item);
+  if (category !== 'Medium') return category;
+  const mtow = Number(item?.mtow_kg);
+  const helicopter = displayText(item?.category) === 'Helicopters';
+  return helicopter || mtow >= 25000 ? 'MediumLarge' : 'MediumSmall';
+}
+
+const WAKE_TIER_LABELS = {
+  Super: 'Super',
+  Heavy: 'Heavy',
+  MediumLarge: 'Medium (≥ 25,000 kg or heli)',
+  MediumSmall: 'Medium (< 25,000 kg)',
+  Light: 'Light',
+};
+
+function formatWakeValue(mode, value) {
+  if (value == null) return WAKE_NONE;
+  if (value === 'D') return 'Distance only';
+  return mode === 'distance' ? `${value} NM` : `${value} min`;
+}
+
+function evaluateWakePair(mode, leader, follower) {
+  const tier = getWakeLeadingTier(leader);
+  const followCategory = getWakeCategory(follower);
+  if (
+    mode === 'intermediate' &&
+    ['Super', 'Heavy'].includes(tier) &&
+    followCategory === 'Heavy'
+  )
+    return null;
+  const value = WAKE_STANDARDS[mode][tier]?.[followCategory];
+  const answer = formatWakeValue(mode, value);
+  const leadingNote =
+    getWakeCategory(leader) !== getWakeLeadingCategory(leader)
+      ? ' (when leading)'
+      : '';
+  let detail = `${WAKE_TIER_LABELS[tier]}${leadingNote} → ${followCategory}`;
+  if (value === 'D') {
+    const nm = WAKE_STANDARDS.distance[tier][followCategory];
+    detail += `, ${nm} NM`;
+  }
+  return {
+    tier,
+    answer,
+    required: value != null,
+    feedback: `${answer} · ${detail}`,
+  };
+}
+
+function getWakeSeparationQuestion(type) {
+  const mode = type.slice('wake-'.length);
+  const pool = getValidAircraftPool();
+  if (pool.length < 2) return null;
+  const leaders = pool.filter((item) =>
+    ['Super', 'Heavy', 'MediumLarge'].includes(getWakeLeadingTier(item)),
+  );
+  for (let attempt = 0; attempt < 80; attempt += 1) {
+    // Most random pairs need no separation, so favour leaders that have a standard.
+    const wantSeparation = attempt < 50 && Math.random() < 0.75;
+    const leader = randomItem(wantSeparation && leaders.length ? leaders : pool);
+    const follower = randomItem(pool);
+    if (getAircraftTypeKey(leader) === getAircraftTypeKey(follower)) continue;
+    const result = evaluateWakePair(mode, leader, follower);
+    if (!result || (wantSeparation && !result.required)) continue;
+    const signature = `${type}|${getRankingItemKey(leader)}|${getRankingItemKey(follower)}`;
+    if (isRepeatedQuestion(type, [leader, follower], true, signature)) continue;
+    return { leader, follower, mode, result, signature };
+  }
+  return null;
+}
+
+function pickWakeChoices(pool, correct) {
+  const others = shuffle(pool.filter((choice) => choice !== correct)).slice(
+    0,
+    3,
+  );
+  return pool.filter((choice) => choice === correct || others.includes(choice));
+}
+
+function buildWakeAircraftCard(item, role) {
+  const label = getSpecialAircraftIdentifier(item);
+  const card = document.createElement('div');
+  card.className = 'speed-aircraft';
+  const photoArea = document.createElement('div');
+  photoArea.className = 'speed-aircraft-photo';
+  const image = document.createElement('img');
+  image.alt = `${role}: ${label}`;
+  image.draggable = false;
+  image.hidden = true;
+  const placeholder = document.createElement('span');
+  placeholder.className = 'loading-message';
+  image.addEventListener(
+    'load',
+    () => {
+      image.hidden = false;
+      placeholder.remove();
+    },
+    { once: true },
+  );
+  image.addEventListener(
+    'error',
+    () => {
+      placeholder.className = 'loading-error';
+      placeholder.textContent = 'Unable to load';
+    },
+    { once: true },
+  );
+  photoArea.append(image, placeholder);
+  setDeferredImageSource(image, getRandomImagePath(item));
+  const caption = document.createElement('span');
+  caption.className = 'wake-role';
+  caption.textContent = role;
+  card.append(photoArea, caption);
+  return card;
+}
+
+function displayWakeSeparationQuestion(question) {
+  const { leader, follower, mode, result } = question;
+  const scenario = WAKE_SCENARIOS[mode];
+  imageContainer.querySelector('.speed-comparison')?.remove();
+  imageElement.hidden = true;
+  loadingMessage.classList.add('hidden');
+  const comparison = document.createElement('div');
+  comparison.className = 'speed-comparison';
+  comparison.setAttribute('aria-label', 'Leading and following aircraft');
+  comparison.append(
+    buildWakeAircraftCard(leader, scenario.roles[0]),
+    buildWakeAircraftCard(follower, scenario.roles[1]),
+  );
+  imageContainer.appendChild(comparison);
+  updatePhotoVisibility();
+  promptElement.replaceChildren();
+  const intro = document.createElement('span');
+  intro.className = 'prompt-context';
+  intro.textContent = `${scenario.text} Minimum separation?`;
+  const matchup = document.createElement('span');
+  matchup.className = 'prompt-matchup';
+  [
+    [scenario.roles[0], leader],
+    [scenario.roles[1], follower],
+  ].forEach(([role, item]) => {
+    const entry = document.createElement('span');
+    entry.className = 'prompt-entry';
+    const tag = document.createElement('span');
+    tag.className = 'prompt-role';
+    tag.textContent = role;
+    const name = document.createElement('span');
+    name.textContent = getSpecialAircraftIdentifier(item);
+    entry.append(tag, name);
+    matchup.appendChild(entry);
+  });
+  promptElement.append(intro, matchup);
+  displaySpecialChoices(
+    pickWakeChoices(WAKE_ANSWER_POOLS[mode], result.answer),
+    result.answer,
+  );
+}
+
+// Each entry lists the correct option first; options are shuffled when shown.
+const WAKE_RULES = [
+  ['Which type is Super category?', ['Airbus A380', 'Boeing 747-8', 'Airbus A340', 'Boeing 777'], 'Only the A380 is Super.'],
+  ['Minimum MTOW of a Heavy?', ['136,000 kg', '100,000 kg', '150,000 kg', '7,000 kg'], ''],
+  ['Maximum MTOW of a Light?', ['7,000 kg', '5,700 kg', '10,000 kg', '25,000 kg'], ''],
+  ['How is a B757 classified?', ['Heavy leading, Medium following', 'Always Heavy', 'Always Medium', 'Medium leading, Heavy following'], 'B757, H47 and H53 are Heavy leading, Medium following.'],
+  ['How is a Chinook (H47) classified?', ['Heavy leading, Medium following', 'Always Medium', 'Always Heavy', 'Always Light'], 'B757, H47 and H53 are Heavy leading, Medium following.'],
+  ['Wake separation applies directly behind within what lateral distance?', ['760 m', '500 m', '1,000 m', '1 NM'], ''],
+  ['Parallel runways need wake separation if closer than?', ['760 m', '300 m', '1,000 m', '1,500 m'], ''],
+  ['Light following a Medium fixed wing under 25,000 kg: separation?', ['Not required', '2 min', '3 min', '5 NM'], ''],
+  ['Landing behind a take-off on the same runway: separation?', ['Not required', '2 min', '3 min', 'Only if leader is Heavy'], ''],
+  ['VFR aircraft in the wake envelope of a Super: separation?', ['Required', 'VFR exempt', 'Only at night', 'Only below 3,000 ft'], ''],
+  ['VFR aircraft taking off behind a Heavy: separation?', ['Required', 'VFR exempt', 'Only in IMC', 'Only if requested'], ''],
+  ['Who can initiate a wake waiver?', ['The pilot', 'The controller', 'The aerodrome operator', 'Pilot or controller'], ''],
+  ['When can a wake waiver apply?', ['VMC by day', 'VMC any time', 'Any time in IMC', 'Parallel runways only'], ''],
+  ['Waiver for a Light taking off behind a Heavy that has rotated?', ['Not allowed', 'Allowed if pilot asks', 'Allowed in VMC by day', 'Allowed after 2 min'], 'No waiver behind a Heavy or Super that has rotated or made a low or missed approach.'],
+  ['IFR pilot has the leader in sight and accepts visual separation: wake separation?', ['Not required', 'Reduced', 'Unchanged', 'Only if Heavy'], ''],
+  ['Air taxiing helicopter: wake separation?', ['Not required', '2 min', '3 min', 'Only behind a Heavy'], ''],
+  ['When must a wake caution be issued for a waiver?', ['Whenever the pilot initiates one', 'Never', 'Only at night', 'Only behind a Super'], ''],
+  ['Intermediate departures start beyond what distance?', ['150 m', '100 m', '300 m', '760 m'], ''],
+  ['Crossing runways in use for departures: which standard?', ['Full length, met at the intersection', 'Intermediate', 'None', 'Opposite direction'], ''],
+  ['After a missed approach, when does the take-off interval start?', ['Threshold crossing or missed approach, whichever is later', 'Touchdown', 'Airborne', 'Runway vacated'], ''],
+  ['When can you use distance instead of time?', ['Distance known from report or surveillance', 'Never', 'Heavy aircraft only', 'VMC only'], 'Not for intermediate departures, which still use time.'],
+  ['What counts as “directly behind”?', ['Includes crossing the other’s track', 'Same track only', 'Final approach only', 'Below 1,000 ft only'], 'It includes the part of flight where one aircraft crosses the other’s track.'],
+  ['When does the displaced threshold standard apply?', ['Departure airborne before the landing aircraft’s touchdown point', 'Any landing behind a departure', 'Parallel runway departure', 'Any displaced threshold arrival'], 'It applies behind a heavier landing aircraft when the departure will be airborne before its touchdown point.'],
+  ['When does the opposite direction standard apply?', ['Opposite runway after a heavier aircraft departed or missed approach', 'Same-runway landings', 'Crossing runways', 'Any parallel runways'], 'It covers the opposite runway behind a heavier aircraft that took off or missed approach.'],
+  ['Light crossing the flight path of a departing Heavy during its landing run: which applies?', ['Arrival separation', 'None', 'Departure separation', 'Opposite direction'], ''],
+  ['Heavy behind Heavy, same-runway departure?', ['Distance only, 4 NM', '2 min', '3 min', 'None required'], ''],
+  ['Distance minimum: Super leading Light?', ['8 NM', '6 NM', '7 NM', '5 NM'], 'Super: 6 NM Heavy, 7 NM Medium, 8 NM Light.'],
+  ['Distance minimum: Heavy leading Medium?', ['5 NM', '4 NM', '6 NM', '7 NM'], 'Heavy: 4 NM Heavy, 5 NM Medium, 6 NM Light.'],
+  ['Distance minimum: Medium (25,000 kg+) leading Light?', ['5 NM', '4 NM', '6 NM', '3 NM'], ''],
+];
+
+function getWakeRulesQuestion() {
+  const available = WAKE_RULES.filter(
+    ([text]) =>
+      !isRepeatedQuestion('wake-rules', [], false, `wake-rules|${text}`),
+  );
+  const entry = randomItem(available.length ? available : WAKE_RULES);
+  const [text, options, explanation] = entry;
+  return {
+    text,
+    correct: options[0],
+    options: shuffle([...options]),
+    explanation,
+    signature: `wake-rules|${text}`,
+  };
 }
 
 function getRankingItemKey(item) {
@@ -2731,12 +3107,18 @@ function answerSpecialQuestion(button) {
   if (isCorrect) {
     score += 1;
     button.classList.add('correct');
-    setFeedback(
-      'correct',
-      'Correct!',
-      'Answer:',
-      specialQuestionData.feedbackAnswer,
-    );
+    // The chosen button already shows the answer, so only add the extra detail.
+    const [, ...extra] = String(specialQuestionData.feedbackAnswer).split(' · ');
+    if (extra.length) {
+      setFeedback('correct', 'Correct!', '', extra.join(' · '));
+    } else {
+      setFeedback(
+        'correct',
+        'Correct!',
+        'Answer:',
+        specialQuestionData.feedbackAnswer,
+      );
+    }
   } else {
     button.classList.add('incorrect');
     answerButtons.forEach((answerButton) => {
@@ -2820,12 +3202,15 @@ function answerQuestion(button) {
 // 15. Round Progression & Manifest Loading
 // ============================================================================
 async function nextQuestion() {
+  saveSettings();
   answered = false;
   scoreAtQuestionStart = score;
   currentChoices = [];
   currentAircraft = null;
   specialQuestionData = null;
   feedbackElement.replaceChildren();
+  setFeedback('', 'Choose an answer');
+  rollRandomWakeType();
   syncAnswerOptions();
   resetAnswerUI();
   configureAnswerMode();
@@ -2892,6 +3277,51 @@ async function nextQuestion() {
       feedbackAnswer: pair.feedback,
     };
     displaySpeedComparison(pair);
+    setLoading(false);
+    focusFirstAnswer();
+    return;
+  }
+
+  if (questionType === 'wake-rules') {
+    const rule = getWakeRulesQuestion();
+    rememberQuestion(questionType, [], false, rule.signature);
+    currentAircraft = aircraft[0];
+    specialQuestionData = {
+      type: questionType,
+      correctAnswer: rule.correct,
+      feedbackAnswer: rule.explanation
+        ? `${rule.correct} · ${rule.explanation}`
+        : rule.correct,
+    };
+    promptElement.textContent = rule.text;
+    displaySpecialChoices(rule.options, rule.correct);
+    setLoading(false);
+    focusFirstAnswer();
+    return;
+  }
+
+  if (isWakePairType(questionType)) {
+    const question = getWakeSeparationQuestion(questionType);
+    if (!question) {
+      setLoading(false);
+      promptElement.textContent = 'No suitable wake separation question.';
+      feedbackElement.textContent =
+        'The selected category needs at least two different aircraft with images and wake categories.';
+      return;
+    }
+    rememberQuestion(
+      questionType,
+      [question.leader, question.follower],
+      true,
+      question.signature,
+    );
+    currentAircraft = question.leader;
+    specialQuestionData = {
+      type: questionType,
+      correctAnswer: question.result.answer,
+      feedbackAnswer: question.result.feedback,
+    };
+    displayWakeSeparationQuestion(question);
     setLoading(false);
     focusFirstAnswer();
     return;
@@ -3239,6 +3669,52 @@ answerTypeSelect.addEventListener('change', () => {
 document.addEventListener('keydown', handleKeyboard);
 imageElement.addEventListener('dragstart', (event) => event.preventDefault());
 
+const SETTINGS_KEY = 'aircraft-trainer-settings';
+const settingControls = {
+  category: categorySelect,
+  question: questionTypeSelect,
+  mode: speedModeSelect,
+  answer: answerTypeSelect,
+};
+
+function saveSettings() {
+  try {
+    localStorage.setItem(
+      SETTINGS_KEY,
+      JSON.stringify(
+        Object.fromEntries(
+          Object.entries(settingControls).map(([key, select]) => [
+            key,
+            select.value,
+          ]),
+        ),
+      ),
+    );
+  } catch {
+    // Storage can be unavailable (private mode); settings just won't persist.
+  }
+}
+
+function restoreSettings() {
+  let saved = null;
+  try {
+    saved = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+  } catch {
+    return;
+  }
+  if (!saved) return;
+  const apply = (select, value) => {
+    if ([...select.options].some((option) => option.value === value))
+      select.value = value;
+  };
+  apply(categorySelect, saved.category);
+  apply(questionTypeSelect, saved.question);
+  syncSpeedModeVisibility();
+  apply(speedModeSelect, saved.mode);
+  syncAnswerOptions();
+  apply(answerTypeSelect, saved.answer);
+}
+
 async function start() {
   try {
     ensureAnswerTypeOptions();
@@ -3246,6 +3722,7 @@ async function start() {
     setLoading(true);
     await loadManifest();
     populateCategories();
+    restoreSettings();
     syncSpeedModeVisibility();
     syncAnswerOptions();
     updateScore();

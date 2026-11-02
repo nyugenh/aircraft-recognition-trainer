@@ -3673,7 +3673,13 @@
       "icao": "B737",
       "category": "Business Jets",
       "query": "Boeing 737 Business Jet",
-      "images": ["001.jpg", "002.jpg", "003.jpg", "005.jpg", "006.jpg"],
+      "images": [
+        "001.jpg",
+        "002.jpg",
+        "003.jpg",
+        "005.jpg",
+        "006.jpg"
+      ],
       "cruise_speed_kt": 460,
       "approach_speed_kt": 135,
       "wake_category": "Medium",
