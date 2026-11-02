@@ -2381,11 +2381,16 @@ function getWakeSeparationQuestion(type) {
 }
 
 function pickWakeChoices(pool, correct) {
-  const others = shuffle(pool.filter((choice) => choice !== correct)).slice(
-    0,
-    3,
-  );
-  return pool.filter((choice) => choice === correct || others.includes(choice));
+  const otherChoices = shuffle(
+    pool.filter((choice) => choice !== correct && choice !== WAKE_NONE),
+  ).slice(0, correct === WAKE_NONE ? 3 : 2);
+  const numericChoices = [correct, ...otherChoices]
+    .filter((choice) => choice !== WAKE_NONE && choice !== 'Distance only')
+    .sort((a, b) => Number.parseFloat(a) - Number.parseFloat(b));
+  const answers = [WAKE_NONE, ...numericChoices];
+  if ([correct, ...otherChoices].includes('Distance only'))
+    answers.push('Distance only');
+  return answers.filter((choice) => pool.includes(choice));
 }
 
 function buildWakeAircraftCard(item, role) {
