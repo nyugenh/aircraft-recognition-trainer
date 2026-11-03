@@ -1360,24 +1360,25 @@ function displayQuestion() {
   const answerMode = getAnswerMode();
   const name = getAnswerValue(currentAircraft, 'name');
   const code = getAnswerValue(currentAircraft, 'icao');
-  let text = '';
   if (questionType === 'photo') {
-    text =
-      getAnswerSemanticType(answerMode) === 'icao'
-        ? 'What is its ICAO code?'
-        : 'Which aircraft is this?';
+    promptElement.appendChild(
+      document.createTextNode(
+        getAnswerSemanticType(answerMode) === 'icao'
+          ? 'What is its ICAO code?'
+          : 'Which aircraft is this?',
+      ),
+    );
   } else if (questionType === 'name') {
-    text =
-      answerMode === 'photo'
-        ? `Which photo shows ${getIndefiniteArticle(name)} ${name}?`
-        : `What is the ICAO code for ${getIndefiniteArticle(name)} ${name}?`;
+    setPromptWithContext(
+      answerMode === 'photo' ? 'Which photo shows' : 'What is the ICAO code for',
+      [name],
+    );
   } else if (questionType === 'icao') {
-    text =
-      answerMode === 'photo'
-        ? `Which photo shows ${getIndefiniteArticleForCode(code)} ${code}?`
-        : `Which aircraft has ICAO code ${code}?`;
+    setPromptWithContext(
+      answerMode === 'photo' ? 'Which photo shows' : 'Which aircraft has ICAO code',
+      [code],
+    );
   }
-  promptElement.appendChild(document.createTextNode(text));
   appendCategoryHint(promptElement, currentAircraft?.category);
 }
 
