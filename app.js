@@ -3819,6 +3819,18 @@ speedModeSelect.addEventListener('change', onQuestionSettingChange);
 answerTypeSelect.addEventListener('change', () => {
   nextQuestion();
 });
+document.addEventListener(
+  'keydown',
+  () => appElement.classList.add('keyboard-input'),
+  { capture: true },
+);
+document.addEventListener('pointermove', (event) => {
+  if (event.movementX || event.movementY)
+    appElement.classList.remove('keyboard-input');
+});
+document.addEventListener('pointerdown', () => {
+  appElement.classList.remove('keyboard-input');
+});
 document.addEventListener('keydown', handleKeyboard);
 imageElement.addEventListener('dragstart', (event) => event.preventDefault());
 
