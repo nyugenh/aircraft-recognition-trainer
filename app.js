@@ -1729,7 +1729,9 @@ function finishAnswer() {
     recordAircraftResult(currentAircraft, score - scoreAtQuestionStart);
   updateScore();
   nextButton.disabled = false;
-  nextButton.focus();
+  const { top, bottom } = nextButton.getBoundingClientRect();
+  const isVisible = top >= 0 && bottom <= window.innerHeight;
+  nextButton.focus({ preventScroll: isVisible });
 }
 
 // ============================================================================
