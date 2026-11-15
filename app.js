@@ -43,33 +43,20 @@ const QUESTION_TYPES = new Set([
   'wake-displaced',
   'wake-opposite',
   'wake-distance',
-  'wake-rules',
+  'wake-combined',
   'wake-medium-mtow-threshold',
 ]);
 
 // Mode dropdown value -> question type for the Wake category question.
 const WAKE_MODE_TYPES = {
+  combined: 'wake-combined',
   category: 'wake',
   mediumThreshold: 'wake-medium-mtow-threshold',
-  depart: 'wake-depart',
-  intermediate: 'wake-intermediate',
-  arrive: 'wake-arrive',
-  displaced: 'wake-displaced',
-  opposite: 'wake-opposite',
-  distance: 'wake-distance',
-  rules: 'wake-rules',
 };
 const WAKE_MODE_LABELS = {
-  random: 'Random (all)',
-  category: 'Category',
+  combined: 'Separation values',
+  category: 'Wake category',
   mediumThreshold: 'Medium MTOW',
-  depart: 'Departure separation',
-  intermediate: 'Intermediate departure',
-  arrive: 'Arrival separation',
-  displaced: 'Displaced threshold',
-  opposite: 'Opposite direction',
-  distance: 'Distance (NM)',
-  rules: 'Rules',
 };
 const SPEED_MODE_LABELS = {
   estimate: 'Estimate',
@@ -78,7 +65,6 @@ const SPEED_MODE_LABELS = {
 };
 const isWakePairType = (type) =>
   type?.startsWith('wake-') &&
-  type !== 'wake-rules' &&
   type !== 'wake-medium-mtow-threshold';
 
 const WAKE_CATEGORIES = ['Light', 'Medium', 'Heavy', 'Super'];
@@ -176,6 +162,10 @@ const answerButtons = [...document.querySelectorAll('#answers button')];
 const typeAnswerContainer = byId('type-answer-container');
 const typeAnswerInput = byId('type-answer-input');
 const submitAnswerButton = byId('submit-answer');
+const wakeCombinedAnswer = byId('wake-combined-answer');
+const wakeTimeInput = byId('wake-time-input');
+const wakeDistanceInput = byId('wake-distance-input');
+const wakeCombinedSubmitButton = byId('wake-combined-submit');
 const scoreElement = byId('score');
 const feedbackElement = byId('feedback');
 const nextButton = byId('next');
@@ -636,20 +626,9 @@ function getRandomImagePath(item) {
 const speedModeSelect = byId('speed-mode');
 const speedModeLabel = byId('speed-mode-label');
 // The Question select holds cruise/climb/descent; the Mode select picks the format.
-// Random wake mode resolves once per question so every helper sees the same type.
-let randomWakeType = 'wake';
-function rollRandomWakeType() {
-  if (questionTypeSelect.value !== 'wake' || speedModeSelect.value !== 'random')
-    return;
-  const types = Object.values(WAKE_MODE_TYPES).filter(
-    (type) => type !== randomWakeType,
-  );
-  randomWakeType = randomItem(types);
-}
 const getQuestionType = () => {
   const base = questionTypeSelect.value;
   if (base === 'wake') {
-    if (speedModeSelect.value === 'random') return randomWakeType;
     return WAKE_MODE_TYPES[speedModeSelect.value] ?? base;
   }
   const metric = SPEED_METRICS[base];
@@ -705,10 +684,8 @@ function syncAnswerOptions() {
   const questionType = getQuestionType();
   const specialQuestion = isSpecialQuestionType(questionType);
   const currentValue = answerTypeSelect.value;
-  const hideIdentifier =
-    questionTypeSelect.value === 'wake' && speedModeSelect.value === 'rules';
   if (answerTypeLabel) {
-    answerTypeLabel.hidden = hideIdentifier;
+    answerTypeLabel.hidden = false;
     if (answerTypeCaption) {
       answerTypeCaption.textContent = specialQuestion
         ? 'Identifier'
@@ -1444,11 +1421,10 @@ function setRevealed(element, show, animate) {
 function updatePhotoVisibility(animate = false) {
   const questionType = getQuestionType();
   const isSpecial = isSpecialQuestionType(questionType);
-  const isRules = questionType === 'wake-rules';
-  const showPhotos = isSpecial && photosVisible && !isRules;
+  const showPhotos = isSpecial && photosVisible;
   const comparison = imageContainer.querySelector('.speed-comparison');
   const ranking = byId('speed-ranking');
-  photoToggleButton.hidden = !isSpecial || isRules;
+  photoToggleButton.hidden = !isSpecial;
   updatePhotoToggleContents(photosVisible);
   photoToggleButton.setAttribute('aria-pressed', String(photosVisible));
   photoToggleButton.setAttribute(
@@ -1465,7 +1441,6 @@ function updatePhotoVisibility(animate = false) {
   appElement.classList.toggle(
     'no-image',
     isRank ||
-      isRules ||
       (isSpecial && !photosVisible) ||
       (!isSpecial && questionType !== 'photo' && getAnswerMode() !== 'photo'),
   );
@@ -1493,8 +1468,7 @@ function updatePhotoVisibility(animate = false) {
     !keepForExit
   )
     imageElement.hidden = !showPhotos;
-  const showContainer =
-    !isRank && !isRules && !(isSpecial && !photosVisible);
+  const showContainer = !isRank && !(isSpecial && !photosVisible);
   slides.push(
     setRevealed(imageContainer, showContainer, animate && isSpecial && !isRank),
   );
@@ -1567,6 +1541,9 @@ function setLoading(loading) {
   });
   typeAnswerInput.disabled = true;
   submitAnswerButton.disabled = true;
+  wakeTimeInput.disabled = true;
+  wakeDistanceInput.disabled = true;
+  wakeCombinedSubmitButton.disabled = true;
   nextButton.disabled = true;
 }
 
@@ -1606,6 +1583,20 @@ function resetAnswerUI() {
   typeAnswerInput.disabled = true;
   typeAnswerInput.classList.remove('correct', 'partial', 'incorrect');
   submitAnswerButton.disabled = true;
+  wakeCombinedAnswer.hidden = true;
+  wakeCombinedAnswer.classList.remove(
+    'correct',
+    'partial',
+    'incorrect',
+    'revealed',
+  );
+  [wakeTimeInput, wakeDistanceInput].forEach((input) => {
+    input.value = '';
+    input.placeholder = '';
+    input.disabled = true;
+    input.classList.remove('correct', 'partial', 'incorrect');
+  });
+  wakeCombinedSubmitButton.disabled = true;
   feedbackElement.replaceChildren();
   feedbackElement.classList.remove(
     'correct-feedback',
@@ -1621,7 +1612,9 @@ function configureAnswerMode() {
   appElement.classList.remove('reverse-mode', 'no-image');
   if (isSpecialQuestionType(questionType)) {
     imageContainer.hidden = false;
-    answerContainer.hidden = false;
+    const combinedWake = questionType === 'wake-combined';
+    answerContainer.hidden = combinedWake;
+    wakeCombinedAnswer.hidden = !combinedWake;
     typeAnswerContainer.hidden = true;
     updatePhotoVisibility();
     return;
@@ -2011,7 +2004,7 @@ function submitSpeedGuess() {
   } else {
     setFeedback(
       feedbackType,
-      points > 0 ? 'Partially correct' : 'Incorrect',
+      points > 0 ? 'Partial' : 'Incorrect',
       'Correct answer:',
       specialQuestionData.feedbackAnswer,
     );
@@ -2321,27 +2314,23 @@ const WAKE_ANSWER_POOLS = {
 };
 const WAKE_SCENARIOS = {
   depart: {
-    text: 'Same-runway departure.',
+    text: 'Full-length/crossing departure.',
     roles: ['Leading', 'Following'],
   },
   intermediate: {
-    text: 'Intermediate departure (over 150 m down the runway).',
+    text: 'Intermediate departure.',
     roles: ['Leading', 'Following'],
   },
   arrive: {
-    text: 'Same-runway landing.',
+    text: 'Full-length/crossing arrival.',
     roles: ['Leading', 'Following'],
   },
   displaced: {
-    text: 'Departure behind a landing aircraft (displaced threshold).',
-    roles: ['Landing', 'Departing'],
+    text: 'Displaced landing threshold.',
+    roles: ['Leading', 'Following'],
   },
   opposite: {
-    text: 'Opposite-direction runway after a take-off or missed approach.',
-    roles: ['Departed', 'Affected'],
-  },
-  distance: {
-    text: 'Directly behind, within 760 m.',
+    text: 'Opposite direction.',
     roles: ['Leading', 'Following'],
   },
 };
@@ -2407,24 +2396,55 @@ function evaluateWakePair(mode, leader, follower) {
   };
 }
 
+function getCombinedWakeValues(mode, result, leader, follower) {
+  const followCategory = getWakeCategory(follower);
+  const value = WAKE_STANDARDS[mode][result.tier]?.[followCategory] ?? null;
+  const time = value === 'D' ? null : value;
+  const distance =
+    ['depart', 'arrive'].includes(mode) || value === 'D'
+      ? (WAKE_STANDARDS.distance[result.tier]?.[followCategory] ?? null)
+      : null;
+  const leadingNote =
+    getWakeCategory(leader) !== getWakeLeadingCategory(leader)
+      ? ' (when leading)'
+      : '';
+  return {
+    time,
+    distance,
+    feedback: `${WAKE_TIER_LABELS[result.tier]}${leadingNote} → ${followCategory}`,
+  };
+}
+
 function getWakeSeparationQuestion(type) {
-  const mode = type.slice('wake-'.length);
+  const combined = type === 'wake-combined';
   const pool = getValidAircraftPool();
   if (pool.length < 2) return null;
   const leaders = pool.filter((item) =>
     ['Super', 'Heavy', 'MediumLarge'].includes(getWakeLeadingTier(item)),
   );
   for (let attempt = 0; attempt < 80; attempt += 1) {
+    const mode = combined
+      ? randomItem(Object.keys(WAKE_SCENARIOS))
+      : type.slice('wake-'.length);
     // Most random pairs need no separation, so favour leaders that have a standard.
     const wantSeparation = attempt < 50 && Math.random() < 0.75;
     const leader = randomItem(wantSeparation && leaders.length ? leaders : pool);
     const follower = randomItem(pool);
     if (getAircraftTypeKey(leader) === getAircraftTypeKey(follower)) continue;
-    const result = evaluateWakePair(mode, leader, follower);
-    if (!result || (wantSeparation && !result.required)) continue;
-    const signature = `${type}|${getRankingItemKey(leader)}|${getRankingItemKey(follower)}`;
+    const pairResult = evaluateWakePair(mode, leader, follower);
+    if (!pairResult || (wantSeparation && !pairResult.required)) continue;
+    const result = combined
+      ? {
+          ...getCombinedWakeValues(mode, pairResult, leader, follower),
+          tier: pairResult.tier,
+          required: pairResult.required,
+        }
+      : pairResult;
+    const signature = `${type}|${combined ? `${mode}|` : ''}${getRankingItemKey(
+      leader,
+    )}|${getRankingItemKey(follower)}`;
     if (isRepeatedQuestion(type, [leader, follower], true, signature)) continue;
-    return { leader, follower, mode, result, signature };
+    return { leader, follower, mode, result, signature, combined };
   }
   return null;
 }
@@ -2480,7 +2500,7 @@ function buildWakeAircraftCard(item, role) {
 }
 
 function displayWakeSeparationQuestion(question) {
-  const { leader, follower, mode, result } = question;
+  const { leader, follower, mode, result, combined } = question;
   const scenario = WAKE_SCENARIOS[mode];
   imageContainer.querySelector('.speed-comparison')?.remove();
   imageElement.hidden = true;
@@ -2496,8 +2516,12 @@ function displayWakeSeparationQuestion(question) {
   updatePhotoVisibility();
   promptElement.replaceChildren();
   const intro = document.createElement('span');
-  intro.className = 'prompt-context';
-  intro.textContent = `${scenario.text} Minimum separation?`;
+  intro.className = combined
+    ? 'prompt-context wake-scenario-context'
+    : 'prompt-context';
+  intro.textContent = combined
+    ? scenario.text
+    : `${scenario.text} Minimum separation?`;
   const matchup = document.createElement('span');
   matchup.className = 'prompt-matchup';
   [
@@ -2515,6 +2539,15 @@ function displayWakeSeparationQuestion(question) {
     matchup.appendChild(entry);
   });
   promptElement.append(intro, matchup);
+  if (combined) {
+    answerContainer.hidden = true;
+    wakeCombinedAnswer.hidden = false;
+    wakeTimeInput.disabled = false;
+    wakeDistanceInput.disabled = false;
+    wakeCombinedSubmitButton.disabled = false;
+    wakeTimeInput.focus();
+    return;
+  }
   displaySpecialChoices(
     pickWakeChoices(WAKE_ANSWER_POOLS[mode], result.answer),
     result.answer,
@@ -2572,55 +2605,6 @@ async function displayMediumMtowThresholdQuestion(item) {
       button.disabled = true;
     });
   }
-}
-
-// Each entry lists the correct option first; options are shuffled when shown.
-const WAKE_RULES = [
-  ['Which type is Super category?', ['Airbus A380', 'Boeing 747-8', 'Airbus A340', 'Boeing 777'], 'Only the A380 is Super.'],
-  ['Minimum MTOW of a Heavy?', ['136,000 kg', '100,000 kg', '150,000 kg', '7,000 kg'], ''],
-  ['Maximum MTOW of a Light?', ['7,000 kg', '5,700 kg', '10,000 kg', '25,000 kg'], ''],
-  ['How is a B757 classified?', ['Heavy leading, Medium following', 'Always Heavy', 'Always Medium', 'Medium leading, Heavy following'], 'B757, H47 and H53 are Heavy leading, Medium following.'],
-  ['How is a Chinook (H47) classified?', ['Heavy leading, Medium following', 'Always Medium', 'Always Heavy', 'Always Light'], 'B757, H47 and H53 are Heavy leading, Medium following.'],
-  ['Wake separation applies directly behind within what lateral distance?', ['760 m', '500 m', '1,000 m', '1 NM'], ''],
-  ['Parallel runways need wake separation if closer than?', ['760 m', '300 m', '1,000 m', '1,500 m'], ''],
-  ['Light following a Medium fixed wing under 25,000 kg: separation?', ['Not required', '2 min', '3 min', '5 NM'], ''],
-  ['Landing behind a take-off on the same runway: separation?', ['Not required', '2 min', '3 min', 'Only if leader is Heavy'], ''],
-  ['VFR aircraft in the wake envelope of a Super: separation?', ['Required', 'VFR exempt', 'Only at night', 'Only below 3,000 ft'], ''],
-  ['VFR aircraft taking off behind a Heavy: separation?', ['Required', 'VFR exempt', 'Only in IMC', 'Only if requested'], ''],
-  ['Who can initiate a wake waiver?', ['The pilot', 'The controller', 'The aerodrome operator', 'Pilot or controller'], ''],
-  ['When can a wake waiver apply?', ['VMC by day', 'VMC any time', 'Any time in IMC', 'Parallel runways only'], ''],
-  ['Waiver for a Light taking off behind a Heavy that has rotated?', ['Not allowed', 'Allowed if pilot asks', 'Allowed in VMC by day', 'Allowed after 2 min'], 'No waiver behind a Heavy or Super that has rotated or made a low or missed approach.'],
-  ['IFR pilot has the leader in sight and accepts visual separation: wake separation?', ['Not required', 'Reduced', 'Unchanged', 'Only if Heavy'], ''],
-  ['Air taxiing helicopter: wake separation?', ['Not required', '2 min', '3 min', 'Only behind a Heavy'], ''],
-  ['When must a wake caution be issued for a waiver?', ['Whenever the pilot initiates one', 'Never', 'Only at night', 'Only behind a Super'], ''],
-  ['Intermediate departures start beyond what distance?', ['150 m', '100 m', '300 m', '760 m'], ''],
-  ['Crossing runways in use for departures: which standard?', ['Full length, met at the intersection', 'Intermediate', 'None', 'Opposite direction'], ''],
-  ['After a missed approach, when does the take-off interval start?', ['Threshold crossing or missed approach, whichever is later', 'Touchdown', 'Airborne', 'Runway vacated'], ''],
-  ['When can you use distance instead of time?', ['Distance known from report or surveillance', 'Never', 'Heavy aircraft only', 'VMC only'], 'Not for intermediate departures, which still use time.'],
-  ['What counts as “directly behind”?', ['Includes crossing the other’s track', 'Same track only', 'Final approach only', 'Below 1,000 ft only'], 'It includes the part of flight where one aircraft crosses the other’s track.'],
-  ['When does the displaced threshold standard apply?', ['Departure airborne before the landing aircraft’s touchdown point', 'Any landing behind a departure', 'Parallel runway departure', 'Any displaced threshold arrival'], 'It applies behind a heavier landing aircraft when the departure will be airborne before its touchdown point.'],
-  ['When does the opposite direction standard apply?', ['Opposite runway after a heavier aircraft departed or missed approach', 'Same-runway landings', 'Crossing runways', 'Any parallel runways'], 'It covers the opposite runway behind a heavier aircraft that took off or missed approach.'],
-  ['Light crossing the flight path of a departing Heavy during its landing run: which applies?', ['Arrival separation', 'None', 'Departure separation', 'Opposite direction'], ''],
-  ['Heavy behind Heavy, same-runway departure?', ['Distance only, 4 NM', '2 min', '3 min', 'None required'], ''],
-  ['Distance minimum: Super leading Light?', ['8 NM', '6 NM', '7 NM', '5 NM'], 'Super: 6 NM Heavy, 7 NM Medium, 8 NM Light.'],
-  ['Distance minimum: Heavy leading Medium?', ['5 NM', '4 NM', '6 NM', '7 NM'], 'Heavy: 4 NM Heavy, 5 NM Medium, 6 NM Light.'],
-  ['Distance minimum: Medium (25,000 kg+) leading Light?', ['5 NM', '4 NM', '6 NM', '3 NM'], ''],
-];
-
-function getWakeRulesQuestion() {
-  const available = WAKE_RULES.filter(
-    ([text]) =>
-      !isRepeatedQuestion('wake-rules', [], false, `wake-rules|${text}`),
-  );
-  const entry = randomItem(available.length ? available : WAKE_RULES);
-  const [text, options, explanation] = entry;
-  return {
-    text,
-    correct: options[0],
-    options: shuffle([...options]),
-    explanation,
-    signature: `wake-rules|${text}`,
-  };
 }
 
 function getRankingItemKey(item) {
@@ -3099,7 +3083,7 @@ function checkSpeedRanking() {
   const feedbackResult = correct
     ? 'Correct'
     : correctPositions > 0
-      ? 'Partially correct'
+      ? 'Partial'
       : 'Incorrect';
   if (correct) {
     setFeedback(
@@ -3142,15 +3126,6 @@ function calculatePartialScore(typedAnswer, correctAnswer) {
   }
   return Math.min(matchedIndexes.size / correctWords.length, 1);
 }
-
-const formatPoints = (points) =>
-  points === 1
-    ? '1'
-    : points === 0
-      ? '0'
-      : Number(points.toFixed(2)).toString();
-const formatPointsWithGrammar = (points) =>
-  formatPoints(points) === '1' ? '1 point' : `${formatPoints(points)} points`;
 
 // Loose name marking: full marks if the typed words include the shortened name,
 // or any words from the full name that no other aircraft also contains
@@ -3198,7 +3173,7 @@ function submitTypedAnswer() {
     typeAnswerContainer.classList.add('partial');
     setFeedback(
       'partial',
-      `◐ Partial · ${formatPointsWithGrammar(points)}`,
+      'Partial',
       'Correct answer:',
       feedbackAnswer,
     );
@@ -3244,6 +3219,70 @@ function answerSpecialQuestion(button) {
   answerButtons.forEach((answerButton) => {
     answerButton.disabled = true;
   });
+  finishAnswer();
+}
+
+function submitCombinedWakeAnswer() {
+  if (
+    answered ||
+    !currentAircraft ||
+    specialQuestionData?.type !== 'wake-combined'
+  )
+    return;
+
+  const inputs = [wakeTimeInput, wakeDistanceInput];
+  const invalidInput = inputs.find((input) => !input.checkValidity());
+  if (invalidInput) {
+    setFeedback(
+      '',
+      'Check your entries',
+      'Enter one digit, or leave the field blank when it does not apply.',
+    );
+    invalidInput.focus();
+    return;
+  }
+
+  const actual = inputs.map((input) =>
+    input.value === '' ? null : Number(input.value),
+  );
+  const expected = [
+    specialQuestionData.correctAnswer.time,
+    specialQuestionData.correctAnswer.distance,
+  ];
+  const correct = actual.map((value, index) => value === expected[index]);
+  const points = correct.filter(Boolean).length / inputs.length;
+  answered = true;
+  total += 1;
+  score = Math.round((score + points) * 100) / 100;
+  inputs.forEach((input, index) => {
+    input.value = expected[index] == null ? '' : String(expected[index]);
+    input.placeholder = expected[index] == null ? 'None required' : '';
+    input.classList.add(correct[index] ? 'correct' : 'incorrect');
+    input.disabled = true;
+  });
+  wakeCombinedAnswer.classList.add('revealed');
+  wakeCombinedAnswer.classList.add(
+    points === 1 ? 'correct' : points > 0 ? 'partial' : 'incorrect',
+  );
+  wakeCombinedSubmitButton.disabled = true;
+
+  if (points === 1) {
+    setFeedback('correct', 'Correct!', '', specialQuestionData.feedbackAnswer);
+  } else if (points > 0) {
+    setFeedback(
+      'partial',
+      'Partial',
+      '',
+      specialQuestionData.feedbackAnswer,
+    );
+  } else {
+    setFeedback(
+      'incorrect',
+      'Incorrect',
+      '',
+      specialQuestionData.feedbackAnswer,
+    );
+  }
   finishAnswer();
 }
 
@@ -3319,7 +3358,6 @@ async function nextQuestion() {
   specialQuestionData = null;
   feedbackElement.replaceChildren();
   setFeedback('', 'Choose an answer');
-  rollRandomWakeType();
   syncAnswerOptions();
   resetAnswerUI();
   configureAnswerMode();
@@ -3391,24 +3429,6 @@ async function nextQuestion() {
     return;
   }
 
-  if (questionType === 'wake-rules') {
-    const rule = getWakeRulesQuestion();
-    rememberQuestion(questionType, [], false, rule.signature);
-    currentAircraft = aircraft[0];
-    specialQuestionData = {
-      type: questionType,
-      correctAnswer: rule.correct,
-      feedbackAnswer: rule.explanation
-        ? `${rule.correct} · ${rule.explanation}`
-        : rule.correct,
-    };
-    promptElement.textContent = rule.text;
-    displaySpecialChoices(rule.options, rule.correct);
-    setLoading(false);
-    focusFirstAnswer();
-    return;
-  }
-
   if (isWakePairType(questionType)) {
     const question = getWakeSeparationQuestion(questionType);
     if (!question) {
@@ -3427,12 +3447,17 @@ async function nextQuestion() {
     currentAircraft = question.leader;
     specialQuestionData = {
       type: questionType,
-      correctAnswer: question.result.answer,
+      correctAnswer: question.combined
+        ? {
+            time: question.result.time,
+            distance: question.result.distance,
+          }
+        : question.result.answer,
       feedbackAnswer: question.result.feedback,
     };
     displayWakeSeparationQuestion(question);
     setLoading(false);
-    focusFirstAnswer();
+    if (!question.combined) focusFirstAnswer();
     return;
   }
 
@@ -3738,6 +3763,7 @@ function setupAccessibility() {
   });
   nextButton.setAttribute('aria-keyshortcuts', 'Enter Space N');
   submitAnswerButton.setAttribute('aria-keyshortcuts', 'Enter');
+  wakeCombinedSubmitButton.setAttribute('aria-keyshortcuts', 'Enter');
 }
 
 // ============================================================================
@@ -3747,6 +3773,18 @@ answerButtons.forEach((button) => {
   button.addEventListener('click', () => answerQuestion(button));
 });
 submitAnswerButton.addEventListener('click', submitTypedAnswer);
+for (const input of [wakeTimeInput, wakeDistanceInput]) {
+  input.addEventListener('input', () => {
+    input.value = input.value.replace(/\D/g, '').slice(0, 1);
+  });
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && !wakeCombinedSubmitButton.disabled) {
+      event.preventDefault();
+      submitCombinedWakeAnswer();
+    }
+  });
+}
+wakeCombinedSubmitButton.addEventListener('click', submitCombinedWakeAnswer);
 typeAnswerInput.addEventListener('keydown', (event) => {
   if (event.key === 'Enter' && !submitAnswerButton.disabled) {
     event.preventDefault();
@@ -3852,6 +3890,9 @@ async function start() {
     });
     typeAnswerInput.disabled = true;
     submitAnswerButton.disabled = true;
+    wakeTimeInput.disabled = true;
+    wakeDistanceInput.disabled = true;
+    wakeCombinedSubmitButton.disabled = true;
     nextButton.disabled = true;
     promptElement.focus();
   }

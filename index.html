@@ -80,7 +80,7 @@
             <option value="approach">Approach speed</option>
             <option value="climb">Rate of climb</option>
             <option value="descent">Rate of descent</option>
-            <option value="wake">Wake separation</option>
+            <option value="wake">Wake turbulence</option>
           </select>
         </label>
         <label id="speed-mode-label" for="speed-mode" hidden>
@@ -159,6 +159,49 @@
           ><span class="option-text">Option 4</span>
         </button>
       </section>
+
+      <!-- 7b. Combined Wake Separation Answer -->
+      <form id="wake-combined-answer" class="wake-combined-answer" hidden>
+        <div class="wake-combined-fields">
+          <label class="wake-combined-field" for="wake-time-input">
+            Time separation (min)
+            <input
+              id="wake-time-input"
+              class="type-answer-input"
+              type="text"
+              maxlength="1"
+              pattern="[0-9]"
+              inputmode="numeric"
+              autocomplete="off"
+              disabled
+            />
+          </label>
+          <label class="wake-combined-field" for="wake-distance-input">
+            Distance separation (NM)
+            <input
+              id="wake-distance-input"
+              class="type-answer-input"
+              type="text"
+              maxlength="1"
+              pattern="[0-9]"
+              inputmode="numeric"
+              autocomplete="off"
+              disabled
+            />
+          </label>
+        </div>
+        <p class="wake-combined-hint">
+          Leave a field blank when that separation does not apply.
+        </p>
+        <button
+          id="wake-combined-submit"
+          class="submit-answer"
+          type="button"
+          disabled
+        >
+          Submit
+        </button>
+      </form>
 
       <!-- 8. Typed Answer Form -->
       <form id="type-answer-container" class="type-answer-container" hidden>

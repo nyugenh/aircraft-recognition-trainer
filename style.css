@@ -481,6 +481,22 @@ select:disabled {
   opacity: 0.6;
 }
 
+.wake-scenario-context {
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 0.35rem;
+  padding: 0.5rem 0.8rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--accent-wash);
+  color: var(--accent-strong);
+  font-size: 0.62em;
+  font-weight: 760;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  opacity: 1;
+}
+
 .prompt {
   display: flex;
   align-items: center;
@@ -716,6 +732,31 @@ select:disabled {
   gap: 0.65rem;
 }
 
+.wake-combined-answer {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.wake-combined-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.wake-combined-field {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.wake-combined-hint {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+
 .type-answer-input {
   flex: 1;
   min-width: 0;
@@ -728,6 +769,11 @@ select:disabled {
   transition:
     border-color 160ms var(--ease),
     box-shadow 160ms var(--ease);
+}
+
+.wake-combined-answer .type-answer-input {
+  height: 3.5rem;
+  line-height: 1.2;
 }
 
 .type-answer-input::placeholder {
@@ -743,6 +789,14 @@ select:disabled {
 .type-answer-input:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+.wake-combined-answer.revealed .type-answer-input {
+  font-size: 1.35rem;
+  font-weight: 850;
+  opacity: 1;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
 }
 
 .type-answer-input.correct,
@@ -1231,7 +1285,7 @@ body.ranking-is-dragging * {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   grid-template-areas:
-    ". label"
+    "result label"
     "result value";
   align-items: center;
   min-height: 3.35rem;
@@ -1542,6 +1596,10 @@ body.ranking-is-dragging * {
 }
 
 @media (max-width: 36rem) {
+  .wake-combined-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .ranking-item:has(.ranking-photo-wrap:not([hidden])) .ranking-details {
     flex-direction: column;
     align-items: stretch;
