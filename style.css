@@ -774,6 +774,8 @@ select:disabled {
 .wake-combined-answer .type-answer-input {
   height: 3.5rem;
   line-height: 1.2;
+  font-size: 1.35rem;
+  font-weight: 850;
 }
 
 .type-answer-input::placeholder {
@@ -792,8 +794,6 @@ select:disabled {
 }
 
 .wake-combined-answer.revealed .type-answer-input {
-  font-size: 1.35rem;
-  font-weight: 850;
   opacity: 1;
   text-align: left;
   font-variant-numeric: tabular-nums;
